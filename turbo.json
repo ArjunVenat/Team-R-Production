@@ -1,0 +1,41 @@
+{
+  "$schema": "https://turbo.build/schema.json",
+  "pipeline": {
+    "dependencies": {
+      "inputs": [],
+      "outputs": []
+    },
+    "lint": {
+      "dependsOn": ["^dependencies", "^build:dev"]
+    },
+    "lint:fix": {
+      "dependsOn": ["^dependencies", "^build:dev"]
+    },
+    "build:dev": {
+      "dependsOn": ["^dependencies", "^build:dev"]
+    },
+    "dev": {
+      "dependsOn": ["^build:dev"],
+      "cache": false,
+      "dotEnv": [".env.development.local", ".env.development", ".env.local", ".env"],
+      "persistent": true
+    },
+    "deploy": {
+      "dependsOn": ["^build", "lint"],
+      "cache": false,
+      "persistent": true
+    },
+    "build": {
+      "dependsOn": ["^dependencies", "^build"],
+      "outputs": ["build/**"]
+    },
+    "docker:build": {
+      "dependsOn": ["lint"],
+      "cache": false
+    },
+    "docker:upload": {
+      "dependsOn": ["docker:build"],
+      "cache": false
+    }
+  }
+}
