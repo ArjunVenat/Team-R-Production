@@ -1,0 +1,25 @@
+x-db-info: &db-args
+  POSTGRES_USER: dev
+  POSTGRES_PASSWORD: dev
+  POSTGRES_DB: dev
+
+x-port-bindings:
+  DATABASE_EXPOSED: &db-exposed 5432:5432
+
+# Port and container name (URL) for the DB
+x-db-loc: &db-loc
+  POSTGRES_CONTAINER: &pg-container database
+  POSTGRES_PORT: &pg-port "5432"
+
+services:
+  database:
+    image: postgres
+    # Expose the database for development purposes
+    ports:
+      - *db-exposed
+    # Expose the PG port
+    expose:
+      - *pg-port
+    # Use the DB args defined above
+    environment:
+      *db-args
