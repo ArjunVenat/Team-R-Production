@@ -35,13 +35,15 @@ WORKDIR /$WORKDIR
 ARG PRODUCTION_PORT
 
 # Set the environment variable port
-ENV PORT=$PRODUCTION_PORT
+ENV FRONTEND_PORT=$PRODUCTION_PORT
+ENV BACKEND_PORT=$PRODUCTION_PORT
+
 
 # Set us to production environment
 ENV NODE_ENV=production
 
 # Expose the port
-EXPOSE $PORT
+EXPOSE $PRODUCTION_PORT
 
 
 
