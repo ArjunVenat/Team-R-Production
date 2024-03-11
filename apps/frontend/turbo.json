@@ -3,7 +3,12 @@
   "extends": ["//"],
   "pipeline": {
     "dev": {
-      "dotEnv": [".env.development.local", ".env.development", ".env.local", ".env"],
+      "dotEnv": [
+        ".env.development.local",
+        ".env.development",
+        ".env.local",
+        ".env"
+      ],
       "env": ["PORT", "BACKEND_PORT", "BACKEND_SOURCE"]
     },
     "deploy": {
