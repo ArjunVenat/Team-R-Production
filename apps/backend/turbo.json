@@ -3,10 +3,6 @@
   "extends": ["//"],
   "pipeline": {
     "dev": {
-      "dependsOn": ["^build:dev"],
-      "env": ["PORT"]
-    },
-    "dev:push": {
       "dependsOn": ["database#db:push", "^build:dev"],
       "env": ["PORT"]
     },
