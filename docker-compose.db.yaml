@@ -1,7 +1,7 @@
 x-db-info: &db-args
-  POSTGRES_USER: dev
-  POSTGRES_PASSWORD: dev
-  POSTGRES_DB: dev
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  POSTGRES_DB: postgres
 
 x-port-bindings:
   DATABASE_EXPOSED: &db-exposed 5432:5432
