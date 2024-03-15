@@ -1,6 +1,6 @@
 /* eslint-env node */
 // Import the command runner utility using ES6 import syntax
-import { executeCommands } from './commandRunner.js';
+import { executeCommands } from './commandRunner.mjs';
 
 // Define the sync command logic as an array of commands
 const syncCommands = [

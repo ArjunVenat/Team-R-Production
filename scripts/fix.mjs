@@ -1,5 +1,5 @@
 /* eslint-env node */
-import { executeCommands } from './commandRunner.js';
+import { executeCommands } from './commandRunner.mjs';
 
 // Function to execute all fix tasks
 function executeFixes() {
