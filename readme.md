@@ -51,12 +51,15 @@ file and trigger the restart.
 
 ## Installation and Useful Scripts
 - Run `yarn install` to install all packages
-- Run `yarn run lint:fix`
-to validate your code content and style
+- Run `yarn build:dev` to build the development environment
+- Run `yarn setup` runs the above two commands 
+- Run `yarn run lint:fix` to validate your code content and style
 - Run `yarn run dev` to start the development server
-- Run `yarn run deploy` to run the production server.
+- Run `yarn run deploy` to run the production server
 - Run `yarn run dev:stop` to stop the development server
 - Run `yarn run deploy:stop` to stop the production server
+- Run `yarn sync` commits you current branch, merges the latest main into it, and pushes the result
+- Run `yarn fix` to clean the Yarn cache, Turbo cache, and rebuild the development environment which can fix some issues
 
 If your commits are failing, run `yarn run lint` and examine the output to
 find the error(s). Address them, and your commit will proceed
@@ -387,3 +390,9 @@ slowing things down temporarily.
 ### Packages
 Packages contains packages that the front/back end rely on, including code
 they share. Changes to `Packages` will automatically be reflected in both the front and back ends
+
+### scripts
+This folder contains utility scripts used by the Yarn scripts:
+- `commandRunner.mjs` exports a function to execute an array of shell commands in sequence.
+- `fix.mjs` cleans the Yarn cache, removes `node_modules`, reinstalls dependencies, and rebuilds the development environment.
+- `sync.mjs` automatically syncs the current branch with the latest `main` branch by committing, pushing, fetching `main`, merging it in, and pushing the result.
