@@ -60,12 +60,14 @@ class Graph {
    * @param start A unique identifier representing the node to start from
    * @param end A unique identifier representing the node to end at.
    */
-  BFS(start: string, end: string): void {
-    // TODO: Add checks to make sure start and end are nodes within the graph
+  BFS(start: string, end: string): string[] {
+    const startNode = this.nodeMap.get(start);
+    const endNode = this.nodeMap.get(end);
 
-    // use '!' to assert that nodeMap.get will not return undefined
-    const startNode = this.nodeMap.get(start)!;
-    const endNode = this.nodeMap.get(end)!;
+    // Check if the nodes are within the graph
+    if (startNode === undefined || endNode === undefined) {
+      return [];
+    }
 
     const arrivedFrom = new Map<GraphNode, GraphNode>();
     // Use queue.push and queue.shift to perform queue operations (push and pop)
@@ -98,10 +100,10 @@ class Graph {
     let currNode = endNode;
     path.push(currNode);
 
-    //Error handling in case a node cannot be reached
+    // Error handling in case a node cannot be reached
     if (!arrivedFrom.has(endNode)) {
-      console.error(`Endnode: ${endNode.id} cannot be reached`);
-      return;
+      console.error(`endNode: ${endNode.id} cannot be reached`);
+      return [];
     }
 
     while (currNode != startNode) {
@@ -111,7 +113,7 @@ class Graph {
 
     // path contains the order of nodes from end to start
     path.reverse();
-    console.log(path);
+    return path.map((n) => n.id);
   }
 }
 export default Graph;
