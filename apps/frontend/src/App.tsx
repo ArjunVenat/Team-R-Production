@@ -1,6 +1,7 @@
 import React from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
-import ExampleRoute from "./routes/ExampleRoute.tsx";
+// import ExampleRoute from "./routes/ExampleRoute.tsx";
+import MainPage from "./components/MainPage.tsx";
 function App() {
   const router = createBrowserRouter([
     {
@@ -10,7 +11,7 @@ function App() {
       children: [
         {
           path: "",
-          element: <ExampleRoute />,
+          element: <MainPage />,
         },
       ],
     },
@@ -20,7 +21,6 @@ function App() {
   function Root() {
     return (
       <div className="w-full flex flex-col px-20 gap-5">
-        <h1>Welcome to your starter code.</h1>
         <Outlet />
       </div>
     );

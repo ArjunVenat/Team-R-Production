@@ -1,6 +1,6 @@
 
 import { useState } from 'react';
-import "./FullServiceRequest.css"
+import "./FullServiceRequest.css";
 import {Button, Stack, TextField, Typography, Grid, Modal, Card} from "@mui/material";
 
 const modalStyle = {
@@ -35,7 +35,7 @@ export interface ServiceRequest {
 //Define functions for "My Request" log
 function ServiceRequestLog ({availableServices}: ListOfServices) {
     /*DefaultServiceRequest is the default state of the Service Request object, where everything is empty*/
-    const defaultServiceRequest: ServiceRequest = {name: '', room: NaN, deliveryDate: '', type: availableServices[0], details: ''}
+    const defaultServiceRequest: ServiceRequest = {name: '', room: NaN, deliveryDate: '', type: availableServices[0], details: ''};
 
     /*useState for a single service request, where any changes update the specific key-value pair*/
     const [singleServiceRequest, setSingleServiceRequest] = useState<ServiceRequest>(defaultServiceRequest);
@@ -58,7 +58,7 @@ function ServiceRequestLog ({availableServices}: ListOfServices) {
 
     //ToDo: Can delete once combine with actual submitRequest
     const clearForm = () => {
-        setSingleServiceRequest(defaultServiceRequest)
+        setSingleServiceRequest(defaultServiceRequest);
     };
 
     //cancels specific request in My Request column
@@ -88,7 +88,7 @@ function ServiceRequestLog ({availableServices}: ListOfServices) {
                                     <Button variant="contained" onClick={() => setSingleServiceRequest({...singleServiceRequest, type:serviceOption})}>
                                         {serviceOption}
                                     </Button>
-                                )
+                                );
                             })}
                             {/*Display the selected service option*/}
                             <Typography>Selected Service: {singleServiceRequest.type}</Typography>

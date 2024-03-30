@@ -41,7 +41,7 @@ const modalStyle = {
 
 
 function MainPage() {
-    const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"] //options for service requests
+    const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
 
     //speed dial state
     const [speedDialOpen, setSpeedDialOpen] = useState(true);
@@ -49,13 +49,13 @@ function MainPage() {
     //sign in modal state handlers
     const [openSignInModal, setOpenSignInModal] = useState(false);
     const handleCloseSignInModal = () => setOpenSignInModal(false);
-    const handleOpenSignInModal = () => setOpenSignInModal(true)
+    const handleOpenSignInModal = () => setOpenSignInModal(true);
 
 
     //service request modal state handlers
     const [openServiceRequestModal, setOpenServiceRequestModal] = useState(false);
     const handleCloseServiceRequestModal = () => setOpenServiceRequestModal(false);
-    const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true)
+    const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
 
     //placeholder for handle directions
     const handleDirections = () => <p>placeholder</p>;
@@ -76,7 +76,7 @@ function MainPage() {
                 break;
             }
         }
-    }
+    };
 
     return (
         <div id="MainPage">
@@ -146,7 +146,7 @@ function MainPage() {
 
 
         </div>
-    )
+    );
 }
 
 export default MainPage;
