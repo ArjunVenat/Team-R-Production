@@ -38,19 +38,24 @@ class Graph {
   }
 
   /**
-   * Creates an edge connecting the two nodes. Assumes the given ids
-   * are already nodes within the graph.
+   * Creates an edge connecting the two nodes. Adds the two nodes to the graph
+   * if they do not already exist
    * @param id1 A unique identifier for the first node to connect.
    * @param id2 A unique identifier for the second node to connect.
    */
   addEdge(id1: string, id2: string): void {
-    if (!this.nodeMap.has(id1) || !this.nodeMap.has(id2)) {
-      console.error(`Error: ${id1} or ${id2} is not a valid node`);
-      return;
+    // Add nodes to the graph if they do not exist yet
+    if (!this.nodeMap.has(id1)) {
+      this.addNode(id1);
     }
+    if (!this.nodeMap.has(id2)) {
+      this.addNode(id2);
+    }
+
     // use '!' to assert that nodeMap.get will not return undefined
     const node1 = this.nodeMap.get(id1)!;
     const node2 = this.nodeMap.get(id2)!;
+
     node1.addNeighbor(node2);
     node2.addNeighbor(node1);
   }
