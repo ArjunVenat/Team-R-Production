@@ -81,14 +81,14 @@ function MainPage() {
 
     return (
         <div id="MainPage" className="flex flex-row">
-            <SideBar/>
+            <SideBar />
 
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
                 <div id={"map"} className="max-w-full">
                     <TransformWrapper>
                         <TransformComponent>
-                            <img src={firstFloorMap} alt={"Fist floor map"} className="w-auto max-h-screen"/>
+                            <img src={firstFloorMap} alt={"Fist floor map"} className="w-screen max-h-screen"/>
                         </TransformComponent>
                     </TransformWrapper>
                 </div>
