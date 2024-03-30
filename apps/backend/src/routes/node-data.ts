@@ -16,7 +16,9 @@ AllNodesDatarouter.get("/", async (req, res) => {
 
     // If there are no nodes, return an empty array
     if (allNodes.length === 0) {
-      return res.json({ allNodes: [] });
+      console.error("No node data found in database!");
+      res.sendStatus(204); // send 204 error
+      return;
     }
 
     // Map the data to the desired format
@@ -31,10 +33,10 @@ AllNodesDatarouter.get("/", async (req, res) => {
     }));
 
     // Return the formatted nodes as a 2D array
-    return res.json({ allNodes: formattedNodes });
+    res.sendStatus(200).json({ allNodes: formattedNodes });
   } catch (error) {
-    console.error("Error retrieving nodes:", error);
-    return res.status(500).json({ error: "Internal Server Error" });
+    console.error("Unable to get all nodes data from database", error);
+    return res.status(400);
   }
 });
 
