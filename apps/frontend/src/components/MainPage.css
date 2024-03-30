@@ -1,0 +1,15 @@
+main {
+    display:flex;
+    align-content: center;
+    justify-content: center;
+    background-color: #d6d8d5;
+    line-height: 0;
+}
+#map {
+    max-width: 100%;
+}
+
+#map img {
+    width:auto;
+    max-height: 100vh;
+}
