@@ -16,7 +16,7 @@ interface Menu {
     icon: ReactNode;
 }
 
-export default function Sidebar() {
+export default function Sidebar({ handleOpenServiceRequestModal }) {
     const home: Menu = {title: "Home", icon: <RiHome3Fill/>};
     const serviceRequest: Menu = {title: "Service Request", icon: <BsBellFill />};
     const sendFlowers: Menu = {title: "Send Flowers", icon: <LocalFloristIcon />};
@@ -30,6 +30,9 @@ export default function Sidebar() {
 
     const handleMenuClick = (title: string) => {
         setActiveMenu(title);
+        if (title === "Service Request") {
+            handleOpenServiceRequestModal();
+        }
     };
 
     return (

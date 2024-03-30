@@ -81,7 +81,7 @@ function MainPage() {
 
     return (
         <div id="MainPage" className="flex flex-row">
-            <SideBar />
+            <SideBar handleOpenServiceRequestModal={handleOpenServiceRequestModal} />
 
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
