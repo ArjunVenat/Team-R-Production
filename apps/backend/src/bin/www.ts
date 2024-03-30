@@ -2,6 +2,7 @@ import app from "../app.ts";
 import http from "http";
 import { AddressInfo } from "net";
 import { createHttpTerminator } from "http-terminator";
+import { processFile } from "../fileUtils.ts";
 
 // Attempt a database connection
 console.info("Connecting to database...");
@@ -66,6 +67,10 @@ export default server;
     process.exit(0); // Exit normally
   });
 });
+
+//populate the database with initial Edges data from L1Edges.csv
+const inFilePathEdges = "L1Edges.csv"; //edges content csv file
+processFile(inFilePathEdges).then();
 
 // Listen on the provided port, on all interfaces
 server.listen(port);
