@@ -1,6 +1,8 @@
 
 import { useState } from 'react';
 import "./FullServiceRequest.css";
+import {ServiceRequest} from "./ServiceRequest.tsx";
+import {submitRequestDB} from "./SubmitRequest.tsx";
 import {Button, Stack, TextField, Typography, Grid, Modal, Card} from "@mui/material";
 
 const modalStyle = {
@@ -24,14 +26,6 @@ export interface ListOfServices {
     availableServices: string[];
 }
 
-export interface ServiceRequest {
-    name: string;
-    room: number;
-    deliveryDate: string;
-    type: string;
-    details: string;
-}
-
 //Define functions for "My Request" log
 function ServiceRequestLog ({availableServices}: ListOfServices) {
     /*DefaultServiceRequest is the default state of the Service Request object, where everything is empty*/
@@ -52,6 +46,7 @@ function ServiceRequestLog ({availableServices}: ListOfServices) {
     const submitRequest = () => {
         if (singleServiceRequest.name && !isNaN(singleServiceRequest.room) && singleServiceRequest.deliveryDate) {
             setRequests([...requests, singleServiceRequest]);
+            submitRequestDB(singleServiceRequest);
             clearForm();
         }
     };
