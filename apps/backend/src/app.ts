@@ -3,6 +3,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
+import AllNodesDatarouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import mapRouter from "./routes/map.ts";
 
@@ -29,6 +30,7 @@ app.use("/api/map", mapRouter);
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();
 });
+app.use("/api/admin/allnodes", AllNodesDatarouter); //GET request for all Nodes Data
 
 /**
  * Catch all 404 errors, and forward them to the error handler
