@@ -18,3 +18,14 @@ model HighScore {
   time  DateTime
   score Int
 }
+
+// schema.prisma
+// making Edges table
+// 2 columns:
+// StartNodeID which is a VARCHAR (mixed datatype)
+// endNodeID which is a VARCHAR as well
+model Edges {
+  EdgeID      Int    @id
+  StartNodeID String // StartNodeID column in Edges table
+  EndNodeID   String // EndNodeID column in Edges table
+}
