@@ -1,4 +1,4 @@
 export interface Directions {
-    start: string;
-    end: string;
+  start: string;
+  end: string;
 }
