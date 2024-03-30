@@ -83,18 +83,24 @@ function MainPage() {
             <SpeedDial //this is a speed dial. It's an expandable floating action button menu.
                 ariaLabel="Navigation Menu"
                 sx={{position: 'absolute', top: 16, left: 16}} //styling property for mui components
-                icon={<SpeedDialIcon />}
+                icon={<SpeedDialIcon/>}
                 direction={'down'}
-                FabProps={{sx:[{backgroundColor:"#34587A", "&:hover":{backgroundColor:"#d6d8d5", color:"#34587A"}}]}} //need to export to a theme eventually
+                FabProps={{
+                    sx: [{
+                        backgroundColor: "#34587A",
+                        "&:hover": {backgroundColor: "#d6d8d5", color: "#34587A"}
+                    }]
+                }} //need to export to a theme eventually
                 onClick={() => setSpeedDialOpen(!speedDialOpen)} //toggle open speed dial only on click. Necessary for not opening on hover
                 open={!speedDialOpen} //open state
             >
                 {actions.map((action) => ( //create the speed dial options from the list declared at the top of the file
                     <SpeedDialAction
                         key={action.name}
-                        icon={<SpeedDialIcon //this mess is necessary to make the menu options into buttons with text instead of just icons
+                        icon={
+                            <SpeedDialIcon //this mess is necessary to make the menu options into buttons with text instead of just icons
                                 icon={
-                                    <Box sx={{ display: "flex"}}>
+                                    <Box sx={{display: "flex"}}>
                                         {action.icon}
                                         <Typography sx={{marginLeft: '0.5em'}}>{action.name}</Typography>
                                     </Box>
@@ -103,18 +109,19 @@ function MainPage() {
                         FabProps={{ //this sets the properties for the buttons in the menu
                             variant: 'extended',
                             size: 'medium',
-                            sx:[{backgroundColor:"#34587A", color:"white", "&:hover":{color:"#34587A"}}]}}
+                            sx: [{backgroundColor: "#34587A", color: "white", "&:hover": {color: "#34587A"}}]
+                        }}
                         onClick={() => handleMenuButton(action.name)}
                     />
-                    ))}
+                ))}
             </SpeedDial>
 
             {/*This tag only holds the map itself and adds zooming and panning*/}
-            <main>
-                <div id={"map"}>
+            <main className="flex content-center justify-center leading-none">
+                <div id={"map"} className="max-w-full">
                     <TransformWrapper>
                         <TransformComponent>
-                            <img src={firstFloorMap} alt={"Fist floor map"}/>
+                            <img src={firstFloorMap} alt={"Fist floor map"} className="w-auto max-h-screen"/>
                         </TransformComponent>
                     </TransformWrapper>
                 </div>
@@ -127,7 +134,7 @@ function MainPage() {
                 <Card
                     sx={modalStyle}
                 >
-                    <SignInPage />
+                    <SignInPage/>
                 </Card>
             </Modal>
 
