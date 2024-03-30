@@ -1,6 +1,7 @@
 import fs from "fs";
 import { PrismaClient } from "database";
 import { createEdge } from "./edge"; // Importing edge database functions
+import { createNode } from "./node";
 
 //Prisma client constant
 const prisma = new PrismaClient();
@@ -70,19 +71,13 @@ export const writeCSVFile = async (
     // const edges = await prisma.edges.findMany(); // Retrieve all edges from the database
     // const nodes = await prisma.nodes.findMany(); // Retrieve all nodes from the database
 
-    // const [edges, nodes] = await Promise.all([
-    //     await prisma.edges.findMany(),
-    //     //await prisma.nodes.findMany()
-    // ])
-
-    const [edges] = await Promise.all([
+    const [edges, nodes] = await Promise.all([
       await prisma.edges.findMany(),
-      //await prisma.nodes.findMany()
+      await prisma.nodes.findMany(),
     ]);
 
     //Check for no data
-    if (edges.length === 0) {
-      //&& nodes.length == 0) {
+    if (edges.length === 0 && nodes.length == 0) {
       console.log("No data found in the database.");
       return;
     }
@@ -94,12 +89,16 @@ export const writeCSVFile = async (
         .map((edge) => `${edge.StartNodeID},${edge.EndNodeID}`)
         .join("\n");
       fs.writeFileSync(destFilePath, csvContent); // Write CSV content to file
-    }
-    // else if(sourceFilePath === 'L1Nodes.csv') { //If we are reading nodes data...
-    //     const csvContent = nodes.map(node => `${node.NodeID},${node.Xcoord},${node.Ycoord},${node.Floor},${node.Building},${node.NodeType},${node.LongName},${node.ShortName}`).join('\n');
-    //     fs.writeFileSync(destFilePath, csvContent); // Write CSV content to file
-    // }
-    else {
+    } else if (sourceFilePath === "L1Nodes.csv") {
+      //If we are reading nodes data...
+      const csvContent = nodes
+        .map(
+          (node) =>
+            `${node.NodeID},${node.Xcoord},${node.Ycoord},${node.Floor},${node.Building},${node.NodeType},${node.LongName},${node.ShortName}`,
+        )
+        .join("\n");
+      fs.writeFileSync(destFilePath, csvContent); // Write CSV content to file
+    } else {
       //sourceFilePath is neither of the above...
       console.log(
         `Error writing to ${destFilePath}. sourceFilePath must be L1Edges.csv or L1Nodes.csv`,
@@ -130,12 +129,28 @@ export const processFile = async (processFilePath: string) => {
           const [startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
           await createEdge(edgeIdCounter, startNodeID, endNodeID);
           edgeIdCounter = edgeIdCounter + 1;
-        }
-        // else if(processFilePath === 'L1Nodes.csv') {
-        //     const [nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName] = row; //Parse each row of the .csv file into startNodeID and endNodeID
-        //     await createNode(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName);
-        // }
-        else {
+        } else if (processFilePath === "L1Nodes.csv") {
+          const [
+            nodeID,
+            xcoord,
+            ycoord,
+            floor,
+            building,
+            nodeType,
+            longName,
+            shortName,
+          ] = row; //Parse each row of the .csv file into startNodeID and endNodeID
+          await createNode(
+            nodeID,
+            xcoord,
+            ycoord,
+            floor,
+            building,
+            nodeType,
+            longName,
+            shortName,
+          );
+        } else {
           console.log(
             `Failed to insert data. CSV not supported. Must be L1Edges.csv`,
           ); //or L1Nodes.csv`);

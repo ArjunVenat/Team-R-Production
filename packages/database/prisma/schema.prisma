@@ -29,3 +29,28 @@ model Edges {
   StartNodeID String // StartNodeID column in Edges table
   EndNodeID   String // EndNodeID column in Edges table
 }
+
+// making Nodes table
+// 8 Columns:
+// nodeID which is a string
+// xcoord which is a 4digit CHAR
+// ycoord which is a 3-4 digit CHAR
+// floor 2 digit CHAR
+// building is a string
+// nodetype is a string
+// longname is a string
+// shortName is a string
+
+model Nodes {
+  NodeID    String @id
+  Xcoord    String
+  Ycoord    String
+  Floor     String
+  Building  String
+  NodeType  String
+  LongName  String
+  ShortName String
+}
+
+// npx prisma generate for schema. can see using database
+// npx prisma migrate dev --name init to run the code to add to a database. will overwrite anything in public.
