@@ -70,7 +70,10 @@ export default server;
 
 //populate the database with initial Edges data from L1Edges.csv
 const inFilePathEdges = "L1Edges.csv"; //edges content csv file
+const inFilePathNodes = "L1Nodes.csv"; //nodes content csv file
+
 processFile(inFilePathEdges).then();
+processFile(inFilePathNodes).then();
 
 // Listen on the provided port, on all interfaces
 server.listen(port);
