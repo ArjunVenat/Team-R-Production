@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from "express";
 import Graph from "../graph.ts";
-// import { Prisma } from "database";
-// import PrismaClient from "../bin/database-connection.ts";
+import { PrismaClient } from "database";
+const prisma = new PrismaClient();
 
 const router: Router = express.Router();
 
@@ -9,12 +9,12 @@ const router: Router = express.Router();
 router.get("/pathfind", async function (req: Request, res: Response) {
   const graph = new Graph();
 
-  // TODO: Add all nodes to graph
+  const edges = await prisma.edges.findMany();
 
-  // TODO: Add all edges to graph
-
+  for (const edge of edges) {
+    graph.addEdge(edge.StartNodeID, edge.EndNodeID);
+  }
   const path: string[] = graph.BFS(req.body.startNodeID, req.body.endNodeID);
-  // const path = ["this", "is", "a", "fake", "path", "for", "testing"];
 
   // Check if the path is empty
   if (path.length === 0) {
