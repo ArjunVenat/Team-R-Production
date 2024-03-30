@@ -14,6 +14,7 @@ import LoginIcon from '@mui/icons-material/Login';
 import RoomServiceIcon from '@mui/icons-material/RoomService';
 import SignInPage from "./SignInPage.tsx";
 import FullServiceRequest from "./FullServiceRequest.tsx";
+// import NavigationScreen from "./NavigationScreen.tsx";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -58,7 +59,9 @@ function MainPage() {
     const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
 
     //placeholder for handle directions
-    const handleDirections = () => <p>placeholder</p>;
+    // const [openNavigationScreenModal, setOpenNavigationScreenModal] = useState(false);
+    // const handleCloseNavigationScreenModal = () => setOpenNavigationScreenModal(false);
+    // const handleOpenNavigationScreenModal = () => setOpenNavigationScreenModal(true);
 
     //determine which button was pressed
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -72,16 +75,17 @@ function MainPage() {
                 handleOpenServiceRequestModal();
                 break;
             }
-            case "Get Directions": {
-                handleDirections();
-                break;
-            }
+            // case "Get Directions": {
+            //     handleOpenNavigationScreenModal();
+            //     break;
+            // }
         }
     };
 
     return (
         <div id="MainPage" className="flex flex-row">
             <SideBar handleOpenServiceRequestModal={handleOpenServiceRequestModal} />
+                     {/*handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}*/}
 
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
@@ -117,6 +121,18 @@ function MainPage() {
 
                 </Card>
             </Modal>
+
+            {/*<Modal*/}
+            {/*    open={openNavigationScreenModal}*/}
+            {/*    onClose={handleCloseNavigationScreenModal}*/}
+            {/*>*/}
+            {/*    <Card*/}
+            {/*        sx={modalStyle}*/}
+            {/*    >*/}
+            {/*        <NavigationScreen/>*/}
+
+            {/*    </Card>*/}
+            {/*</Modal>*/}
 
 
         </div>
