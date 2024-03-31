@@ -8,6 +8,7 @@ export default function EdgeTable() {
             const res = await axios.get("/api/edges/read");
             setEdgeData(res.data);
         }
+
         fetch().then();
     }, []);
     const arrayEdge = edgeData.map((edge: Edge) =>
@@ -17,3 +18,4 @@ export default function EdgeTable() {
             <td>{edge.endNodeID}</td>
         </tr>
     );
+}
