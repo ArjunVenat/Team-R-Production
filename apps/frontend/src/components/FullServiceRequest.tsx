@@ -4,26 +4,30 @@ import { ServiceRequest } from "./ServiceRequest.tsx";
 import { submitRequestDB } from "./SubmitRequest.tsx";
 import {
   Button,
-  Stack,
-  TextField,
-  Typography,
-  Grid,
+  // Stack,
+  // TextField,
+  // Typography,
+  // Grid,
   Modal,
   Card,
 } from "@mui/material";
+import Flower1 from "./image/Flower1.png";
+import Flower2 from "./image/Flower2.png";
+import Flower3 from "./image/Flower3.png";
+import Flower4 from "./image/Flower4.png";
 
-const modalStyle = {
-  position: "absolute",
-  top: "50%",
-  left: "50%",
-  transform: "translate(-50%, -50%)",
-  bgcolor: "background.paper",
-  boxShadow: 24,
-  borderRadius: 10,
-  padding: "50px",
-  width: "fit-content",
-  height: "fit-content",
-};
+// const modalStyle = {
+//   position: "absolute",
+//   top: "50%",
+//   left: "50%",
+//   transform: "translate(-50%, -50%)",
+//   bgcolor: "background.paper",
+//   boxShadow: 24,
+//   borderRadius: 10,
+//   padding: "50px",
+//   width: "fit-content",
+//   height: "fit-content",
+// };
 
 //Define interface for each service request
 //ToDo: add type of service request to update with name, room, date
@@ -49,11 +53,70 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
   /*requests handles the list of service requests, which is used for the list on the side of the page*/
   const [requests, setRequests] = useState<ServiceRequest[]>([]);
-
+    let contentComponent: JSX.Element | null = null;
   //Function to test if my request updates when submit an order
   //ToDo: Can delete once combine with actual submitRequest
   //ToDo: check for item having been selected
+    const switchService = (service: string) => {
+        switch (service) {
+            case 'Flowers':
+                contentComponent = (
+                    <>
 
+                        <div className="mt-[-25rem] bg-gray-100 rounded-lg" >
+                            <h2 className="mb-4 p-3 font-bold text-lg">Switch Content Section</h2>
+                            <div>
+                                <div className=" bg-gray-100  object-right gap-2 columns-3 rounded-lg " style={{paddingLeft: '30%'}}>
+
+                                    <Button
+                                        className=" transition duration-200 ease-in-out hover:scale-20 focus:ring-transparent">
+                                        <img className=" " src={Flower1} alt="Flowers"/>
+                                    </Button>
+                                    <Button
+                                        className="   hover:scale-20 focus:ring-transparent">
+                                        <img className="" src={Flower2} alt="Flowers"/>
+                                    </Button>
+                                    <Button
+                                        className=" hover:scale-20 ">
+                                        <img className="" src={Flower3} alt="Flowers"/>
+                                    </Button>
+                                    <Button
+                                        className="transition duration-300 ease-in-out  hover:scale-20">
+                                        <img className="" src={Flower4} alt="Flowers "/>
+                                    </Button>
+
+                                </div>
+                            </div>
+                        </div>
+                    </>
+                );
+                break;
+            case 'Food':
+                contentComponent = (
+                    <div className="mt-[-25rem] bg-gray-100 rounded-lg" style={{height: '40vh'}}>
+                        <div className="mt-[-25rem] bg-gray-100 rounded-lg" style={{height: '40vh'}}>
+                            <h2 className="mb-4 p-3 font-bold text-lg">Switch Content Section</h2>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+
+                );
+                break;
+            default:
+                contentComponent = (
+
+                    <div className="mt-[-25rem] bg-gray-100 rounded-lg" style={{height: '40vh'}}>
+                        <div className="mt-[-25rem] bg-gray-100 rounded-lg" style={{height: '40vh'}}>
+                            <h2 className="mb-4 p-3 font-bold text-lg">Switch Content Section</h2>
+                            <div>
+                            </div>
+                        </div>
+                    </div>
+                );
+        }
+        return contentComponent;
+    };
   const submitRequest = () => {
       console.log("submitting");
       if (
@@ -81,202 +144,115 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   //ToDo: Comment here
   const [openSuccessMessage, setOpenSuccess] = useState(false);
 
-  return (
-    <>
-      {/* Topmost div which is a container Grid*/}
-      {/* Overriding default material-ui styling by specifying columnSpacing, marginX, and width*/}
-      <Grid
-        container
-        className="container"
-        columnSpacing={4}
-        marginX={0}
-        width={"100%"}
-      >
-        {/*Grid container which holds the buttons and takes up 1/4 of the width */}
-        <Grid
-          container
-          xs={3}
-          className="availableServices"
-          direction={"column"}
-          alignItems="center"
-          justifyContent={"center"}
-        >
-          <h3>Select Service Type</h3>
+    return (
+        <>
+            <div className="grid grid-cols-2 gap-4 items-start p-4 bg-gray-300 rounded-lg" style={{ paddingTop: '8%' }}>
 
-          {/*map the possible options to buttons*/}
-          <Stack spacing={4}>
-            {availableServices.map((serviceOption) => {
-              // For every serviceOption display a button where the onclick function modifies the singleServiceRequest with the type set to the serviceOption
-              return (
-                <Button
-                  variant="contained"
-                  onClick={() =>
-                    setSingleServiceRequest({
-                      ...singleServiceRequest,
-                      type: serviceOption,
-                    })
-                  }
-                >
-                  {serviceOption}
-                </Button>
-              );
-            })}
-            {/*Display the selected service option*/}
-            <Typography>
-              Selected Service: {singleServiceRequest.type}
-            </Typography>
-          </Stack>
-        </Grid>
-
-        {/*Middle column, which takes up 5/12th of the width*/}
-
-        <Grid item xs={5}>
-          <Stack direction={"column"} spacing={4}>
-            <div className="service-form">
-              <h2>Service Request Form</h2>
-              {/* The details of the request, which will later be replaced with something specific based on what button is clicked */}
-              {/* On change will load in all key value pairs in singleServiceRequest but replace one specific key value pair */}
-              <div className="form-item">
-                <label htmlFor="details">Details:</label>
-                <TextField
-                  variant={"filled"}
-                  multiline
-                  id="details"
-                  value={singleServiceRequest.details}
-                  onChange={(e) =>
-                    setSingleServiceRequest({
-                      ...singleServiceRequest,
-                      details: e.target.value,
-                    })
-                  }
-                  placeholder="Please Enter Request Details Here"
-                />
-              </div>
-
-              {/* Stack for the form items */}
-              <Stack spacing={4}>
-                {/* TextField to enter the Room number, which disallows non-numeric characters */}
-                <div className="form-item">
-                  <label htmlFor="room">Room:</label>
-                  <TextField
-                    variant={"filled"}
-                    type="number"
-                    id="room"
-                    value={singleServiceRequest.room}
-                    onChange={(e) =>
-                      setSingleServiceRequest({
-                        ...singleServiceRequest,
-                        room: parseInt(e.target.value) || NaN,
-                      })
-                    }
-                    placeholder="Room Number"
-                  />
+                <div className="col-span-1" style={{ paddingLeft: '20%' }}>
+                    <div className="bg-gray-100 rounded-lg p-5" style={{ maxWidth: '60%' }}>
+                        <h2 className="mb-4 font-bold text-lg">Select Service Type</h2>
+                        <div className="flex flex-col space-y-4">
+                            {availableServices.map((serviceOption: string) => (
+                                <Button key={serviceOption} variant="contained" onClick={() => setSingleServiceRequest({
+                                    ...singleServiceRequest,
+                                    type: serviceOption
+                                })}>
+                                    {serviceOption}
+                                </Button>
+                            ))}
+                            <p className="text-sm">Selected Service: {singleServiceRequest.type}</p>
+                        </div>
+                    </div>
                 </div>
 
-                {/* TextField to enter the name */}
-                <div className="form-item">
-                  <label htmlFor="name">Name:</label>
-                  <TextField
-                    variant={"filled"}
-                    type="text"
-                    id="name"
-                    value={singleServiceRequest.name}
-                    onChange={(e) =>
-                      setSingleServiceRequest({
-                        ...singleServiceRequest,
-                        name: e.target.value,
-                      })
-                    }
-                    placeholder="Name"
-                  />
+                <div className="col-span-1" style={{paddingRight: '20%'}}>
+                    {contentComponent}
                 </div>
 
-                {/* TextField to enter the the date for when to deliver the service*/}
-                <div className="form-item">
-                  <label htmlFor="deliveryDate">Delivery Date:</label>
-                  <TextField
-                    variant={"filled"}
-                    type="date"
-                    id="deliveryDate"
-                    value={singleServiceRequest.deliveryDate}
-                    onChange={(e) =>
-                      setSingleServiceRequest({
-                        ...singleServiceRequest,
-                        deliveryDate: e.target.value,
-                      })
-                    }
-                    placeholder="Delivery Date"
-                  />
+                <div className="col-span-1" style={{ height: '80%', paddingTop: '10%', paddingLeft: '20%' }}>
+                    <div className="bg-gray-100 rounded-lg p-5 overflow-auto" style={{ maxHeight: '80%', maxWidth: '60%' }}>
+                        <h2 className="mb-4 font-bold text-lg">My Requests</h2>
+                        <hr className="mb-4 border-solid border border-black" />
+                        {requests.map((request, index) => (
+                            <div key={index} className="request-box mb-2">
+                                <p>Service Type: {request.type}</p>
+                                <p>Name: {request.name}</p>
+                                <p>Delivery Date: {request.deliveryDate}</p>
+                                <p>Room: {request.room}</p>
+                                <p>Details: {request.details}</p>
+                                <Button variant="contained" onClick={() => cancelRequest(index)}>Cancel</Button>
+                                {index < requests.length - 1 && <hr className="mb-4" style={{ border: '1px solid black' }} />}
+                            </div>
+                        ))}
+                        <hr className="mb-4 border-solid border border-black" />
+                        <Button variant="contained" onClick={() => { setOpenSuccess(true); }}>Done</Button>
+                    </div>
                 </div>
+                <div className="content" id="content">
+                    {switchService(singleServiceRequest.type)}
 
-                {/* Submit button for the form */}
-                <div className="form-item">
-                  <Button
-                    variant="contained"
-                    color="success"
-                    onClick={submitRequest}
-                  >
-                    Submit Request
-                  </Button>
+                    <div className="col-span-1 mt-10" style={{ paddingRight: '10%' }}>
+                        <div className="bg-gray-100 rounded-lg p-4" style={{ height: '30vh' }}>
+                            <h2 className="mb-4 font-bold text-lg">Service Request Form</h2>
+                            <div className="space-y-4">
+                                <div className="form-item flex flex-col lg:flex-row lg:space-x-4">
+                                    <div className="flex-1">
+                                        <label htmlFor="room">Room:</label>
+                                        <input className="border rounded-md px-2 py-1 w-full" type="number" id="room"
+                                               value={singleServiceRequest.room} onChange={e => setSingleServiceRequest({
+                                            ...singleServiceRequest,
+                                            room: parseInt(e.target.value) || NaN
+                                        })} placeholder="Room Number" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <label htmlFor="name">Name:</label>
+                                        <input className="border rounded-md px-2 py-1 w-full" type="text" id="name"
+                                               value={singleServiceRequest.name} onChange={e => setSingleServiceRequest({
+                                            ...singleServiceRequest,
+                                            name: e.target.value
+                                        })} placeholder="Name" />
+                                    </div>
+                                    <div className="flex-1">
+                                        <label htmlFor="deliveryDate">Delivery Date:</label>
+                                        <input className="border rounded-md px-2 py-1 w-full" type="date" id="deliveryDate"
+                                               value={singleServiceRequest.deliveryDate}
+                                               onChange={e => setSingleServiceRequest({
+                                                   ...singleServiceRequest,
+                                                   deliveryDate: e.target.value
+                                               })} placeholder="Delivery Date" />
+                                    </div>
+                                </div>
+                                <div className="form-item">
+                                    <label htmlFor="details">Details:</label>
+                                    <textarea className="border rounded-md px-2 py-1 w-full" id="details"
+                                              value={singleServiceRequest.details} onChange={e => setSingleServiceRequest({
+                                        ...singleServiceRequest,
+                                        details: e.target.value
+                                    })} placeholder="Please Enter Request Details Here" />
+                                </div>
+                                <div className="form-item">
+                                    <Button variant="contained" color="success" onClick={submitRequest}>Submit
+                                        Request</Button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-              </Stack>
             </div>
-          </Stack>
-        </Grid>
 
-        {/*My Request Format*/}
-        <Grid
-          className={"service-request-log"}
-          item
-          xs={4}
-          sx={{ margin: "auto" }}
-        >
-          {/* List of submitted service requests */}
-          <div className="my-requests">
-            <h3>My Requests</h3>
-            <hr />
-            {requests.map((request, index) => (
-              <div className="request-box" key={index}>
-                {/* Service Request info */}
-                {/*ToDo: make service request updatable*/}
-                <p>Service Type: {request.type}</p>
 
-                <p>Name: {request.name}</p>
-                <p>Delivery Date: {request.deliveryDate}</p>
-                <p>Room: {request.room}</p>
-                <p>Details: {request.details}</p>
-
-                {/* Button to cancel individual requests */}
-                <Button
-                  variant="contained"
-                  onClick={() => cancelRequest(index)}
-                >
-                  Cancel
-                </Button>
-
-                {/* Divider line */}
-                {index < requests.length - 1 && <hr />}
-              </div>
-            ))}
-            <hr />
-            {/* Done button to clear all requests assuming they are submitted*/}
-            {/*ToDo: connect to a pop up that says "requests successfully submitted" and return to initial page (map?)*/}
-            <Button variant="contained" onClick={() => setOpenSuccess(true)}>
-              Done
-            </Button>
-
-            {/*ToDo: Comment here*/}
+            {/* Modal for success message */}
             <Modal open={openSuccessMessage}>
-              <Card sx={modalStyle}>
-                <h1 id="successMessage">Success! Request Submitted</h1>
-                <Button onClick={() => setOpenSuccess(false)}>Close</Button>
-              </Card>
+                <Card
+                    className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
+                    <h1 id="successMessage" className="text-center text-green-600 text-xl mb-4">Success! Request
+                        Submitted</h1>
+                    <Button onClick={() => setOpenSuccess(false)}>Close</Button>
+                </Card>
             </Modal>
-          </div>
-        </Grid>
-      </Grid>
-    </>
-  );
+        </>
+    );
 }
 
 export default ServiceRequestLog;
