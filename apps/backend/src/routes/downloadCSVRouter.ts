@@ -1,8 +1,8 @@
 import express, { Router, Request, Response } from "express";
-const downloadCSVRouter: Router = express.Router();
+const CSVRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 
-downloadCSVRouter.get(
+CSVRouter.get(
   "/:downloadType",
   async function (req: Request, res: Response) {
     try {
@@ -62,4 +62,4 @@ downloadCSVRouter.get(
 // });
 
 //Export the router.
-export default downloadCSVRouter;
+export default CSVRouter;
