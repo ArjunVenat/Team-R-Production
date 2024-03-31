@@ -11,6 +11,10 @@ import NearMeIcon from "@mui/icons-material/NearMe";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
 
+interface SidebarProps {
+  handleOpenServiceRequestModal: () => void;
+  handleOpenNavigationScreenModal: () => void;
+}
 interface Menu {
   title: string;
   icon: ReactNode;
@@ -19,7 +23,7 @@ interface Menu {
 export default function Sidebar({
   handleOpenServiceRequestModal,
   handleOpenNavigationScreenModal,
-}) {
+}: SidebarProps) {
   const home: Menu = { title: "Home", icon: <RiHome3Fill /> };
   const serviceRequest: Menu = {
     title: "Service Request",

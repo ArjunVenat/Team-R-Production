@@ -13,10 +13,11 @@ function App() {
         {
           path: "",
           element: <MainPage />,
-        }, {
+        },
+        {
           path: "testing",
-              element: <NavigationScreen />
-          }
+          element: <NavigationScreen />,
+        },
       ],
     },
   ]);
