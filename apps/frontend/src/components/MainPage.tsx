@@ -12,6 +12,7 @@ import FullServiceRequest from "./FullServiceRequest.tsx";
 import NavigationScreen from "./NavigationScreen.tsx";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
+import EdgeTable from "./Edges.tsx";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -37,7 +38,6 @@ const modalStyle = {
 
 function MainPage() {
     const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
-
     //speed dial state
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [speedDialOpen, setSpeedDialOpen] = useState(true);
@@ -89,7 +89,9 @@ function MainPage() {
                 handleOpenServiceRequestModal={handleOpenServiceRequestModal}
                 handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}
             />
+            <EdgeTable>
 
+            </EdgeTable>
 
 
             {/*This tag only holds the map itself and adds zooming and panning*/}
