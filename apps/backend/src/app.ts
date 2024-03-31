@@ -7,6 +7,7 @@ import allNodesRouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import mapRouter from "./routes/map.ts";
 import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
+import downloadCSVRouter from "./routes/downloadCSVRouter.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -33,6 +34,7 @@ app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/service/create", serviceRequestRouter);
 app.use("/api/admin/allnodes", allNodesRouter); //GET request for all Nodes Data
 app.use("/api/map", mapRouter);
+app.use("/api/admin/allcsv", downloadCSVRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
