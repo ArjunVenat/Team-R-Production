@@ -12,6 +12,7 @@ import FullServiceRequest from "./FullServiceRequest.tsx";
 import NavigationScreen from "./NavigationScreen.tsx";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
+import Canvas from "./Canvas.tsx";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -81,7 +82,6 @@ function MainPage() {
     };
 
 
-
     return (
         <div id="MainPage" className="flex flex-row bg-[#d6d8d5]">
             {/*<NavigationScreen/>*/}
@@ -91,20 +91,20 @@ function MainPage() {
             />
 
 
-
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
-                <div id={"map"} className="max-w-full">
-                    <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
-                        <TransformComponent>
-                            <img
-                                src={firstFloorMap}
-                                alt={"Fist floor map"}
-                                className=" max-h-screen"
-                            />
-                        </TransformComponent>
-                    </TransformWrapper>
-                </div>
+                    <div id={"map"} className="max-w-full">
+                        <TransformWrapper alignmentAnimation={{sizeX: 0, sizeY: 0}}>
+                            <TransformComponent>
+                                <img
+                                    src={firstFloorMap}
+                                    alt={"Fist floor map"}
+                                    className=" max-h-screen"
+                                />
+                                <Canvas/>
+                            </TransformComponent>
+                        </TransformWrapper>
+                    </div>
             </main>
 
             <Modal // These are the modals that I am planning on turning into separate components eventually
