@@ -49,7 +49,7 @@ model Nodes {
   Building       String
   NodeType       String
   LongName       String          @unique
-  ShortName      String          @unique
+  ShortName      String
   FlowerRequests FlowerRequest[]
 }
 
@@ -70,7 +70,7 @@ model FlowerRequest {
   RecipientName      String
   FlowerType         String
   UserID             Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
-  Destination        Nodes    @relation(fields: [DestinationShortID], references: [ShortName])
+  Destination        Nodes    @relation(fields: [DestinationShortID], references: [LongName])
   DestinationShortID String
 }
 

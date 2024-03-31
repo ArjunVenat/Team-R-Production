@@ -40,3 +40,7 @@ WELEV00JL1,2360,799,L1,45 Francis,ELEV,Elevator J Floor L1,Elevator JL1
 WELEV00KL1,2220,974,L1,45 Francis,ELEV,Elevator K Floor L1,Elevator KL1
 WELEV00LL1,1785,924,L1,Tower,ELEV,Elevator L Floor L1,Elevator LL1
 WELEV00ML1,1820,1284,L1,Tower,ELEV,Elevator M Floor L1,Elevator ML1
+GHALL003L1,1688,2167,L1,Shapiro,HALL,Hallway MapNode 3 Floor L1,Hall
+GHALL004L1,1666,2167,L1,Shapiro,HALL,Hallway MapNode 4 Floor L1,Hall
+GHALL005L1,1688,2131,L1,Shapiro,HALL,Hallway MapNode 5 Floor L1,Hall
+GHALL006L1,1665,2116,L1,Shapiro,HALL,Hallway MapNode 6 Floor L1,Hall
