@@ -1,15 +1,8 @@
-// import MapIcon from '@mui/icons-material/Map';
-// import LoginIcon from '@mui/icons-material/Login';
-// import RoomServiceIcon from '@mui/icons-material/RoomService';
-// import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import NearMeIcon from "@mui/icons-material/NearMe";
-// import {IconType} from "react-icons";
-// import {SvgIconComponent} from "@mui/icons-material";
-// import {Collapse} from "@mui/material";
 
 interface Menu {
   title: string;
