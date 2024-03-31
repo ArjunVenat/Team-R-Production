@@ -3,13 +3,13 @@ import axios from "axios";
 
 export async function sendDirections(request: Directions) {
   const data = JSON.stringify({
-    start: request.start,
-    end: request.end,
+      startNodeID: request.start,
+      endNodeID: request.end,
   });
   console.log(data);
   //sends a post request the /api/high-score
   //ToDo: change api
-  const res = await axios.post("/api/high-score", data, {
+  const res = await axios.post("/api/map/pathfind", data, {
     headers: {
       "Content-Type": "application/json",
     },
