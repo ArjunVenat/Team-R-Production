@@ -94,17 +94,17 @@ function MainPage() {
 
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
-              <div id={"map"} className="max-w-full">
-                <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
-                  <TransformComponent>
-                    <img
-                      src={firstFloorMap}
-                      alt={"Fist floor map"}
-                      className=" max-h-screen"
-                    />
-                  </TransformComponent>
-                </TransformWrapper>
-              </div>
+                <div id={"map"} className="max-w-full">
+                    <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
+                        <TransformComponent>
+                            <img
+                                src={firstFloorMap}
+                                alt={"Fist floor map"}
+                                className=" max-h-screen"
+                            />
+                        </TransformComponent>
+                    </TransformWrapper>
+                </div>
             </main>
 
             <Modal // These are the modals that I am planning on turning into separate components eventually
