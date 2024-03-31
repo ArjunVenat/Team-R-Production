@@ -42,7 +42,7 @@ model Edges {
 // shortName is a string
 
 model Nodes {
-  NodeID         String
+  NodeID         String          @id
   Xcoord         String
   Ycoord         String
   Floor          String
