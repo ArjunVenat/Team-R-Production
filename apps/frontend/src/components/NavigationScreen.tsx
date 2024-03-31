@@ -32,10 +32,14 @@ export default function NavigationScreen() {
 
   const Locations = nodes?.map((node) => node.LongName) || [];
 
-  function getDirections() {
-    setPoints({ start: start, end: end });
-    sendDirections(points).then();
-  }
+
+    function getDirections() {
+        const startnode: string = nodes?.filter((node) => node.LongName === start)[0]["NodeID"];
+        const endnode: string = nodes?.filter((node) => node.LongName === end)[0]["NodeID"];
+
+        setPoints({start: startnode, end: endnode});
+        sendDirections(points).then();
+    }
 
   return (
     <>
