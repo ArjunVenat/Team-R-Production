@@ -6,7 +6,6 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import "./MainPage.css";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import {
-   
   // Box,
   Card,
   Modal,
