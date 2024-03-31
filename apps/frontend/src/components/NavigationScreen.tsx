@@ -22,7 +22,9 @@ export default function NavigationScreen() {
     useEffect(() => {
         async function fetchData() {
             const res = await axios.get("/api/admin/allnodes");
-            setNodes(res.data);
+            const allNodes = res.data;
+            const nonHallwayNodes = allNodes.filter((node: { LongName: string | string[]; }) => !node.LongName.includes("Hallway"));
+            setNodes(nonHallwayNodes);
             console.log("successfully got data from get request");
         }
 
