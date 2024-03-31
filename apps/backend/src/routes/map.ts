@@ -6,22 +6,48 @@ const prisma = new PrismaClient();
 const router: Router = express.Router();
 
 // Whenever a get request is made, return the shortest path
-router.get("/pathfind", async function (req: Request, res: Response) {
-  const graph = new Graph();
+router.get(
+  "/pathfind",
+  async function (
+    req: Request<
+      object,
+      object,
+      object,
+      {
+        startNodeID?: string;
+        endNodeID?: string;
+      }
+    >,
+    res: Response,
+  ): Promise<void> {
+    const { startNodeID, endNodeID } = req.query;
 
-  const edges = await prisma.edges.findMany();
+    // Validate query params before continuing
+    if (startNodeID == undefined || endNodeID == undefined) {
+      res.status(400).send("startNodeID and/or endNodeID is required");
+      return;
+    }
 
-  for (const edge of edges) {
-    graph.addEdge(edge.StartNodeID, edge.EndNodeID);
-  }
-  const path: string[] = graph.BFS(req.body.startNodeID, req.body.endNodeID);
+    // Initialize the graph
+    const graph = new Graph();
 
-  // Check if the path is empty
-  if (path.length === 0) {
-    res.sendStatus(204); // and send 204, no data
-  } else {
-    res.send(JSON.stringify({ pathNodeIDs: path }));
-  }
-});
+    // Get all the edges from the db
+    const edges = await prisma.edges.findMany();
+
+    // Add edges to the graph
+    for (const edge of edges) {
+      graph.addEdge(edge.StartNodeID, edge.EndNodeID);
+    }
+
+    const path: string[] = graph.BFS(startNodeID, endNodeID);
+
+    // Check if the path is empty
+    if (path.length === 0) {
+      res.sendStatus(204); // and send 204, no data
+    } else {
+      res.send(JSON.stringify({ pathNodeIDs: path }));
+    }
+  },
+);
 
 export default router;
