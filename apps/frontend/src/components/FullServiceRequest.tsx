@@ -55,13 +55,13 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   //ToDo: check for item having been selected
 
   const submitRequest = () => {
-    console.log("submitting");
-    if (
+      console.log("submitting");
+      if (
       singleServiceRequest.name &&
       !isNaN(singleServiceRequest.room) &&
       singleServiceRequest.deliveryDate
     ) {
-      setRequests([...requests, singleServiceRequest]);
+        setRequests([...requests, singleServiceRequest]);
       submitRequestDB(singleServiceRequest).then();
       clearForm();
     }

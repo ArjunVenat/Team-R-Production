@@ -6,7 +6,7 @@ import FirstPageIcon from "@mui/icons-material/FirstPage";
 import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
-import NearMeIcon from "@mui/icons-material/NearMe";
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -16,17 +16,17 @@ interface Menu {
   icon: ReactNode;
 }
 
-export default function Sidebar({
-  handleOpenServiceRequestModal,
-  handleOpenNavigationScreenModal,
-}) {
+export default function Sidebar({ handleOpenServiceRequestModal }) {
   const home: Menu = { title: "Home", icon: <RiHome3Fill /> };
   const serviceRequest: Menu = {
     title: "Service Request",
     icon: <BsBellFill />,
   };
-  const doNavigation: Menu = { title: "Navigation", icon: <NearMeIcon /> };
-  const Menus: Menu[] = [home, serviceRequest, doNavigation];
+  const sendFlowers: Menu = {
+    title: "Send Flowers",
+    icon: <LocalFloristIcon />,
+  };
+  const Menus: Menu[] = [home, serviceRequest, sendFlowers];
 
   const [open, setOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState<string>(home.title);
@@ -37,9 +37,6 @@ export default function Sidebar({
     setActiveMenu(title);
     if (title === "Service Request") {
       handleOpenServiceRequestModal();
-    }
-    if (title === "Navigation") {
-      handleOpenNavigationScreenModal();
     }
   };
 
