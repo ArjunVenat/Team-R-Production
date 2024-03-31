@@ -22,5 +22,27 @@ serviceRequestRouter.post("/", async function (req: Request, res: Response) {
   }
 });
 
+serviceRequestRouter.get(
+  "/",
+  async function (req: Request, res: Response): Promise<void> {
+    try {
+      const flowerrequests: FlowerRequest[] =
+        await PrismaClient.flowerRequest.findMany();
+      if (flowerrequests.length == 0) {
+        //if there is no edge data...
+        // Log that (it's a problem)
+        console.error("No requests data found in database!");
+        res.sendStatus(204); // and send 204, no data
+        return;
+      }
+      res.json(flowerrequests);
+    } catch (error) {
+      //If there was an error with the HTTP request...
+      console.error(`Unable to get all service request data from database`);
+      res.sendStatus(400); // Send error
+      return; // Don't try to send duplicate statuses
+    }
+  },
+);
 //Export the router.
 export default serviceRequestRouter;
