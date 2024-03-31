@@ -6999,6 +6999,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "softeng-starter-code@workspace:."
   dependencies:
+    "@mui/material": "npm:^5.15.14"
     "@types/react": "npm:^18.0.37"
     "@types/react-dom": "npm:^18.0.11"
     "@vitest/ui": "npm:^0.33.0"
@@ -7008,6 +7009,7 @@ __metadata:
     dotenv-cli: "npm:^7.4.0"
     eslint: "npm:^8.56.0"
     eslint-config-custom: "workspace:*"
+    framer-motion: "npm:^11.0.24"
     happy-dom: "npm:^10.6.3"
     husky: "npm:^8.0.0"
     prettier: "npm:2.8.8"
