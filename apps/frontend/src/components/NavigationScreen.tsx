@@ -21,7 +21,7 @@ export default function NavigationScreen() {
 
     useEffect(() => {
         async function fetchData() {
-            const res = await axios.get("/api/map/allnodes");
+            const res = await axios.get("/api/admin/allnodes");
             setNodes(res.data);
             console.log("successfully got data from get request");
         }
