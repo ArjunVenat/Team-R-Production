@@ -25,6 +25,7 @@ export async function sendDirections(request: Directions) {
       console.log("no path found");
   }
   if (res.status == 200) {
-    console.log(res.data);
+    //console.log(res.data);
+      console.log(res.data["pathNodeIDs"]);
   }
 }

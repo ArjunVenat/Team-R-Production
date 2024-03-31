@@ -36,11 +36,6 @@ export default function NavigationScreen() {
         const startnode: string = nodes?.filter((node) => node.LongName === start)[0]["NodeID"];
         const endnode: string = nodes?.filter((node) => node.LongName === end)[0]["NodeID"];
 
-        console.log("StartID");
-        console.log(startnode);
-        console.log("EndID");
-        console.log(endnode);
-
         setPoints({start: startnode, end: endnode});
         sendDirections(points).then();
     }
