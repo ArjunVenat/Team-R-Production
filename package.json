@@ -51,6 +51,7 @@
   "dependencies": {
     "@mui/material": "^5.15.14",
     "@yarnpkg/pnpify": "^4.0.0-rc.45",
+    "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.0",
     "framer-motion": "^11.0.24",

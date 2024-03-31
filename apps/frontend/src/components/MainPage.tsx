@@ -6,6 +6,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import "./MainPage.css";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import {
+
   // Box,
   Card,
   Modal,
@@ -13,12 +14,15 @@ import {
   // SpeedDialAction,
   // SpeedDialIcon,
   // Typography,
+
 } from "@mui/material";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import LoginIcon from "@mui/icons-material/Login";
 import RoomServiceIcon from "@mui/icons-material/RoomService";
 import SignInPage from "./SignInPage.tsx";
 import FullServiceRequest from "./FullServiceRequest.tsx";
+import NavigationScreen from "./NavigationScreen.tsx";
+// import NavigationScreen from "./NavigationScreen.tsx";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -61,7 +65,12 @@ function MainPage() {
   const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
 
   //placeholder for handle directions
-  const handleDirections = () => <p>placeholder</p>;
+  const [openNavigationScreenModal, setOpenNavigationScreenModal] =
+    useState(false);
+  const handleCloseNavigationScreenModal = () =>
+    setOpenNavigationScreenModal(false);
+  const handleOpenNavigationScreenModal = () =>
+    setOpenNavigationScreenModal(true);
 
   //determine which button was pressed
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -76,7 +85,7 @@ function MainPage() {
         break;
       }
       case "Get Directions": {
-        handleDirections();
+        handleOpenNavigationScreenModal();
         break;
       }
     }
@@ -84,7 +93,11 @@ function MainPage() {
 
   return (
     <div id="MainPage" className="flex flex-row">
-      <SideBar handleOpenServiceRequestModal={handleOpenServiceRequestModal} />
+      {/*<NavigationScreen/>*/}
+      <SideBar
+        handleOpenServiceRequestModal={handleOpenServiceRequestModal}
+        handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}
+      />
 
       {/*This tag only holds the map itself and adds zooming and panning*/}
       <main className="flex content-center justify-center leading-none">
@@ -116,6 +129,15 @@ function MainPage() {
       >
         <Card sx={modalStyle}>
           <FullServiceRequest availableServices={guestOptions} />
+        </Card>
+      </Modal>
+
+      <Modal
+        open={openNavigationScreenModal}
+        onClose={handleCloseNavigationScreenModal}
+      >
+        <Card sx={modalStyle}>
+          <NavigationScreen />
         </Card>
       </Modal>
     </div>
