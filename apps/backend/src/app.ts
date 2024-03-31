@@ -3,7 +3,7 @@ import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
-import AllNodesDatarouter from "./routes/node-data.ts";
+import allNodesRouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import mapRouter from "./routes/map.ts";
 import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
@@ -25,14 +25,14 @@ app.use(cookieParser()); // Cookie parser
 
 // Setup routers. ALL ROUTERS MUST use /api as a start point, or they
 // won't be reached by the default proxy and prod setup
-app.use("/api/high-score", exampleRouter);
-app.use("/api/admin/alledges", allEdgesRouter);
-app.use("/api/service/create", serviceRequestRouter);
-app.use("/api/map", mapRouter);
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();
 });
-app.use("/api/admin/allnodes", AllNodesDatarouter); //GET request for all Nodes Data
+app.use("/api/high-score", exampleRouter);
+app.use("/api/admin/alledges", allEdgesRouter);
+app.use("/api/service/create", serviceRequestRouter);
+app.use("/api/admin/allnodes", allNodesRouter); //GET request for all Nodes Data
+app.use("/api/map", mapRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
