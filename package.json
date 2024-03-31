@@ -50,6 +50,7 @@
   },
   "dependencies": {
     "@yarnpkg/pnpify": "^4.0.0-rc.45",
+    "axios": "^1.6.8",
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.0",
     "react": "^18.2.0",

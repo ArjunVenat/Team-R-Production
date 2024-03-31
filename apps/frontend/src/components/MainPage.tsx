@@ -7,13 +7,7 @@ import "./MainPage.css";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import {
   // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Box,
-  Card,
-  Modal,
-  SpeedDial,
-  SpeedDialAction,
-  SpeedDialIcon,
-  Typography,
+  Box, Card, Modal, SpeedDial, SpeedDialAction, SpeedDialIcon, Typography,
 } from "@mui/material";
 import DirectionsIcon from "@mui/icons-material/Directions";
 import LoginIcon from "@mui/icons-material/Login";
