@@ -6,6 +6,7 @@ import exampleRouter from "./routes/example.ts";
 import allNodesRouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import mapRouter from "./routes/map.ts";
+import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -29,6 +30,7 @@ app.use("/healthcheck", (req, res) => {
 });
 app.use("/api/high-score", exampleRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
+app.use("/api/service/create", serviceRequestRouter);
 app.use("/api/admin/allnodes", allNodesRouter); //GET request for all Nodes Data
 app.use("/api/map", mapRouter);
 
