@@ -6,6 +6,7 @@ import exampleRouter from "./routes/example.ts";
 import AllNodesDatarouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import mapRouter from "./routes/map.ts";
+import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -26,6 +27,7 @@ app.use(cookieParser()); // Cookie parser
 // won't be reached by the default proxy and prod setup
 app.use("/api/high-score", exampleRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
+app.use("/api/service/create", serviceRequestRouter);
 app.use("/api/map", mapRouter);
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();

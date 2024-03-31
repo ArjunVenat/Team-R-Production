@@ -50,6 +50,28 @@ model Nodes {
   NodeType  String
   LongName  String
   ShortName String
+  // FlowerRequests FlowerRequest[]
+}
+
+// model Request {
+//   RequestID     Int      @id @default(autoincrement())
+//   Time          DateTime
+//   Type          String
+//   Details       String
+//   UserID        Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
+//   Destination   Nodes    @relation(fields: [DestinationID], references: [NodeID])
+//   DestinationID String
+// }
+
+model FlowerRequest {
+  RequestID     Int      @id @default(autoincrement())
+  Time          DateTime
+  DeliveryDate  DateTime
+  RecipientName String
+  FlowerType    String
+  UserID        Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
+  // Destination   Nodes    //@relation(fields: [DestinationID], references: [NodeID])
+  DestinationID String
 }
 
 // npx prisma generate for schema. can see using database
