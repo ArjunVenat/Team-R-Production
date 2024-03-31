@@ -6,7 +6,7 @@ import { TransformWrapper, TransformComponent } from "react-zoom-pan-pinch";
 import "./MainPage.css";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import {
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+   
   // Box,
   Card,
   Modal,

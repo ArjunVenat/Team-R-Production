@@ -34,10 +34,6 @@ CSERV001L2,2015,1280,L2,45 Francis,SERV,Interpreter Services Floor L2,Service C0
 GELEV00QL1,1637,2116,L1,Shapiro,ELEV,Elevator Q MapNode 7 Floor L1,Elevator Q L1
 GEXIT001L1,1702,2260,L1,Shapiro,EXIT,Fenwood Road Exit MapNode 1 Floor L1,Fenwood Road EntranceExit L1
 GHALL002L1,1702,2167,L1,Shapiro,HALL,Hallway MapNode 2 Floor L1,Hall
-GHALL003L1,1688,2167,L1,Shapiro,HALL,Hallway MapNode 3 Floor L1,Hall
-GHALL004L1,1666,2167,L1,Shapiro,HALL,Hallway MapNode 4 Floor L1,Hall
-GHALL005L1,1688,2131,L1,Shapiro,HALL,Hallway MapNode 5 Floor L1,Hall
-GHALL006L1,1665,2116,L1,Shapiro,HALL,Hallway MapNode 6 Floor L1,Hall
 GSTAI008L1,1720,2131,L1,Shapiro,STAI,Stairs MapNode 8 Floor L1,L1 Stairs
 WELEV00HL1,2715,1070,L1,45 Francis,ELEV,Elevator H Floor L1,Elevator HL1
 WELEV00JL1,2360,799,L1,45 Francis,ELEV,Elevator J Floor L1,Elevator JL1

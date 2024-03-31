@@ -42,15 +42,15 @@ model Edges {
 // shortName is a string
 
 model Nodes {
-  NodeID    String @id
-  Xcoord    String
-  Ycoord    String
-  Floor     String
-  Building  String
-  NodeType  String
-  LongName  String
-  ShortName String
-  // FlowerRequests FlowerRequest[]
+  NodeID         String
+  Xcoord         String
+  Ycoord         String
+  Floor          String
+  Building       String
+  NodeType       String
+  LongName       String          @unique
+  ShortName      String          @unique
+  FlowerRequests FlowerRequest[]
 }
 
 // model Request {
@@ -64,14 +64,14 @@ model Nodes {
 // }
 
 model FlowerRequest {
-  RequestID     Int      @id @default(autoincrement())
-  Time          DateTime
-  DeliveryDate  DateTime
-  RecipientName String
-  FlowerType    String
-  UserID        Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
-  // Destination   Nodes    //@relation(fields: [DestinationID], references: [NodeID])
-  DestinationID String
+  RequestID          Int      @id @default(autoincrement())
+  Time               DateTime
+  DeliveryDate       DateTime
+  RecipientName      String
+  FlowerType         String
+  UserID             Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
+  Destination        Nodes    @relation(fields: [DestinationShortID], references: [ShortName])
+  DestinationShortID String
 }
 
 // npx prisma generate for schema. can see using database
