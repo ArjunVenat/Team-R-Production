@@ -21,7 +21,10 @@ serviceRequestRouter.post("/", async function (req: Request, res: Response) {
     return; // Don't try to send duplicate statuses
   }
 });
-
+/**
+ * sends all service requests as a json from backend
+ * database to frontend
+ */
 serviceRequestRouter.get(
   "/",
   async function (req: Request, res: Response): Promise<void> {
@@ -29,7 +32,7 @@ serviceRequestRouter.get(
       const flowerrequests: FlowerRequest[] =
         await PrismaClient.flowerRequest.findMany();
       if (flowerrequests.length == 0) {
-        //if there is no edge data...
+        //if there is no flower request data...
         // Log that (it's a problem)
         console.error("No requests data found in database!");
         res.sendStatus(204); // and send 204, no data
