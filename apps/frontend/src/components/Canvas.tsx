@@ -32,6 +32,11 @@ export default function Canvas() {
                     endNodeID: "CRETL001L1",
                 }
             });
+            if (res.status === 200) {
+                console.log("Successfully fetched path");
+            } else {
+                console.error("Failed to fetch path");
+            }
             console.log(res.data);
             setPath (res.data);
         }
@@ -55,12 +60,13 @@ export default function Canvas() {
     async function draw(ctx: CanvasRenderingContext2D) {
         const nodesData = await fetchNodes();
 
-        if (nodesData) {
+        if (nodesData && path) {
             ctx.drawImage(image, 0, 0, 5000, 3400);
-            for (let i = 0; i < path!.length; i++) {
+            for (let i = 0; i < path!.length - 1; i++) {
                 const node = path![i];
                 ctx.beginPath();
                 ctx.moveTo(Number(node.Xcoord), Number(node.Ycoord));
+                ctx.lineWidth = 5;
                 ctx.lineTo(Number(path![i + 1].Xcoord), Number(path![i + 1].Ycoord));
                 ctx.strokeStyle = 'blue';
                 ctx.stroke();
