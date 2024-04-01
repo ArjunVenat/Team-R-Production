@@ -17,8 +17,8 @@ export async function sendDirections(request: Directions) {
   // });
     const res = await axios.get('/api/map/pathfind', {
        params: {
-            startNodeID: request.start,
-            endNodeID: request.end,
+            startnodeid: request.start,
+            endnodeid: request.end,
         }
     });
   if (res.status == 204) {

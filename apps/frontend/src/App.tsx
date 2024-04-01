@@ -7,6 +7,7 @@ import SignInPage from "./components/SignInPage";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeTablePage from "./components/EdgePage.tsx";
 import NodeTablePage from "./components/NodePage.tsx";
+import UploadCSV from "./components/UploadCSV.tsx";
 function App() {
   const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
   const router = createBrowserRouter([
@@ -38,7 +39,11 @@ function App() {
         {
           path: "node-table",
           element: <NodeTablePage/>
-        }
+        },
+          {
+              path: "upload-csv",
+              element: <UploadCSV/>
+          }
       ],
     },
   ]);

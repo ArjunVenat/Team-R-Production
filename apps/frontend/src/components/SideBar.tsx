@@ -1,6 +1,6 @@
 // import MapIcon from '@mui/icons-material/Map';
 // import LoginIcon from '@mui/icons-material/Login';
-import {Logout} from "@mui/icons-material";
+import {Logout, UploadFile} from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -36,7 +36,8 @@ export default function Sidebar() {
     const logout: Menu = {title: "Logout", icon: <Logout/>};
     const edges: Menu = {title: "Edge Table", icon: <AccessibleForwardIcon/>};
     const nodes: Menu = {title: "Node Table", icon: <AirlineSeatFlatAngledIcon/>};
-    const Menus: Menu[] = [home, serviceRequest, doNavigation, edges, nodes, logout];
+    const uploadCSV: Menu = {title: "Upload CSV", icon: <UploadFile/>};
+    const Menus: Menu[] = [home, serviceRequest, doNavigation, edges, nodes, uploadCSV, logout];
 
     const [open, setOpen] = useState(true);
     const [activeMenu, setActiveMenu] = useState<string>(home.title);
@@ -69,6 +70,9 @@ export default function Sidebar() {
         }
         if (title=== "Home"){
             routeChange("home");
+        }
+        if (title === "Upload CSV"){
+            routeChange("upload-csv");
         }
     };
 

@@ -11,7 +11,7 @@ export async function submitRequestDB(request: ServiceRequest) {
     details: request.details,
   });
   console.log(data);
-  //sends a post request the /api/high-score
+  //sends a post request
   const res = await axios.post("/service/create", data, {
     headers: {
       "Content-Type": "application/json",
