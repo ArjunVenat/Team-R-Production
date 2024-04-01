@@ -12,7 +12,6 @@ import FullServiceRequest from "./FullServiceRequest.tsx";
 import NavigationScreen from "./NavigationScreen.tsx";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
-import EdgeTable from "./Edges.tsx";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -38,6 +37,7 @@ const modalStyle = {
 
 function MainPage() {
     const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
+
     //speed dial state
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
     const [speedDialOpen, setSpeedDialOpen] = useState(true);
@@ -85,15 +85,7 @@ function MainPage() {
     return (
         <div id="MainPage" className="flex flex-row bg-[#d6d8d5]">
             {/*<NavigationScreen/>*/}
-            <SideBar
-                handleOpenServiceRequestModal={handleOpenServiceRequestModal}
-                handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}
-            />
-            <EdgeTable>
-
-            </EdgeTable>
-
-
+            <SideBar/>
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
                 <div id={"map"} className="max-w-full">

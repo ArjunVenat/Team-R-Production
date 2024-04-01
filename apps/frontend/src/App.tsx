@@ -3,7 +3,10 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
 import MainPage from "./components/MainPage.tsx";
 import NavigationScreen from "./components/NavigationScreen.tsx";
+import SignInPage from "./components/SignInPage";
+import FullServiceRequest from "./components/FullServiceRequest.tsx";
 function App() {
+  const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
   const router = createBrowserRouter([
     {
       path: "/",
@@ -12,11 +15,19 @@ function App() {
       children: [
         {
           path: "",
-          element: <MainPage />,
+          element: <SignInPage />,
         },
         {
           path: "testing",
           element: <NavigationScreen />,
+        },
+        {
+          path: "home",
+          element: <MainPage/>
+        },
+        {
+          path: "servicerequest",
+          element: <FullServiceRequest availableServices={guestOptions}  />
         },
       ],
     },
