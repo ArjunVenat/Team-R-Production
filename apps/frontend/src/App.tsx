@@ -4,7 +4,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import MainPage from "./components/MainPage.tsx";
 import NavigationScreen from "./components/NavigationScreen.tsx";
 import SignInPage from "./components/SignInPage";
+import FullServiceRequest from "./components/FullServiceRequest.tsx";
 function App() {
+  const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
   const router = createBrowserRouter([
     {
       path: "/",
@@ -22,6 +24,10 @@ function App() {
         {
           path: "login",
           element: <SignInPage/>
+        },
+        {
+          path: "servicerequest",
+          element: <FullServiceRequest availableServices={guestOptions}  />
         },
       ],
     },
