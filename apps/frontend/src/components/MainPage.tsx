@@ -4,9 +4,9 @@ import SideBar from "./SideBar";
 import React, {useState} from "react";
 import "./MainPage.css";
 import {Card, Modal,} from "@mui/material";
-import DirectionsIcon from "@mui/icons-material/Directions";
-import LoginIcon from "@mui/icons-material/Login";
-import RoomServiceIcon from "@mui/icons-material/RoomService";
+// import DirectionsIcon from "@mui/icons-material/Directions";
+// import LoginIcon from "@mui/icons-material/Login";
+// import RoomServiceIcon from "@mui/icons-material/RoomService";
 import SignInPage from "./SignInPage.tsx";
 import FullServiceRequest from "./FullServiceRequest.tsx";
 import NavigationScreen from "./NavigationScreen.tsx";
@@ -45,21 +45,21 @@ function MainPage() {
     //sign in modal state handlers
     const [openSignInModal, setOpenSignInModal] = useState(false);
     const handleCloseSignInModal = () => setOpenSignInModal(false);
-    const handleOpenSignInModal = () => setOpenSignInModal(true);
+    // const handleOpenSignInModal = () => setOpenSignInModal(true);
 
     //service request modal state handlers
     const [openServiceRequestModal, setOpenServiceRequestModal] = useState(false);
     const handleCloseServiceRequestModal = () =>
         setOpenServiceRequestModal(false);
-    const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
+    // const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
 
     //placeholder for handle directions
     const [openNavigationScreenModal, setOpenNavigationScreenModal] =
         useState(false);
     const handleCloseNavigationScreenModal = () =>
         setOpenNavigationScreenModal(false);
-    const handleOpenNavigationScreenModal = () =>
-        setOpenNavigationScreenModal(true);
+    // const handleOpenNavigationScreenModal = () =>
+    //     setOpenNavigationScreenModal(true);
 
     //determine which button was pressed
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
