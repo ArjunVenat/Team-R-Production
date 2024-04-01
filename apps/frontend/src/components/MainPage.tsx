@@ -14,6 +14,7 @@ import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import Canvas from "./Canvas.tsx";
 
+
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const actions = [
@@ -101,7 +102,7 @@ function MainPage() {
                                     alt={"Fist floor map"}
                                     className=" max-h-screen"
                                 />
-                                <Canvas/>
+                                <Canvas />
                             </TransformComponent>
                         </TransformWrapper>
                     </div>
