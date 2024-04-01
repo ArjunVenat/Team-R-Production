@@ -26,6 +26,6 @@ export async function sendDirections(request: Directions) {
   }
   if (res.status == 200) {
     //console.log(res.data);
-      console.log(res.data["pathNodeIDs"]);
+      console.log(res.data);
   }
 }
