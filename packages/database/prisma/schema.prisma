@@ -59,7 +59,7 @@ model Nodes {
 //   Type          String
 //   Details       String
 //   UserID        Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
-//   Destination   Nodes    @relation(fields: [DestinationID], references: [NodeID])
+//   Destination   Nodes    @relation(fields: [DestinationID], references: [LongName])
 //   DestinationID String
 // }
 
