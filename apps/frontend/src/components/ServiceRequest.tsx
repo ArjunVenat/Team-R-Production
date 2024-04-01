@@ -3,5 +3,6 @@ export interface ServiceRequest {
   room: number;
   deliveryDate: string;
   type: string;
+  subType: string;
   details: string;
 }

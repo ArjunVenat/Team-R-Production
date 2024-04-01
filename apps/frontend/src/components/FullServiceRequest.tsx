@@ -44,6 +44,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     room: NaN,
     deliveryDate: "",
     type: availableServices[0],
+      subType: "",
     details: "",
   };
 
@@ -62,31 +63,49 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
             case 'Flowers':
                 contentComponent = (
                     <>
-
                         <div className="mt-[-25rem] bg-gray-100 rounded-lg" >
                             <h2 className="mb-4 p-3 font-bold text-lg">Switch Content Section</h2>
                             <div className="bg-gray-100 gap-2 rounded-lg ">
                                 <div className="grid grid-cols-4 gap-y-4">
 
                                     <label className="flex flex-col items-center">
-                                        <input id="Tulip" type="checkbox"/>
-                                        <img className=" " src={Flower1} alt="Flowers"/>
+                                        <button className={`${singleServiceRequest.subType === "Daffodil" ? "border-4 border-primary rounded-[2.8rem]": ""}`}>
+                                            <img className="" src={Flower1} onClick={() => setSingleServiceRequest({
+                                                ...singleServiceRequest,
+                                                subType: "Daffodil"
+                                            })} alt="Flowers"/>
+                                        </button>
                                     </label>
                                     <label className="flex flex-col items-center">
-                                        <input id="Rose" type="checkbox"/>
-                                        <img className="" src={Flower2} alt="Flowers"/>
+                                        <button className={`${singleServiceRequest.subType === "Carnation" ? "border-4 border-primary rounded-[2.8rem]": ""}`}>
+                                        <img className="" src={Flower2} onClick={() => setSingleServiceRequest({
+                                            ...singleServiceRequest,
+                                            subType: "Carnation"
+                                        })} alt="Flowers"/>
+                                        </button>
                                     </label>
                                 <label className="flex flex-col items-center">
-                                    <input id="Lily" type="checkbox"/>
-                                    <img className="" src={Flower3} alt="Flowers"/>
-                                </label>
-                                <label className="flex flex-col items-center">
-                                    <input id="Variety" type="checkbox"/>
-                                    <img className="" src={Flower4} alt="Flowers "/>
-                                </label>
+                                    <button className={`${singleServiceRequest.subType === "Rose" ? "border-4 border-primary rounded-[2.8rem]": ""}`}>
+                                    <img className="" src={Flower3} onClick={() => setSingleServiceRequest({
+                                        ...singleServiceRequest,
+                                        subType: "Rose"
+                                    })}
+                                         alt="Flowers"/>
+                                    </button>
 
+                                </label>
+                                    <label className="flex flex-col items-center">
+                                        <button className={`${singleServiceRequest.subType === "Lily" ? "border-4 border-primary rounded-[2.8rem]": ""}`}>
+                                            <img className="" src={Flower4} onClick={() => setSingleServiceRequest({
+                                                ...singleServiceRequest,
+                                                subType: "Lily"
+                                            })} alt="Flowers "/>
+                                        </button>
+
+                                    </label>
+
+                                </div>
                             </div>
-                        </div>
                         </div>
                     </>
                 );
@@ -129,6 +148,8 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
       clearForm();
     }
   };
+
+
 
   //ToDo: Can delete once combine with actual submitRequest
   const clearForm = () => {
@@ -176,12 +197,15 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                         {requests.map((request, index) => (
                             <div key={index} className="request-box mb-2">
                                 <p>Service Type: {request.type}</p>
+                                <p>Sub Type: {request.subType}</p>
                                 <p>Name: {request.name}</p>
                                 <p>Delivery Date: {request.deliveryDate}</p>
                                 <p>Room: {request.room}</p>
                                 <p>Details: {request.details}</p>
+
                                 <Button variant="contained" onClick={() => cancelRequest(index)}>Cancel</Button>
-                                {index < requests.length - 1 && <hr className="mb-4" style={{ border: '1px solid black' }} />}
+                                {index < requests.length - 1 &&
+                                    <hr className="mb-4" style={{border: '1px solid black'}}/>}
                             </div>
                         ))}
                         <hr className="mb-4 border-solid border border-black" />
@@ -248,7 +272,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
                     <h1 id="successMessage" className="text-center text-green-600 text-xl mb-4">Success! Request
                         Submitted</h1>
-                    <Button onClick={() => clearRequests()}>Close</Button>
+                    <Button onClick={() => setOpenSuccess(false)}>Close</Button>
                 </Card>
             </Modal>
         </>
