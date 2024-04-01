@@ -68,22 +68,22 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             <div>
                                 <div className=" bg-gray-100  object-right gap-2 columns-3 rounded-lg " style={{paddingLeft: '30%'}}>
 
-                                    <Button
+                                    <form
                                         className=" transition duration-200 ease-in-out hover:scale-20 focus:ring-transparent">
                                         <img className=" " src={Flower1} alt="Flowers"/>
-                                    </Button>
-                                    <Button
+                                    </form>
+                                    <form
                                         className="   hover:scale-20 focus:ring-transparent">
                                         <img className="" src={Flower2} alt="Flowers"/>
-                                    </Button>
-                                    <Button
+                                    </form>
+                                    <form
                                         className=" hover:scale-20 ">
                                         <img className="" src={Flower3} alt="Flowers"/>
-                                    </Button>
-                                    <Button
+                                    </form>
+                                    <form
                                         className="transition duration-300 ease-in-out  hover:scale-20">
                                         <img className="" src={Flower4} alt="Flowers "/>
-                                    </Button>
+                                    </form>
 
                                 </div>
                             </div>
