@@ -27,11 +27,12 @@ export default function Canvas() {
             ctx!.moveTo(0, 0);
             ctx!.lineTo(5000, 3400);
             ctx!.stroke();
-            console.log("drawn");
         }
     }
+
+    setTimeout(draw, 100);
     return (
-        <canvas onClick={draw} ref={canvasRef} className="absolute top-0 left-0 "></canvas>
+        <canvas ref={canvasRef} className="absolute top-0 left-0 "></canvas>
 
     );
 }

@@ -23,7 +23,7 @@ export default function NavigationScreen() {
         async function fetchData() {
             const res = await axios.get("/api/admin/allnodes");
             const allNodes = res.data;
-            const nonHallwayNodes = allNodes.filter(node => !node.LongName.includes("Hallway"));
+            const nonHallwayNodes = allNodes.filter((node: { LongName: string | string[]; }) => !node.LongName.includes("Hallway"));
             setNodes(nonHallwayNodes);
             console.log("successfully got data from get request");
         }
