@@ -7,7 +7,7 @@ import allNodesRouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import mapRouter from "./routes/map.ts";
 import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
-import CSVRouter from "./routes/downloadCSVRouter.ts";
+import CSVRouter from "./routes/CSVRouter.ts";
 
 const app: Express = express(); // Setup the backend
 

@@ -2,6 +2,13 @@ import express, { Router, Request, Response } from "express";
 const CSVRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 
+/**
+ * Asyncrhonous function for handling an HTTP get request for downloading a CSV.
+ * API route is /api/admin/csv
+ * Specified with /Edges or /Nodes (e.g. /api/admin/csv/Edges)
+ * @param req HTTP request information
+ * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
+ */
 CSVRouter.get(
   "/:downloadType",
   async function (req: Request, res: Response) {
