@@ -65,28 +65,28 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
                         <div className="mt-[-25rem] bg-gray-100 rounded-lg" >
                             <h2 className="mb-4 p-3 font-bold text-lg">Switch Content Section</h2>
-                            <div>
-                                <div className=" bg-gray-100  object-right gap-2 columns-3 rounded-lg " style={{paddingLeft: '30%'}}>
+                            <div className="bg-gray-100 gap-2 rounded-lg ">
+                                <div className="grid grid-cols-4 gap-y-4">
 
-                                    <form
-                                        className=" transition duration-200 ease-in-out hover:scale-20 focus:ring-transparent">
+                                    <label className="flex flex-col items-center">
+                                        <input id="Tulip" type="checkbox"/>
                                         <img className=" " src={Flower1} alt="Flowers"/>
-                                    </form>
-                                    <form
-                                        className="   hover:scale-20 focus:ring-transparent">
+                                    </label>
+                                    <label className="flex flex-col items-center">
+                                        <input id="Rose" type="checkbox"/>
                                         <img className="" src={Flower2} alt="Flowers"/>
-                                    </form>
-                                    <form
-                                        className=" hover:scale-20 ">
-                                        <img className="" src={Flower3} alt="Flowers"/>
-                                    </form>
-                                    <form
-                                        className="transition duration-300 ease-in-out  hover:scale-20">
-                                        <img className="" src={Flower4} alt="Flowers "/>
-                                    </form>
+                                    </label>
+                                <label className="flex flex-col items-center">
+                                    <input id="Lily" type="checkbox"/>
+                                    <img className="" src={Flower3} alt="Flowers"/>
+                                </label>
+                                <label className="flex flex-col items-center">
+                                    <input id="Variety" type="checkbox"/>
+                                    <img className="" src={Flower4} alt="Flowers "/>
+                                </label>
 
-                                </div>
                             </div>
+                        </div>
                         </div>
                     </>
                 );
