@@ -2,6 +2,13 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, styled } from "@mui/material";
+// import SideBar from "./SideBar.tsx";
+// import { Alert, Snackbar} from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import bwh from "../../src/assets/bwh.jpeg";
+
+
+
 
 // Define styled components for modal
 const Anim = styled(motion.div)({
@@ -74,22 +81,49 @@ const LoginFormFields = styled(Box)({
 
 // Define SignInPage component
 function SignInPage() {
+
+    const navigate = useNavigate();
+    const routeChange = (path: string) => {
+        const newPath = `/${path}`;
+        navigate(newPath);
+    };
   // Define state variables
   const [selectedUserType, setSelectedUserType] = useState("");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [showLoginForm, setShowLoginForm] = useState(false);
 
+  const[error, setError] = useState("");
   // Define function to handle user type (guest, staff, admin) selection
   const handleUserTypeSelection = (userType: string) => {
     setSelectedUserType(userType);
     setShowLoginForm(true);
   };
 
-  // Define function to handle sign in
   const handleSignIn = () => {
-    setShowLoginForm(false);
+
+      if(selectedUserType === 'Guest' ||
+          (selectedUserType === 'Admin' && username === 'admin' && password === 'admin') ||
+          (selectedUserType === 'Staff' && username === 'staff' && password === 'staff')
+      ){
+          routeChange("home");
+      }else {
+              // props.setSnackBar({
+              //     open: true,
+              //     severity: 'error',
+              //     message: 'Invalid username or password'
+              // });
+              setError("Incorrect Username or Password - Please try again");
+              setUsername("");
+              setPassword("");
+              setSelectedUserType("");
+          }
+      setShowLoginForm(false);
   };
+  // Define function to handle sign in
+  // const handleSignIn = () => {
+  //   setShowLoginForm(false);
+  // };
 
   // Define function to handle cancel
   const handleCancel = () => {
@@ -101,82 +135,98 @@ function SignInPage() {
 
   // Render SignInPage component
   return (
-    <AnimatePresence>
-      {!showLoginForm && (
-        <UserTypeList
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 id={"sign_in_h1"}>Welcome</h1>
-          <UserTypeButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => handleUserTypeSelection("Guest")}
-          >
-            Guest
-          </UserTypeButton>
-          <UserTypeButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => handleUserTypeSelection("Staff")}
-          >
-            Staff
-          </UserTypeButton>
-          <UserTypeButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => handleUserTypeSelection("Admin")}
-          >
-            Admin
-          </UserTypeButton>
-          {username && <p>Username: {username}</p>}
-          {password && <p>Password: {password}</p>}
-          {selectedUserType && <p>User Type: {selectedUserType}</p>}
-        </UserTypeList>
-      )}
-      {showLoginForm && (
-        <Anim
-          initial={{ opacity: 0, y: -50 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: -50 }}
-          transition={{ duration: 0.5 }}
-        >
-          <h1 id={"sign_in_h1"}>{selectedUserType}</h1>
-          <LoginFormFields>
-            <LoginFormLabel>
-              Username:
-              <input
-                type="text"
-                onChange={(e) => setUsername(e.target.value)}
-              />
-            </LoginFormLabel>
-            <LoginFormLabel>
-              Password:
-              <input
-                type="password"
-                onChange={(e) => setPassword(e.target.value)}
-              />
-            </LoginFormLabel>
-          </LoginFormFields>
-          <LoginFormButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={handleSignIn}
-          >
-            Sign in
-          </LoginFormButton>
-          <LoginFormButton
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={handleCancel}
-          >
-            Cancel
-          </LoginFormButton>
-        </Anim>
-      )}
-    </AnimatePresence>
+     <>
+         <div
+             style={
+             {backgroundImage:`url(${bwh}`,  backgroundPosition: 'center',
+             backgroundSize: 'cover',
+             backgroundRepeat: 'no-repeat',
+             width: '100vw',
+             height: '100vh'}}>
+             <div style={{backgroundPosition:'center', backgroundColor: 'white', backgroundAttachment: ''}}>
+
+                 <AnimatePresence>
+                     {!showLoginForm && (
+                         <UserTypeList
+                             initial={{ opacity: 0, y: -50 }}
+                             animate={{ opacity: 1, y: 0 }}
+                             exit={{ opacity: 0, y: -50 }}
+                             transition={{ duration: 0.5 }}
+                         >
+                             <h1 id={"sign_in_h1"}>Welcome</h1>
+                             <UserTypeButton
+                                 whileHover={{ scale: 1.1 }}
+                                 whileTap={{ scale: 0.9 }}
+                                 onClick={() => handleUserTypeSelection("Guest")}
+                             >
+                                 Guest
+                             </UserTypeButton>
+                             <UserTypeButton
+                                 whileHover={{ scale: 1.1 }}
+                                 whileTap={{ scale: 0.9 }}
+                                 onClick={() => handleUserTypeSelection("Staff")}
+                             >
+                                 Staff
+                             </UserTypeButton>
+                             <UserTypeButton
+                                 whileHover={{ scale: 1.1 }}
+                                 whileTap={{ scale: 0.9 }}
+                                 onClick={() => handleUserTypeSelection("Admin")}
+                             >
+                                 Admin
+                             </UserTypeButton>
+                             {error && <p>{error}</p>}
+                             {username && <p>Username: {username}</p>}
+                             {password && <p>Password: {password}</p>}
+                             {selectedUserType && <p>User Type: {selectedUserType}</p>}
+                         </UserTypeList>
+                     )}
+                     {showLoginForm && (
+                         <Anim
+                             initial={{ opacity: 0, y: -50 }}
+                             animate={{ opacity: 1, y: 0 }}
+                             exit={{ opacity: 0, y: -50 }}
+                             transition={{ duration: 0.5 }}
+                         >
+                             <h1 id={"sign_in_h1"}>{selectedUserType}</h1>
+                             <LoginFormFields>
+                                 <LoginFormLabel>
+                                     Username:
+                                     <input
+                                         type="text"
+                                         onChange={(e) => setUsername(e.target.value)}
+                                     />
+                                 </LoginFormLabel>
+                                 <LoginFormLabel>
+                                     Password:
+                                     <input
+                                         type="password"
+                                         onChange={(e) => setPassword(e.target.value)}
+                                     />
+                                 </LoginFormLabel>
+                             </LoginFormFields>
+                             <LoginFormButton
+                                 whileHover={{ scale: 1.1 }}
+                                 whileTap={{ scale: 0.9 }}
+                                 onClick={handleSignIn}
+                             >
+                                 Sign in
+                             </LoginFormButton>
+                             <LoginFormButton
+                                 whileHover={{ scale: 1.1 }}
+                                 whileTap={{ scale: 0.9 }}
+                                 onClick={handleCancel}
+                             >
+                                 Cancel
+                             </LoginFormButton>
+                         </Anim>
+                     )}
+                 </AnimatePresence>
+             </div>
+
+         </div>
+     </>
+
   );
 }
 

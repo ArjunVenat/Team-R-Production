@@ -85,13 +85,7 @@ function MainPage() {
     return (
         <div id="MainPage" className="flex flex-row bg-[#d6d8d5]">
             {/*<NavigationScreen/>*/}
-            <SideBar
-                handleOpenServiceRequestModal={handleOpenServiceRequestModal}
-                handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}
-            />
-
-
-
+            <SideBar/>
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
                 <div id={"map"} className="max-w-full">
