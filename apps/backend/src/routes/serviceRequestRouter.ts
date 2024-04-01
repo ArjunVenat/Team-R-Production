@@ -3,6 +3,12 @@ const serviceRequestRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 import { FlowerRequest } from "database";
 
+/**
+ * Asyncrhonous function for handling an HTTP post request for sending a service request.
+ * API route is /api/service/create
+ * @param req HTTP request information
+ * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
+ */
 serviceRequestRouter.post("/", async function (req: Request, res: Response) {
   try {
     const receivedRequest: FlowerRequest = req.body;
