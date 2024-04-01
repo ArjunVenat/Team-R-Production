@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
 import MainPage from "./components/MainPage.tsx";
 import NavigationScreen from "./components/NavigationScreen.tsx";
+import SignInPage from "./components/SignInPage";
 function App() {
   const router = createBrowserRouter([
     {
@@ -17,6 +18,10 @@ function App() {
         {
           path: "testing",
           element: <NavigationScreen />,
+        },
+        {
+          path: "login",
+          element: <SignInPage/>
         },
       ],
     },
