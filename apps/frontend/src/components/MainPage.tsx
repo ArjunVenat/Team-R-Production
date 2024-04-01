@@ -86,8 +86,8 @@ function MainPage() {
         <div id="MainPage" className="flex flex-row bg-[#d6d8d5]">
             {/*<NavigationScreen/>*/}
             <SideBar
-                handleOpenServiceRequestModal={handleOpenServiceRequestModal}
-                handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}
+                // handleOpenServiceRequestModal={handleOpenServiceRequestModal}
+                // handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}
             />
 
 
