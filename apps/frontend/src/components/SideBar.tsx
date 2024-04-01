@@ -9,7 +9,7 @@ import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import NearMeIcon from "@mui/icons-material/NearMe";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import AirlineSeatFlatAngledIcon from '@mui/icons-material/AirlineSeatFlatAngled';
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
@@ -38,8 +38,33 @@ export default function Sidebar() {
     const nodes: Menu = {title: "Node Table", icon: <AirlineSeatFlatAngledIcon/>};
     const Menus: Menu[] = [home, serviceRequest, doNavigation, edges, nodes, logout];
 
+
+    const location = useLocation();
+    const currentURL = location.pathname;
+
+    let menuHighlight:string = "";
+    console.log({currentURL});
+
+    switch (currentURL){
+        case "/testing":
+            menuHighlight = "Navigation";
+            break;
+        case "/servicerequest":
+            menuHighlight = "Service Request";
+            break;
+        case "/login":
+            menuHighlight = "Login";
+            break;
+        default:
+            menuHighlight = "Home";
+
+    }
+
+
+
+
     const [open, setOpen] = useState(true);
-    const [activeMenu, setActiveMenu] = useState<string>(home.title);
+    const [activeMenu, setActiveMenu] = useState<string>(menuHighlight);
 
     const collapse = { title: "Collapse", icon: <FirstPageIcon /> };
 
@@ -49,6 +74,8 @@ export default function Sidebar() {
         const newPath = `/${path}`;
         navigate(newPath);
     };
+
+
 
     const handleMenuClick = (title: string) => {
         setActiveMenu(title);
