@@ -57,6 +57,8 @@ export default function Canvas() {
         }
     }
 
+
+
     async function draw(ctx: CanvasRenderingContext2D) {
         const nodesData = await fetchNodes();
 
@@ -70,12 +72,25 @@ export default function Canvas() {
                 ctx.lineTo(Number(path![i + 1].Xcoord), Number(path![i + 1].Ycoord));
                 ctx.strokeStyle = 'blue';
                 ctx.stroke();
+
+                const angle = Math.atan2(Number(path![i + 1].Ycoord) - Number(node.Ycoord), Number(path![i + 1].Xcoord) - Number(node.Xcoord));
+
+                const arrowX = Number(path![i + 1].Xcoord) - 10 * Math.cos(angle);
+                const arrowY = Number(path![i + 1].Ycoord) - 10 * Math.sin(angle);
+
+                ctx.beginPath();
+                ctx.moveTo(arrowX, arrowY);
+                ctx.lineTo(arrowX - 15 * Math.cos(angle - Math.PI / 6), arrowY - 15 * Math.sin(angle - Math.PI / 6));
+                ctx.lineTo(arrowX - 15 * Math.cos(angle + Math.PI / 6), arrowY - 15 * Math.sin(angle + Math.PI / 6));
+                ctx.closePath();
+                ctx.fillStyle = 'blue';
+                ctx.fill();
             }
             for (let i = 0; i < nodesData.length; i++) {
                 const node = nodesData[i];
                 ctx.beginPath();
                 ctx.arc(node.Xcoord, node.Ycoord, 10, 0, 2 * Math.PI);
-                ctx.strokeStyle = 'white';
+                ctx.strokeStyle = 'transparent';
                 ctx.fillStyle = 'red';
                 ctx.fill();
                 ctx.stroke();
