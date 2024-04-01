@@ -14,7 +14,7 @@ datasource db {
 
 // example table used in the express router example
 model HighScore {
-  id    Int      @id @default(autoincrement())
+  id    Int      @id
   time  DateTime
   score Int
 }
@@ -52,6 +52,19 @@ model Nodes {
   ShortName      String
   FlowerRequests FlowerRequest[]
 }
+
+// model Request {
+//   RequestID     Int      @id @default(autoincrement())
+//   Time          DateTime
+//   Type          String
+//   Details       String
+//   UserID        Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
+//   Destination   Nodes    @relation(fields: [DestinationID], references: [LongName])
+//   DestinationID String
+// }
+
+// npx prisma generate for schema. can see using database
+// npx prisma migrate dev --name init to run the code to add to a database. will overwrite anything in public.
 
 // model Request {
 //   RequestID     Int      @id @default(autoincrement())
