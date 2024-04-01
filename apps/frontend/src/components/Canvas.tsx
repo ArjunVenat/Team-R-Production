@@ -20,8 +20,8 @@ export default function Canvas() {
     }, []);
 
     function draw() {
+        setCtx(canvasCtxRef.current);
         if (ctx !== null) {
-            setCtx(canvasCtxRef.current);
             ctx!.beginPath();
             ctx!.drawImage(image, 0, 0, 5000, 3400);
             ctx!.moveTo(0, 0);
@@ -32,7 +32,7 @@ export default function Canvas() {
 
     setTimeout(draw, 100);
     return (
-        <canvas ref={canvasRef} className="absolute top-0 left-0 "></canvas>
+        <canvas ref={canvasRef} height={"3400"} width={"5000"} className="absolute top-0 left-0 max-h-screen"></canvas>
 
     );
 }

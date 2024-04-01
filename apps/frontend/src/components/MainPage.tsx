@@ -102,9 +102,9 @@ function MainPage() {
                                     alt={"Fist floor map"}
                                     className=" max-h-screen"
                                 />
-                                <Canvas />
                             </TransformComponent>
                         </TransformWrapper>
+                        <Canvas />
                     </div>
             </main>
 
