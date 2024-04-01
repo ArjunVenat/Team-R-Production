@@ -28,7 +28,7 @@ export default function Canvas() {
         async function fetchPath() {
             const res = await axios.get('/api/map/pathfind', {
                 params: {
-                    startNodeID: "CDEPT004L1",
+                    startNodeID: "CCONF002L1",
                     endNodeID: "CRETL001L1",
                 }
             });
