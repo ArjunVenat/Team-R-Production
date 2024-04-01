@@ -7,7 +7,7 @@ const router: Router = express.Router();
 
 // Whenever a get request is made, return the shortest path
 router.get(
-  "/pathfind",
+  "/",
   async function (
     req: Request<
       object,
