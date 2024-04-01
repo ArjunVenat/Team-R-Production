@@ -4,11 +4,13 @@ import {Logout} from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
+import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import NearMeIcon from "@mui/icons-material/NearMe";
 import { useNavigate } from "react-router-dom";
+import AirlineSeatFlatAngledIcon from '@mui/icons-material/AirlineSeatFlatAngled';
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -32,7 +34,9 @@ export default function Sidebar() {
     };
     const doNavigation: Menu = { title: "Navigation", icon: <NearMeIcon /> };
     const logout: Menu = {title: "Logout", icon: <Logout/>};
-    const Menus: Menu[] = [home, serviceRequest, doNavigation, logout];
+    const edges: Menu = {title: "Edge Table", icon: <AccessibleForwardIcon/>};
+    const nodes: Menu = {title: "Node Table", icon: <AirlineSeatFlatAngledIcon/>};
+    const Menus: Menu[] = [home, serviceRequest, doNavigation, edges, nodes, logout];
 
     const [open, setOpen] = useState(true);
     const [activeMenu, setActiveMenu] = useState<string>(home.title);
@@ -56,6 +60,12 @@ export default function Sidebar() {
         }
         if (title === "Service Request"){
             routeChange("servicerequest");
+        }
+        if (title === "Edge Table"){
+            routeChange("edge-table");
+        }
+        if (title === "Node Table"){
+            routeChange("node-table");
         }
         if (title=== "Home"){
             routeChange("home");
