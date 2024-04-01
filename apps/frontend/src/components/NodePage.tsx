@@ -1,12 +1,15 @@
 
 import React from "react";
-import NodeTable from "./Nodes.tsx"; // Assuming NodeTable component is defined in NodeTable.tsx
+import NodeTable from "./Nodes.tsx";
+import SideBar from "./SideBar.tsx";
+import {Box} from "@mui/material"; // Assuming NodeTable component is defined in NodeTable.tsx
 
 const NodeTablePage = () => {
     return (
-        <div>
+        <Box display="flex">
+            <SideBar/>
             <NodeTable />
-        </div>
+        </Box>
     );
 };
 

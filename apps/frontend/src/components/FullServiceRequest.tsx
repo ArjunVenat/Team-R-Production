@@ -1,4 +1,4 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import "./FullServiceRequest.css";
 import { ServiceRequest } from "./ServiceRequest.tsx";
 import { submitRequestDB } from "./SubmitRequest.tsx";
@@ -13,6 +13,7 @@ import {
   Modal,
   Card,
 } from "@mui/material";
+import {RequestContext} from "../App.tsx";
 
 const modalStyle = {
   position: "absolute",
@@ -50,7 +51,8 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     useState<ServiceRequest>(defaultServiceRequest);
 
   /*requests handles the list of service requests, which is used for the list on the side of the page*/
-  const [requests, setRequests] = useState<ServiceRequest[]>([]);
+  // const [requests, setRequests] = useState<ServiceRequest[]>([]);
+    const context = useContext(RequestContext);
 
   //Function to test if my request updates when submit an order
   //ToDo: Can delete once combine with actual submitRequest
@@ -63,7 +65,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
       !isNaN(singleServiceRequest.room) &&
       singleServiceRequest.deliveryDate
     ) {
-      setRequests([...requests, singleServiceRequest]);
+      context?.setRequests([...(context?.requests || []), singleServiceRequest]);
       submitRequestDB(singleServiceRequest).then();
       clearForm();
     }
@@ -76,8 +78,8 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
   //cancels specific request in My Request column
   const cancelRequest = (index: number) => {
-    const updatedRequests = requests.filter((_, i) => i !== index);
-    setRequests(updatedRequests);
+    const updatedRequests = context?.requests.filter((_, i) => i !== index);
+      context?.setRequests(updatedRequests);
   };
 
   //ToDo: Comment here
@@ -239,7 +241,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                 <div className="my-requests">
                     <h3>My Requests</h3>
                     <hr />
-                    {requests.map((request, index) => (
+                    {context?.requests.map((request, index) => (
                         <div className="request-box" key={index}>
                             {/* Service Request info */}
                             {/*ToDo: make service request updatable*/}
@@ -259,7 +261,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             </Button>
 
                             {/* Divider line */}
-                            {index < requests.length - 1 && <hr />}
+                            {index < context?.requests.length - 1 && <hr />}
                         </div>
                     ))}
                     <hr />

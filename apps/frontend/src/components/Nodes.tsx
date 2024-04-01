@@ -1,6 +1,14 @@
 import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {Nodes} from "database";
+import Table from '@mui/material/Table';
+import TableBody from '@mui/material/TableBody';
+import TableCell from '@mui/material/TableCell';
+import TableContainer from '@mui/material/TableContainer';
+import TableHead from '@mui/material/TableHead';
+import TableRow from '@mui/material/TableRow';
+import Paper from '@mui/material/Paper';
+import {Box} from "@mui/material";
 export default function NodeTable() {
     const [nodeData, setNodeData] = useState<Nodes[]>([]);
     useEffect(() => {
@@ -11,35 +19,41 @@ export default function NodeTable() {
         fetch().then();
     }, []);
     const arrayNode = nodeData.map((node: Nodes) =>
-        <tr>
-            <td>{node.NodeID}</td>
-            <td>{node.Xcoord}</td>
-            <td>{node.Ycoord}</td>
-            <td>{node.Floor}</td>
-            <td>{node.Building}</td>
-            <td>{node.NodeType}</td>
-            <td>{node.LongName}</td>
-            <td>{node.ShortName}</td>
-        </tr>
+        <TableRow
+            key={node.NodeID}
+            sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+        >
+            <TableCell>{node.NodeID}</TableCell>
+            <TableCell>{node.Xcoord}</TableCell>
+            <TableCell>{node.Ycoord}</TableCell>
+            <TableCell>{node.Floor}</TableCell>
+            <TableCell>{node.Building}</TableCell>
+            <TableCell>{node.NodeType}</TableCell>
+            <TableCell>{node.LongName}</TableCell>
+            <TableCell>{node.ShortName}</TableCell>
+        </TableRow>
     );
     return (
-        <div>
-            <table>
-                <thead>
-                <tr>
-                    <th>NodeID</th>
-                    <th>Xcoord</th>
-                    <th>Ycoord</th>
-                    <th>Floor</th>
-                    <th>Building</th>
-                    <th>LongName</th>
-                    <th>ShortName</th>
-                </tr>
-                </thead>
-                <tbody>
-                {arrayNode}
-                </tbody>
-            </table>
-        </div>
+        <Box flex={1}>
+            <TableContainer component={Paper}>
+                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                    <TableHead>
+                        <TableRow>
+                            <TableCell>NodeID</TableCell>
+                            <TableCell>Xcoord</TableCell>
+                            <TableCell>Ycoord</TableCell>
+                            <TableCell>Floor</TableCell>
+                            <TableCell>Building</TableCell>
+                            <TableCell>NodeType</TableCell>
+                            <TableCell>LongName</TableCell>
+                            <TableCell>ShortName</TableCell>
+                        </TableRow>
+                    </TableHead>
+                    <TableBody>
+                        {arrayNode}
+                    </TableBody>
+                </Table>
+            </TableContainer>
+        </Box>
     );
 }
