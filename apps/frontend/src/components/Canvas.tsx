@@ -1,12 +1,15 @@
 import React, {useEffect, useRef} from "react";
 import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import axios from "axios";
+import { Nodes } from "database";
 
 export default function Canvas() {
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
     const canvasCtxRef = React.useRef<CanvasRenderingContext2D | null>(null);
+
+    const [path, setPath] = React.useState< Nodes[] >();
 
     const image = new Image();
     image.src = firstFloorMap;
@@ -19,6 +22,20 @@ export default function Canvas() {
 
     useEffect(() => {
         fetchNodes();
+    }, []);
+
+    useEffect(() => {
+        async function fetchPath() {
+            const res = await axios.get('/api/map/pathfind', {
+                params: {
+                    startNodeID: "CDEPT004L1",
+                    endNodeID: "CRETL001L1",
+                }
+            });
+            console.log(res.data);
+            setPath (res.data);
+        }
+        fetchPath().then();
     }, []);
 
     async function fetchNodes() {
@@ -40,6 +57,14 @@ export default function Canvas() {
 
         if (nodesData) {
             ctx.drawImage(image, 0, 0, 5000, 3400);
+            for (let i = 0; i < path!.length; i++) {
+                const node = path![i];
+                ctx.beginPath();
+                ctx.moveTo(Number(node.Xcoord), Number(node.Ycoord));
+                ctx.lineTo(Number(path![i + 1].Xcoord), Number(path![i + 1].Ycoord));
+                ctx.strokeStyle = 'blue';
+                ctx.stroke();
+            }
             for (let i = 0; i < nodesData.length; i++) {
                 const node = nodesData[i];
                 ctx.beginPath();
