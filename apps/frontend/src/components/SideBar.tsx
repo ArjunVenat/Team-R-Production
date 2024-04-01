@@ -4,7 +4,7 @@
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import { ReactNode, useState } from "react";
-import { BsBellFill } from "react-icons/bs";
+import { BsBellFill, BsListTask } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 // import {IconType} from "react-icons";
@@ -26,7 +26,12 @@ export default function Sidebar({ handleOpenServiceRequestModal }) {
     title: "Send Flowers",
     icon: <LocalFloristIcon />,
   };
-  const Menus: Menu[] = [home, serviceRequest, sendFlowers];
+    const ServiceRequestTable: Menu = {
+        title: " Request Table",
+        icon: < BsListTask/>,
+    };
+
+  const Menus: Menu[] = [home, serviceRequest, sendFlowers,ServiceRequestTable];
 
   const [open, setOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState<string>(home.title);

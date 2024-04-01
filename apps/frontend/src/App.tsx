@@ -3,6 +3,9 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
 import MainPage from "./components/MainPage.tsx";
 import NavigationScreen from "./components/NavigationScreen.tsx";
+//import {ServiceRequest} from "./components/FullServiceRequest";
+import ServiceRequestTable from "./components/ServiceRequestTable";
+
 function App() {
   const router = createBrowserRouter([
     {
@@ -16,7 +19,11 @@ function App() {
         }, {
           path: "testing",
               element: <NavigationScreen />
-          }
+          },
+          {
+              path: "./ServiceRequest.tsx",
+              element: (<ServiceRequestTable />),
+          },
       ],
     },
   ]);

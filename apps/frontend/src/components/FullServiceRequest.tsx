@@ -248,7 +248,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
                     <h1 id="successMessage" className="text-center text-green-600 text-xl mb-4">Success! Request
                         Submitted</h1>
-                    <Button onClick={() => setOpenSuccess(false)}>Close</Button>
+                    <Button onClick={() => clearRequests()}>Close</Button>
                 </Card>
             </Modal>
         </>
