@@ -105,6 +105,6 @@ export default function Canvas() {
     }, 100);
 
     return (
-        <canvas ref={canvasRef} height={"3400"} width={"5000"} className="absolute top-0 left-0 max-h-screen"></canvas>
+        <canvas ref={canvasRef} height={"3400"} width={"5000"} className="top-0 left-0 max-h-screen"></canvas>
     );
 }
