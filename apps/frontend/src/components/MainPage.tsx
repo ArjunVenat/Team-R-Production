@@ -15,11 +15,11 @@ import firstFloorMap from "./maps/00_thelowerlevel1.png";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const actions = [
-    {icon: <LoginIcon/>, name: "Sign In"},
-    {icon: <RoomServiceIcon/>, name: "Service Request"},
-    {icon: <DirectionsIcon/>, name: "Get Directions"},
-];
+// const actions = [
+//     {icon: <LoginIcon/>, name: "Sign In"},
+//     {icon: <RoomServiceIcon/>, name: "Service Request"},
+//     {icon: <DirectionsIcon/>, name: "Get Directions"},
+// ];
 
 //need to export eventually to another file to generalize as a component
 const modalStyle = {
@@ -40,7 +40,7 @@ function MainPage() {
 
     //speed dial state
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [speedDialOpen, setSpeedDialOpen] = useState(true);
+    // const [speedDialOpen, setSpeedDialOpen] = useState(true);
 
     //sign in modal state handlers
     const [openSignInModal, setOpenSignInModal] = useState(false);
@@ -63,22 +63,22 @@ function MainPage() {
 
     //determine which button was pressed
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const handleMenuButton = (name: string) => {
-        switch (name) {
-            case "Sign In": {
-                handleOpenSignInModal();
-                break;
-            }
-            case "Service Request": {
-                handleOpenServiceRequestModal();
-                break;
-            }
-            case "Get Directions": {
-                handleOpenNavigationScreenModal();
-                break;
-            }
-        }
-    };
+    // const handleMenuButton = (name: string) => {
+    //     switch (name) {
+    //         case "Sign In": {
+    //             handleOpenSignInModal();
+    //             break;
+    //         }
+    //         case "Service Request": {
+    //             handleOpenServiceRequestModal();
+    //             break;
+    //         }
+    //         case "Get Directions": {
+    //             handleOpenNavigationScreenModal();
+    //             break;
+    //         }
+    //     }
+    // };
 
 
 
@@ -93,7 +93,7 @@ function MainPage() {
                         <TransformComponent>
                             <img
                                 src={firstFloorMap}
-                                alt={"Fist floor map"}
+                                alt={"First floor map"}
                                 className=" max-h-screen"
                             />
                         </TransformComponent>
