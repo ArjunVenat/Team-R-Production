@@ -5,8 +5,9 @@ import logger from "morgan";
 import exampleRouter from "./routes/example.ts";
 import allNodesRouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
-import mapRouter from "./routes/map.ts";
+import pathfindRouter from "./routes/pathfind.ts";
 import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
+import CSVRouter from "./routes/CSVRouter.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -32,7 +33,8 @@ app.use("/api/high-score", exampleRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/service/create", serviceRequestRouter);
 app.use("/api/admin/allnodes", allNodesRouter); //GET request for all Nodes Data
-app.use("/api/map", mapRouter);
+app.use("/api/map/pathfind", pathfindRouter);
+app.use("/api/admin/csv", CSVRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

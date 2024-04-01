@@ -7,7 +7,7 @@ const router: Router = express.Router();
 
 // Whenever a get request is made, return the shortest path
 router.get(
-  "/pathfind",
+  "/",
   async function (
     req: Request<
       object,
@@ -44,9 +44,36 @@ router.get(
     // Check if the path is empty
     if (path.length === 0) {
       res.sendStatus(204); // and send 204, no data
-    } else {
-      res.send(JSON.stringify({ pathNodeIDs: path }));
+      return;
     }
+
+    // Synchronously get data
+    // const data: Nodes[] = [];
+    //
+    // for (const nodeID of path) {
+    //   data.push(
+    //     await prisma.nodes.findUniqueOrThrow({
+    //       where: {
+    //         NodeID: nodeID,
+    //       },
+    //     }),
+    //   );
+    // }
+    // res.send(data);
+
+    // Asynchronously get data
+    // This *should* work, but uncomment the previous section if not
+    res.send(
+      await Promise.all(
+        path.map(async (nodeID) => {
+          return prisma.nodes.findUniqueOrThrow({
+            where: {
+              NodeID: nodeID,
+            },
+          });
+        }),
+      ),
+    );
   },
 );
 
