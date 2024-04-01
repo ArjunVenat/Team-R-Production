@@ -38,11 +38,9 @@ export default function NavigationScreen() {
     function getDirections() {
         const startNodeArray = nodes?.filter((node: Nodes) => node.LongName === start);
         const endNodeArray = nodes?.filter((node: Nodes) => node.LongName === end);
-
         if (startNodeArray && startNodeArray.length > 0 && endNodeArray && endNodeArray.length > 0) {
             const startNode: string = startNodeArray[0]["NodeID"];
             const endNode: string = endNodeArray[0]["NodeID"];
-
             setPoints({start: startNode, end: endNode});
             sendDirections(points).then();
         } else {
