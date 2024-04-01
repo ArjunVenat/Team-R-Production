@@ -75,6 +75,7 @@ export default function Canvas() {
                 const node = nodesData[i];
                 ctx.beginPath();
                 ctx.arc(node.Xcoord, node.Ycoord, 10, 0, 2 * Math.PI);
+                ctx.strokeStyle = 'white';
                 ctx.fillStyle = 'red';
                 ctx.fill();
                 ctx.stroke();
