@@ -11,7 +11,8 @@ import SignInPage from "./SignInPage.tsx";
 import FullServiceRequest from "./FullServiceRequest.tsx";
 import NavigationScreen from "./NavigationScreen.tsx";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
-import firstFloorMap from "./maps/00_thelowerlevel1.png";
+// import firstFloorMap from "./maps/00_thelowerlevel1.png";
+import Canvas from "./Canvas.tsx";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -91,11 +92,7 @@ function MainPage() {
                 <div id={"map"} className="max-w-full">
                     <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
                         <TransformComponent>
-                            <img
-                                src={firstFloorMap}
-                                alt={"First floor map"}
-                                className=" max-h-screen"
-                            />
+                            <Canvas />
                         </TransformComponent>
                     </TransformWrapper>
                 </div>
