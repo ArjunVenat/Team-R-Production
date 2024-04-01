@@ -4,24 +4,22 @@ import SideBar from "./SideBar";
 import React, {useState} from "react";
 import "./MainPage.css";
 import {Card, Modal,} from "@mui/material";
-import DirectionsIcon from "@mui/icons-material/Directions";
-import LoginIcon from "@mui/icons-material/Login";
-import RoomServiceIcon from "@mui/icons-material/RoomService";
+// import DirectionsIcon from "@mui/icons-material/Directions";
+// import LoginIcon from "@mui/icons-material/Login";
+// import RoomServiceIcon from "@mui/icons-material/RoomService";
 import SignInPage from "./SignInPage.tsx";
 import FullServiceRequest from "./FullServiceRequest.tsx";
 import NavigationScreen from "./NavigationScreen.tsx";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
-// import firstFloorMap from "./maps/00_thelowerlevel1.png";
-import Canvas from "./Canvas.tsx";
-
+import firstFloorMap from "./maps/00_thelowerlevel1.png";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
-const actions = [
-    {icon: <LoginIcon/>, name: "Sign In"},
-    {icon: <RoomServiceIcon/>, name: "Service Request"},
-    {icon: <DirectionsIcon/>, name: "Get Directions"},
-];
+// const actions = [
+//     {icon: <LoginIcon/>, name: "Sign In"},
+//     {icon: <RoomServiceIcon/>, name: "Service Request"},
+//     {icon: <DirectionsIcon/>, name: "Get Directions"},
+// ];
 
 //need to export eventually to another file to generalize as a component
 const modalStyle = {
@@ -42,65 +40,65 @@ function MainPage() {
 
     //speed dial state
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const [speedDialOpen, setSpeedDialOpen] = useState(true);
+    // const [speedDialOpen, setSpeedDialOpen] = useState(true);
 
     //sign in modal state handlers
     const [openSignInModal, setOpenSignInModal] = useState(false);
     const handleCloseSignInModal = () => setOpenSignInModal(false);
-    const handleOpenSignInModal = () => setOpenSignInModal(true);
+    // const handleOpenSignInModal = () => setOpenSignInModal(true);
 
     //service request modal state handlers
     const [openServiceRequestModal, setOpenServiceRequestModal] = useState(false);
     const handleCloseServiceRequestModal = () =>
         setOpenServiceRequestModal(false);
-    const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
+    // const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
 
     //placeholder for handle directions
     const [openNavigationScreenModal, setOpenNavigationScreenModal] =
         useState(false);
     const handleCloseNavigationScreenModal = () =>
         setOpenNavigationScreenModal(false);
-    const handleOpenNavigationScreenModal = () =>
-        setOpenNavigationScreenModal(true);
+    // const handleOpenNavigationScreenModal = () =>
+    //     setOpenNavigationScreenModal(true);
 
     //determine which button was pressed
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const handleMenuButton = (name: string) => {
-        switch (name) {
-            case "Sign In": {
-                handleOpenSignInModal();
-                break;
-            }
-            case "Service Request": {
-                handleOpenServiceRequestModal();
-                break;
-            }
-            case "Get Directions": {
-                handleOpenNavigationScreenModal();
-                break;
-            }
-        }
-    };
+    // const handleMenuButton = (name: string) => {
+    //     switch (name) {
+    //         case "Sign In": {
+    //             handleOpenSignInModal();
+    //             break;
+    //         }
+    //         case "Service Request": {
+    //             handleOpenServiceRequestModal();
+    //             break;
+    //         }
+    //         case "Get Directions": {
+    //             handleOpenNavigationScreenModal();
+    //             break;
+    //         }
+    //     }
+    // };
+
 
 
     return (
         <div id="MainPage" className="flex flex-row bg-[#d6d8d5]">
             {/*<NavigationScreen/>*/}
-            <SideBar
-                handleOpenServiceRequestModal={handleOpenServiceRequestModal}
-                handleOpenNavigationScreenModal={handleOpenNavigationScreenModal}
-            />
-
-
+            <SideBar/>
             {/*This tag only holds the map itself and adds zooming and panning*/}
             <main className="flex content-center justify-center leading-none">
-                    <div id={"map"} className="max-w-full">
-                        <TransformWrapper alignmentAnimation={{sizeX: 0, sizeY: 0}}>
-                            <TransformComponent>
-                                <Canvas />
-                            </TransformComponent>
-                        </TransformWrapper>
-                    </div>
+                <div id={"map"} className="max-w-full">
+                    <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
+                        <TransformComponent>
+                            <img
+                                src={firstFloorMap}
+                                alt={"First floor map"}
+                                className=" max-h-screen"
+                            />
+                        </TransformComponent>
+                    </TransformWrapper>
+                </div>
             </main>
 
             <Modal // These are the modals that I am planning on turning into separate components eventually
