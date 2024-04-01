@@ -1,5 +1,6 @@
 // import MapIcon from '@mui/icons-material/Map';
-import LoginIcon from '@mui/icons-material/Login';
+// import LoginIcon from '@mui/icons-material/Login';
+import {Logout} from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -30,8 +31,8 @@ export default function Sidebar() {
         icon: <BsBellFill />,
     };
     const doNavigation: Menu = { title: "Navigation", icon: <NearMeIcon /> };
-    const login: Menu = {title: "Login", icon: <LoginIcon/>};
-    const Menus: Menu[] = [home, serviceRequest, doNavigation, login];
+    const logout: Menu = {title: "Logout", icon: <Logout/>};
+    const Menus: Menu[] = [home, serviceRequest, doNavigation, logout];
 
     const [open, setOpen] = useState(true);
     const [activeMenu, setActiveMenu] = useState<string>(home.title);
@@ -47,8 +48,8 @@ export default function Sidebar() {
 
     const handleMenuClick = (title: string) => {
         setActiveMenu(title);
-        if (title === "Login") {
-            routeChange("login");
+        if (title === "Logout") {
+            routeChange("");
         }
         if (title === "Navigation") {
             routeChange("testing");
@@ -57,12 +58,12 @@ export default function Sidebar() {
             routeChange("servicerequest");
         }
         if (title=== "Home"){
-            routeChange("");
+            routeChange("home");
         }
     };
 
     return (
-        <div className="flex">
+        <div className="flex" >
             <div
                 className={`bg-primary h-screen p-5 pt-9 flex flex-col drop-shadow-2xl justify-between ${
                     open ? "w-72" : "w-20"

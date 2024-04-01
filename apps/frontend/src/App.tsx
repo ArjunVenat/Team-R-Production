@@ -15,15 +15,15 @@ function App() {
       children: [
         {
           path: "",
-          element: <MainPage />,
+          element: <SignInPage />,
         },
         {
           path: "testing",
           element: <NavigationScreen />,
         },
         {
-          path: "login",
-          element: <SignInPage/>
+          path: "home",
+          element: <MainPage/>
         },
         {
           path: "servicerequest",
