@@ -18,7 +18,10 @@ type appContextType = {
     setRequests: (state: ServiceRequest[]) => void
 };
 
-export const RequestContext = createContext<appContextType | null>(null);
+export const RequestContext = createContext<appContextType>({
+    requests: [],
+    setRequests: (state) => state
+});
 
 import UploadCSV from "./components/UploadCSV.tsx";
 function App() {
