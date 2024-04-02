@@ -155,35 +155,46 @@ function SignInPage(props: SignInPageProps) {
              backgroundSize: 'cover',
              backgroundRepeat: 'no-repeat',
              width: '100vw',
-             height: '100vh'}}>
-             <div style={{backgroundPosition:'center', backgroundColor: 'white', backgroundAttachment: ''}}>
+             height: '100vh',
+             display: 'flex',
+             justifyContent: 'center',
+             alignItems: 'center',}}>
+
+             <div className="grid" style={{
+                 display: 'grid',
+                 placeItems: 'center',
+                 backgroundColor: 'rgba(255, 255, 255, 0.75)',
+                 height: '50vh',
+                 width: '40vw',
+                 borderStyle: 'solid',
+                 borderRadius: '40px'}}>
 
                  <AnimatePresence>
                      {!showLoginForm && (
                          <UserTypeList
-                             initial={{ opacity: 0, y: -50 }}
-                             animate={{ opacity: 1, y: 0 }}
-                             exit={{ opacity: 0, y: -50 }}
-                             transition={{ duration: 0.5 }}
+                             initial={{opacity: 0, y: -50}}
+                             animate={{opacity: 1, y: 0}}
+                             exit={{opacity: 0, y: -50}}
+                             transition={{duration: 0.5}}
                          >
-                             <h1 id={"sign_in_h1"}>Welcome</h1>
+                             <h1 id={"sign_in_h1"} className="text-4xl" >Welcome</h1>
                              <UserTypeButton
-                                 whileHover={{ scale: 1.1 }}
-                                 whileTap={{ scale: 0.9 }}
+                                 whileHover={{scale: 1.1}}
+                                 whileTap={{scale: 0.9}}
                                  onClick={() => handleUserTypeSelection("Guest")}
                              >
                                  Guest
                              </UserTypeButton>
                              <UserTypeButton
-                                 whileHover={{ scale: 1.1 }}
-                                 whileTap={{ scale: 0.9 }}
+                                 whileHover={{scale: 1.1}}
+                                 whileTap={{scale: 0.9}}
                                  onClick={() => handleUserTypeSelection("Staff")}
                              >
                                  Staff
                              </UserTypeButton>
                              <UserTypeButton
-                                 whileHover={{ scale: 1.1 }}
-                                 whileTap={{ scale: 0.9 }}
+                                 whileHover={{scale: 1.1}}
+                                 whileTap={{scale: 0.9}}
                                  onClick={() => handleUserTypeSelection("Admin")}
                              >
                                  Admin
@@ -196,10 +207,10 @@ function SignInPage(props: SignInPageProps) {
                      )}
                      {showLoginForm && (
                          <Anim
-                             initial={{ opacity: 0, y: -50 }}
-                             animate={{ opacity: 1, y: 0 }}
-                             exit={{ opacity: 0, y: -50 }}
-                             transition={{ duration: 0.5 }}
+                             initial={{opacity: 0, y: -50}}
+                             animate={{opacity: 1, y: 0}}
+                             exit={{opacity: 0, y: -50}}
+                             transition={{duration: 0.5}}
                          >
                              <h1 id={"sign_in_h1"}>{selectedUserType}</h1>
                              <LoginFormFields>
@@ -219,15 +230,15 @@ function SignInPage(props: SignInPageProps) {
                                  </LoginFormLabel>
                              </LoginFormFields>
                              <LoginFormButton
-                                 whileHover={{ scale: 1.1 }}
-                                 whileTap={{ scale: 0.9 }}
+                                 whileHover={{scale: 1.1}}
+                                 whileTap={{scale: 0.9}}
                                  onClick={handleSignIn}
                              >
                                  Sign in
                              </LoginFormButton>
                              <LoginFormButton
-                                 whileHover={{ scale: 1.1 }}
-                                 whileTap={{ scale: 0.9 }}
+                                 whileHover={{scale: 1.1}}
+                                 whileTap={{scale: 0.9}}
                                  onClick={handleCancel}
                              >
                                  Cancel

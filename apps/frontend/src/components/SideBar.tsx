@@ -53,7 +53,7 @@ export default function Sidebar() {
     console.log({currentURL});
 
     switch (currentURL){
-        case "/testing":
+        case "/navigation":
             menuHighlight = "Navigation";
             break;
         case "/servicerequest":
@@ -61,6 +61,21 @@ export default function Sidebar() {
             break;
         case "/login":
             menuHighlight = "Login";
+            break;
+        case "/home":
+            menuHighlight = "Home";
+            break;
+        case "/service-request-table":
+            menuHighlight = "Service Request Table";
+            break;
+        case "/edge-table":
+            menuHighlight = "Edge Table";
+            break;
+        case "/node-table":
+            menuHighlight = "Node Table";
+            break;
+        case "/upload-csv":
+            menuHighlight = "Upload CSV";
             break;
         default:
             menuHighlight = "Home";
