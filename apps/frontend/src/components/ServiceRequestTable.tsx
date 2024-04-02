@@ -1,24 +1,24 @@
 import * as React from 'react';
 import {useContext} from "react";
 import {RequestContext} from "../App";
-import {useNavigate} from "react-router-dom";
+// import {useNavigate} from "react-router-dom";
 import {Box} from "@mui/material";
 import Sidebar from "./SideBar.tsx";
 
 function ServiceRequestTable() {
 
-    const context = useContext(RequestContext);
+    const {requests} = useContext(RequestContext);
 
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     return (
         <Box display="flex">
             <Sidebar/>
             <div className="bg-white p-5 flex-1">
                 <div className="flex justify-between items-center mb-5">
-                    <button onClick={() => navigate(-1)}
-                            className="bg-blue-700 hover:bg-blue-800 text-white rounded transition duration-300 ease-in-out transform hover:scale-105">Back
-                    </button>
+                    {/*<button onClick={() => navigate(-1)}*/}
+                    {/*        className="bg-blue-700 hover:bg-blue-800 text-white rounded transition duration-300 ease-in-out transform hover:scale-105">Back*/}
+                    {/*</button>*/}
                     <div className="text-2xl text-center">
                         Service Request
                     </div>
@@ -36,7 +36,7 @@ function ServiceRequestTable() {
                     </thead>
                     <tbody>
                     {
-                        context?.requests.map((row, index) => (
+                        requests.map((row, index) => (
                             <tr key={index}>
                                 <td className="border border-slate-300 text-center">{row.type}</td>
                                 <td className="border border-slate-300 text-center">{row.name}</td>
