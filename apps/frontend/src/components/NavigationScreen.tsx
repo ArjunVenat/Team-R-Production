@@ -64,43 +64,61 @@ export default function NavigationScreen() {
     <>
         <Stack direction="row" spacing={2}>
             <SideBar/>
-            <div>
-                <h1> Enter your start and end locations</h1>
-                <Autocomplete
-                    value={start}
-                    onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
-                        return setStart(getStart!);
-                    }}
-                    disablePortal
-                    id="combo-box-start"
-                    options={Locations}
-                    sx={{width: 300}}
-                    renderInput={(params) => (
-                        <TextField {...params} label="Start Location"/>
-                    )}
-                />
+            <div className="grid" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minWidth: '80vw'
+                }}>
+                <div className="grid" style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    display: "grid"
+                    }}>
+                    <div className = 'flex justify-center items-center h-full'>
+                            <Stack direction="column" spacing={4}>
+                                <h1 className="text-xl"> Enter your start and end locations:</h1>
+                                <Autocomplete
+                                    value={start}
+                                    onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
+                                        return setStart(getStart!);
+                                    }}
+                                    disablePortal
+                                    id="combo-box-start"
+                                    options={Locations}
+                                    sx={{width: 300}}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="Start Location"/>
+                                    )}
+                                />
 
-                <Autocomplete
-                    value={end}
-                    onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
-                        setEnd(getEnd!);
-                    }}
-                    disablePortal
-                    id="combo-box-end"
-                    options={Locations}
-                    sx={{width: 300}}
-                    renderInput={(params) => (
-                        <TextField {...params} label="End Location"/>
-                    )}
-                />
+                                <Autocomplete
+                                    value={end}
+                                    onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
+                                        setEnd(getEnd!);
+                                    }}
+                                    disablePortal
+                                    id="combo-box-end"
+                                    options={Locations}
+                                    sx={{width: 300}}
+                                    renderInput={(params) => (
+                                        <TextField {...params} label="End Location"/>
+                                    )}
+                                />
 
-                <div className="form-item">
-                    <Button variant="contained" color="success" onClick={getDirections}>
-                        Get Directions
-                    </Button>
+                                <div className="form-item">
+                                    <Button variant="contained" color="success" onClick={getDirections}>
+                                        Get Directions
+                                    </Button>
+                                </div>
+                        </Stack>
+                    </div>
+
+
                 </div>
+
             </div>
         </Stack>
     </>
-  );
+);
 }

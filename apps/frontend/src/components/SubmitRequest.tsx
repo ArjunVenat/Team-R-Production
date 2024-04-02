@@ -1,19 +1,19 @@
 import { ServiceRequest } from "./ServiceRequest.tsx";
 import axios from "axios";
-import SuccessAlert from "./SuccessAlert.tsx";
+// import SuccessAlert from "./SuccessAlert.tsx";
 export async function submitRequestDB(request: ServiceRequest) {
   const data = JSON.stringify({
-    time: new Date(),
-    name: request.name,
-    room: request.room,
-    deliveryDate: request.deliveryDate,
-    type: request.type,
-    details: request.details,
+    Time: new Date(),
+    DeliveryDate: request.deliveryDate + ":00.000Z" ,
+    RecipientName: request.name,
+    FlowerType: request.subType,
+    UserID: 123456,
+    DestinationLongID: request.room,
   });
-  SuccessAlert();
+  // SuccessAlert();
   console.log(data);
   //sends a post request
-  const res = await axios.post("/service/create", data, {
+  const res = await axios.post("/api/service/create", data, {
     headers: {
       "Content-Type": "application/json",
     },
@@ -21,6 +21,6 @@ export async function submitRequestDB(request: ServiceRequest) {
   if (res.status == 200) {
     console.log("submitted request");
 
-    SuccessAlert();
+    // SuccessAlert();
   }
 }
