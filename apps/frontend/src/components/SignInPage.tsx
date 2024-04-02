@@ -79,8 +79,16 @@ const LoginFormFields = styled(Box)({
   marginBottom: "10px",
 });
 
+type SignInPageProps = {
+    setSnackBar: (obj: {
+        open: boolean,
+        severity: string,
+        message: string
+    }) => void
+}
+
 // Define SignInPage component
-function SignInPage() {
+function SignInPage(props: SignInPageProps) {
 
     const navigate = useNavigate();
     const routeChange = (path: string) => {
@@ -93,7 +101,7 @@ function SignInPage() {
   const [password, setPassword] = useState("");
   const [showLoginForm, setShowLoginForm] = useState(false);
 
-  const[error, setError] = useState("");
+  // const[error, setError] = useState("");
   // Define function to handle user type (guest, staff, admin) selection
   const handleUserTypeSelection = (userType: string) => {
     setSelectedUserType(userType);
@@ -107,13 +115,18 @@ function SignInPage() {
           (selectedUserType === 'Staff' && username === 'staff' && password === 'staff')
       ){
           routeChange("home");
+          props.setSnackBar({
+              open: true,
+              severity: 'success',
+              message: 'Login successful'
+          });
       }else {
-              // props.setSnackBar({
-              //     open: true,
-              //     severity: 'error',
-              //     message: 'Invalid username or password'
-              // });
-              setError("Incorrect Username or Password - Please try again");
+              props.setSnackBar({
+                  open: true,
+                  severity: 'error',
+                  message: 'Invalid username or password'
+              });
+              // setError("Incorrect Username or Password - Please try again");
               setUsername("");
               setPassword("");
               setSelectedUserType("");
@@ -175,7 +188,7 @@ function SignInPage() {
                              >
                                  Admin
                              </UserTypeButton>
-                             {error && <p>{error}</p>}
+                             {/*{error && <p>{error}</p>}*/}
                              {username && <p>Username: {username}</p>}
                              {password && <p>Password: {password}</p>}
                              {selectedUserType && <p>User Type: {selectedUserType}</p>}
