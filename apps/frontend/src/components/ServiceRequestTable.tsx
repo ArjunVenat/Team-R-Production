@@ -28,6 +28,7 @@ function ServiceRequestTable() {
                     <thead>
                     <tr>
                         <th className="border border-slate-300">Service Type</th>
+                        <th className="border border-slate-300">Sub Type</th>
                         <th className="border border-slate-300">Name</th>
                         <th className="border border-slate-300">Delivery Date</th>
                         <th className="border border-slate-300">Room</th>
@@ -39,6 +40,7 @@ function ServiceRequestTable() {
                         requests.map((row, index) => (
                             <tr key={index}>
                                 <td className="border border-slate-300 text-center">{row.type}</td>
+                                <td className="border border-slate-300 text-center">{row.subType}</td>
                                 <td className="border border-slate-300 text-center">{row.name}</td>
                                 <td className="border border-slate-300 text-center">{row.deliveryDate}</td>
                                 <td className="border border-slate-300 text-center">{row.room}</td>
