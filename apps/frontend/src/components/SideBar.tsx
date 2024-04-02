@@ -9,7 +9,6 @@ import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from '@mui/icons-material/TableView';
-import NearMeIcon from "@mui/icons-material/NearMe";
 import { useNavigate, useLocation } from "react-router-dom";
 import AirlineSeatFlatAngledIcon from '@mui/icons-material/AirlineSeatFlatAngled';
 // import {IconType} from "react-icons";
@@ -37,25 +36,21 @@ export default function Sidebar() {
         title: "Service Request Table",
         icon: <TableViewIcon />,
     };
-    const doNavigation: Menu = { title: "Navigation", icon: <NearMeIcon /> };
     const logout: Menu = {title: "Logout", icon: <Logout/>};
     const edges: Menu = {title: "Edge Table", icon: <AccessibleForwardIcon/>};
     const nodes: Menu = {title: "Node Table", icon: <AirlineSeatFlatAngledIcon/>};
     const uploadCSV: Menu = {title: "Upload CSV", icon: <UploadFile/>};
-    const Menus: Menu[] = [home, serviceRequest, serviceRequestTable, doNavigation, edges, nodes, uploadCSV, logout];
+    const Menus: Menu[] = [home, serviceRequest, serviceRequestTable, edges, nodes, uploadCSV, logout];
 
 
 
     const location = useLocation();
     const currentURL = location.pathname;
 
-    let menuHighlight:string = "";
+    let menuHighlight:string;
     console.log({currentURL});
 
     switch (currentURL){
-        case "/navigation":
-            menuHighlight = "Navigation";
-            break;
         case "/servicerequest":
             menuHighlight = "Service Request";
             break;
@@ -103,9 +98,6 @@ export default function Sidebar() {
         setActiveMenu(title);
         if (title === "Logout") {
             routeChange("");
-        }
-        if (title === "Navigation") {
-            routeChange("navigation");
         }
         if (title === "Service Request"){
             routeChange("servicerequest");

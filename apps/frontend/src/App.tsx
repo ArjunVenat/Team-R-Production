@@ -2,7 +2,6 @@ import React, {createContext, useState} from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
 import MainPage from "./components/MainPage.tsx";
-import NavigationScreen from "./components/NavigationScreen.tsx";
 import SignInPage from "./components/SignInPage";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeTablePage from "./components/EdgePage.tsx";
@@ -38,10 +37,6 @@ function App() {
         {
           path: "",
           element: <SignInPage setSnackBar={setSnackbar} />,
-        },
-        {
-          path: "navigation",
-          element: <NavigationScreen />,
         },
         {
           path: "home",
