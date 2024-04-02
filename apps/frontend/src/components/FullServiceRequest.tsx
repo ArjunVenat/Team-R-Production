@@ -170,6 +170,10 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
         const updatedRequests = requests.filter((_, i) => i !== index);
         setRequests(updatedRequests);
     };
+    const clearRequests = () => {
+        setRequests([]);
+        setOpenSuccess(false); // Close the success modal if it's open
+    };
 
     //ToDo: Comment here
     const [openSuccessMessage, setOpenSuccess] = useState(false);
@@ -212,7 +216,7 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
             <div>
                 <div className="inline-block w-[40%]"  >
                     <div className="" style={{height: '100%', paddingTop: '10%'}}>
-                        <div className="bg-white rounded-lg p-5 overflow-auto" style={{maxHeight: '100%'}}>
+                        <div className="bg-white rounded-lg p-5 overflow-auto" style={{maxHeight: '40vh'}}>
                             <h2 className="mb-4 font-bold text-lg">My Requests</h2>
                             <hr className="mb-4 border-solid border border-black"/>
                             {requests.map((request, index) => (
@@ -306,7 +310,7 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
                     className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
                     <h1 id="successMessage" className="text-center text-green-600 text-xl mb-4">Success! Request
                         Submitted</h1>
-                    <Button onClick={() => setOpenSuccess(false)}>Close</Button>
+                    <Button onClick={() => clearRequests()}>Close</Button>
                 </Card>
             </Modal>
 
