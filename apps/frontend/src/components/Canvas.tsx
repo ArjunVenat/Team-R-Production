@@ -61,7 +61,6 @@ export default function Canvas() {
 
     async function draw(ctx: CanvasRenderingContext2D) {
         const nodesData = await fetchNodes();
-
         if (nodesData && path) {
             ctx.drawImage(image, 0, 0, 5000, 3400);
             for (let i = 0; i < path!.length - 1; i++) {
@@ -102,7 +101,7 @@ export default function Canvas() {
         if (canvasCtxRef.current) {
             draw(canvasCtxRef.current);
         }
-    }, 100);
+    });
 
     return (
         <canvas ref={canvasRef} height={"3400"} width={"5000"} className="top-0 left-0 max-h-screen"></canvas>
