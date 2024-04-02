@@ -3,6 +3,7 @@ import axios from 'axios';
 import SuccessAlert from "./SuccessAlert.tsx";
 import SideBar from "./SideBar.tsx";
 import {Stack, Button, Box} from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 
 
@@ -10,6 +11,12 @@ import {Stack, Button, Box} from "@mui/material";
 export default function UploadCSV() {
     // a local state to store the currently selected file.
     const [selectedFile, setSelectedFile] = useState<File | null>(null);
+
+    const navigate = useNavigate();
+    const routeChange = (path:string) =>{
+        const newPath = `/${path}`;
+        navigate(newPath);
+    };
 
     const handleSubmit = async(event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
@@ -29,9 +36,15 @@ export default function UploadCSV() {
             if (response.status == 200) {
                 console.log("submitted csv successfully");
 
+                //ToDo: Test this!!!
                 SuccessAlert();
+                routeChange("home");
+
             }
+
         }
+
+        
     };
 
     const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
