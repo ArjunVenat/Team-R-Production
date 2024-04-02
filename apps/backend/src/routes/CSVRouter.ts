@@ -57,7 +57,6 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
   }
 });
 
-
 /**
  * Asyncrhonous function for handling an HTTP post request for uploading a CSV.
  * API route is /api/admin/csv
@@ -65,83 +64,88 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
  */
-CSVRouter.post("/", upload.single("uploadFile.csv"), async function (req: Request, res: Response) {
+CSVRouter.post(
+  "/",
+  upload.single("uploadFile.csv"),
+  async function (req: Request, res: Response) {
     try {
-        //Check if file was sent
-        if (req.file === undefined) {
-            console.log("Error, no file sent");
-            return;
+      //Check if file was sent
+      if (req.file === undefined) {
+        console.log("Error, no file sent");
+        return;
+      }
+      fs.readFile(String(req.file.buffer), "utf8", async (err, data) => {
+        //utf8 for character encoding, and an error callback in case stuff messes up.
+        // Trying to use \r\n as a delimiter
+        let rows = data
+          .split("\r\n") // Files created in windows are terminated with \r\n
+          .slice(1, -1) // Remove header and trailing null value
+          .map((row) => row.split(","));
+
+        // Check if data was read, try reading with \n as a delimiter if not
+        if (rows.length == 0) {
+          rows = data
+            .split("\n") // Files created in windows are terminated with \r\n
+            .slice(1, -1) // Remove header and trailing null value
+            .map((row) => row.split(","));
         }
-        fs.readFile(String(req.file.buffer), "utf8", async (err, data) => {
-          //utf8 for character encoding, and an error callback in case stuff messes up.
-                // Trying to use \r\n as a delimiter
-                let rows = data
-                    .split("\r\n") // Files created in windows are terminated with \r\n
-                    .slice(1, -1) // Remove header and trailing null value
-                    .map((row) => row.split(","));
 
-                // Check if data was read, try reading with \n as a delimiter if not
-                if (rows.length == 0) {
-                    rows = data
-                        .split("\n") // Files created in windows are terminated with \r\n
-                        .slice(1, -1) // Remove header and trailing null value
-                        .map((row) => row.split(","));
-                }
+        // We still have no data, reject the promise
+        if (rows.length == 0) {
+          console.log("The given csv is empty or delimited improperly");
+          return;
+        }
 
-                // We still have no data, reject the promise
-                if (rows.length == 0) {
-                    console.log("The given csv is empty or delimited improperly");
-                    return;
-                }
+        const delteFlowerReqyests = await PrismaClient.flowerRequest.deleteMany(
+          {},
+        );
+        if (rows[0].length == 2) {
+          const deleteEdges = await PrismaClient.edges.deleteMany({});
+        } else if (rows[0].length == 8) {
+          const deleteNodes = await PrismaClient.nodes.deleteMany({});
+        }
 
-                const delteFlowerReqyests = await PrismaClient.flowerRequest.deleteMany({});
-                if (rows[0].length == 2) {
-                    const deleteEdges = await PrismaClient.edges.deleteMany({});
-                } else if (rows[0].length == 8) {
-                    const deleteNodes = await PrismaClient.nodes.deleteMany({});
-                }
-
-                let edgeIdCounter = 0;
-                for (const row of rows) {
-                    try {
-                        if (rows[0].length == 2) {
-                            const [startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
-                            await createEdge(edgeIdCounter, startNodeID, endNodeID);
-                            edgeIdCounter = edgeIdCounter + 1;
-                        } else if (rows[0].length == 8) {
-                            const [
-                                nodeID,
-                                xcoord,
-                                ycoord,
-                                floor,
-                                building,
-                                nodeType,
-                                longName,
-                                shortName,
-                            ] = row; //Parse each row of the .csv file into startNodeID and endNodeID
-                            await createNode(
-                                nodeID,
-                                xcoord,
-                                ycoord,
-                                floor,
-                                building,
-                                nodeType,
-                                longName,
-                                shortName,
-                            );
-                        } else {
-                            console.log(
-                                `Failed to insert data. CSV not supported. Must be uploadFile.csv`,
-                            ); //or L1Nodes.csv`);
-                        }
-                    } catch (error) {
-                        //Display error message
-                        console.error(
-                            `Error inserting data from uploadFile.csv failed. This record likely already exists.`,
-                        );
-                    }
-                }
-        });
+        let edgeIdCounter = 0;
+        for (const row of rows) {
+          try {
+            if (rows[0].length == 2) {
+              const [startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
+              await createEdge(edgeIdCounter, startNodeID, endNodeID);
+              edgeIdCounter = edgeIdCounter + 1;
+            } else if (rows[0].length == 8) {
+              const [
+                nodeID,
+                xcoord,
+                ycoord,
+                floor,
+                building,
+                nodeType,
+                longName,
+                shortName,
+              ] = row; //Parse each row of the .csv file into startNodeID and endNodeID
+              await createNode(
+                nodeID,
+                xcoord,
+                ycoord,
+                floor,
+                building,
+                nodeType,
+                longName,
+                shortName,
+              );
+            } else {
+              console.log(
+                `Failed to insert data. CSV not supported. Must be uploadFile.csv`,
+              ); //or L1Nodes.csv`);
+            }
+          } catch (error) {
+            //Display error message
+            console.error(
+              `Error inserting data from uploadFile.csv failed. This record likely already exists.`,
+            );
+          }
+        }
+      });
     } catch (error) {
       console.error("Unable to upload data to database");
       res.sendStatus(400); // Send error
