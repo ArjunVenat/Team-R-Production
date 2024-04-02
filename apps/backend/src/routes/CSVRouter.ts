@@ -2,7 +2,6 @@ import express, { Router, Request, Response } from "express";
 const CSVRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 import multer from "multer";
-import fs from "fs";
 import { createNode } from "../node.ts"; // Importing node database functions
 import { createEdge } from "../edge"; // Importing edge database functions
 const upload = multer({
