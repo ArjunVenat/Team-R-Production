@@ -64,11 +64,15 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
  */
-CSVRouter.post("/", upload.single("uploadFile.csv"), async function (req: Request, res: Response) {
+CSVRouter.post(
+  "/",
+  upload.single("uploadFile.csv"),
+  async function (req: Request, res: Response) {
     try {
       //Check if file was sent
       if (req.file === undefined) {
         console.log("Error, no file sent");
+        res.sendStatus(400);
         return;
       }
 
@@ -104,30 +108,51 @@ CSVRouter.post("/", upload.single("uploadFile.csv"), async function (req: Reques
         await PrismaClient.nodes.deleteMany({});
       }
 
-        //Now, write file contents to CSV
-        let edgeIdCounter = 0;
-        for (const row of rows) {
-            if (rows[0].length == 2) {
-                const [startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
-                await createEdge(edgeIdCounter, startNodeID, endNodeID);
-                edgeIdCounter = edgeIdCounter + 1;
-            } else if (rows[0].length == 8) {
-                 //Parse each row of the .csv file into startNodeID and endNodeID
-                 const [nodeID, xcoord, ycoord, floor,
-                        building, nodeType, longName, shortName] = row;
-                await createNode(nodeID, xcoord, ycoord, floor, building, nodeType, longName, shortName);
-            } else {
-                res.sendStatus(400);
-                console.log(`Failed to insert data. CSV not supported. Must be uploadFile.csv`);
-                return;
-            }
+      //Now, write file contents to CSV
+      let edgeIdCounter = 0;
+      for (const row of rows) {
+        if (rows[0].length == 2) {
+          const [startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
+          await createEdge(edgeIdCounter, startNodeID, endNodeID);
+          edgeIdCounter = edgeIdCounter + 1;
+        } else if (rows[0].length == 8) {
+          //Parse each row of the .csv file into startNodeID and endNodeID
+          const [
+            nodeID,
+            xcoord,
+            ycoord,
+            floor,
+            building,
+            nodeType,
+            longName,
+            shortName,
+          ] = row;
+          await createNode(
+            nodeID,
+            xcoord,
+            ycoord,
+            floor,
+            building,
+            nodeType,
+            longName,
+            shortName,
+          );
+        } else {
+          res.sendStatus(400);
+          console.log(
+            `Failed to insert data. CSV not supported. Must be uploadFile.csv`,
+          );
+          return;
         }
+      }
+      res.sendStatus(200);
     } catch (error) {
       console.error("Unable to upload data to database");
       res.sendStatus(400); // Send error
       return; // Don't try to send duplicate statuses
     }
-  });
+  },
+);
 
 //Export the router.
 export default CSVRouter;
