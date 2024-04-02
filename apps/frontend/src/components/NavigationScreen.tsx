@@ -8,13 +8,9 @@ import axios from "axios";
 import { Nodes } from "database";
 import SideBar from "./SideBar.tsx";
 import { useNavigate } from "react-router-dom";
-
 import { ChangeEvent } from "react";
+import Canvas from "./Canvas.tsx";
 
-// interface Location {
-//     label: string;
-//     nodeID: string;
-// }
 export default function NavigationScreen() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
@@ -111,9 +107,9 @@ export default function NavigationScreen() {
                                         Get Directions
                                     </Button>
                                 </div>
+                                <Canvas startnode={points.start} endnode={points.end}></Canvas>
                         </Stack>
                     </div>
-
 
                 </div>
 

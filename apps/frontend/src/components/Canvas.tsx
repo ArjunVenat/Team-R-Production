@@ -3,7 +3,7 @@ import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import axios from "axios";
 import { Nodes } from "database";
 
-export default function Canvas() {
+export default function Canvas(props:{startnode?:string,endnode?:string}) {
 
     const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
@@ -23,7 +23,7 @@ export default function Canvas() {
     useEffect(() => {
         fetchNodes();
     }, []);
-
+    console.log(props);
     useEffect(() => {
         async function fetchPath() {
             const res = await axios.get('/api/map/pathfind', {
