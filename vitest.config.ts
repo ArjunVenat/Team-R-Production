@@ -11,7 +11,7 @@ export default defineConfig({
   },
   test: {
     api: {
-      port:  parseInt(<string>process.env["FROUNTEND_PORT"]),
+      port:  parseInt(<string>process.env["FRONTEND_PORT"]),
       host: "0.0.0.0",
     },
   },

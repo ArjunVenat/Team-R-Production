@@ -88,7 +88,7 @@ export default function Sidebar() {
             routeChange("");
         }
         if (title === "Navigation") {
-            routeChange("testing");
+            routeChange("navigation");
         }
         if (title === "Service Request"){
             routeChange("servicerequest");

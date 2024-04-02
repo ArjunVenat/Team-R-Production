@@ -7,6 +7,7 @@ import { sendDirections } from "./SendDirectionRequest.tsx";
 import axios from "axios";
 import { Nodes } from "database";
 import SideBar from "./SideBar.tsx";
+import { useNavigate } from "react-router-dom";
 
 import { ChangeEvent } from "react";
 
@@ -20,26 +21,43 @@ export default function NavigationScreen() {
   const [points, setPoints] = useState<Directions>({ start: "", end: "" });
   const [nodes, setNodes] = useState<Nodes[]>();
 
-  useEffect(() => {
-    async function fetchData() {
-      const res = await axios.get("/api/admin/allnodes");
-      setNodes(res.data);
-      console.log("successfully got data from get request");
-    }
 
-    fetchData().then();
-  }, []);
+  const navigate = useNavigate();
+  const routeChange = (path: string) => {
+    const newPath = `/${path}`;
+    navigate(newPath);
+  };
+
+
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await axios.get("/api/admin/allnodes");
+            const allNodes = res.data;
+            const nonHallwayNodes = allNodes.filter((node: { LongName: string | string[]; }) => !node.LongName.includes("Hallway"));
+            setNodes(nonHallwayNodes);
+            console.log("successfully got data from get request");
+        }
+
+        fetchData().then();
+    }, []);
   console.log(nodes);
 
-  const Locations = nodes?.map((node) => node.LongName) || [];
+    const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
 
 
     function getDirections() {
-        const startnode: string = nodes?.filter((node) => node.LongName === start)[0]["NodeID"];
-        const endnode: string = nodes?.filter((node) => node.LongName === end)[0]["NodeID"];
-
-        setPoints({start: startnode, end: endnode});
-        sendDirections(points).then();
+        const startNodeArray = nodes?.filter((node: Nodes) => node.LongName === start);
+        const endNodeArray = nodes?.filter((node: Nodes) => node.LongName === end);
+        if (startNodeArray && startNodeArray.length > 0 && endNodeArray && endNodeArray.length > 0) {
+            const startNode: string = startNodeArray[0]["NodeID"];
+            const endNode: string = endNodeArray[0]["NodeID"];
+            setPoints({start: startNode, end: endNode});
+            sendDirections(points).then();
+        } else {
+            console.error('Start or end node not found');
+        }
+        routeChange("home");
     }
 
   return (

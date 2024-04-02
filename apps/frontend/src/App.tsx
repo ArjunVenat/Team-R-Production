@@ -7,6 +7,7 @@ import SignInPage from "./components/SignInPage";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeTablePage from "./components/EdgePage.tsx";
 import NodeTablePage from "./components/NodePage.tsx";
+import Canvas from "./components/Canvas.tsx";
 import Snackbar from "@mui/material/Snackbar";
 import {Alert} from "@mui/material";
 import { ServiceRequest } from "./components/ServiceRequest.tsx";
@@ -35,7 +36,7 @@ function App() {
           element: <SignInPage setSnackBar={setSnackbar} />,
         },
         {
-          path: "testing",
+          path: "navigation",
           element: <NavigationScreen />,
         },
         {
@@ -57,7 +58,11 @@ function App() {
         {
           path: "node-table",
           element: <NodeTablePage/>
-        }
+        },
+          {
+              path: "canvas",
+              element: <Canvas />
+          }
       ],
     },
   ]);
