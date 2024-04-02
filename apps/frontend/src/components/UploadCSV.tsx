@@ -67,6 +67,7 @@ export default function UploadCSV() {
                     alignItems: 'center',
                     display: "grid"
                 }}>
+                    <div className="border-2 border-blue rounded-lg px-20 py-10">
                     <form onSubmit={(event) => {
                         handleSubmit(event).then();
                     }}>
@@ -75,6 +76,7 @@ export default function UploadCSV() {
                             <Button variant="contained" color="success" type="submit">Upload File</Button>
                         </Box>
                     </form>
+                    </div>
                 </div>
             </div>
         </Stack>
