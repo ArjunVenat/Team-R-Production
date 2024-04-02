@@ -1,18 +1,18 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
 import SideBar from "./SideBar";
-import React, {useState} from "react";
+import React, {ChangeEvent, useEffect, useState} from "react";
 import "./MainPage.css";
-import {Card, Modal,} from "@mui/material";
-// import DirectionsIcon from "@mui/icons-material/Directions";
-// import LoginIcon from "@mui/icons-material/Login";
-// import RoomServiceIcon from "@mui/icons-material/RoomService";
-import SignInPage from "./SignInPage.tsx";
-import FullServiceRequest from "./FullServiceRequest.tsx";
-import NavigationScreen from "./NavigationScreen.tsx";
 import {TransformComponent, TransformWrapper} from "react-zoom-pan-pinch";
 // import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import Canvas from "./Canvas.tsx";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { Nodes } from "database";
+import { Stack } from "react-bootstrap";
+import Autocomplete from "@mui/material/Autocomplete";
+import TextField from "@mui/material/TextField";
+import {Button} from "@mui/material";
 
 //actions for speed dial
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -23,107 +23,145 @@ import Canvas from "./Canvas.tsx";
 // ];
 
 //need to export eventually to another file to generalize as a component
-const modalStyle = {
-    position: "absolute",
-    top: "50%",
-    left: "50%",
-    transform: "translate(-50%, -50%)",
-    bgcolor: "background.paper",
-    boxShadow: 24,
-    borderRadius: 10,
-    padding: "50px",
-    width: "fit-content",
-    height: "fit-content",
-};
+// const modalStyle = {
+//     position: "absolute",
+//     top: "50%",
+//     left: "50%",
+//     transform: "translate(-50%, -50%)",
+//     bgcolor: "background.paper",
+//     boxShadow: 24,
+//     borderRadius: 10,
+//     padding: "50px",
+//     width: "fit-content",
+//     height: "fit-content",
+// };
 
 function MainPage() {
-    const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
 
-    //speed dial state
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // const [speedDialOpen, setSpeedDialOpen] = useState(true);
-
-    //sign in modal state handlers
-    const [openSignInModal, setOpenSignInModal] = useState(false);
-    const handleCloseSignInModal = () => setOpenSignInModal(false);
-    // const handleOpenSignInModal = () => setOpenSignInModal(true);
-
-    //service request modal state handlers
-    const [openServiceRequestModal, setOpenServiceRequestModal] = useState(false);
-    const handleCloseServiceRequestModal = () =>
-        setOpenServiceRequestModal(false);
-    // const handleOpenServiceRequestModal = () => setOpenServiceRequestModal(true);
-
-    //placeholder for handle directions
-    const [openNavigationScreenModal, setOpenNavigationScreenModal] =
-        useState(false);
-    const handleCloseNavigationScreenModal = () =>
-        setOpenNavigationScreenModal(false);
-    // const handleOpenNavigationScreenModal = () =>
-    //     setOpenNavigationScreenModal(true);
-
-    //determine which button was pressed
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    // const handleMenuButton = (name: string) => {
-    //     switch (name) {
-    //         case "Sign In": {
-    //             handleOpenSignInModal();
-    //             break;
-    //         }
-    //         case "Service Request": {
-    //             handleOpenServiceRequestModal();
-    //             break;
-    //         }
-    //         case "Get Directions": {
-    //             handleOpenNavigationScreenModal();
-    //             break;
-    //         }
-    //     }
-    // };
+    const [start, setStart] = useState("");
+    const [end, setEnd] = useState("");
+    const [nodes, setNodes] = useState<Nodes[]>();
+    const [path, setPath] = React.useState< Nodes[] >([]);
 
 
+    const navigate = useNavigate();
+    const routeChange = (path: string) => {
+        const newPath = `/${path}`;
+        navigate(newPath);
+    };
+
+
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await axios.get("/api/admin/allnodes");
+            const allNodes = res.data;
+            const nonHallwayNodes = allNodes.filter((node: { LongName: string | string[]; }) => !node.LongName.includes("Hallway"));
+            setNodes(nonHallwayNodes);
+            console.log("successfully got data from get request");
+        }
+
+        fetchData().then();
+    }, []);
+    console.log(nodes);
+
+    const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
+
+    async function getDirections() {
+        const startNodeArray = nodes?.filter((node: Nodes) => node.LongName === start);
+        const endNodeArray = nodes?.filter((node: Nodes) => node.LongName === end);
+        if (startNodeArray && startNodeArray.length > 0 && endNodeArray && endNodeArray.length > 0) {
+            const startNode: string = startNodeArray[0]["NodeID"];
+            const endNode: string = endNodeArray[0]["NodeID"];
+            const res = await axios.get('/api/map/pathfind', {
+                params: {
+                    startNodeID: startNode,
+                    endNodeID: endNode,
+                }
+            });
+            if (res.status === 200) {
+                console.log("Successfully fetched path");
+            } else {
+                console.error("Failed to fetch path");
+            }
+            console.log(res.data);
+            setPath (res.data);
+        } else {
+            console.error('Start or end node not found');
+        }
+        routeChange("home");
+    }
 
     return (
         <div id="MainPage" className="flex flex-row bg-[#d6d8d5]">
             {/*<NavigationScreen/>*/}
             <SideBar/>
-            {/*This tag only holds the map itself and adds zooming and panning*/}
-            <main className="flex content-center justify-center leading-none">
-                <div id={"map"} className="max-w-full">
-                    <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
-                        <TransformComponent>
-                            <Canvas />
-                        </TransformComponent>
-                    </TransformWrapper>
-                </div>
-            </main>
+            <>
+                <Stack direction="row" spacing={2}>
+                    <div className="grid" style={{
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                        minWidth: '80vw'
+                    }}>
+                        <div className="grid" style={{
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                            display: "grid"
+                        }}>
+                            <div className = 'flex justify-center items-center h-full'>
+                                <div>
+                                    <h1 className="text-xl"> Enter your start and end locations:</h1>
+                                    <Autocomplete
+                                        value={start}
+                                        onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
+                                            return setStart(getStart!);
+                                        }}
+                                        disablePortal
+                                        id="combo-box-start"
+                                        options={Locations}
+                                        sx={{width: 300}}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="Start Location"/>
+                                        )}
+                                    />
 
-            <Modal // These are the modals that I am planning on turning into separate components eventually
-                open={openSignInModal}
-                onClose={handleCloseSignInModal}
-            >
-                <Card sx={modalStyle}>
-                    <SignInPage/>
-                </Card>
-            </Modal>
+                                    <Autocomplete
+                                        value={end}
+                                        onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
+                                            setEnd(getEnd!);
+                                        }}
+                                        disablePortal
+                                        id="combo-box-end"
+                                        options={Locations}
+                                        sx={{width: 300}}
+                                        renderInput={(params) => (
+                                            <TextField {...params} label="End Location"/>
+                                        )}
+                                    />
 
-            <Modal
-                open={openServiceRequestModal}
-                onClose={handleCloseServiceRequestModal}
-            >
-                <Card sx={modalStyle}>
-                    <FullServiceRequest availableServices={guestOptions}/>
-                </Card>
-            </Modal>
+                                    <div className="form-item">
+                                        <Button variant="contained" color="success" onClick={getDirections}>
+                                            Get Directions
+                                        </Button>
+                                    </div>
+                                    <main className="flex content-center justify-center leading-none">
+                                        <div id={"map"} className="max-w-full">
+                                            <TransformWrapper alignmentAnimation={{sizeX: 0, sizeY: 0}}>
+                                                <TransformComponent>
+                                                    <Canvas path={path}></Canvas>
+                                                </TransformComponent>
+                                            </TransformWrapper>
+                                        </div>
+                                    </main>
+                                </div>
+                            </div>
 
-            <Modal
-                open={openNavigationScreenModal}
-                onClose={handleCloseNavigationScreenModal}
-            >
-                <Card sx={modalStyle}>
-                    <NavigationScreen/>
-                </Card>
-            </Modal>
+                        </div>
+
+                    </div>
+                </Stack>
+            </>
         </div>
     );
 }
