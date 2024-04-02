@@ -7,6 +7,7 @@ import { sendDirections } from "./SendDirectionRequest.tsx";
 import axios from "axios";
 import { Nodes } from "database";
 import SideBar from "./SideBar.tsx";
+import { useNavigate } from "react-router-dom";
 
 import { ChangeEvent } from "react";
 
@@ -19,6 +20,15 @@ export default function NavigationScreen() {
   const [end, setEnd] = useState("");
   const [points, setPoints] = useState<Directions>({ start: "", end: "" });
   const [nodes, setNodes] = useState<Nodes[]>();
+
+
+  const navigate = useNavigate();
+  const routeChange = (path: string) => {
+    const newPath = `/${path}`;
+    navigate(newPath);
+  };
+
+
 
     useEffect(() => {
         async function fetchData() {
@@ -47,6 +57,7 @@ export default function NavigationScreen() {
         } else {
             console.error('Start or end node not found');
         }
+        routeChange("home");
     }
 
   return (

@@ -21,7 +21,7 @@ function App() {
           element: <SignInPage />,
         },
         {
-          path: "testing",
+          path: "navigation",
           element: <NavigationScreen />,
         },
         {
@@ -41,7 +41,7 @@ function App() {
           element: <NodeTablePage/>
         },
           {
-              path: "test",
+              path: "canvas",
               element: <Canvas />
           }
       ],
