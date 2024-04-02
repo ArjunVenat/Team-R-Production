@@ -1,6 +1,8 @@
 import React, {FormEvent, useState} from 'react';
 import axios from 'axios';
 import SuccessAlert from "./SuccessAlert.tsx";
+import Sidebar from "./SideBar.tsx";
+import {Box} from "@mui/material";
 
 
 
@@ -39,9 +41,12 @@ export default function UploadCSV() {
     };
 
     return (
+        <Box display={"flex"}>
+            <Sidebar/>
         <form onSubmit={(event)=> {handleSubmit(event).then();}}>
             <input type="file" onChange={handleFileSelect}/><br/>
             <button type="submit">Upload File</button>
         </form>
+        </Box>
     );
 };
