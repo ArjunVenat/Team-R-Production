@@ -8,7 +8,7 @@ export async function submitRequestDB(request: ServiceRequest) {
     RecipientName: request.name,
     FlowerType: request.subType,
     UserID: 123456,
-    DestinationShortID: request.room,
+    DestinationLongID: request.room,
   });
   // SuccessAlert();
   console.log(data);

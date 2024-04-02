@@ -289,7 +289,7 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
                                                 options={Locations}
                                                 sx={{width: 300}}
                                                 renderInput={(params) => (
-                                                    <TextField {...params} label="End Location"/>
+                                                    <TextField {...params} label="Room Name"/>
                                                 )}
                                             />
                                             {/*<input className="border rounded-md px-2 py-1 w-full" type="number"*/}
