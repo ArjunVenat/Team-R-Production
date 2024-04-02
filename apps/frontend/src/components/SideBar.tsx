@@ -8,6 +8,7 @@ import AccessibleForwardIcon from '@mui/icons-material/AccessibleForward';
 import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
+import TableViewIcon from '@mui/icons-material/TableView';
 import NearMeIcon from "@mui/icons-material/NearMe";
 import { useNavigate, useLocation } from "react-router-dom";
 import AirlineSeatFlatAngledIcon from '@mui/icons-material/AirlineSeatFlatAngled';
@@ -32,12 +33,17 @@ export default function Sidebar() {
         title: "Service Request",
         icon: <BsBellFill />,
     };
+    const serviceRequestTable: Menu = {
+        title: "Service Request Table",
+        icon: <TableViewIcon />,
+    };
     const doNavigation: Menu = { title: "Navigation", icon: <NearMeIcon /> };
     const logout: Menu = {title: "Logout", icon: <Logout/>};
     const edges: Menu = {title: "Edge Table", icon: <AccessibleForwardIcon/>};
     const nodes: Menu = {title: "Node Table", icon: <AirlineSeatFlatAngledIcon/>};
     const uploadCSV: Menu = {title: "Upload CSV", icon: <UploadFile/>};
-    const Menus: Menu[] = [home, serviceRequest, doNavigation, edges, nodes, uploadCSV, logout];
+    const Menus: Menu[] = [home, serviceRequest, serviceRequestTable, doNavigation, edges, nodes, uploadCSV, logout];
+
 
 
     const location = useLocation();
@@ -84,10 +90,13 @@ export default function Sidebar() {
             routeChange("");
         }
         if (title === "Navigation") {
-            routeChange("testing");
+            routeChange("navigation");
         }
         if (title === "Service Request"){
             routeChange("servicerequest");
+        }
+        if (title === "Service Request Table"){
+            routeChange("service-request-table");
         }
         if (title === "Edge Table"){
             routeChange("edge-table");

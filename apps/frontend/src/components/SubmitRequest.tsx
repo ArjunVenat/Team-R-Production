@@ -10,6 +10,7 @@ export async function submitRequestDB(request: ServiceRequest) {
     type: request.type,
     details: request.details,
   });
+  SuccessAlert();
   console.log(data);
   //sends a post request
   const res = await axios.post("/service/create", data, {
