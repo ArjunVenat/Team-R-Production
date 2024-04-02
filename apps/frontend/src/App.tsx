@@ -23,6 +23,7 @@ export const RequestContext = createContext<appContextType>({
     setRequests: (state) => state
 });
 
+import UploadCSV from "./components/UploadCSV.tsx";
 function App() {
   const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
   const [snackbar, setSnackbar] = React.useState({severity: 'success', open: false, message: ''});
@@ -62,6 +63,10 @@ function App() {
           path: "node-table",
           element: <NodeTablePage/>
         },
+          {
+              path: "upload-csv",
+              element: <UploadCSV/>
+          },
           {
               path: "canvas",
               element: <Canvas />
