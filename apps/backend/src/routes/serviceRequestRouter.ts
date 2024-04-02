@@ -11,6 +11,7 @@ import { FlowerRequest } from "database";
  */
 serviceRequestRouter.post("/", async function (req: Request, res: Response) {
   try {
+    console.log(req.body);
     const receivedRequest: FlowerRequest = req.body;
     await PrismaClient.flowerRequest.create({
       data: receivedRequest,

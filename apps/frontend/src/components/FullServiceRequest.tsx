@@ -1,11 +1,11 @@
-import {useContext, useState} from "react";
+import {ChangeEvent, useContext, useEffect, useState} from "react";
 import "./FullServiceRequest.css";
 import {ServiceRequest} from "./ServiceRequest.tsx";
 import {submitRequestDB} from "./SubmitRequest.tsx";
 import {
     Button,
     Stack,
-    // TextField,
+    TextField,
     // Typography,
     // Grid,
     Modal,
@@ -17,6 +17,10 @@ import Flower3 from "./image/Flower3.png";
 import Flower4 from "./image/Flower4.png";
 import SideBar from "./SideBar.tsx";
 import {RequestContext} from "../App.tsx";
+import Autocomplete from "@mui/material/Autocomplete";
+import { Nodes } from "database";
+import axios from "axios";
+
 
 // const modalStyle = {
 //   position: "absolute",
@@ -43,12 +47,31 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
     /*DefaultServiceRequest is the default state of the Service Request object, where everything is empty*/
     const defaultServiceRequest: ServiceRequest = {
         name: "",
-        room: NaN,
+        room: "",
         deliveryDate: "",
         type: availableServices[0],
         subType: "",
         details: "",
     };
+
+    const [nodes, setNodes] = useState<Nodes[]>();
+
+
+    // const [room, setRoom] = useState("");
+    const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
+
+    useEffect(() => {
+        async function fetchData() {
+            const res = await axios.get("/api/admin/allnodes");
+            const allNodes = res.data;
+            const nonHallwayNodes = allNodes.filter((node: { LongName: string | string[]; }) => !node.LongName.includes("Hallway"));
+            setNodes(nonHallwayNodes);
+            console.log("successfully got data from get request");
+        }
+
+        fetchData().then();
+    }, []);
+
 
     /*useState for a single service request, where any changes update the specific key-value pair*/
     const [singleServiceRequest, setSingleServiceRequest] =
@@ -152,7 +175,7 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
         console.log("submitting");
         if (
             singleServiceRequest.name &&
-            !isNaN(singleServiceRequest.room) &&
+            // !isNaN(singleServiceRequest.room) &&
             singleServiceRequest.deliveryDate
         ) {
             setRequests([...requests, singleServiceRequest]);
@@ -254,13 +277,28 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
                                     <div className="form-item flex flex-col lg:flex-row lg:space-x-4">
                                         <div className="flex-1">
                                             <label htmlFor="room">Room:</label>
-                                            <input className="border rounded-md px-2 py-1 w-full" type="number"
-                                                   id="room"
-                                                   value={singleServiceRequest.room}
-                                                   onChange={e => setSingleServiceRequest({
-                                                       ...singleServiceRequest,
-                                                       room: parseInt(e.target.value) || NaN
-                                                   })} placeholder="Room Number"/>
+
+                                            <Autocomplete
+                                                value={singleServiceRequest.room}
+                                                onChange={(e:ChangeEvent<unknown>, getRoom: string | null)=> setSingleServiceRequest({
+                                                    ...singleServiceRequest,
+                                                    room: getRoom!,
+                                                })}
+                                                disablePortal
+                                                id="combo-box-end"
+                                                options={Locations}
+                                                sx={{width: 300}}
+                                                renderInput={(params) => (
+                                                    <TextField {...params} label="End Location"/>
+                                                )}
+                                            />
+                                            {/*<input className="border rounded-md px-2 py-1 w-full" type="number"*/}
+                                            {/*       id="room"*/}
+                                            {/*       value={singleServiceRequest.room}*/}
+                                            {/*       onChange={e => setSingleServiceRequest({*/}
+                                            {/*           ...singleServiceRequest,*/}
+                                            {/*           room: parseInt(e.target.value) || NaN*/}
+                                            {/*       })} placeholder="Room Number"/>*/}
                                         </div>
                                         <div className="flex-1">
                                             <label htmlFor="name">Name:</label>
@@ -273,7 +311,7 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
                                         </div>
                                         <div className="flex-1">
                                             <label htmlFor="deliveryDate">Delivery Date:</label>
-                                            <input className="border rounded-md px-2 py-1 w-full" type="date"
+                                            <input className="border rounded-md px-2 py-1 w-full" type="datetime-local"
                                                    id="deliveryDate"
                                                    value={singleServiceRequest.deliveryDate}
                                                    onChange={e => setSingleServiceRequest({

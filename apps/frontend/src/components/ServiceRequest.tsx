@@ -1,6 +1,6 @@
 export interface ServiceRequest {
   name: string;
-  room: number;
+  room: string;
   deliveryDate: string;
   type: string;
   subType: string;
