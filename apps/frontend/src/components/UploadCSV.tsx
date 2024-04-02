@@ -1,6 +1,8 @@
 import React, {FormEvent, useState} from 'react';
 import axios from 'axios';
 import SuccessAlert from "./SuccessAlert.tsx";
+import SideBar from "./SideBar.tsx";
+import {Stack, Button, Box} from "@mui/material";
 
 
 
@@ -39,9 +41,29 @@ export default function UploadCSV() {
     };
 
     return (
-        <form onSubmit={(event)=> {handleSubmit(event).then();}}>
-            <input type="file" onChange={handleFileSelect}/><br/>
-            <button type="submit">Upload File</button>
-        </form>
+        <Stack direction = "row" spacing={2}>
+            <SideBar/>
+            <div className="grid" style={{
+                display: 'flex',
+                justifyContent: 'center',
+                alignItems: 'center',
+                minWidth: '80vw'
+            }}>
+                <div className="grid" style={{
+                    justifyContent: 'center',
+                    alignItems: 'center',
+                    display: "grid"
+                }}>
+                    <form onSubmit={(event) => {
+                        handleSubmit(event).then();
+                    }}>
+                        <input type="file" onChange={handleFileSelect}/><br/>
+                        <Box mt={5}>
+                            <Button variant="contained" color="success" type="submit">Upload File</Button>
+                        </Box>
+                    </form>
+                </div>
+            </div>
+        </Stack>
     );
 };
