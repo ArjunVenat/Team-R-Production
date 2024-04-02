@@ -17,7 +17,10 @@ type appContextType = {
     setRequests: (state: ServiceRequest[]) => void
 };
 
-export const RequestContext = createContext<appContextType | null>(null);
+export const RequestContext = createContext<appContextType>({
+    requests: [],
+    setRequests: (state) => state
+});
 
 function App() {
   const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests

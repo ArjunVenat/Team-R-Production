@@ -1,4 +1,4 @@
-import {useState} from "react";
+import {useContext, useState} from "react";
 import "./FullServiceRequest.css";
 import {ServiceRequest} from "./ServiceRequest.tsx";
 import {submitRequestDB} from "./SubmitRequest.tsx";
@@ -16,6 +16,7 @@ import Flower2 from "./image/Flower2.png";
 import Flower3 from "./image/Flower3.png";
 import Flower4 from "./image/Flower4.png";
 import SideBar from "./SideBar.tsx";
+import {RequestContext} from "../App.tsx";
 
 // const modalStyle = {
 //   position: "absolute",
@@ -54,7 +55,8 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
         useState<ServiceRequest>(defaultServiceRequest);
 
     /*requests handles the list of service requests, which is used for the list on the side of the page*/
-    const [requests, setRequests] = useState<ServiceRequest[]>([]);
+    // const [requests, setRequests] = useState<ServiceRequest[]>([]);
+    const { requests, setRequests } = useContext(RequestContext);
     let contentComponent: JSX.Element | null = null;
     //Function to test if my request updates when submit an order
     //ToDo: Can delete once combine with actual submitRequest
@@ -179,8 +181,8 @@ function ServiceRequestLog({availableServices}: ListOfServices) {
     const [openSuccessMessage, setOpenSuccess] = useState(false);
 
     return (
-        <div className="" style={{display:'inline-block'}}>
-        <div className="" style={{display:'inline-block', float:'left'}}>
+        <div className="flex">
+        <div className="inline-block">
             <SideBar/>
         </div>
 
