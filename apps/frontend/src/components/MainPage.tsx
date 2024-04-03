@@ -2,7 +2,6 @@
 
 import SideBar from "./SideBar";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import "./MainPage.css";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 // import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import Canvas from "./Canvas.tsx";
@@ -14,29 +13,9 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 
-//actions for speed dial
-
-// const actions = [
-//     {icon: <LoginIcon/>, name: "Sign In"},
-//     {icon: <RoomServiceIcon/>, name: "Service Request"},
-//     {icon: <DirectionsIcon/>, name: "Get Directions"},
-// ];
-
-//need to export eventually to another file to generalize as a component
-// const modalStyle = {
-//     position: "absolute",
-//     top: "50%",
-//     left: "50%",
-//     transform: "translate(-50%, -50%)",
-//     bgcolor: "background.paper",
-//     boxShadow: 24,
-//     borderRadius: 10,
-//     padding: "50px",
-//     width: "fit-content",
-//     height: "fit-content",
-// };
 
 function MainPage() {
+    console.log("this is a test");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();

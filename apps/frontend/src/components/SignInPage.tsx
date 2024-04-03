@@ -86,6 +86,7 @@ type SignInPageProps = {
 
 // Define SignInPage component
 function SignInPage(props: SignInPageProps) {
+    console.log("testing string double");
   const navigate = useNavigate();
   const routeChange = (path: string) => {
     const newPath = `/${path}`;

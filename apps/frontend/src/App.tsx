@@ -8,9 +8,11 @@ import EdgeTablePage from "./components/EdgePage.tsx";
 import NodeTablePage from "./components/NodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
-import { ServiceRequest } from "./components/ServiceRequest.tsx";
+import { ServiceRequest } from "./components/ServiceRequest.ts";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
 import DownloadCSV from "./components/DownloadCSV.tsx";
+import UploadCSV from "./components/UploadCSV.tsx";
+
 type appContextType = {
   requests: ServiceRequest[];
   setRequests: (state: ServiceRequest[]) => void;
@@ -21,8 +23,8 @@ export const RequestContext = createContext<appContextType>({
   setRequests: (state) => state,
 });
 
-import UploadCSV from "./components/UploadCSV.tsx";
 function App() {
+    console.log("top of app");
   const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
   const [snackbar, setSnackbar] = React.useState({
     severity: "success",
@@ -43,7 +45,7 @@ function App() {
         },
         {
           path: "home",
-          element: <MainPage />,
+          element:<MainPage />,
         },
         {
           path: "servicerequest",
@@ -73,7 +75,10 @@ function App() {
     },
   ]);
 
-  return <RouterProvider router={router} />;
+  return (
+      <RouterProvider router={router} />
+  );
+
   function Root() {
     return (
       <RequestContext.Provider value={{ requests, setRequests }}>
