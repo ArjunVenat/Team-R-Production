@@ -44,7 +44,7 @@ function App() {
         },
         {
           path: "home",
-          element:<MainPage />,
+          element: <MainPage />,
         },
         {
           path: "servicerequest",

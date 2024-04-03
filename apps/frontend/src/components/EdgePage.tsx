@@ -5,12 +5,12 @@ import { Box } from "@mui/material"; // Assuming NodeTable component is defined 
 
 const EdgeTablePage = () => {
   return (
-      <Box display="flex">
-          <SideBar />
-          <div className="overflow-y-auto h-screen">
-            <EdgeTable />
-          </div>
-      </Box>
+    <Box display="flex">
+      <SideBar />
+      <div className="overflow-y-auto h-screen">
+        <EdgeTable />
+      </div>
+    </Box>
   );
 };
 

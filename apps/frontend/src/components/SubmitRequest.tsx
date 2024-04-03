@@ -2,7 +2,6 @@ import { ServiceRequest } from "./ServiceRequest.ts";
 import axios from "axios";
 // import SuccessAlert from "./SuccessAlert.tsx";
 
-
 export async function submitRequestDB(request: ServiceRequest) {
   const data = JSON.stringify({
     Time: new Date(),

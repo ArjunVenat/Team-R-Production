@@ -12,7 +12,6 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
 
-
 function MainPage() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
