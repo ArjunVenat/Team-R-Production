@@ -1,14 +1,27 @@
 import * as React from "react";
-import { useContext } from "react";
-import { RequestContext } from "../App";
+import { useState, useEffect } from "react";
+// import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
 import { Box } from "@mui/material";
 import Sidebar from "./SideBar.tsx";
+import {FlowerRequest} from "database";
+import axios from "axios";
+
 
 function ServiceRequestTable() {
-  const { requests } = useContext(RequestContext);
+  // const { requests } = useContext(RequestContext);
 
   // const navigate = useNavigate();
+    const [flowerData, setFlowerData] = useState<FlowerRequest[]>([]);
+    useEffect(() => {
+        async function fetch() {
+            const res = await axios.get("/api/service/create");
+            setFlowerData(res.data);
+        }
+        fetch().then();
+    }, []);
+
+    console.log(flowerData);
 
   return (
     <Box display="flex">
@@ -29,30 +42,30 @@ function ServiceRequestTable() {
               <th className="border border-slate-300">Name</th>
               <th className="border border-slate-300">Delivery Date</th>
               <th className="border border-slate-300">Room</th>
-              <th className="border border-slate-300">Details</th>
+              {/*<th className="border border-slate-300">Details</th>*/}
             </tr>
           </thead>
           <tbody>
-            {requests.map((row, index) => (
+            {flowerData.map((row, index) => (
               <tr key={index}>
                 <td className="border border-slate-300 text-center">
-                  {row.type}
+                  Flowers
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.subType}
+                  {row.FlowerType }
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.name}
+                  {row.RecipientName }
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.deliveryDate}
+                  {row.DeliveryDate.toString() }
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.room}
+                  {row.DestinationLongID}
                 </td>
-                <td className="border border-slate-300 text-center">
-                  {row.details}
-                </td>
+                {/*<td className="border border-slate-300 text-center">*/}
+                {/*  {row. }//flowers doesnt store details */}
+                  {/*</td>*/}
               </tr>
             ))}
           </tbody>
