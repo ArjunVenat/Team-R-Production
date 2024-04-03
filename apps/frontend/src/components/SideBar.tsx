@@ -10,6 +10,7 @@ import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from '@mui/icons-material/TableView';
 import NearMeIcon from "@mui/icons-material/NearMe";
+import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { useNavigate, useLocation } from "react-router-dom";
 import AirlineSeatFlatAngledIcon from '@mui/icons-material/AirlineSeatFlatAngled';
 // import {IconType} from "react-icons";
@@ -42,7 +43,8 @@ export default function Sidebar() {
     const edges: Menu = {title: "Edge Table", icon: <AccessibleForwardIcon/>};
     const nodes: Menu = {title: "Node Table", icon: <AirlineSeatFlatAngledIcon/>};
     const uploadCSV: Menu = {title: "Upload CSV", icon: <UploadFile/>};
-    const Menus: Menu[] = [home, serviceRequest, serviceRequestTable, doNavigation, edges, nodes, uploadCSV, logout];
+    const downloadCSV: Menu = {title: "Download CSV", icon: <CloudDownloadIcon/>};
+    const Menus: Menu[] = [home, serviceRequest, serviceRequestTable, doNavigation, edges, nodes, uploadCSV, downloadCSV, logout];
 
 
 
@@ -76,6 +78,9 @@ export default function Sidebar() {
             break;
         case "/upload-csv":
             menuHighlight = "Upload CSV";
+            break;
+        case "/download-csv":
+            menuHighlight = "Download CSV";
             break;
         default:
             menuHighlight = "Home";
@@ -124,6 +129,9 @@ export default function Sidebar() {
         }
         if (title === "Upload CSV"){
             routeChange("upload-csv");
+        }
+        if(title === "Download CSV"){
+            routeChange("download-csv");
         }
     };
 

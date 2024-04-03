@@ -12,6 +12,7 @@ import Snackbar from "@mui/material/Snackbar";
 import {Alert} from "@mui/material";
 import { ServiceRequest } from "./components/ServiceRequest.tsx";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
+import DownloadCSV from "./components/DownloadCSV.tsx";
 
 type appContextType = {
     requests: ServiceRequest[],
@@ -70,6 +71,10 @@ function App() {
           {
               path: "canvas",
               element: <Canvas />
+          },
+          {
+              path: "download-csv",
+              element: <DownloadCSV/>
           }
       ],
     },
