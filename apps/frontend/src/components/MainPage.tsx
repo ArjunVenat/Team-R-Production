@@ -99,7 +99,7 @@ function MainPage() {
   }
 
   return (
-    <div id="MainPage" className="flex flex-row bg-[#d6d8d5]">
+    <div id="MainPage" className="flex h-screen overflow-hidden flex-row bg-[#d6d8d5]">
       {/*<NavigationScreen/>*/}
       <SideBar />
       <>
@@ -108,7 +108,6 @@ function MainPage() {
             className="grid"
             style={{
               display: "flex",
-              justifyContent: "center",
               alignItems: "center",
               minWidth: "80vw",
             }}
@@ -121,68 +120,68 @@ function MainPage() {
                 display: "grid",
               }}
             >
-              <div className="flex justify-center items-center h-full">
                 <div>
-                  <h1 className="text-xl">
-                    {" "}
-                    Enter your start and end locations:
-                  </h1>
-                  <Autocomplete
-                    value={start}
-                    onChange={(
-                      event: ChangeEvent<unknown>,
-                      getStart: string | null,
-                    ) => {
-                      return setStart(getStart!);
-                    }}
-                    disablePortal
-                    id="combo-box-start"
-                    options={Locations}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => (
-                      <TextField {...params} label="Start Location" />
-                    )}
-                  />
+                    <div style={{ position: 'absolute', zIndex: 1, right: 0, top: 0 }}>
+                        <h1 className="text-xl" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }}>
+                            {" "}
+                            Enter your start and end locations:
+                        </h1>
+                        <Autocomplete
+                            value={start}
+                            onChange={(
+                                event: ChangeEvent<unknown>,
+                                getStart: string | null,
+                            ) => {
+                                return setStart(getStart!);
+                            }}
+                            disablePortal
+                            id="combo-box-start"
+                            options={Locations}
+                            sx={{ width: 300 }}
+                            renderInput={(params) => (
+                                <TextField {...params} label="Start Location" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} />
+                            )}
+                        />
 
-                  <Autocomplete
-                    value={end}
-                    onChange={(
-                      event: ChangeEvent<unknown>,
-                      getEnd: string | null,
-                    ) => {
-                      setEnd(getEnd!);
-                    }}
-                    disablePortal
-                    id="combo-box-end"
-                    options={Locations}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => (
-                      <TextField {...params} label="End Location" />
-                    )}
-                  />
+                        <Autocomplete
+                            value={end}
+                            onChange={(
+                                event: ChangeEvent<unknown>,
+                                getEnd: string | null,
+                            ) => {
+                                setEnd(getEnd!);
+                            }}
+                            disablePortal
+                            id="combo-box-end"
+                            options={Locations}
+                            sx={{ width: 300 }}
+                            renderInput={(params) => (
+                                <TextField {...params} label="End Location" style={{ backgroundColor: 'rgba(0, 0, 0, 0.1)' }} />
+                            )}
+                        />
 
-                  <div className="form-item">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={getDirections}
-                    >
-                      Get Directions
-                    </Button>
-                  </div>
-                  <main className="flex content-center justify-center leading-none">
-                    <div id={"map"} className="max-w-full">
-                      <TransformWrapper
-                        alignmentAnimation={{ sizeX: 0, sizeY: 0 }}
-                      >
-                        <TransformComponent>
-                          <Canvas path={path}></Canvas>
-                        </TransformComponent>
-                      </TransformWrapper>
+                        <div className="form-item">
+                            <Button
+                                variant="contained"
+                                color="success"
+                                onClick={getDirections}
+                            >
+                                Get Directions
+                            </Button>
+                        </div>
                     </div>
-                  </main>
+                    <main className="flex content-center justify-center leading-none">
+                        <div id={"map"} className="max-w-full">
+                            <TransformWrapper
+                                alignmentAnimation={{ sizeX: 0, sizeY: 0 }}
+                            >
+                                <TransformComponent>
+                                    <Canvas path={path}></Canvas>
+                                </TransformComponent>
+                            </TransformWrapper>
+                        </div>
+                    </main>
                 </div>
-              </div>
             </div>
           </div>
         </Stack>
