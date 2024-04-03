@@ -3,7 +3,6 @@
 import { Logout, UploadFile } from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
-import FirstPageIcon from "@mui/icons-material/FirstPage";
 import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
 import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
@@ -85,8 +84,6 @@ export default function Sidebar() {
 
   const [open, setOpen] = useState(true);
   const [activeMenu, setActiveMenu] = useState<string>(menuHighlight);
-
-  const collapse = { title: "Collapse", icon: <FirstPageIcon /> };
 
   const navigate = useNavigate();
   const routeChange = (path: string) => {
@@ -192,15 +189,9 @@ export default function Sidebar() {
             className="text-white text-2xl flex items-center gap-x-8 cursor-pointer p-2 hover:bg-blue-300 rounded-md mt-2"
             onClick={() => setOpen(!open)}
           >
-            <span>
-              <FirstPageIcon
-                className={`text-white cursor-pointer ${!open && "rotate-180"} duration-1000`}
-              />
-            </span>
             <span
               className={`text-base font-medium flex-1 duration-300 ${!open && "scale-0"}`}
             >
-              {collapse.title}
             </span>
           </li>
         </div>
