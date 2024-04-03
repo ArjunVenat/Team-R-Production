@@ -5,6 +5,18 @@ import SideBar from "./SideBar.tsx";
 import { Stack, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
+//received help from Dan from team o. He fixed some errors.
+export default function DownloadCSV() {
+
+    async function fetchEdges(){
+        // make an http get request to backend
+        const res = await axios.get("/api/admin/csv/Edges");
+
+        //make a new blob
+        const receiveEdges = new Blob([res.data], {
+            type: "text/csv;encoding:utf-8",
+        });
+        downloadBlob(receiveEdges);
 // received help from Dan from team o. He fixed some errors.
 export default function UploadCSV() {
   // a local state to store the currently selected file.
@@ -36,6 +48,7 @@ export default function UploadCSV() {
         // SuccessAlert();
         routeChange("home");
       }
+
     }
   };
 
