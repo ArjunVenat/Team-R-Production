@@ -5,11 +5,13 @@ import { Box } from "@mui/material"; // Assuming NodeTable component is defined 
 
 const NodeTablePage = () => {
   return (
-    <Box display="flex">
-      <SideBar />
-      <NodeTable />
-    </Box>
-  );
+      <Box display="flex">
+          <SideBar/>
+          <div className="overflow-y-auto h-screen">
+              <NodeTable/>
+          </div>
+      </Box>
+);
 };
 
 export default NodeTablePage;

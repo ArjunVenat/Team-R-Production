@@ -127,7 +127,7 @@ export default function Sidebar() {
     };
 
     return (
-        <div className="flex" >
+        <div className="flex h-screen">
             <div
                 className={`bg-primary h-full p-5 pt-9 flex flex-col drop-shadow-2xl justify-between ${
                     open ? "w-72" : "w-20"
@@ -151,7 +151,7 @@ export default function Sidebar() {
                         className="w-10 rounded cursor-pointer block float-left mr-2"
                         src="/src/assets/Brigham_and_Womens_Hospital_logo.svg.png"
                         alt={""}
-                        onClick={() => setActiveMenu(home.title)}
+                        onClick={() => handleMenuClick(home.title)}
                     ></img>
                     <h1
                         className={`text-white pl-5 origin-left font-medium text-2xl duration-300 ${
