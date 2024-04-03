@@ -2,9 +2,7 @@
 
 import SideBar from "./SideBar";
 import React, { ChangeEvent, useEffect, useState } from "react";
-import "./MainPage.css";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-// import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import Canvas from "./Canvas.tsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -13,14 +11,6 @@ import { Stack } from "react-bootstrap";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Button } from "@mui/material";
-
-//actions for speed dial
-
-// const actions = [
-//     {icon: <LoginIcon/>, name: "Sign In"},
-//     {icon: <RoomServiceIcon/>, name: "Service Request"},
-//     {icon: <DirectionsIcon/>, name: "Get Directions"},
-// ];
 
 //need to export eventually to another file to generalize as a component
 // const modalStyle = {

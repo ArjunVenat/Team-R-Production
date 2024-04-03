@@ -2,8 +2,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Box, styled } from "@mui/material";
-// import SideBar from "./SideBar.tsx";
-// import { Alert, Snackbar} from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import bwh from "../../src/assets/bwh.jpeg";
 
