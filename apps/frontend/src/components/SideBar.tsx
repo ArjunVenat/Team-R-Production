@@ -1,8 +1,4 @@
-// import MapIcon from '@mui/icons-material/Map';
-// import LoginIcon from '@mui/icons-material/Login';
 import { Logout, UploadFile } from "@mui/icons-material";
-// import RoomServiceIcon from '@mui/icons-material/RoomService';
-// import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
 import { ReactNode, useState } from "react";
@@ -11,15 +7,8 @@ import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from "@mui/icons-material/TableView";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
-import AirlineSeatFlatAngledIcon from "@mui/icons-material/AirlineSeatFlatAngled";
-// import {IconType} from "react-icons";
-// import {SvgIconComponent} from "@mui/icons-material";
-// import {Collapse} from "@mui/material";
+import AirlineSeatFlatAngledIcon from '@mui/icons-material/AirlineSeatFlatAngled';
 
-// interface SidebarProps {
-//     handleOpenServiceRequestModal: () => void;
-//     handleOpenNavigationScreenModal: () => void;
-// }
 interface Menu {
   title: string;
   icon: ReactNode;

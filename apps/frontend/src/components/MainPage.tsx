@@ -3,7 +3,6 @@
 import SideBar from "./SideBar";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-// import firstFloorMap from "./maps/00_thelowerlevel1.png";
 import Canvas from "./Canvas.tsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -15,7 +14,6 @@ import { Button } from "@mui/material";
 
 
 function MainPage() {
-    console.log("this is a test");
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
