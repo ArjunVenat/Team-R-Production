@@ -84,7 +84,6 @@ export default function Sidebar() {
             break;
         default:
             menuHighlight = "Home";
-
     }
 
 
