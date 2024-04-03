@@ -17,7 +17,7 @@ export default function DownloadCSV() {
         const receiveEdges = new Blob([res.data], {
             type: "text/csv;encoding:utf-8",
         });
-        downloadBlob(receiveEdges);
+        downloadBlob(receiveEdges, "edges.csv");
     }
 
     async function fetchNodes(){
@@ -28,16 +28,16 @@ export default function DownloadCSV() {
         const receiveNodes = new Blob([res.data], {
             type: "text/csv;encoding:utf-8",
         });
-        downloadBlob(receiveNodes);
+        downloadBlob(receiveNodes, "nodes.csv");
     }
 
-    function downloadBlob(blob: Blob){
+    function downloadBlob(blob: Blob, filePath: string){
         const blobURL = URL.createObjectURL(blob);
 
         const link = document.createElement("a");
 
         link.href = blobURL;
-        link.download = "download.csv";
+        link.download = filePath;
 
         document.body.appendChild(link);
 
