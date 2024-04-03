@@ -6,7 +6,7 @@ import {Stack, Button, Box} from "@mui/material";
 
 
 
-// received help from Dan from team o. He fixed some errors.
+//received help from Dan from team o. He fixed some errors.
 export default function DownloadCSV() {
 
     async function fetchEdges(){

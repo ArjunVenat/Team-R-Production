@@ -40,6 +40,8 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
             .join("\n"),
         );
     }
+
+    //Send the CSV Content
     res.send(csvContent);
   } catch (error) {
     console.error("Unable to download data from database");
