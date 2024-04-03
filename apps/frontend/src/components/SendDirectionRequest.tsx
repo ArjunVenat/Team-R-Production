@@ -1,4 +1,4 @@
-import { Directions } from "./Directions.tsx";
+import { Directions } from "./Directions.ts";
 import axios from "axios";
 
 export async function sendDirections(request: Directions) {
@@ -7,7 +7,7 @@ export async function sendDirections(request: Directions) {
     endNodeID: request.end,
   });
   console.log(data);
-  //sends a post request the /api/high-score
+
   //ToDo: change api
 
   // const res = await axios.get("/api/map/pathfind", data, {

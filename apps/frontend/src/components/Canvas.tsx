@@ -97,7 +97,7 @@ export default function Canvas(props: { path: Nodes[] }) {
       ref={canvasRef}
       height={"3400"}
       width={"5000"}
-      className="top-0 left-0 max-h-screen"
+      className="top-0 left-0 object-fit-cover max-w-full"
     ></canvas>
   );
 }

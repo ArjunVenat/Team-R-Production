@@ -1,6 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import "./FullServiceRequest.css";
-import { ServiceRequest } from "./ServiceRequest.tsx";
+import { ServiceRequest } from "./ServiceRequest.ts";
 import { submitRequestDB } from "./SubmitRequest.tsx";
 import {
   Button,
@@ -20,19 +19,6 @@ import { RequestContext } from "../App.tsx";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Nodes } from "database";
 import axios from "axios";
-
-// const modalStyle = {
-//   position: "absolute",
-//   top: "50%",
-//   left: "50%",
-//   transform: "translate(-50%, -50%)",
-//   bgcolor: "background.paper",
-//   boxShadow: 24,
-//   borderRadius: 10,
-//   padding: "50px",
-//   width: "fit-content",
-//   height: "fit-content",
-// };
 
 //Define interface for each service request
 //ToDo: add type of service request to update with name, room, date

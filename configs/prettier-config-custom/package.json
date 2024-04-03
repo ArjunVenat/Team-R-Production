@@ -6,7 +6,7 @@
     "prettier": "latest"
   },
   "scripts": {
-    "shared:prettierlint": "cd $INIT_CWD && prettier --ignore-path ./../.prettierignore --check .",
-    "shared:prettierlint:fix": "cd $INIT_CWD && prettier --ignore-path ./../.prettierignore --write ."
+    "shared:prettierlint": "cd $INIT_CWD && prettier --ignore-path ${PROJECT_CWD}/configs/prettier-config-custom/.prettierignore --check .",
+    "shared:prettierlint:fix": "cd $INIT_CWD && prettier --ignore-path ${PROJECT_CWD}/configs/prettier-config-custom/.prettierignore --write ."
   }
 }
