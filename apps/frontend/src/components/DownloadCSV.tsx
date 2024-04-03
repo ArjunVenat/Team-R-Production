@@ -1,88 +1,85 @@
-
-import axios from 'axios';
+import React, { FormEvent, useState } from "react";
+import axios from "axios";
+// import SuccessAlert from "./SuccessAlert.tsx";
 import SideBar from "./SideBar.tsx";
-import {Stack, Button, Box} from "@mui/material";
-
-
-
+import { Stack, Button, Box } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 // received help from Dan from team o. He fixed some errors.
-export default function DownloadCSV() {
+export default function UploadCSV() {
+  // a local state to store the currently selected file.
+  const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
-    async function fetchEdges(){
-        // make an http get request to backend
-        const res = await axios.get("/api/admin/csv/Edges");
+  const navigate = useNavigate();
+  const routeChange = (path: string) => {
+    const newPath = `/${path}`;
+    navigate(newPath);
+  };
 
-        //make a new blob
-        const receiveEdges = new Blob([res.data], {
-            type: "text/csv;encoding:utf-8",
-        });
-        downloadBlob(receiveEdges);
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    const formData = new FormData();
+    if (selectedFile != undefined) {
+      console.log(selectedFile.name);
+      formData.append("uploadFile.csv", selectedFile);
+
+      console.log(formData);
+
+      const response = await axios.post("/api/admin/csv", formData, {
+        headers: { "Content-Type": "multipart/form-data" },
+      });
+
+      if (response.status == 200) {
+        console.log("submitted csv successfully");
+
+        //ToDo: Test this!!!
+        // SuccessAlert();
+        routeChange("home");
+      }
     }
+  };
 
-    async function fetchNodes(){
-        // make an http get request to backend
-        const res = await axios.get("/api/admin/csv/Nodes");
-
-        //make a new blob
-        const receiveNodes = new Blob([res.data], {
-            type: "text/csv;encoding:utf-8",
-        });
-        downloadBlob(receiveNodes);
+  const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
+    if (event.target.files && event.target.files.length > 0) {
+      setSelectedFile(event.target.files[0]);
     }
+  };
 
-    function downloadBlob(blob: Blob){
-        const blobURL = URL.createObjectURL(blob);
-
-        const link = document.createElement("a");
-
-        link.href = blobURL;
-        link.download = "download.csv";
-
-        document.body.appendChild(link);
-
-        link.dispatchEvent(
-            new MouseEvent('click',{
-                bubbles: true,
-                cancelable: true,
-                view: window
-            })
-        );
-
-        document.body.removeChild(link);
-
-    }
-
-
-    return (
-        <Stack direction = "row" spacing={2}>
-            <SideBar/>
-            <div className="grid" style={{
-                display: 'flex',
-                justifyContent: 'center',
-                alignItems: 'center',
-                minWidth: '80vw'
-            }}>
-                <div className="grid" style={{
-                    justifyContent: 'center',
-                    alignItems: 'center',
-                    display: "grid"
-                }}>
-                    <div className="border-2 border-blue rounded-lg p-10">
-                    <Stack direction ="row" spacing={5}>
-
-                        <Box mt={5}>
-                            <Button onClick={fetchNodes} variant="contained" color="success" type="submit">Download Nodes File</Button>
-                        </Box>
-
-                        <Box mt={5}>
-                            <Button onClick={fetchEdges} variant="contained" color="success" type="submit">Download Edges File</Button>
-                        </Box>
-                    </Stack>
-                    </div>
-
-                </div>
-            </div>
-        </Stack>
-    );
-};
+  return (
+    <Stack direction="row" spacing={2}>
+      <SideBar />
+      <div
+        className="grid"
+        style={{
+          display: "flex",
+          justifyContent: "center",
+          alignItems: "center",
+          minWidth: "80vw",
+        }}
+      >
+        <div
+          className="grid"
+          style={{
+            justifyContent: "center",
+            alignItems: "center",
+            display: "grid",
+          }}
+        >
+          <form
+            onSubmit={(event) => {
+              handleSubmit(event).then();
+            }}
+          >
+            <input type="file" onChange={handleFileSelect} />
+            <br />
+            <Box mt={5}>
+              <Button variant="contained" color="success" type="submit">
+                Upload File
+              </Button>
+            </Box>
+          </form>
+        </div>
+      </div>
+    </Stack>
+  );
+}
