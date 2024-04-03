@@ -1,4 +1,4 @@
-import { Directions } from "./Directions.tsx";
+import { Directions } from "./Directions.ts";
 import axios from "axios";
 
 export async function sendDirections(request: Directions) {

@@ -8,7 +8,7 @@ import EdgeTablePage from "./components/EdgePage.tsx";
 import NodeTablePage from "./components/NodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
-import { ServiceRequest } from "./components/ServiceRequest.tsx";
+import { ServiceRequest } from "./components/ServiceRequest.ts";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
 import DownloadCSV from "./components/DownloadCSV.tsx";
 import UploadCSV from "./components/UploadCSV.tsx";

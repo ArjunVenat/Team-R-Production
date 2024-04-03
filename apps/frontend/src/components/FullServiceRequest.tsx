@@ -1,5 +1,5 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { ServiceRequest } from "./ServiceRequest.tsx";
+import { ServiceRequest } from "./ServiceRequest.ts";
 import { submitRequestDB } from "./SubmitRequest.tsx";
 import {
   Button,
