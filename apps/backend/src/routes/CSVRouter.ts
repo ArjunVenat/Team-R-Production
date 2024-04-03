@@ -2,6 +2,7 @@ import express, { Router, Request, Response } from "express";
 const CSVRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 import multer from "multer";
+// import fs from "fs";
 import { createNode } from "../node.ts"; // Importing node database functions
 import { createEdge } from "../edge"; // Importing edge database functions
 const upload = multer({
@@ -41,8 +42,19 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
         );
     }
 
+
     //Send the CSV Content
     res.send(csvContent);
+
+    // Build the blob with csvContent string
+    const sendBlob = new Blob([csvContent], {
+      type: "text/csv;encoding:utf-8",
+    });
+
+    // Send the blob
+    console.log(await sendBlob.text());
+    res.send(sendBlob);
+
   } catch (error) {
     console.error("Unable to download data from database");
     res.sendStatus(400); // Send error

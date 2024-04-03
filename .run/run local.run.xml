@@ -1,6 +1,6 @@
 <component name="ProjectRunConfigurationManager">
   <configuration default="false" name="run local" type="CompoundRunConfigurationType">
-    <toRun name="Team-R-Production &gt; dev" type="js.build_tools.npm" />
+    <toRun name="dev" type="js.build_tools.npm" />
     <method v="2" />
   </configuration>
 </component>
