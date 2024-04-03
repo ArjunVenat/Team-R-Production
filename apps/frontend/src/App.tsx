@@ -67,8 +67,8 @@ function App() {
         },
         {
           path: "download-csv",
-          element: <DownloadCSV/>
-        }
+          element: <DownloadCSV />,
+        },
       ],
     },
   ]);
