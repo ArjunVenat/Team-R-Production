@@ -9,7 +9,6 @@ import { ReactNode, useState } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from '@mui/icons-material/TableView';
-import NearMeIcon from "@mui/icons-material/NearMe";
 import CloudDownloadIcon from '@mui/icons-material/CloudDownload';
 import { useNavigate, useLocation } from "react-router-dom";
 import AirlineSeatFlatAngledIcon from '@mui/icons-material/AirlineSeatFlatAngled';
@@ -38,13 +37,12 @@ export default function Sidebar() {
         title: "Service Request Table",
         icon: <TableViewIcon />,
     };
-    const doNavigation: Menu = { title: "Navigation", icon: <NearMeIcon /> };
     const logout: Menu = {title: "Logout", icon: <Logout/>};
     const edges: Menu = {title: "Edge Table", icon: <AccessibleForwardIcon/>};
     const nodes: Menu = {title: "Node Table", icon: <AirlineSeatFlatAngledIcon/>};
     const uploadCSV: Menu = {title: "Upload CSV", icon: <UploadFile/>};
     const downloadCSV: Menu = {title: "Download CSV", icon: <CloudDownloadIcon/>};
-    const Menus: Menu[] = [home, serviceRequest, serviceRequestTable, doNavigation, edges, nodes, uploadCSV, downloadCSV, logout];
+    const Menus: Menu[] = [home, serviceRequest, serviceRequestTable, edges, nodes, uploadCSV, downloadCSV, logout];
 
 
 
@@ -55,9 +53,6 @@ export default function Sidebar() {
     console.log({currentURL});
 
     switch (currentURL){
-        case "/navigation":
-            menuHighlight = "Navigation";
-            break;
         case "/servicerequest":
             menuHighlight = "Service Request";
             break;
@@ -84,7 +79,6 @@ export default function Sidebar() {
             break;
         default:
             menuHighlight = "Home";
-
     }
 
 
@@ -108,9 +102,6 @@ export default function Sidebar() {
         setActiveMenu(title);
         if (title === "Logout") {
             routeChange("");
-        }
-        if (title === "Navigation") {
-            routeChange("navigation");
         }
         if (title === "Service Request"){
             routeChange("servicerequest");
@@ -138,7 +129,7 @@ export default function Sidebar() {
     return (
         <div className="flex" >
             <div
-                className={`bg-primary h-screen p-5 pt-9 flex flex-col drop-shadow-2xl justify-between ${
+                className={`bg-primary h-full p-5 pt-9 flex flex-col drop-shadow-2xl justify-between ${
                     open ? "w-72" : "w-20"
                 } duration-300 relative`}
             >
