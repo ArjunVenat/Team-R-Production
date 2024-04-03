@@ -4,7 +4,7 @@ import axios from "axios";
 export async function submitRequestDB(request: ServiceRequest) {
   const data = JSON.stringify({
     Time: new Date(),
-    DeliveryDate: request.deliveryDate + ":00.000Z" ,
+    DeliveryDate: request.deliveryDate + ":00.000Z",
     RecipientName: request.name,
     FlowerType: request.subType,
     UserID: 123456,

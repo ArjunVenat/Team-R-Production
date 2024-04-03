@@ -1,4 +1,4 @@
-import React, {createContext, useState} from "react";
+import React, { createContext, useState } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
 import MainPage from "./components/MainPage.tsx";
@@ -6,26 +6,29 @@ import SignInPage from "./components/SignInPage";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeTablePage from "./components/EdgePage.tsx";
 import NodeTablePage from "./components/NodePage.tsx";
-import Canvas from "./components/Canvas.tsx";
 import Snackbar from "@mui/material/Snackbar";
-import {Alert} from "@mui/material";
+import { Alert } from "@mui/material";
 import { ServiceRequest } from "./components/ServiceRequest.tsx";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
 
 type appContextType = {
-    requests: ServiceRequest[],
-    setRequests: (state: ServiceRequest[]) => void
+  requests: ServiceRequest[];
+  setRequests: (state: ServiceRequest[]) => void;
 };
 
 export const RequestContext = createContext<appContextType>({
-    requests: [],
-    setRequests: (state) => state
+  requests: [],
+  setRequests: (state) => state,
 });
 
 import UploadCSV from "./components/UploadCSV.tsx";
 function App() {
   const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
-  const [snackbar, setSnackbar] = React.useState({severity: 'success', open: false, message: ''});
+  const [snackbar, setSnackbar] = React.useState({
+    severity: "success",
+    open: false,
+    message: "",
+  });
   const [requests, setRequests] = useState<ServiceRequest[]>([]);
 
   const router = createBrowserRouter([
@@ -40,32 +43,28 @@ function App() {
         },
         {
           path: "home",
-          element: <MainPage/>
+          element: <MainPage />,
         },
         {
           path: "servicerequest",
-          element: <FullServiceRequest availableServices={guestOptions}  />
+          element: <FullServiceRequest availableServices={guestOptions} />,
         },
-          {
-              path: "service-request-table",
-              element: <ServiceRequestTable  />
-          },
+        {
+          path: "service-request-table",
+          element: <ServiceRequestTable />,
+        },
         {
           path: "edge-table",
-          element: <EdgeTablePage/>
+          element: <EdgeTablePage />,
         },
         {
           path: "node-table",
-          element: <NodeTablePage/>
+          element: <NodeTablePage />,
         },
-          {
-              path: "upload-csv",
-              element: <UploadCSV/>
-          },
-          {
-              path: "canvas",
-              element: <Canvas />
-          }
+        {
+          path: "upload-csv",
+          element: <UploadCSV />,
+        },
       ],
     },
   ]);
@@ -75,22 +74,20 @@ function App() {
     return (
       <RequestContext.Provider value={{ requests, setRequests }}>
         <div className="w-full flex flex-col gap-5">
-        <Outlet />
-        <Snackbar
+          <Outlet />
+          <Snackbar
             open={snackbar.open}
             autoHideDuration={3000}
-            onClose={() => setSnackbar(prevState => ({...prevState, open: false}))}
-            anchorOrigin={{vertical: 'top', horizontal: 'center'}}
-        >
-            <Alert
-                severity={snackbar.severity}
-                variant="filled"
-                sx={{width: '100%'}}
-            >
-                {snackbar.message}
+            onClose={() =>
+              setSnackbar((prevState) => ({ ...prevState, open: false }))
+            }
+            anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          >
+            <Alert variant="filled" sx={{ width: "100%" }}>
+              {snackbar.message}
             </Alert>
-        </Snackbar>
-      </div>
+          </Snackbar>
+        </div>
       </RequestContext.Provider>
     );
   }
