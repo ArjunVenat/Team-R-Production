@@ -12,7 +12,9 @@ import { ServiceRequest } from "./components/ServiceRequest.ts";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
 import DownloadCSV from "./components/DownloadCSV.tsx";
 import UploadCSV from "./components/UploadCSV.tsx";
-import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { Auth0Provider} from "@auth0/auth0-react";
+// import {useAuth0} from "@auth0/auth0-react";
+//this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez
 import { useNavigate } from "react-router-dom";
 
 type appContextType = {
@@ -79,13 +81,14 @@ function App() {
   return <RouterProvider router={router} />;
   function Root() {
     const navigate = useNavigate();
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    const { loginWithRedirect, logout } = useAuth0();
-    logout({
-      logoutParams: {
-        returnTo: window.location.origin,
-      },
-    });
+    // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // const { loginWithRedirect, logout } = useAuth0();
+    // logout({
+    //   logoutParams: {
+    //     returnTo: window.location.origin,
+    //   },
+    // });
+    // baby's first await logic break
 
     return (
       <Auth0Provider
