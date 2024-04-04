@@ -12,6 +12,8 @@ import { ServiceRequest } from "./components/ServiceRequest.ts";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
 import DownloadCSV from "./components/DownloadCSV.tsx";
 import UploadCSV from "./components/UploadCSV.tsx";
+import { Auth0Provider, useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 type appContextType = {
   requests: ServiceRequest[];
@@ -76,24 +78,48 @@ function App() {
 
   return <RouterProvider router={router} />;
   function Root() {
+    const navigate = useNavigate();
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    const { loginWithRedirect, logout } = useAuth0();
+    logout({
+      logoutParams: {
+        returnTo: window.location.origin,
+      },
+    });
+
     return (
-      <RequestContext.Provider value={{ requests, setRequests }}>
-        <div className="w-full flex flex-col gap-5">
-          <Outlet />
-          <Snackbar
-            open={snackbar.open}
-            autoHideDuration={3000}
-            onClose={() =>
-              setSnackbar((prevState) => ({ ...prevState, open: false }))
-            }
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <Alert variant="filled" sx={{ width: "100%" }}>
-              {snackbar.message}
-            </Alert>
-          </Snackbar>
-        </div>
-      </RequestContext.Provider>
+      <Auth0Provider
+        useRefreshTokens
+        cacheLocation="localstorage"
+        domain="redrockverify.us.auth0.com"
+        clientId="z3HAzFMCeeSU9GehHltcf0LJYZQy0aew"
+        onRedirectCallback={(appState) => {
+          navigate(appState?.returnTo || window.location.pathname);
+        }}
+        authorizationParams={{
+          redirect_uri: window.location.origin,
+          audience: "/api",
+          scope: "openid profile email offline_access",
+        }}
+      >
+        <RequestContext.Provider value={{ requests, setRequests }}>
+          <div className="w-full flex flex-col gap-5">
+            <Outlet />
+            <Snackbar
+              open={snackbar.open}
+              autoHideDuration={3000}
+              onClose={() =>
+                setSnackbar((prevState) => ({ ...prevState, open: false }))
+              }
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert variant="filled" sx={{ width: "100%" }}>
+                {snackbar.message}
+              </Alert>
+            </Snackbar>
+          </div>
+        </RequestContext.Provider>
+      </Auth0Provider>
     );
   }
 }
