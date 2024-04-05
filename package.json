@@ -50,6 +50,7 @@
     "vitest": "^0.33.0"
   },
   "dependencies": {
+    "@auth0/auth0-react": "^2.2.4",
     "@mui/material": "^5.15.14",
     "@yarnpkg/pnpify": "^4.0.0-rc.45",
     "axios": "^1.6.8",
