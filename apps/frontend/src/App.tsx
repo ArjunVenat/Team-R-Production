@@ -44,7 +44,7 @@ function App() {
       children: [
         {
           path: "",
-          element: <SignInPage setSnackBar={setSnackbar} />,
+          element: <SignInPage />,
         },
         {
           path: "home",
@@ -94,14 +94,14 @@ function App() {
       <Auth0Provider
         useRefreshTokens
         cacheLocation="localstorage"
-        domain="redrockverify.us.auth0.com"
-        clientId="z3HAzFMCeeSU9GehHltcf0LJYZQy0aew"
+        domain="redrockslogin.us.auth0.com"
+        clientId="affQSRlQfnYe2MYeBXQr2bfG8rpQBHDx"
         onRedirectCallback={(appState) => {
           navigate(appState?.returnTo || window.location.pathname);
         }}
         authorizationParams={{
           redirect_uri: window.location.origin,
-          audience: "/api",
+          // audience: "/api", Add back in
           scope: "openid profile email offline_access",
         }}
       >
