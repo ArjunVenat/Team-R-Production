@@ -58,7 +58,7 @@ function ServiceRequestTable() {
                   {row.DeliveryDate.toString()}
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.DestinationLongID}
+                  {row.DestinationNodeID}
                 </td>
                 {/*<td className="border border-slate-300 text-center">*/}
                 {/*  {row. }//flowers doesnt store details */}

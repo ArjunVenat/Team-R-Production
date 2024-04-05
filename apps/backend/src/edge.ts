@@ -9,7 +9,7 @@ const prisma = new PrismaClient();
  * @param endNodeID EndNodeID field for edge record.
  */
 export const createEdge = async (
-  edgeIdCounter: number,
+  edgeId: string,
   startNodeID: string,
   endNodeID: string,
 ) => {
@@ -17,7 +17,7 @@ export const createEdge = async (
   await prisma.edges.create({
     data: {
       //Insert data table row (edgeID auto-incremented)
-      EdgeID: edgeIdCounter,
+      EdgeID: edgeId,
       StartNodeID: startNodeID, //add StartNodeID to Edges table
       EndNodeID: endNodeID, //add EndNodeID to Edges table
     },
@@ -25,6 +25,11 @@ export const createEdge = async (
 
   //Display successful data population message
   console.log(
-    `Inserted data: StartNodeID - ${startNodeID}, endNodeID - ${endNodeID}`,
+    `Inserted data: EdgeID - ${edgeId} StartNodeID - ${startNodeID}, endNodeID - ${endNodeID}`,
   );
+};
+
+export const insertEdgeIntoDB = async (row: string[]) => {
+  const [edgeID, startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
+  await createEdge(edgeID, startNodeID, endNodeID);
 };

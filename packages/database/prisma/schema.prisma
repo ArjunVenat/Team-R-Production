@@ -25,7 +25,7 @@ model HighScore {
 // StartNodeID which is a VARCHAR (mixed datatype)
 // endNodeID which is a VARCHAR as well
 model Edges {
-  EdgeID      Int    @id
+  EdgeID      String @id // EdgeID column in Edges table
   StartNodeID String // StartNodeID column in Edges table
   EndNodeID   String // EndNodeID column in Edges table
 }
@@ -48,7 +48,7 @@ model Nodes {
   Floor          String
   Building       String
   NodeType       String
-  LongName       String          @unique
+  LongName       String
   ShortName      String
   FlowerRequests FlowerRequest[]
 }
@@ -83,8 +83,8 @@ model FlowerRequest {
   RecipientName     String
   FlowerType        String
   UserID            Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
-  Destination       Nodes    @relation(fields: [DestinationLongID], references: [LongName])
-  DestinationLongID String
+  Destination       Nodes    @relation(fields: [DestinationNodeID], references: [NodeID])
+  DestinationNodeID String
 }
 
 // npx prisma generate for schema. can see using database
