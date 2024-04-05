@@ -12,7 +12,7 @@ import { ServiceRequest } from "./components/ServiceRequest.ts";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
 import DownloadCSV from "./components/DownloadCSV.tsx";
 import UploadCSV from "./components/UploadCSV.tsx";
-import { Auth0Provider} from "@auth0/auth0-react";
+import { Auth0Provider } from "@auth0/auth0-react";
 // import {useAuth0} from "@auth0/auth0-react";
 //this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez idk
 import { useNavigate } from "react-router-dom";

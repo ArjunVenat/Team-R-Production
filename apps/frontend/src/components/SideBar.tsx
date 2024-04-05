@@ -173,15 +173,15 @@ export default function Sidebar() {
               key={index}
               className={`text-white text-2xl flex items-center gap-x-10 cursor-pointer p-2 rounded-md mt-2 hover:border-r-4 hover:border-secondary${
                 activeMenu === menu.title
-                  ? "border-r-4 border-tertiary bg-opacity-75"
-                  : "hover:bg-blue-300"
+                  ? "border-r-4 border-tertiary bg-tertiary/25"
+                  : "hover:bg-blue-300 hover:bg-secondary/25"
               }`}
               style={{ height: "3.5rem" }}
               onClick={() => handleMenuClick(menu.title)}
             >
               <span
                 className={`${
-                  activeMenu === menu.title ? "text-tertiary" : "text-white"
+                  activeMenu === menu.title ? "text-tertiary" : "text-secondary"
                 }`}
               >
                 {menu.icon}
