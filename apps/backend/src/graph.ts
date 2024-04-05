@@ -3,10 +3,16 @@
  */
 class GraphNode {
   id: string;
+  x: number;
+  y: number;
+  z: number;
   neighbors: GraphNode[];
-  constructor(id: string) {
+  constructor(id: string, x: number, y: number, z: number) {
     this.id = id;
     this.neighbors = [];
+    this.x = x;
+    this.y = y;
+    this.z = z;
   }
 
   /**
@@ -15,6 +21,12 @@ class GraphNode {
    */
   addNeighbor(node: GraphNode) {
     this.neighbors.push(node);
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  getDistance(node: GraphNode): number {
+    // TODO: Make this return an correct value
+    return -99999;
   }
 }
 
@@ -28,15 +40,17 @@ class Graph {
     this.nodeMap = new Map<string, GraphNode>();
   }
 
-  /**
-   * Adds a node to the graph. Assumes the given id is unique.
-   * @param id A unique identifier for the node to add to the graph.
-   */
-  addNode(id: string): void {
-    const tempNode = new GraphNode(id);
-    this.nodeMap.set(id, tempNode);
-  }
+  // TODO: Update this with the new signature
+  // /**
+  //  * Adds a node to the graph. Assumes the given id is unique.
+  //  * @param id A unique identifier for the node to add to the graph.
+  //  */
+  // addNode(id: string): void {
+  //   const tempNode = new GraphNode(id);
+  //   this.nodeMap.set(id, tempNode);
+  // }
 
+  // TODO: update documentation
   /**
    * Creates an edge connecting the two nodes. Adds the two nodes to the graph
    * if they do not already exist
@@ -45,11 +59,9 @@ class Graph {
    */
   addEdge(id1: string, id2: string): void {
     // Add nodes to the graph if they do not exist yet
-    if (!this.nodeMap.has(id1)) {
-      this.addNode(id1);
-    }
-    if (!this.nodeMap.has(id2)) {
-      this.addNode(id2);
+    if (!this.nodeMap.has(id1) || !this.nodeMap.has(id2)) {
+      // TODO: This should throw an error as this is an invalid state
+      return;
     }
 
     // use '!' to assert that nodeMap.get will not return undefined
