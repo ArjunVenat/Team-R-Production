@@ -4,24 +4,23 @@ import { useState, useEffect } from "react";
 // import {useNavigate} from "react-router-dom";
 import { Box } from "@mui/material";
 import Sidebar from "./SideBar.tsx";
-import {FlowerRequest} from "database";
+import { FlowerRequest } from "database";
 import axios from "axios";
-
 
 function ServiceRequestTable() {
   // const { requests } = useContext(RequestContext);
 
   // const navigate = useNavigate();
-    const [flowerData, setFlowerData] = useState<FlowerRequest[]>([]);
-    useEffect(() => {
-        async function fetch() {
-            const res = await axios.get("/api/service/create");
-            setFlowerData(res.data);
-        }
-        fetch().then();
-    }, []);
+  const [flowerData, setFlowerData] = useState<FlowerRequest[]>([]);
+  useEffect(() => {
+    async function fetch() {
+      const res = await axios.get("/api/service/create");
+      setFlowerData(res.data);
+    }
+    fetch().then();
+  }, []);
 
-    console.log(flowerData);
+  console.log(flowerData);
 
   return (
     <Box display="flex">
@@ -48,24 +47,22 @@ function ServiceRequestTable() {
           <tbody>
             {flowerData.map((row, index) => (
               <tr key={index}>
+                <td className="border border-slate-300 text-center">Flowers</td>
                 <td className="border border-slate-300 text-center">
-                  Flowers
+                  {row.FlowerType}
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.FlowerType }
+                  {row.RecipientName}
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.RecipientName }
-                </td>
-                <td className="border border-slate-300 text-center">
-                  {row.DeliveryDate.toString() }
+                  {row.DeliveryDate.toString()}
                 </td>
                 <td className="border border-slate-300 text-center">
                   {row.DestinationLongID}
                 </td>
                 {/*<td className="border border-slate-300 text-center">*/}
                 {/*  {row. }//flowers doesnt store details */}
-                  {/*</td>*/}
+                {/*</td>*/}
               </tr>
             ))}
           </tbody>
