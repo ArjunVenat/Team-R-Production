@@ -6,6 +6,8 @@ export default function SVGCanvas(props: {
   path: Nodes[];
   currentMap: string;
   currentLevel: string;
+  nodeClicked?: Nodes | undefined;
+  handleNodeClicked?: (node: Nodes) => void;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
 
@@ -13,7 +15,7 @@ export default function SVGCanvas(props: {
     fetchNodes();
   }, []);
 
-  console.log(props);
+  // console.log(props);
 
   async function fetchNodes() {
     try {
@@ -30,7 +32,9 @@ export default function SVGCanvas(props: {
   }
 
   function handleCircleClick(node: Nodes) {
-    console.log("node Xcoord: ", node.Xcoord, "node Ycord: ", node.Ycoord);
+    if (props.handleNodeClicked) {
+      props.handleNodeClicked(node);
+    }
   }
 
   const filteredNodes = nodesData.filter(

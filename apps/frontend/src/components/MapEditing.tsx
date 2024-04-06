@@ -50,11 +50,17 @@ export default function MapEditing() {
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = React.useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
+  const [nodeClicked, setNodeClicked] = useState<Nodes>();
 
   const navigate = useNavigate();
   const routeChange = (path: string) => {
     const newPath = `/${path}`;
     navigate(newPath);
+  };
+
+  const handleNodeClick = (node: Nodes | undefined) => {
+    setNodeClicked(node);
+    console.log("node Xcoord: ", node?.Xcoord, "node Ycoord: ", node?.Ycoord);
   };
 
   useEffect(() => {
@@ -164,6 +170,8 @@ export default function MapEditing() {
                       floors.find((floor) => floor.map === currentMap)?.level ||
                       ""
                     }
+                    handleNodeClicked={handleNodeClick}
+                    nodeClicked={nodeClicked}
                   />
                 </TransformComponent>
               </section>
