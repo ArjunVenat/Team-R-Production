@@ -1,6 +1,5 @@
 import { GraphNode } from "./graph.ts";
 
- 
 /**
  * A class that describes a minimum heap data structure
  */
@@ -15,7 +14,7 @@ class minHeap {
   }
 
   // Public methods
-   
+
   /**
    * Insert: inserts a node at the next available space, then sorts it in the minheap
    * @param node
@@ -142,7 +141,6 @@ class minHeap {
     delete this.nodeheap[0];
     return r;
   }
-   
 }
 
 export default minHeap;

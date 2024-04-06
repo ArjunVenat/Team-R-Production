@@ -1,7 +1,7 @@
 /**
  * Represents a node within the graph.
  */
-class GraphNode {
+export class GraphNode {
   id: string;
   x: number;
   y: number;
@@ -33,7 +33,7 @@ class GraphNode {
 /**
  * Represents a graph structure. Nodes are assumed to have unique names.
  */
-class Graph {
+export class Graph {
   private nodeMap: Map<string, GraphNode>;
 
   constructor() {
@@ -133,4 +133,3 @@ class Graph {
     return path.map((n) => n.id);
   }
 }
-export default Graph;

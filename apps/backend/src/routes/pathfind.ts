@@ -1,5 +1,5 @@
 import express, { Router, Request, Response } from "express";
-import Graph from "../graph.ts";
+import { Graph } from "../graph.ts";
 import { PrismaClient } from "database";
 const prisma = new PrismaClient();
 
