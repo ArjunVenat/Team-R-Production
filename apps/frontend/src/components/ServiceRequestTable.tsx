@@ -14,7 +14,7 @@ function ServiceRequestTable() {
   const [requestData, setRequestData] = useState<GeneralRequest[]>([]);
   useEffect(() => {
     async function fetch() {
-      const res = await axios.get("/api/service/create");
+      const res = await axios.get("/api/service/create/All");
       setRequestData(res.data);
     }
     fetch().then();
