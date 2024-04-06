@@ -81,6 +81,20 @@ CSVRouter.post(
       //Now that we know file exists, get the string
       const data: string = String(req.file.buffer);
 
+      //Determine if data is not of the right type
+      if (
+        !data.includes("edgeID,startNode,endNode") &&
+        !data.includes(
+          "nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName",
+        )
+      ) {
+        console.log(
+          "File uploaded is not of the right type! Must be edges data or nodes data in proper csv format",
+        );
+        res.sendStatus(400); //send bad request
+        return;
+      }
+
       // Trying to use \r\n as a delimiter
       const rows = parseCSVFile(data);
 
@@ -91,11 +105,11 @@ CSVRouter.post(
         return;
       }
 
-      // Decide what type of CSV we are dealing with, then delete according records
-      if (rows[0].length == 2) {
+      // Decide what type of CSV we are dealing with, then delete records accordingly
+      if (rows[0].length == 3) {
         await PrismaClient.edges.deleteMany({});
       } else if (rows[0].length == 8) {
-        await PrismaClient.flowerRequest.deleteMany({});
+        await PrismaClient.generalRequest.deleteMany({});
         await PrismaClient.nodes.deleteMany({});
       }
 

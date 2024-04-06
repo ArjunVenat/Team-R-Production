@@ -1,7 +1,7 @@
 import express, { Router, Request, Response } from "express";
 const serviceRequestRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
-import { FlowerRequest } from "database";
+import { GeneralRequest } from "database";
 
 /**
  * Asyncrhonous function for handling an HTTP post request for sending a service request.
@@ -12,8 +12,8 @@ import { FlowerRequest } from "database";
 serviceRequestRouter.post("/", async function (req: Request, res: Response) {
   try {
     console.log(req.body);
-    const receivedRequest: FlowerRequest = req.body;
-    await PrismaClient.flowerRequest.create({
+    const receivedRequest: GeneralRequest = req.body;
+    await PrismaClient.generalRequest.create({
       data: receivedRequest,
     });
     console.log(`Added request to database!`);
@@ -36,8 +36,8 @@ serviceRequestRouter.get(
   "/",
   async function (req: Request, res: Response): Promise<void> {
     try {
-      const flowerrequests: FlowerRequest[] =
-        await PrismaClient.flowerRequest.findMany();
+      const flowerrequests: GeneralRequest[] =
+        await PrismaClient.generalRequest.findMany();
       if (flowerrequests.length == 0) {
         //if there is no flower request data...
         // Log that (it's a problem)
