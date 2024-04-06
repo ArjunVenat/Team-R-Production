@@ -3,7 +3,7 @@ import axios from "axios";
 import { Nodes } from "database";
 
 export default function SVGCanvas(props: {
-  path: Nodes[];
+  path?: Nodes[];
   currentMap: string;
   currentLevel: string;
   nodeClicked?: Nodes | undefined;
@@ -49,9 +49,9 @@ export default function SVGCanvas(props: {
       viewBox="0 0 5000 3400"
     >
       <image href={props.currentMap} height="3400" width="5000" />
-      {props.path.map((node, i) => {
-        if (i < props.path.length - 1) {
-          const nextNode = props.path[i + 1];
+      {(props.path ?? []).map((node, i) => {
+        if (i < (props.path ?? []).length - 1) {
+          const nextNode = (props.path ?? [])[i + 1];
           return (
             <line
               x1={node.Xcoord}
