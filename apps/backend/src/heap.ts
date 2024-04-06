@@ -8,6 +8,11 @@ class minHeap {
   public nodeheap: Array<GraphNode> = new Array<GraphNode>();
   public weightheap: Array<number> = new Array<number>();
 
+  /**
+   * constructor: for now, a heap is defined as an array of weights, and an array fo nodes.
+   * @param nodeheap the heap that contains nodes. Parallel to weight heap
+   * @param weightheap the heap that contains weights. Parallel to node heap
+   */
   public constructor(nodeheap: Array<GraphNode>, weightheap: Array<number>) {
     this.weightheap = weightheap;
     this.nodeheap = nodeheap;
@@ -16,17 +21,16 @@ class minHeap {
   // Public methods
 
   /**
-   * Insert: inserts a node at the next available space, then sorts it in the minheap
+   * Insert: inserts a node at the next available space, then sorts it in the min-heap
    * @param node
    * @param weight
    */
   public insert(node: GraphNode, weight: number): void {
-    //adds weight and node to their respetive graphs
+    //adds weight and node to their respective graphs
     this.weightheap.push(weight);
     this.nodeheap.push(node);
-
+    //if the element inserted isn't the first
     if (this.weightheap.length > 1) {
-      //if the element inserted isnt the first
       let currentIndex = this.weightheap.length - 1; //starts at end of heap
 
       while (
@@ -34,7 +38,7 @@ class minHeap {
         this.weightheap[Math.floor((currentIndex - 1) / 2)] >
           this.weightheap[currentIndex]
       ) {
-        //(currentIndex - 1) / 2) is how to get from and index to its parent in a heap
+        //Math.floor(currentIndex - 1) / 2) is how to get from an index to its parent in a heap
         this.swapIndex(Math.floor((currentIndex - 1) / 2), currentIndex);
         currentIndex = Math.floor((currentIndex - 1) / 2);
       }
@@ -60,10 +64,12 @@ class minHeap {
    */
   delete(node: GraphNode) {
     let i = -1;
+    //Finds the node to delete, i is the index of it
     while (node != this.nodeheap[i]) {
       i++;
       if (i > this.nodeheap.length) {
-        break;
+        //break;
+        return;
       }
     }
 
