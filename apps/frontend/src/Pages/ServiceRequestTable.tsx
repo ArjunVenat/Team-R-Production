@@ -3,7 +3,7 @@ import { useState, useEffect } from "react";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
 import { Box } from "@mui/material";
-import Sidebar from "./SideBar.tsx";
+import Sidebar from "../components/SideBar.tsx";
 import { GeneralRequest } from "database";
 import axios from "axios";
 

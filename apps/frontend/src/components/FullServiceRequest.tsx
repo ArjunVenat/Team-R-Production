@@ -1,6 +1,6 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { ServiceRequest } from "./ServiceRequest.ts";
-import { submitRequestDB } from "./SubmitRequest.tsx";
+import { ServiceRequest } from "../Interfaces/ServiceRequest.ts";
+import { submitRequestDB } from "../backendreference/SubmitRequest.tsx";
 import {
   Button,
   Stack,
@@ -10,10 +10,10 @@ import {
   Modal,
   Card,
 } from "@mui/material";
-import Flower1 from "./image/Flower1.png";
-import Flower2 from "./image/Flower2.png";
-import Flower3 from "./image/Flower3.png";
-import Flower4 from "./image/Flower4.png";
+import Flower1 from "../assets/image/Flower1.png";
+import Flower2 from "../assets/image/Flower2.png";
+import Flower3 from "../assets/image/Flower3.png";
+import Flower4 from "../assets/image/Flower4.png";
 import SideBar from "./SideBar.tsx";
 import { RequestContext } from "../App.tsx";
 import Autocomplete from "@mui/material/Autocomplete";
