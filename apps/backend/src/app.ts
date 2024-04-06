@@ -8,6 +8,8 @@ import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import pathfindRouter from "./routes/pathfind.ts";
 import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
 import CSVRouter from "./routes/CSVRouter.ts";
+import editServiceRequestRouter from "./routes/editServiceRequestRouter.ts";
+import delServiceRequestRouter from "./routes/delServiceRequestRouter.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -35,6 +37,8 @@ app.use("/api/service/create", serviceRequestRouter);
 app.use("/api/admin/allnodes", allNodesRouter); //GET request for all Nodes Data
 app.use("/api/map/pathfind", pathfindRouter);
 app.use("/api/admin/csv", CSVRouter);
+app.use("/api/admin/service/edit", editServiceRequestRouter);
+app.use("/api/admin/service/del", delServiceRequestRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

@@ -3,24 +3,24 @@ import { useState, useEffect } from "react";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
 import { Box } from "@mui/material";
-import Sidebar from "./SideBar.tsx";
-import { FlowerRequest } from "database";
+import Sidebar from "../components/SideBar.tsx";
+import { GeneralRequest } from "database";
 import axios from "axios";
 
 function ServiceRequestTable() {
   // const { requests } = useContext(RequestContext);
 
   // const navigate = useNavigate();
-  const [flowerData, setFlowerData] = useState<FlowerRequest[]>([]);
+  const [requestData, setRequestData] = useState<GeneralRequest[]>([]);
   useEffect(() => {
     async function fetch() {
-      const res = await axios.get("/api/service/create");
-      setFlowerData(res.data);
+      const res = await axios.get("/api/service/create/All");
+      setRequestData(res.data);
     }
     fetch().then();
   }, []);
 
-  console.log(flowerData);
+  console.log(requestData);
 
   return (
     <Box display="flex">
@@ -36,29 +36,51 @@ function ServiceRequestTable() {
         <table className="border-collapse border border-slate-400 w-full">
           <thead>
             <tr>
-              <th className="border border-slate-300">Service Type</th>
-              <th className="border border-slate-300">Sub Type</th>
-              <th className="border border-slate-300">Name</th>
+              <th className="border border-slate-300">Request ID</th>
+              <th className="border border-slate-300">Requester Name</th>
+              <th className="border border-slate-300">Request Type</th>
+              <th className="border border-slate-300">Priority Level</th>
+              <th className="border border-slate-300">Location Node ID</th>
+              <th className="border border-slate-300">Details 1</th>
+              <th className="border border-slate-300">Details 2</th>
+              <th className="border border-slate-300">Details 3</th>
               <th className="border border-slate-300">Delivery Date</th>
-              <th className="border border-slate-300">Room</th>
+              <th className="border border-slate-300">Status</th>
               {/*<th className="border border-slate-300">Details</th>*/}
             </tr>
           </thead>
           <tbody>
-            {flowerData.map((row, index) => (
+            {requestData.map((row, index) => (
               <tr key={index}>
-                <td className="border border-slate-300 text-center">Flowers</td>
                 <td className="border border-slate-300 text-center">
-                  {row.FlowerType}
+                  {row.RequestID}
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.RecipientName}
+                  {row.RequesterName}
+                </td>
+                <td className="border border-slate-300 text-center">
+                  {row.RequestType}
+                </td>
+                <td className="border border-slate-300 text-center">
+                  {row.Priority}
+                </td>
+                <td className="border border-slate-300 text-center">
+                  {row.LocationNodeID}
+                </td>
+                <td className="border border-slate-300 text-center">
+                  {row.Details1}
+                </td>
+                <td className="border border-slate-300 text-center">
+                  {row.Details2}
+                </td>
+                <td className="border border-slate-300 text-center">
+                  {row.Details3}
                 </td>
                 <td className="border border-slate-300 text-center">
                   {row.DeliveryDate.toString()}
                 </td>
                 <td className="border border-slate-300 text-center">
-                  {row.DestinationNodeID}
+                  {row.Status}
                 </td>
                 {/*<td className="border border-slate-300 text-center">*/}
                 {/*  {row. }//flowers doesnt store details */}

@@ -1,10 +1,10 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
-import SideBar from "./SideBar";
+import SideBar from "../components/SideBar.tsx";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 // import Canvas from "./Canvas.tsx";
-import SVGCanvas from "./SVGCanvas.tsx";
+import SVGCanvas from "../components/SVGCanvas.tsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Nodes } from "database";
@@ -14,11 +14,11 @@ import TextField from "@mui/material/TextField";
 import { Button, ButtonGroup } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import lowerLevel1Map from "./maps/00_thelowerlevel1.png";
-import lowerLevel2Map from "./maps/00_thelowerlevel2.png";
-import firstFloorMap from "./maps/01_thefirstfloor.png";
-import secondFloorMap from "./maps/02_thesecondfloor.png";
-import thirdFloorMap from "./maps/03_thethirdfloor.png";
+import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
+import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
+import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
+import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
+import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 

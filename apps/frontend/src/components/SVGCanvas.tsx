@@ -3,9 +3,11 @@ import axios from "axios";
 import { Nodes } from "database";
 
 export default function SVGCanvas(props: {
-  path: Nodes[];
+  path?: Nodes[];
   currentMap: string;
   currentLevel: string;
+  nodeClicked?: Nodes | undefined;
+  handleNodeClicked?: (node: Nodes) => void;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
 
@@ -13,7 +15,7 @@ export default function SVGCanvas(props: {
     fetchNodes();
   }, []);
 
-  console.log(props);
+  // console.log(props);
 
   async function fetchNodes() {
     try {
@@ -29,6 +31,12 @@ export default function SVGCanvas(props: {
     }
   }
 
+  function handleCircleClick(node: Nodes) {
+    if (props.handleNodeClicked) {
+      props.handleNodeClicked(node);
+    }
+  }
+
   const filteredNodes = nodesData.filter(
     (node) => node.Floor === props.currentLevel,
   );
@@ -41,9 +49,9 @@ export default function SVGCanvas(props: {
       viewBox="0 0 5000 3400"
     >
       <image href={props.currentMap} height="3400" width="5000" />
-      {props.path.map((node, i) => {
-        if (i < props.path.length - 1) {
-          const nextNode = props.path[i + 1];
+      {(props.path ?? []).map((node, i) => {
+        if (i < (props.path ?? []).length - 1) {
+          const nextNode = (props.path ?? [])[i + 1];
           return (
             <line
               x1={node.Xcoord}
@@ -58,7 +66,9 @@ export default function SVGCanvas(props: {
         return null;
       })}
       {filteredNodes.map((node) => (
-        <circle cx={node.Xcoord} cy={node.Ycoord} r="10" fill="red" />
+        <g onClick={() => handleCircleClick(node)}>
+          <circle cx={node.Xcoord} cy={node.Ycoord} r="10" fill="red" />
+        </g>
       ))}
     </svg>
   );

@@ -12,6 +12,7 @@ import TableViewIcon from "@mui/icons-material/TableView";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import AirlineSeatFlatAngledIcon from "@mui/icons-material/AirlineSeatFlatAngled";
+import EditIcon from "@mui/icons-material/Edit";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -35,6 +36,8 @@ export default function Sidebar() {
     title: "Service Request Table",
     icon: <TableViewIcon />,
   };
+  const editmap: Menu = { title: "Edit Map", icon: <EditIcon /> };
+
   const logout: Menu = { title: "Logout", icon: <Logout /> };
   const edges: Menu = { title: "Edge Table", icon: <AccessibleForwardIcon /> };
   const nodes: Menu = {
@@ -48,6 +51,7 @@ export default function Sidebar() {
   };
   const Menus: Menu[] = [
     home,
+    editmap,
     serviceRequest,
     serviceRequestTable,
     edges,
@@ -67,11 +71,14 @@ export default function Sidebar() {
     case "/servicerequest":
       menuHighlight = "Service Request";
       break;
-    case "/login":
+    case "/":
       menuHighlight = "Login";
       break;
     case "/home":
       menuHighlight = "Home";
+      break;
+    case "/editmap":
+      menuHighlight = "Edit Map";
       break;
     case "/service-request-table":
       menuHighlight = "Service Request Table";
@@ -87,6 +94,9 @@ export default function Sidebar() {
       break;
     case "/download-csv":
       menuHighlight = "Download CSV";
+      break;
+    case "/logout":
+      menuHighlight = "Logout";
       break;
     default:
       menuHighlight = "Home";
@@ -113,6 +123,9 @@ export default function Sidebar() {
     }
     if (title === "Service Request Table") {
       routeChange("service-request-table");
+    }
+    if (title === "Edit Map") {
+      routeChange("editmap");
     }
     if (title === "Edge Table") {
       routeChange("edge-table");

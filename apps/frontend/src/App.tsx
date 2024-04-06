@@ -1,17 +1,18 @@
 import React, { createContext, useState } from "react";
 import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
-import MainPage from "./components/MainPage.tsx";
-import SignInPage from "./components/SignInPage";
+import MainPage from "./Pages/MainPage.tsx";
+import SignInPage from "./Pages/SignInPage.tsx";
+import MapEditing from "./Pages/MapEditing.tsx";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
-import EdgeTablePage from "./components/EdgePage.tsx";
-import NodeTablePage from "./components/NodePage.tsx";
+import EdgeTablePage from "./Pages/EdgePage.tsx";
+import NodeTablePage from "./Pages/NodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
-import { ServiceRequest } from "./components/ServiceRequest.ts";
-import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
-import DownloadCSV from "./components/DownloadCSV.tsx";
-import UploadCSV from "./components/UploadCSV.tsx";
+import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
+import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
+import DownloadCSV from "./backendreference/DownloadCSV.tsx";
+import UploadCSV from "./Pages/UploadCSV.tsx";
 import { Auth0Provider } from "@auth0/auth0-react";
 // import {useAuth0} from "@auth0/auth0-react";
 //this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez idk
@@ -49,6 +50,10 @@ function App() {
         {
           path: "home",
           element: <MainPage />,
+        },
+        {
+          path: "editmap",
+          element: <MapEditing />,
         },
         {
           path: "servicerequest",
@@ -94,8 +99,8 @@ function App() {
       <Auth0Provider
         useRefreshTokens
         cacheLocation="localstorage"
-        domain="redrockslogin.us.auth0.com"
-        clientId="affQSRlQfnYe2MYeBXQr2bfG8rpQBHDx"
+        domain="redrockverify.us.auth0.com"
+        clientId="z3HAzFMCeeSU9GehHltcf0LJYZQy0aew"
         onRedirectCallback={(appState) => {
           navigate(appState?.returnTo || window.location.pathname);
         }}

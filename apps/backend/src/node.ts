@@ -36,11 +36,6 @@ export const createNode = async (
       ShortName: shortName,
     },
   });
-
-  //Display successful data population message
-  console.log(
-    `Inserted data: NodeID - ${nodeID}, Xcoord - ${xcoord}, Ycoord - ${ycoord}, Floor - ${floor}, Building - ${building}, NodeType - ${nodeType}, LongName - ${longName}, ShortName - ${shortName}`,
-  );
 };
 
 export const insertNodeIntoDB = async (row: string[]) => {
@@ -65,4 +60,9 @@ export const insertNodeIntoDB = async (row: string[]) => {
     longName,
     shortName,
   );
+
+  //Display successful data population message
+  // console.log(
+  //     `Inserted data: NodeID - ${nodeID}, Xcoord - ${xcoord}, Ycoord - ${ycoord}, Floor - ${floor}, Building - ${building}, NodeType - ${nodeType}, LongName - ${longName}, ShortName - ${shortName}`,
+  // );
 };

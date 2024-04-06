@@ -1,6 +1,6 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
-import { ServiceRequest } from "./ServiceRequest.ts";
-import { submitRequestDB } from "./SubmitRequest.tsx";
+import { ServiceRequest } from "../Interfaces/ServiceRequest.ts";
+import { submitRequestDB } from "../backendreference/SubmitRequest.tsx";
 import {
   Button,
   Stack,
@@ -10,10 +10,10 @@ import {
   Modal,
   Card,
 } from "@mui/material";
-import Flower1 from "./image/Flower1.png";
-import Flower2 from "./image/Flower2.png";
-import Flower3 from "./image/Flower3.png";
-import Flower4 from "./image/Flower4.png";
+import Flower1 from "../assets/image/Flower1.png";
+import Flower2 from "../assets/image/Flower2.png";
+import Flower3 from "../assets/image/Flower3.png";
+import Flower4 from "../assets/image/Flower4.png";
 import SideBar from "./SideBar.tsx";
 import { RequestContext } from "../App.tsx";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -31,18 +31,21 @@ export interface ListOfServices {
 function ServiceRequestLog({ availableServices }: ListOfServices) {
   /*DefaultServiceRequest is the default state of the Service Request object, where everything is empty*/
   const defaultServiceRequest: ServiceRequest = {
-    name: "",
-    room: "",
+    requesterName: "",
+    requestType: "",
+    priority: "",
+    locationNodeID: "",
+    details1: "",
+    details2: "",
+    details3: "",
     deliveryDate: "",
-    type: availableServices[0],
-    subType: "",
-    details: "",
+    status: "",
   };
 
   const [nodes, setNodes] = useState<Nodes[]>();
 
   // const [room, setRoom] = useState("");
-  const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
+  const Locations = nodes?.map((node: Nodes) => node.NodeID) || [];
 
   useEffect(() => {
     async function fetchData() {
@@ -84,7 +87,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <div>
                     <label className="">
                       <button
-                        className={`${singleServiceRequest.subType === "Daffodil" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
                       >
                         <img
                           className=""
@@ -92,7 +95,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           onClick={() =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              subType: "Daffodil",
+                              details1: "Daffodil",
                             })
                           }
                           alt="Flowers"
@@ -101,7 +104,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     </label>
                     <label className="">
                       <button
-                        className={`${singleServiceRequest.subType === "Carnation" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
                       >
                         <img
                           className=""
@@ -109,7 +112,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           onClick={() =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              subType: "Carnation",
+                              details1: "Carnation",
                             })
                           }
                           alt="Flowers"
@@ -118,7 +121,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     </label>
                     <label className="">
                       <button
-                        className={`${singleServiceRequest.subType === "Rose" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
                       >
                         <img
                           className=""
@@ -126,7 +129,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           onClick={() =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              subType: "Rose",
+                              details1: "Rose",
                             })
                           }
                           alt="Flowers"
@@ -135,7 +138,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     </label>
                     <label className="">
                       <button
-                        className={`${singleServiceRequest.subType === "Lily" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
                       >
                         <img
                           className=""
@@ -143,7 +146,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           onClick={() =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              subType: "Lily",
+                              details1: "Lily",
                             })
                           }
                           alt="Flowers "
@@ -186,7 +189,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   const submitRequest = () => {
     console.log("submitting");
     if (
-      singleServiceRequest.name &&
+      singleServiceRequest.requesterName &&
       // !isNaN(singleServiceRequest.room) &&
       singleServiceRequest.deliveryDate
     ) {
@@ -234,7 +237,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                       onClick={() =>
                         setSingleServiceRequest({
                           ...singleServiceRequest,
-                          type: serviceOption,
+                          requestType: serviceOption,
                         })
                       }
                     >
@@ -242,7 +245,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     </Button>
                   ))}
                   <p className="text-sm">
-                    Selected Service: {singleServiceRequest.type}
+                    Selected Service: {singleServiceRequest.requestType}
                   </p>
                 </div>
               </div>
@@ -263,12 +266,13 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                 <hr className="mb-4 border-solid border border-black" />
                 {requests.map((request, index) => (
                   <div key={index} className="request-box mb-2">
-                    <p>Service Type: {request.type}</p>
-                    <p>Sub Type: {request.subType}</p>
-                    <p>Name: {request.name}</p>
+                    <p>Service Type: {request.requestType}</p>
+                    <p>Details 1: {request.details1}</p>
+                    <p>Details 2: {request.details2}</p>
+                    <p>Details 3: {request.details3}</p>
+                    <p>Name: {request.requesterName}</p>
                     <p>Delivery Date: {request.deliveryDate}</p>
-                    <p>Room: {request.room}</p>
-                    <p>Details: {request.details}</p>
+                    <p>Room: {request.locationNodeID}</p>
 
                     <Button
                       variant="contained"
@@ -299,7 +303,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
           <div className="inline-block w-[60%]">
             <div className="content" id="content">
-              {switchService(singleServiceRequest.type)}
+              {switchService(singleServiceRequest.requestType)}
 
               <div className="mt-[5rem]">
                 <div
@@ -316,14 +320,14 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                         <label htmlFor="room">Room:</label>
 
                         <Autocomplete
-                          value={singleServiceRequest.room}
+                          value={singleServiceRequest.locationNodeID}
                           onChange={(
                             e: ChangeEvent<unknown>,
                             getRoom: string | null,
                           ) =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              room: getRoom!,
+                              locationNodeID: getRoom!,
                             })
                           }
                           disablePortal
@@ -348,11 +352,11 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           className="border rounded-md px-2 py-1 w-full"
                           type="text"
                           id="name"
-                          value={singleServiceRequest.name}
+                          value={singleServiceRequest.requesterName}
                           onChange={(e) =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              name: e.target.value,
+                              requesterName: e.target.value,
                             })
                           }
                           placeholder="Name"
@@ -380,11 +384,11 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                       <textarea
                         className="border rounded-md px-2 py-1 w-full"
                         id="details"
-                        value={singleServiceRequest.details}
+                        value={singleServiceRequest.details2}
                         onChange={(e) =>
                           setSingleServiceRequest({
                             ...singleServiceRequest,
-                            details: e.target.value,
+                            details2: e.target.value,
                           })
                         }
                         placeholder="Please Enter Request Details Here"
