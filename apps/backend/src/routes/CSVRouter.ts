@@ -2,8 +2,10 @@ import express, { Router, Request, Response } from "express";
 const CSVRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 import multer from "multer";
-import { createNode } from "../node.ts"; // Importing node database functions
-import { createEdge } from "../edge"; // Importing edge database functions
+import { insertNodeIntoDB } from "../node.ts"; // Importing node database functions
+import { insertEdgeIntoDB } from "../edge"; // Importing edge database functions
+import { parseCSVFile } from "../fileUtils.ts";
+
 const upload = multer({
   storage: multer.memoryStorage(),
 });
@@ -41,6 +43,13 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
         );
     }
 
+    //Determine if the csvContent is empty or not
+    if (csvContent == "") {
+      console.log("No data in databse!");
+      res.sendStatus(204);
+      return;
+    }
+
     //Send the CSV Content
     res.send(csvContent);
   } catch (error) {
@@ -73,18 +82,7 @@ CSVRouter.post(
       const data: string = String(req.file.buffer);
 
       // Trying to use \r\n as a delimiter
-      let rows = data
-        .split("\r\n") // Files created in windows are terminated with \r\n
-        .slice(1, -1) // Remove header and trailing null value
-        .map((row) => row.split(","));
-
-      // Check if data was read, try reading with \n as a delimiter if not
-      if (rows.length == 0) {
-        rows = data
-          .split("\n") // Files created in windows are terminated with \r\n
-          .slice(1, -1) // Remove header and trailing null value
-          .map((row) => row.split(","));
-      }
+      const rows = parseCSVFile(data);
 
       //If We still have no data, give an error
       if (rows.length == 0) {
@@ -102,38 +100,15 @@ CSVRouter.post(
       }
 
       //Now, write file contents to CSV
-      let edgeIdCounter = 0;
       for (const row of rows) {
-        if (rows[0].length == 2) {
-          const [startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
-          await createEdge(edgeIdCounter, startNodeID, endNodeID);
-          edgeIdCounter = edgeIdCounter + 1;
+        if (rows[0].length == 3) {
+          await insertEdgeIntoDB(row);
         } else if (rows[0].length == 8) {
-          //Parse each row of the .csv file into startNodeID and endNodeID
-          const [
-            nodeID,
-            xcoord,
-            ycoord,
-            floor,
-            building,
-            nodeType,
-            longName,
-            shortName,
-          ] = row;
-          await createNode(
-            nodeID,
-            xcoord,
-            ycoord,
-            floor,
-            building,
-            nodeType,
-            longName,
-            shortName,
-          );
+          await insertNodeIntoDB(row);
         } else {
           res.sendStatus(400);
           console.log(
-            `Failed to insert data. CSV not supported. Must be uploadFile.csv`,
+            `Failed to insert data. CSV not supported. Must contains Edges or Nodes data`,
           );
           return;
         }

@@ -12,6 +12,10 @@ import { ServiceRequest } from "./components/ServiceRequest.ts";
 import ServiceRequestTable from "./components/ServiceRequestTable.tsx";
 import DownloadCSV from "./components/DownloadCSV.tsx";
 import UploadCSV from "./components/UploadCSV.tsx";
+import { Auth0Provider } from "@auth0/auth0-react";
+// import {useAuth0} from "@auth0/auth0-react";
+//this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez idk
+import { useNavigate } from "react-router-dom";
 
 type appContextType = {
   requests: ServiceRequest[];
@@ -40,7 +44,7 @@ function App() {
       children: [
         {
           path: "",
-          element: <SignInPage setSnackBar={setSnackbar} />,
+          element: <SignInPage />,
         },
         {
           path: "home",
@@ -76,24 +80,49 @@ function App() {
 
   return <RouterProvider router={router} />;
   function Root() {
+    const navigate = useNavigate();
+    // // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    // const { loginWithRedirect, logout } = useAuth0();
+    // logout({
+    //   logoutParams: {
+    //     returnTo: window.location.origin,
+    //   },
+    // });
+    // baby's first await logic break
+
     return (
-      <RequestContext.Provider value={{ requests, setRequests }}>
-        <div className="w-full flex flex-col gap-5">
-          <Outlet />
-          <Snackbar
-            open={snackbar.open}
-            autoHideDuration={3000}
-            onClose={() =>
-              setSnackbar((prevState) => ({ ...prevState, open: false }))
-            }
-            anchorOrigin={{ vertical: "top", horizontal: "center" }}
-          >
-            <Alert variant="filled" sx={{ width: "100%" }}>
-              {snackbar.message}
-            </Alert>
-          </Snackbar>
-        </div>
-      </RequestContext.Provider>
+      <Auth0Provider
+        useRefreshTokens
+        cacheLocation="localstorage"
+        domain="redrockslogin.us.auth0.com"
+        clientId="affQSRlQfnYe2MYeBXQr2bfG8rpQBHDx"
+        onRedirectCallback={(appState) => {
+          navigate(appState?.returnTo || window.location.pathname);
+        }}
+        authorizationParams={{
+          redirect_uri: window.location.origin,
+          // audience: "/api", Add back in
+          scope: "openid profile email offline_access",
+        }}
+      >
+        <RequestContext.Provider value={{ requests, setRequests }}>
+          <div className="w-full flex flex-col gap-5">
+            <Outlet />
+            <Snackbar
+              open={snackbar.open}
+              autoHideDuration={3000}
+              onClose={() =>
+                setSnackbar((prevState) => ({ ...prevState, open: false }))
+              }
+              anchorOrigin={{ vertical: "top", horizontal: "center" }}
+            >
+              <Alert variant="filled" sx={{ width: "100%" }}>
+                {snackbar.message}
+              </Alert>
+            </Snackbar>
+          </div>
+        </RequestContext.Provider>
+      </Auth0Provider>
     );
   }
 }

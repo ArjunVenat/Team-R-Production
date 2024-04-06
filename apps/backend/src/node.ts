@@ -42,3 +42,27 @@ export const createNode = async (
     `Inserted data: NodeID - ${nodeID}, Xcoord - ${xcoord}, Ycoord - ${ycoord}, Floor - ${floor}, Building - ${building}, NodeType - ${nodeType}, LongName - ${longName}, ShortName - ${shortName}`,
   );
 };
+
+export const insertNodeIntoDB = async (row: string[]) => {
+  //Parse each row of the .csv file into startNodeID and endNodeID
+  const [
+    nodeID,
+    xcoord,
+    ycoord,
+    floor,
+    building,
+    nodeType,
+    longName,
+    shortName,
+  ] = row;
+  await createNode(
+    nodeID,
+    xcoord,
+    ycoord,
+    floor,
+    building,
+    nodeType,
+    longName,
+    shortName,
+  );
+};

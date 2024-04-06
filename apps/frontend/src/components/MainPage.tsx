@@ -3,20 +3,53 @@
 import SideBar from "./SideBar";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-import Canvas from "./Canvas.tsx";
+// import Canvas from "./Canvas.tsx";
+import SVGCanvas from "./SVGCanvas.tsx";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Nodes } from "database";
-import { Stack } from "react-bootstrap";
+//import { Stack } from "react-bootstrap";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, ButtonGroup } from "@mui/material";
+import ZoomOutIcon from "@mui/icons-material/ZoomOut";
+import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import lowerLevel1Map from "./maps/00_thelowerlevel1.png";
+import lowerLevel2Map from "./maps/00_thelowerlevel2.png";
+import firstFloorMap from "./maps/01_thefirstfloor.png";
+import secondFloorMap from "./maps/02_thesecondfloor.png";
+import thirdFloorMap from "./maps/03_thethirdfloor.png";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
-function MainPage() {
+const autocompleteStyle = {
+  "& .MuiInputBase-input": { color: "white" },
+  "& label.Mui-focused": { color: "white" },
+  "& .MuiInputLabel-outlined": { color: "white" },
+  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
+    borderColor: "white",
+  },
+  "& .MuiAutocomplete-popupIndicator": { color: "white" },
+  "& .MuiAutocomplete-clearIndicator": { color: "white" },
+};
+
+const floors = [
+  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
+  { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
+  { name: "First Floor", map: firstFloorMap, level: "1" },
+  { name: "Second Floor", map: secondFloorMap, level: "2" },
+  { name: "Third Floor", map: thirdFloorMap, level: "3" },
+];
+
+export default function MainPage() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = React.useState<Nodes[]>([]);
+  const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
 
   const navigate = useNavigate();
   const routeChange = (path: string) => {
@@ -79,107 +112,113 @@ function MainPage() {
       id="MainPage"
       className="flex h-screen overflow-hidden flex-row bg-[#d6d8d5]"
     >
-      {/*<NavigationScreen/>*/}
       <SideBar />
-      <>
-        <Stack>
-          <div
-            className="grid"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              minWidth: "80vw",
-            }}
-          >
-            <div
-              className="grid"
-              style={{
-                justifyContent: "center",
-                alignItems: "center",
-                display: "grid",
-              }}
-            >
-              <div>
-                <div
-                  style={{ position: "absolute", zIndex: 1, right: 0, top: 0 }}
+      <main className="flex content-center justify-center leading-none relative">
+        <div id="map" className="relative">
+          <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
+            {({ zoomIn, zoomOut, resetTransform }) => (
+              <section>
+                <ButtonGroup
+                  variant="contained"
+                  color="primary"
+                  className="flex absolute top-1 left-1 z-10"
                 >
-                  <h1
-                    className="text-xl"
-                    style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
+                  <Button
+                    onClick={() => zoomOut()}
+                    children={<ZoomOutIcon />}
+                    className="p-1"
+                  />
+                  <Button onClick={() => resetTransform()} children={"Reset"} />
+                  <Button
+                    onClick={() => zoomIn()}
+                    children={<ZoomInIcon />}
+                    className="p-1"
+                  />
+                  <Select
+                    value={currentMap}
+                    onChange={(event) => setCurrentMap(event.target.value)}
+                    sx={{
+                      backgroundColor: "primary.main",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "primary.dark",
+                      },
+                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                    }}
                   >
-                    {" "}
-                    Enter your start and end locations:
-                  </h1>
-                  <Autocomplete
-                    value={start}
-                    onChange={(
-                      event: ChangeEvent<unknown>,
-                      getStart: string | null,
-                    ) => {
-                      return setStart(getStart!);
-                    }}
-                    disablePortal
-                    id="combo-box-start"
-                    options={Locations}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="Start Location"
-                        style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
-                      />
-                    )}
+                    {floors.map((floor, index) => (
+                      <MenuItem key={index} value={floor.map}>
+                        {floor.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </ButtonGroup>
+                <TransformComponent>
+                  <SVGCanvas
+                    key={currentMap}
+                    path={path}
+                    currentMap={currentMap}
+                    currentLevel={
+                      floors.find((floor) => floor.map === currentMap)?.level ||
+                      ""
+                    }
                   />
+                </TransformComponent>
+              </section>
+            )}
+          </TransformWrapper>
+        </div>
+      </main>
+      <aside className="bg-primary text-secondary w-screen">
+        <h1 className="text-xl bg-transparent p-2 text-center">
+          Enter your start and end locations:
+        </h1>
+        <Autocomplete
+          className="p-2"
+          value={start}
+          onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
+            return setStart(getStart!);
+          }}
+          id="origin"
+          options={Locations}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="Start Location"
+              sx={autocompleteStyle}
+            />
+          )}
+        />
+        <Autocomplete
+          className="p-2"
+          value={end}
+          onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
+            setEnd(getEnd!);
+          }}
+          id="destination"
+          options={Locations}
+          renderInput={(params) => (
+            <TextField
+              {...params}
+              label="End Location"
+              sx={autocompleteStyle}
+            />
+          )}
+        />
 
-                  <Autocomplete
-                    value={end}
-                    onChange={(
-                      event: ChangeEvent<unknown>,
-                      getEnd: string | null,
-                    ) => {
-                      setEnd(getEnd!);
-                    }}
-                    disablePortal
-                    id="combo-box-end"
-                    options={Locations}
-                    sx={{ width: 300 }}
-                    renderInput={(params) => (
-                      <TextField
-                        {...params}
-                        label="End Location"
-                        style={{ backgroundColor: "rgba(0, 0, 0, 0.1)" }}
-                      />
-                    )}
-                  />
-
-                  <div className="form-item">
-                    <Button
-                      variant="contained"
-                      color="success"
-                      onClick={getDirections}
-                    >
-                      Get Directions
-                    </Button>
-                  </div>
-                </div>
-                <main className="flex content-center justify-center leading-none">
-                  <div id={"map"} className="max-w-full">
-                    <TransformWrapper
-                      alignmentAnimation={{ sizeX: 0, sizeY: 0 }}
-                    >
-                      <TransformComponent>
-                        <Canvas path={path}></Canvas>
-                      </TransformComponent>
-                    </TransformWrapper>
-                  </div>
-                </main>
-              </div>
-            </div>
-          </div>
-        </Stack>
-      </>
+        <div className="flex justify-center">
+          <Button
+            className="content-center"
+            variant="contained"
+            color="success"
+            onClick={getDirections}
+          >
+            Get Directions
+          </Button>
+        </div>
+      </aside>
     </div>
   );
 }
-
-export default MainPage;
