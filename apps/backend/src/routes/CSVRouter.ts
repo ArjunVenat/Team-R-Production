@@ -43,6 +43,13 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
         );
     }
 
+    //Determine if the csvContent is empty or not
+    if (csvContent == "") {
+      console.log("No data in databse!");
+      res.sendStatus(204);
+      return;
+    }
+
     //Send the CSV Content
     res.send(csvContent);
   } catch (error) {
