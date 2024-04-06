@@ -1,7 +1,7 @@
 import fs from "fs";
 import { PrismaClient } from "database";
-import { createEdge } from "./edge"; // Importing edge database functions
-import { createNode } from "./node";
+import { insertEdgeIntoDB } from "./edge"; // Importing edge database functions
+import { insertNodeIntoDB } from "./node";
 
 //Prisma client constant
 const prisma = new PrismaClient();
@@ -9,10 +9,9 @@ const prisma = new PrismaClient();
 /**
  * Asyncrhonous function for reading information from a CSV file and returning
  * a promise for a 2D array of strings (rows and columns).
- *
- * @param filePath must be a string of a .csv file path (ex. "L1Edges.csv")
+ * @param filePath must be a string of a .csv file path (ex. "edges.csv")
  */
-export const readCSVFile = (filePath: string): Promise<string[][]> => {
+export const readCSVFile = async (filePath: string): Promise<string[][]> => {
   //declaration of function
   return new Promise((resolve, reject) => {
     //output of function
@@ -22,18 +21,7 @@ export const readCSVFile = (filePath: string): Promise<string[][]> => {
         reject(err);
       } else {
         // Trying to use \r\n as a delimiter
-        let rows = data
-          .split("\r\n") // Files created in windows are terminated with \r\n
-          .slice(1, -1) // Remove header and trailing null value
-          .map((row) => row.split(","));
-
-        // Check if data was read, try reading with \n as a delimiter if not
-        if (rows.length == 0) {
-          rows = data
-            .split("\n") // Files created in windows are terminated with \r\n
-            .slice(1, -1) // Remove header and trailing null value
-            .map((row) => row.split(","));
-        }
+        const rows = parseCSVFile(data);
 
         // We still have no data, reject the promise
         if (rows.length == 0) {
@@ -53,7 +41,7 @@ export const readCSVFile = (filePath: string): Promise<string[][]> => {
  * Asyncrhonous function for writing a CSV file at destination destFilePath from a database specified by sourceFilePath.
  * See important note about sourceFilePath parameter.
  * @param sourceFilePath used ONLY to specify what type of data is being retrieved from the database (edges or nodes).
- * Must be of name "L1Edges.csv" or "L1Nodes.csv".
+ * Must be of name "edges.csv" or "nodes.csv".
  * @param destFilePath used to print database data to a .csv file destination. Must be a string denoting a .csv file.
  */
 export const writeCSVFile = async (
@@ -83,13 +71,13 @@ export const writeCSVFile = async (
     }
 
     //use sourceFilePath to determine which relation to use (edges or nodes)
-    if (sourceFilePath === "L1Edges.csv") {
+    if (sourceFilePath === "edges.csv") {
       //If we are reading edges data...
       const csvContent = edges
         .map((edge) => `${edge.StartNodeID},${edge.EndNodeID}`)
         .join("\n");
       fs.writeFileSync(destFilePath, csvContent); // Write CSV content to file
-    } else if (sourceFilePath === "L1Nodes.csv") {
+    } else if (sourceFilePath === "nodes.csv") {
       //If we are reading nodes data...
       const csvContent = nodes
         .map(
@@ -101,7 +89,7 @@ export const writeCSVFile = async (
     } else {
       //sourceFilePath is neither of the above...
       console.log(
-        `Error writing to ${destFilePath}. sourceFilePath must be L1Edges.csv or L1Nodes.csv`,
+        `Error writing to ${destFilePath}. sourceFilePath must be edges.csv or nodes.csv`,
       );
       await prisma.$disconnect();
       return;
@@ -116,44 +104,26 @@ export const writeCSVFile = async (
   }
 };
 
+/**
+ * Function for processing a CSV file and inserting its contents into the PostgreSQL DB.
+ * @param processFilePath Specifies what file is to be processed. Must be of names edges.csv or nodes.csv
+ */
 export const processFile = async (processFilePath: string) => {
   try {
     const csvData = await readCSVFile(processFilePath);
     console.log("CSV Data:", csvData);
 
     // Use Prisma to insert data into PostgreSQL database
-    let edgeIdCounter: number = 1;
     for (const row of csvData) {
       try {
-        if (processFilePath === "L1Edges.csv") {
-          const [startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
-          await createEdge(edgeIdCounter, startNodeID, endNodeID);
-          edgeIdCounter = edgeIdCounter + 1;
-        } else if (processFilePath === "L1Nodes.csv") {
-          const [
-            nodeID,
-            xcoord,
-            ycoord,
-            floor,
-            building,
-            nodeType,
-            longName,
-            shortName,
-          ] = row; //Parse each row of the .csv file into startNodeID and endNodeID
-          await createNode(
-            nodeID,
-            xcoord,
-            ycoord,
-            floor,
-            building,
-            nodeType,
-            longName,
-            shortName,
-          );
+        if (processFilePath === "edges.csv") {
+          await insertEdgeIntoDB(row);
+        } else if (processFilePath === "nodes.csv") {
+          await insertNodeIntoDB(row);
         } else {
           console.log(
-            `Failed to insert data. CSV not supported. Must be L1Edges.csv`,
-          ); //or L1Nodes.csv`);
+            `Failed to insert data. CSV not supported. Must be edges.csv or nodes.csv`,
+          ); //or nodes.csv`);
         }
       } catch (error) {
         //Display error message
@@ -173,4 +143,24 @@ export const processFile = async (processFilePath: string) => {
     // Close Prisma client connection
     await prisma.$disconnect();
   }
+};
+
+/**
+ * Function for parsing a CSV file and returning a 2D array of strings representing its contents
+ * @param data the raw string of CSV content.
+ */
+export const parseCSVFile = (data: string): string[][] => {
+  let rows = data
+    .split("\r\n") // Files created in windows are terminated with \r\n
+    .slice(1, -1) // Remove header and trailing null value
+    .map((row) => row.split(","));
+
+  // Check if data was read, try reading with \n as a delimiter if not
+  if (rows.length == 0) {
+    rows = data
+      .split("\n") // Files created in windows are terminated with \r\n
+      .slice(1, -1) // Remove header and trailing null value
+      .map((row) => row.split(","));
+  }
+  return rows;
 };
