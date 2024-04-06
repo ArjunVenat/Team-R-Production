@@ -12,7 +12,6 @@ import TableViewIcon from "@mui/icons-material/TableView";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import AirlineSeatFlatAngledIcon from "@mui/icons-material/AirlineSeatFlatAngled";
-import EditIcon from "@mui/icons-material/Edit";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -47,10 +46,8 @@ export default function Sidebar() {
     title: "Download CSV",
     icon: <CloudDownloadIcon />,
   };
-  const editMap: Menu = { title: "Edit Map", icon: <EditIcon /> };
   const Menus: Menu[] = [
     home,
-    editMap,
     serviceRequest,
     serviceRequestTable,
     edges,
@@ -75,9 +72,6 @@ export default function Sidebar() {
       break;
     case "/home":
       menuHighlight = "Home";
-      break;
-    case "/editmap":
-      menuHighlight = "Edit Map";
       break;
     case "/service-request-table":
       menuHighlight = "Service Request Table";
@@ -113,9 +107,6 @@ export default function Sidebar() {
     setActiveMenu(title);
     if (title === "Logout") {
       routeChange("");
-    }
-    if (title === "Edit Map") {
-      routeChange("editmap");
     }
     if (title === "Service Request") {
       routeChange("servicerequest");

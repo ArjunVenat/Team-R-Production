@@ -1,9 +1,12 @@
 import React, { useEffect } from "react";
-import lowerLevel1Map from "./maps/00_thelowerlevel1.png";
 import axios from "axios";
 import { Nodes } from "database";
 
-export default function SVGCanvas(props: { path: Nodes[] }) {
+export default function SVGCanvas(props: {
+  path: Nodes[];
+  currentMap: string;
+  currentLevel: string;
+}) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
 
   useEffect(() => {
@@ -26,6 +29,10 @@ export default function SVGCanvas(props: { path: Nodes[] }) {
     }
   }
 
+  const filteredNodes = nodesData.filter(
+    (node) => node.Floor === props.currentLevel,
+  );
+
   return (
     <svg
       height="100vh"
@@ -33,7 +40,7 @@ export default function SVGCanvas(props: { path: Nodes[] }) {
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
     >
-      <image href={lowerLevel1Map} height="3400" width="5000" />
+      <image href={props.currentMap} height="3400" width="5000" />
       {props.path.map((node, i) => {
         if (i < props.path.length - 1) {
           const nextNode = props.path[i + 1];
@@ -50,7 +57,7 @@ export default function SVGCanvas(props: { path: Nodes[] }) {
         }
         return null;
       })}
-      {nodesData.map((node) => (
+      {filteredNodes.map((node) => (
         <circle cx={node.Xcoord} cy={node.Ycoord} r="10" fill="red" />
       ))}
     </svg>
