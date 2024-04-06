@@ -6,36 +6,8 @@ import { useAuth0 } from "@auth0/auth0-react";
 const UserTypeList = motion.div;
 const UserTypeButton = motion.button;
 
-// type SignInPageProps = {
-//     setSnackBar: (obj: {
-//         open: boolean;
-//         severity: string;
-//         message: string;
-//     }) => void;
-//     navigate: (path: string) => void;
-// };
-
 function SignInPage() {
-  const { loginWithRedirect, isAuthenticated } = useAuth0();
-
-  // useEffect(() => {
-  //     const login = async () => {
-  //         try {
-  //             await getAccessTokenSilently();
-  //         }
-  //         catch (error) {
-  //             await loginWithRedirect({
-  //                 appState: {
-  //                     returnTo: location.pathname
-  //                 };
-  //             })
-  //         }
-  //     }
-  //
-  //     if (!isLoading && isAuthenticated){
-  //         login();
-  //     }
-  // }, [getAccessTokenSilently, isAuthenticated, isLoading, location.pathname, loginWithRedirect]);
+  const { loginWithRedirect } = useAuth0();
 
   return (
     <>
@@ -52,7 +24,7 @@ function SignInPage() {
           style={{ height: "50vh", width: "40vw" }}
         >
           <AnimatePresence>
-            {!isAuthenticated && (
+            {
               <UserTypeList
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
@@ -66,13 +38,17 @@ function SignInPage() {
                 <UserTypeButton
                   whileHover={{ scale: 1.1 }}
                   whileTap={{ scale: 0.9 }}
-                  onClick={() => loginWithRedirect()}
+                  onClick={() =>
+                    loginWithRedirect({
+                      appState: { returnTo: "/home" },
+                    })
+                  }
                   className="m-10 p-4 w-48 bg-primary text-white font-bold rounded-lg hover:bg-[#012d5a]"
                 >
                   Log In
                 </UserTypeButton>
               </UserTypeList>
-            )}
+            }
           </AnimatePresence>
         </div>
       </div>
