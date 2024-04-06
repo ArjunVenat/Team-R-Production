@@ -23,10 +23,12 @@ export class GraphNode {
     this.neighbors.push(node);
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  getDistance(node: GraphNode): number {
-    // TODO: Make this return an correct value
-    return -99999;
+  getDistance(other: GraphNode): number {
+    return Math.sqrt(
+      (this.x - other.x) ** 2 +
+        (this.y - other.y) ** 2 +
+        (this.z - other.z) ** 2,
+    );
   }
 }
 
