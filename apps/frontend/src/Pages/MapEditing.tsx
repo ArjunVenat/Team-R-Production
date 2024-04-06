@@ -123,6 +123,8 @@ export default function MapEditing() {
                     nodeClicked={nodeClicked}
                     handleEdgeClicked={handleEdgeClicked}
                     edgeClicked={edgeClicked}
+                    nodeColor="orange"
+                    edgeColor="green"
                   />
                 </TransformComponent>
               </section>
