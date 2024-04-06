@@ -16,6 +16,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 // import {useAuth0} from "@auth0/auth0-react";
 //this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez idk
 import { useNavigate } from "react-router-dom";
+import EditMap from "./components/EditMap";
 
 type appContextType = {
   requests: ServiceRequest[];
@@ -49,6 +50,10 @@ function App() {
         {
           path: "home",
           element: <MainPage />,
+        },
+        {
+          path: "editmap",
+          element: <EditMap />,
         },
         {
           path: "servicerequest",
