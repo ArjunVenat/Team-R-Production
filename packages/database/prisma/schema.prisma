@@ -42,16 +42,48 @@ model Edges {
 // shortName is a string
 
 model Nodes {
-  NodeID         String          @id
-  Xcoord         String
-  Ycoord         String
-  Floor          String
-  Building       String
-  NodeType       String
-  LongName       String
-  ShortName      String
-  FlowerRequests FlowerRequest[]
+  NodeID    String           @id
+  Xcoord    String
+  Ycoord    String
+  Floor     String
+  Building  String
+  NodeType  String
+  LongName  String
+  ShortName String
+  Requests  GeneralRequest[]
 }
+
+//--------------- Iteration 2 -----------------------------
+
+// making General Request table
+// 10 Columns:
+// RequestID which is an Int
+// RequesterName which is a string of the person making the request
+// RequestType which is a string
+// Priority which is a string (low, medium, high, emergency)
+// Location which is a Node Object
+// Details1 which is a string of whatever important details dependent on type of request
+// Details2 which is a string of whatever important details dependent on type of request
+// Details3 which is a string of whatever important details dependent on type of request
+// DeliveryDate which is a DateTime of whatever the delievery date is supposed to be
+// Status which is a string of either (Unassigned, Assigned, InProgress, or Closed)
+// LocationNodeID is a string which specifies the Node ID of the location of the Node
+
+model GeneralRequest {
+  RequestID      Int      @id @default(autoincrement())
+  RequesterName  String
+  RequestType    String
+  Priority       String
+  Location       Nodes    @relation(fields: [LocationNodeID], references: [NodeID])
+  LocationNodeID String
+  Details1       String
+  Details2       String
+  Details3       String
+  DeliveryDate   DateTime
+  Status         String
+}
+
+//-----------------------------OLD-----------------------------
 
 // model Request {
 //   RequestID     Int      @id @default(autoincrement())
@@ -76,16 +108,16 @@ model Nodes {
 //   DestinationID String
 // }
 
-model FlowerRequest {
-  RequestID         Int      @id @default(autoincrement())
-  Time              DateTime
-  DeliveryDate      DateTime
-  RecipientName     String
-  FlowerType        String
-  UserID            Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
-  Destination       Nodes    @relation(fields: [DestinationNodeID], references: [NodeID])
-  DestinationNodeID String
-}
+// model FlowerRequest {
+//   RequestID         Int      @id @default(autoincrement())
+//   Time              DateTime
+//   DeliveryDate      DateTime
+//   RecipientName     String
+//   FlowerType        String
+//   UserID            Int // USE RELATION FOR LATER ITERATION (When we need to make a Users table)
+//   Destination       Nodes    @relation(fields: [DestinationNodeID], references: [NodeID])
+//   DestinationNodeID String
+// }
 
 // npx prisma generate for schema. can see using database
 // npx prisma migrate dev --name init to run the code to add to a database. will overwrite anything in public.

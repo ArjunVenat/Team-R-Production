@@ -128,7 +128,7 @@ export const processFile = async (processFilePath: string) => {
       } catch (error) {
         //Display error message
         console.error(
-          `Error inserting data from ${processFilePath}. This record likely already exists.`,
+          `Could not insert data from ${processFilePath}. This record likely already exists.`,
         );
       }
     }
