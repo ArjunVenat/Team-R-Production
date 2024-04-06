@@ -1,4 +1,4 @@
-import { ServiceRequest } from "./ServiceRequest.ts";
+import { ServiceRequest } from "../Interfaces/ServiceRequest.ts";
 import axios from "axios";
 // import SuccessAlert from "./SuccessAlert.tsx";
 

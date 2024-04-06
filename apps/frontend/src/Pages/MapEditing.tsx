@@ -1,40 +1,23 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
-import SideBar from "./SideBar";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import SideBar from "../components/SideBar.tsx";
+import React, { useEffect, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 // import Canvas from "./Canvas.tsx";
-import SVGCanvas from "./SVGCanvas.tsx";
-import { useNavigate } from "react-router-dom";
+import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
-import { Nodes } from "database";
+import { Edges, Nodes } from "database";
 //import { Stack } from "react-bootstrap";
-import Autocomplete from "@mui/material/Autocomplete";
-import TextField from "@mui/material/TextField";
 import { Button, ButtonGroup } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import lowerLevel1Map from "./maps/00_thelowerlevel1.png";
-import lowerLevel2Map from "./maps/00_thelowerlevel2.png";
-import firstFloorMap from "./maps/01_thefirstfloor.png";
-import secondFloorMap from "./maps/02_thesecondfloor.png";
-import thirdFloorMap from "./maps/03_thethirdfloor.png";
+import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
+import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
+import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
+import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
+import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
-
-const autocompleteStyle = {
-  "& .MuiInputBase-input": { color: "white" },
-  "& label.Mui-focused": { color: "white" },
-  "& .MuiInputLabel-outlined": { color: "white" },
-  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-  "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-  "& .MuiAutocomplete-popupIndicator": { color: "white" },
-  "& .MuiAutocomplete-clearIndicator": { color: "white" },
-};
 
 const floors = [
   { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
@@ -44,17 +27,25 @@ const floors = [
   { name: "Third Floor", map: thirdFloorMap, level: "3" },
 ];
 
-export default function MainPage() {
-  const [start, setStart] = useState("");
-  const [end, setEnd] = useState("");
+export default function MapEditing() {
   const [nodes, setNodes] = useState<Nodes[]>();
-  const [path, setPath] = React.useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
+  const [nodeClicked, setNodeClicked] = useState<Nodes>();
+  const [edgeClicked, setEdgeClicked] = useState<Edges>();
 
-  const navigate = useNavigate();
-  const routeChange = (path: string) => {
-    const newPath = `/${path}`;
-    navigate(newPath);
+  const handleNodeClick = (node: Nodes | undefined) => {
+    setNodeClicked(node);
+    console.log("node Xcoord: ", node?.Xcoord, "node Ycoord: ", node?.Ycoord);
+  };
+
+  const handleEdgeClicked = (edge: Edges | undefined) => {
+    setEdgeClicked(edge);
+    console.log(
+      "edge startNodeID: ",
+      edge?.StartNodeID,
+      "edge startNodeID: ",
+      edge?.EndNodeID,
+    );
   };
 
   useEffect(() => {
@@ -68,44 +59,9 @@ export default function MainPage() {
       setNodes(nonHallwayNodes);
       console.log("successfully got data from get request");
     }
-
     fetchData().then();
   }, []);
   console.log(nodes);
-
-  const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
-
-  async function getDirections() {
-    const startNodeArray = nodes?.filter(
-      (node: Nodes) => node.LongName === start,
-    );
-    const endNodeArray = nodes?.filter((node: Nodes) => node.LongName === end);
-    if (
-      startNodeArray &&
-      startNodeArray.length > 0 &&
-      endNodeArray &&
-      endNodeArray.length > 0
-    ) {
-      const startNode: string = startNodeArray[0]["NodeID"];
-      const endNode: string = endNodeArray[0]["NodeID"];
-      const res = await axios.get("/api/map/pathfind", {
-        params: {
-          startNodeID: startNode,
-          endNodeID: endNode,
-        },
-      });
-      if (res.status === 200) {
-        console.log("Successfully fetched path");
-      } else {
-        console.error("Failed to fetch path");
-      }
-      console.log(res.data);
-      setPath(res.data);
-    } else {
-      console.error("Start or end node not found");
-    }
-    routeChange("home");
-  }
 
   return (
     <div
@@ -158,12 +114,15 @@ export default function MainPage() {
                 <TransformComponent>
                   <SVGCanvas
                     key={currentMap}
-                    path={path}
                     currentMap={currentMap}
                     currentLevel={
                       floors.find((floor) => floor.map === currentMap)?.level ||
                       ""
                     }
+                    handleNodeClicked={handleNodeClick}
+                    nodeClicked={nodeClicked}
+                    handleEdgeClicked={handleEdgeClicked}
+                    edgeClicked={edgeClicked}
                   />
                 </TransformComponent>
               </section>
@@ -173,51 +132,33 @@ export default function MainPage() {
       </main>
       <aside className="bg-primary text-secondary w-screen">
         <h1 className="text-xl bg-transparent p-2 text-center">
-          Enter your start and end locations:
+          Clicked Node/Edge Information:
         </h1>
-        <Autocomplete
-          className="p-2"
-          value={start}
-          onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
-            return setStart(getStart!);
-          }}
-          id="origin"
-          options={Locations}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Start Location"
-              sx={autocompleteStyle}
-            />
-          )}
-        />
-        <Autocomplete
-          className="p-2"
-          value={end}
-          onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
-            setEnd(getEnd!);
-          }}
-          id="destination"
-          options={Locations}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="End Location"
-              sx={autocompleteStyle}
-            />
-          )}
-        />
+        {nodeClicked != undefined && (
+          <div>
+            <p>NodeID: {nodeClicked.NodeID}</p>
+            <p>Xcoord: {nodeClicked.Xcoord}</p>
+            <p>Ycoord: {nodeClicked.Ycoord}</p>
+            <p>Floor: {nodeClicked.Floor}</p>
+            <p>Building: {nodeClicked.Building}</p>
+            <p>NodeType: {nodeClicked.NodeType}</p>
+            <p>LongName: {nodeClicked.LongName}</p>
+            <p>ShortName: {nodeClicked.ShortName}</p>
+          </div>
+        )}
 
-        <div className="flex justify-center">
-          <Button
-            className="content-center"
-            variant="contained"
-            color="success"
-            onClick={getDirections}
-          >
-            Get Directions
-          </Button>
-        </div>
+        {edgeClicked != undefined && (
+          <div>
+            <p>EdgeID: {edgeClicked.EdgeID}</p>
+            <p>StartNodeID: {edgeClicked.StartNodeID}</p>
+            <p>EndNodeID: {edgeClicked.EndNodeID}</p>
+          </div>
+        )}
+        {nodeClicked === undefined && edgeClicked === undefined && (
+          <div>
+            <p>Click on a Node or Edge to view its details</p>
+          </div>
+        )}
       </aside>
     </div>
   );

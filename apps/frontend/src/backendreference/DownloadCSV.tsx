@@ -1,5 +1,5 @@
 import axios from "axios";
-import SideBar from "./SideBar.tsx";
+import SideBar from "../components/SideBar.tsx";
 import { Stack, Button, Box } from "@mui/material";
 
 //received help from Dan from team o. He fixed some errors.
