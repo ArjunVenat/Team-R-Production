@@ -4,7 +4,7 @@ const prisma = new PrismaClient();
 
 /**
  * Asynchronous function used to create an edge record in the Edges relation.
- * @param edgeIdCounter EdgeID field for edge record.
+ * @param edgeId EdgeID field for edge record.
  * @param startNodeID StartNodeID field for edge record.
  * @param endNodeID EndNodeID field for edge record.
  */
