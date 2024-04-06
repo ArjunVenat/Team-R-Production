@@ -1,19 +1,29 @@
 import React, { useEffect } from "react";
 import axios from "axios";
 import { Nodes } from "database";
+import { Edges } from "database";
 
 export default function SVGCanvas(props: {
   path?: Nodes[];
   currentMap: string;
   currentLevel: string;
   nodeClicked?: Nodes | undefined;
-  handleNodeClicked?: (node: Nodes) => void;
+  handleNodeClicked?: (node: Nodes | undefined) => void;
+  edgeClicked?: Edges | undefined;
+  handleEdgeClicked?: (edge: Edges | undefined) => void;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
+  const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
 
   useEffect(() => {
     fetchNodes();
   }, []);
+
+  useEffect(() => {
+    if (props.path === undefined) {
+      fetchEdges();
+    }
+  }, [props.path]);
 
   // console.log(props);
 
@@ -31,15 +41,53 @@ export default function SVGCanvas(props: {
     }
   }
 
-  function handleCircleClick(node: Nodes) {
+  async function fetchEdges() {
+    try {
+      const res = await axios.get("/api/admin/alledges");
+      if (res.status === 200) {
+        console.log("Successfully fetched edges");
+        setEdgesData(res.data);
+      } else {
+        console.error("Failed to fetch nodes");
+      }
+    } catch (error) {
+      console.error("An error occurred while fetching nodes:", error);
+    }
+  }
+
+  function handleNodeClick(node: Nodes) {
     if (props.handleNodeClicked) {
       props.handleNodeClicked(node);
+    }
+    if (props.handleEdgeClicked) {
+      props.handleEdgeClicked(undefined);
+    }
+  }
+
+  function handleEdgeClick(edge: Edges) {
+    if (props.handleEdgeClicked) {
+      props.handleEdgeClicked(edge);
+    }
+    if (props.handleNodeClicked) {
+      props.handleNodeClicked(undefined);
     }
   }
 
   const filteredNodes = nodesData.filter(
     (node) => node.Floor === props.currentLevel,
   );
+
+  const filteredEdges: Edges[] = edgesData.filter((edge) => {
+    const startNode = filteredNodes.filter(
+      (node) => node.NodeID === edge.StartNodeID,
+    )[0];
+    const endNode = filteredNodes.filter(
+      (node) => node.NodeID === edge.EndNodeID,
+    )[0];
+    return startNode && endNode;
+  });
+
+  console.log(filteredEdges);
 
   return (
     <svg
@@ -65,8 +113,30 @@ export default function SVGCanvas(props: {
         }
         return null;
       })}
+
+      {(filteredEdges ?? []).map((edge) => {
+        const startNode = filteredNodes.filter(
+          (node) => node.NodeID === edge.StartNodeID,
+        )[0];
+        const endNode = filteredNodes.filter(
+          (node) => node.NodeID === edge.EndNodeID,
+        )[0];
+        return (
+          <g onClick={() => handleEdgeClick(edge)}>
+            <line
+              x1={startNode.Xcoord}
+              y1={startNode.Ycoord}
+              x2={endNode.Xcoord}
+              y2={endNode.Ycoord}
+              stroke="blue"
+              strokeWidth="5"
+            />
+          </g>
+        );
+        return null;
+      })}
       {filteredNodes.map((node) => (
-        <g onClick={() => handleCircleClick(node)}>
+        <g onClick={() => handleNodeClick(node)}>
           <circle cx={node.Xcoord} cy={node.Ycoord} r="10" fill="red" />
         </g>
       ))}
