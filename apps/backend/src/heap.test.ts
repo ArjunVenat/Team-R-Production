@@ -3,7 +3,7 @@ import minHeap from "./heap.ts";
 import { GraphNode } from "./graph.ts";
 
 //const weightheap: Array<number> = new Array<number>;
-const g = new GraphNode("test", 2, 2, 2); //graph nodes to test with
+// const g = new GraphNode("test", 2, 2, 2); //graph nodes to test with
 const g2 = new GraphNode("test", 4, 6, 2);
 const weightheap = new Array<GraphNode>();
 const nodeheap = new Array<number>();
@@ -12,7 +12,7 @@ const heap = new minHeap(weightheap, nodeheap); //heap to test with
 
 //TEST BATCHES: different ways of populating the heap
 //test batch 1. No repeat numbers
-
+/*
 heap.insert(g, 23);
 heap.insert(g2, 10);
 heap.insert(g, 36);
@@ -28,6 +28,7 @@ heap.insert(g, 51);
 heap.insert(g, 52);
 heap.insert(g, 61);
 heap.insert(g, 62);
+*/
 //heap.delete(g2);
 
 //test batch 2 repeat numbers
@@ -41,7 +42,7 @@ heap.insert(g2, 15);
 heap.insert(g2, 10);
 */
 //Test batch 3. Worst case scenario insert
-/*
+
 heap.insert(g2, 100);
 heap.insert(g2, 99);
 heap.insert(g2, 98);
@@ -57,7 +58,6 @@ heap.insert(g2, 89);
 heap.insert(g2, 88);
 heap.insert(g2, 87);
 heap.insert(g2, 86);
-*/
 
 //TESTS: change the toBe of each index test to be what you expect to test heap order
 test("node", (): void => {
