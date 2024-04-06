@@ -29,6 +29,10 @@ export default function SVGCanvas(props: {
     }
   }
 
+  function handleCircleClick(node: Nodes) {
+    console.log("node Xcoord: ", node.Xcoord, "node Ycord: ", node.Ycoord);
+  }
+
   const filteredNodes = nodesData.filter(
     (node) => node.Floor === props.currentLevel,
   );
@@ -58,7 +62,9 @@ export default function SVGCanvas(props: {
         return null;
       })}
       {filteredNodes.map((node) => (
-        <circle cx={node.Xcoord} cy={node.Ycoord} r="10" fill="red" />
+        <g onClick={() => handleCircleClick(node)}>
+          <circle cx={node.Xcoord} cy={node.Ycoord} r="10" fill="red" />
+        </g>
       ))}
     </svg>
   );
