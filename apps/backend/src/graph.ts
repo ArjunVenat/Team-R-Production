@@ -42,15 +42,17 @@ export class Graph {
     this.nodeMap = new Map<string, GraphNode>();
   }
 
-  // TODO: Update this with the new signature
-  // /**
-  //  * Adds a node to the graph. Assumes the given id is unique.
-  //  * @param id A unique identifier for the node to add to the graph.
-  //  */
-  // addNode(id: string): void {
-  //   const tempNode = new GraphNode(id);
-  //   this.nodeMap.set(id, tempNode);
-  // }
+  /**
+   * Adds a node to the graph. Assumes the given id is unique.
+   * @param id A unique identifier for the node to add to the graph.
+   * @param x the x coordinate of the node.
+   * @param y the y coordinate of the node.
+   * @param z the z coordinate of the node.
+   */
+  addNode(id: string, x: number, y: number, z: number): void {
+    const tempNode = new GraphNode(id, x, y, z);
+    this.nodeMap.set(id, tempNode);
+  }
 
   // TODO: update documentation
   /**
