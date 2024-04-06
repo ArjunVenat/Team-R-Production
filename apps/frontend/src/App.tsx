@@ -3,6 +3,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
 import MainPage from "./components/MainPage.tsx";
 import SignInPage from "./components/SignInPage";
+import MapEditing from "./components/MapEditing.tsx";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeTablePage from "./components/EdgePage.tsx";
 import NodeTablePage from "./components/NodePage.tsx";
@@ -49,6 +50,10 @@ function App() {
         {
           path: "home",
           element: <MainPage />,
+        },
+        {
+          path: "editmap",
+          element: <MapEditing />,
         },
         {
           path: "servicerequest",
