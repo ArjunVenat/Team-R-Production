@@ -1,6 +1,6 @@
 import React from "react";
-import EdgeTable from "./Edges.tsx";
-import SideBar from "./SideBar.tsx";
+import EdgeTable from "../backendreference/Edges.tsx";
+import SideBar from "../components/SideBar.tsx";
 import { Box } from "@mui/material"; // Assuming NodeTable component is defined in NodeTable.tsx
 
 const EdgeTablePage = () => {

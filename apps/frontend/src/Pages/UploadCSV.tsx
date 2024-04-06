@@ -1,6 +1,6 @@
 import React, { FormEvent, useState } from "react";
 import axios from "axios";
-import SideBar from "./SideBar.tsx";
+import SideBar from "../components/SideBar.tsx";
 import { Stack, Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 // import SuccessAlert from "./SuccessAlert.tsx";
