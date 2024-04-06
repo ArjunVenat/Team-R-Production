@@ -22,14 +22,14 @@ export const createEdge = async (
       EndNodeID: endNodeID, //add EndNodeID to Edges table
     },
   });
-
-  //Display successful data population message
-  console.log(
-    `Inserted data: EdgeID - ${edgeId} StartNodeID - ${startNodeID}, endNodeID - ${endNodeID}`,
-  );
 };
 
 export const insertEdgeIntoDB = async (row: string[]) => {
   const [edgeID, startNodeID, endNodeID] = row; //Parse each row of the .csv file into startNodeID and endNodeID
   await createEdge(edgeID, startNodeID, endNodeID);
+
+  //Display successful data population message
+  // console.log(
+  //     `Inserted data: EdgeID - ${edgeID} StartNodeID - ${startNodeID}, endNodeID - ${endNodeID}`,
+  // );
 };

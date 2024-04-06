@@ -1,8 +1,11 @@
 export interface ServiceRequest {
-  name: string;
-  room: string;
+  requesterName: string;
+  requestType: string;
+  priority: string;
+  locationNodeID: string;
+  details1: string;
+  details2: string;
+  details3: string;
   deliveryDate: string;
-  type: string;
-  subType: string;
-  details: string;
+  status: string;
 }

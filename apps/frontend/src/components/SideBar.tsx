@@ -71,7 +71,7 @@ export default function Sidebar() {
     case "/servicerequest":
       menuHighlight = "Service Request";
       break;
-    case "/login":
+    case "/":
       menuHighlight = "Login";
       break;
     case "/home":
@@ -94,6 +94,9 @@ export default function Sidebar() {
       break;
     case "/download-csv":
       menuHighlight = "Download CSV";
+      break;
+    case "/logout":
+      menuHighlight = "Logout";
       break;
     default:
       menuHighlight = "Home";

@@ -99,8 +99,8 @@ function App() {
       <Auth0Provider
         useRefreshTokens
         cacheLocation="localstorage"
-        domain="redrockslogin.us.auth0.com"
-        clientId="affQSRlQfnYe2MYeBXQr2bfG8rpQBHDx"
+        domain="redrockverify.us.auth0.com"
+        clientId="z3HAzFMCeeSU9GehHltcf0LJYZQy0aew"
         onRedirectCallback={(appState) => {
           navigate(appState?.returnTo || window.location.pathname);
         }}
