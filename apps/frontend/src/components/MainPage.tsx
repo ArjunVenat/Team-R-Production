@@ -14,6 +14,13 @@ import TextField from "@mui/material/TextField";
 import { Button, ButtonGroup } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import lowerLevel1Map from "./maps/00_thelowerlevel1.png";
+import lowerLevel2Map from "./maps/00_thelowerlevel2.png";
+import firstFloorMap from "./maps/01_thefirstfloor.png";
+import secondFloorMap from "./maps/02_thesecondfloor.png";
+import thirdFloorMap from "./maps/03_thethirdfloor.png";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
 
 const autocompleteStyle = {
   "& .MuiInputBase-input": { color: "white" },
@@ -29,11 +36,20 @@ const autocompleteStyle = {
   "& .MuiAutocomplete-clearIndicator": { color: "white" },
 };
 
-function MainPage() {
+const floors = [
+  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
+  { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
+  { name: "First Floor", map: firstFloorMap, level: "1" },
+  { name: "Second Floor", map: secondFloorMap, level: "2" },
+  { name: "Third Floor", map: thirdFloorMap, level: "3" },
+];
+
+export default function MainPage() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = React.useState<Nodes[]>([]);
+  const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
 
   const navigate = useNavigate();
   const routeChange = (path: string) => {
@@ -118,10 +134,37 @@ function MainPage() {
                     children={<ZoomInIcon />}
                     className="p-1"
                   />
+                  <Select
+                    value={currentMap}
+                    onChange={(event) => setCurrentMap(event.target.value)}
+                    sx={{
+                      backgroundColor: "primary.main",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "primary.dark",
+                      },
+                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                    }}
+                  >
+                    {floors.map((floor, index) => (
+                      <MenuItem key={index} value={floor.map}>
+                        {floor.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
                 </ButtonGroup>
-                <ButtonGroup></ButtonGroup>
                 <TransformComponent>
-                  <SVGCanvas path={path} />
+                  <SVGCanvas
+                    key={currentMap}
+                    path={path}
+                    currentMap={currentMap}
+                    currentLevel={
+                      floors.find((floor) => floor.map === currentMap)?.level ||
+                      ""
+                    }
+                  />
                 </TransformComponent>
               </section>
             )}
@@ -144,7 +187,6 @@ function MainPage() {
             <TextField
               {...params}
               label="Start Location"
-              //color={"secondary"}
               sx={autocompleteStyle}
             />
           )}
@@ -180,5 +222,3 @@ function MainPage() {
     </div>
   );
 }
-
-export default MainPage;
