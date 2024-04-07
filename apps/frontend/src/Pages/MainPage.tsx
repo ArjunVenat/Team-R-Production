@@ -50,6 +50,8 @@ export default function MainPage() {
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = React.useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
+  const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
+  const [clickedNode, setClickedNode] = React.useState<Nodes | undefined>();
 
   const navigate = useNavigate();
   const routeChange = (path: string) => {
@@ -164,6 +166,8 @@ export default function MainPage() {
                       floors.find((floor) => floor.map === currentMap)?.level ||
                       ""
                     }
+                    handleNodeHover={setHoveredNode}
+                    handleNodeClicked={setClickedNode}
                   />
                 </TransformComponent>
               </section>
@@ -218,6 +222,39 @@ export default function MainPage() {
             Get Directions
           </Button>
         </div>
+        {hoveredNode && (
+          <div
+            style={{
+              backgroundColor: "#012d5a",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+              margin: "10px 0",
+            }}
+          >
+            <p>Hovered Node:</p>
+            <p>NodeID: {hoveredNode.NodeID}</p>
+            <p>Name: {hoveredNode.LongName}</p>
+          </div>
+        )}
+        {clickedNode && (
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              width: "fit-content",
+              backgroundColor: "#012d5a",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+              margin: "10px 0",
+            }}
+          >
+            <p>Clicked Node:</p>
+            <p>NodeID: {clickedNode.NodeID}</p>
+            <p>Name: {clickedNode.LongName}</p>
+          </div>
+        )}
       </aside>
     </div>
   );
