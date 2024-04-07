@@ -118,16 +118,16 @@ export class Graph {
       }
     }
 
-    // Backtrack to find the path
-    const path: GraphNode[] = [];
-    let currNode = endNode;
-    path.push(currNode);
-
     // Error handling in case a node cannot be reached
     if (!arrivedFrom.has(endNode)) {
       console.error(`endNode: ${endNode.id} cannot be reached`);
       return [];
     }
+
+    // Backtrack to find the path
+    const path: GraphNode[] = [];
+    let currNode = endNode;
+    path.push(currNode);
 
     while (currNode != startNode) {
       currNode = arrivedFrom.get(currNode)!;
