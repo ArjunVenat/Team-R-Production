@@ -6,7 +6,7 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 // import Canvas from "./Canvas.tsx";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
-import { Nodes } from "database";
+import { Edges, Nodes } from "database";
 //import { Stack } from "react-bootstrap";
 import { Button, ButtonGroup } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
@@ -31,10 +31,21 @@ export default function MapEditing() {
   const [nodes, setNodes] = useState<Nodes[]>();
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
+  const [edgeClicked, setEdgeClicked] = useState<Edges>();
 
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
     console.log("node Xcoord: ", node?.Xcoord, "node Ycoord: ", node?.Ycoord);
+  };
+
+  const handleEdgeClicked = (edge: Edges | undefined) => {
+    setEdgeClicked(edge);
+    console.log(
+      "edge startNodeID: ",
+      edge?.StartNodeID,
+      "edge startNodeID: ",
+      edge?.EndNodeID,
+    );
   };
 
   useEffect(() => {
@@ -48,7 +59,6 @@ export default function MapEditing() {
       setNodes(nonHallwayNodes);
       console.log("successfully got data from get request");
     }
-
     fetchData().then();
   }, []);
   console.log(nodes);
@@ -111,6 +121,10 @@ export default function MapEditing() {
                     }
                     handleNodeClicked={handleNodeClick}
                     nodeClicked={nodeClicked}
+                    handleEdgeClicked={handleEdgeClicked}
+                    edgeClicked={edgeClicked}
+                    nodeColor={"orange"}
+                    edgeColor={"green"}
                   />
                 </TransformComponent>
               </section>
@@ -120,9 +134,9 @@ export default function MapEditing() {
       </main>
       <aside className="bg-primary text-secondary w-screen">
         <h1 className="text-xl bg-transparent p-2 text-center">
-          Clicked Node Information:
+          Clicked Node/Edge Information:
         </h1>
-        {nodeClicked && (
+        {nodeClicked != undefined && (
           <div>
             <p>NodeID: {nodeClicked.NodeID}</p>
             <p>Xcoord: {nodeClicked.Xcoord}</p>
@@ -134,16 +148,17 @@ export default function MapEditing() {
             <p>ShortName: {nodeClicked.ShortName}</p>
           </div>
         )}
-        {nodeClicked === undefined && (
+
+        {edgeClicked != undefined && (
           <div>
-            <p>NodeID: _________</p>
-            <p>Xcoord: _________</p>
-            <p>Ycoord: _________</p>
-            <p>Floor: _________</p>
-            <p>Building: _________</p>
-            <p>NodeType: _________</p>
-            <p>LongName: _________</p>
-            <p>ShortName: _________</p>
+            <p>EdgeID: {edgeClicked.EdgeID}</p>
+            <p>StartNodeID: {edgeClicked.StartNodeID}</p>
+            <p>EndNodeID: {edgeClicked.EndNodeID}</p>
+          </div>
+        )}
+        {nodeClicked === undefined && edgeClicked === undefined && (
+          <div>
+            <p>Click on a Node or Edge to view its details</p>
           </div>
         )}
       </aside>
