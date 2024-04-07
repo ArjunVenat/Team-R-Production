@@ -31,6 +31,7 @@ router.get(
     const graph = await createGraph();
 
     const path: string[] = graph.AStar(startNodeID, endNodeID);
+    console.log(path);
 
     // Check if the path is empty
     if (path.length === 0) {
@@ -77,6 +78,7 @@ router.get(
     const graph = await createGraph();
 
     const path: string[] = graph.BFS(startNodeID, endNodeID);
+    console.log(path);
 
     // Check if the path is empty
     if (path.length === 0) {
@@ -98,13 +100,31 @@ router.get(
 );
 
 async function createGraph(): Promise<Graph> {
+  const floorToZMap = new Map<string, number>();
+  floorToZMap.set("L1", -100);
+  floorToZMap.set("L2", -200);
+  floorToZMap.set("1", 100);
+  floorToZMap.set("2", 200);
+  floorToZMap.set("3", 300);
+
   // Initialize the graph
   const graph = new Graph();
 
-  // Get all the edges and nodes from the db
+  // Get all the nodes and edges and nodes from the db
+  const nodes = await prisma.nodes.findMany();
   const edges = await prisma.edges.findMany();
 
-  // Add edges to the graph
+  // Add nodes to graph
+  for (const node of nodes) {
+    graph.addNode(
+      node.NodeID,
+      +node.Xcoord,
+      +node.Ycoord,
+      floorToZMap.get(node.Floor)!,
+    );
+  }
+
+  // Add edges to graph
   for (const edge of edges) {
     graph.addEdge(edge.StartNodeID, edge.EndNodeID);
   }
