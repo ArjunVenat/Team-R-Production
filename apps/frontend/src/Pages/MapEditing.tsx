@@ -32,7 +32,7 @@ export default function MapEditing() {
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
   const [edgeClicked, setEdgeClicked] = useState<Edges>();
-
+  const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
     console.log("node Xcoord: ", node?.Xcoord, "node Ycoord: ", node?.Ycoord);
@@ -119,6 +119,7 @@ export default function MapEditing() {
                       floors.find((floor) => floor.map === currentMap)?.level ||
                       ""
                     }
+                    handleNodeHover={setHoveredNode}
                     handleNodeClicked={handleNodeClick}
                     nodeClicked={nodeClicked}
                     handleEdgeClicked={handleEdgeClicked}
@@ -159,6 +160,39 @@ export default function MapEditing() {
         {nodeClicked === undefined && edgeClicked === undefined && (
           <div>
             <p>Click on a Node or Edge to view its details</p>
+          </div>
+        )}
+        {hoveredNode && (
+          <div
+            style={{
+              backgroundColor: "#012d5a",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+              margin: "10px 0",
+            }}
+          >
+            <p>Hovered Node:</p>
+            <p>NodeID: {hoveredNode.NodeID}</p>
+            <p>Name: {hoveredNode.LongName}</p>
+          </div>
+        )}
+        {nodeClicked && (
+          <div
+            style={{
+              position: "absolute",
+              top: "55%",
+              width: "fit-content",
+              backgroundColor: "#012d5a",
+              color: "white",
+              padding: "10px",
+              borderRadius: "5px",
+              margin: "10px 0",
+            }}
+          >
+            <p>Clicked Node:</p>
+            <p>NodeID: {nodeClicked.NodeID}</p>
+            <p>Name: {nodeClicked.LongName}</p>
           </div>
         )}
       </aside>
