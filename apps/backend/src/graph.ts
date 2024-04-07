@@ -148,62 +148,62 @@ export class Graph {
       return [];
     }
 
-    // TODO: IMPLEMENT SEARCH
-
     const heap = new minHeap();
+    const nodeSet = new Set<GraphNode>();
 
     const BASICALLY_INFINITY = 99999999999;
     const arrivedFrom = new Map<GraphNode, GraphNode>();
     const shortestPath = new Map<GraphNode, number>();
-    const remainingGuess = new Map<GraphNode, number>();
 
+    arrivedFrom.set(startNode, startNode);
     shortestPath.set(startNode, 0);
-    remainingGuess.set(startNode, startNode.getDistance(endNode));
     heap.insert(startNode, startNode.getDistance(endNode));
+    nodeSet.add(startNode);
 
     while (!heap.isEmpty()) {
       const currNode = heap.pop();
+      nodeSet.delete(currNode);
+
+      // Terminate search if we find the target
       if (currNode == endNode) {
-        // Backtrack to find the path
-        const path: GraphNode[] = [];
-        let currNode = endNode;
-        path.push(currNode);
-
-        // Error handling in case a node cannot be reached
-        if (!arrivedFrom.has(endNode)) {
-          console.error(`endNode: ${endNode.id} cannot be reached`);
-          return [];
-        }
-
-        while (currNode != startNode) {
-          currNode = arrivedFrom.get(currNode)!;
-          path.push(currNode);
-        }
-
-        // path contains the order of nodes from end to start
-        path.reverse();
-        console.log(path);
-        return path.map((n) => n.id);
-
-        // TODO: RETURN PATH
-        // return [];
+        break;
       }
-      for (const tempNode of currNode.neighbors) {
-        const dist =
-          (shortestPath.get(tempNode) || BASICALLY_INFINITY) +
-          currNode.getDistance(tempNode);
 
-        // Check if we found a better path
+      for (const tempNode of currNode.neighbors) {
+        // We will know how far a node is before we explore its neighbors
+        const dist =
+          shortestPath.get(currNode)! + currNode.getDistance(tempNode);
+
+        // Compare to best known path
         if (dist < (shortestPath.get(tempNode) || BASICALLY_INFINITY)) {
           arrivedFrom.set(tempNode, currNode);
           shortestPath.set(tempNode, dist);
-          remainingGuess.set(tempNode, dist + tempNode.getDistance(endNode));
+
+          // TODO: Add a hashset to check if the node exists instead of performing expensive delete operation
           heap.delete(tempNode);
           heap.insert(tempNode, dist + tempNode.getDistance(endNode));
         }
       }
     }
 
-    return [];
+    // Check if the end node can be reached
+    if (!arrivedFrom.has(endNode)) {
+      console.error(`endNode: ${endNode.id} cannot be reached`);
+      return [];
+    }
+
+    // Backtrack to find the path
+    const path: GraphNode[] = [];
+    let currNode = endNode;
+    path.push(currNode);
+
+    while (currNode != startNode) {
+      currNode = arrivedFrom.get(currNode)!;
+      path.push(currNode);
+    }
+
+    // path contains the order of nodes from end to start
+    path.reverse();
+    return path.map((n) => n.id);
   }
 }
