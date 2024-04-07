@@ -137,6 +137,22 @@ describe("delete", () => {
     heap.insert(testNodes[1], 2);
     heap.delete(testNodes[0]);
     expect(heap.isEmpty()).toBe(false);
-    expect(heap.peek()).toBe(testNodes[0]);
+    expect(heap.peek()).toBe(testNodes[1]);
+  });
+
+  test("minHeap reordered after deletion 2", () => {
+    heap.insert(testNodes[4], 4);
+    heap.insert(testNodes[2], 2);
+    heap.insert(testNodes[1], 1);
+    heap.insert(testNodes[3], 3);
+    heap.insert(testNodes[6], 6);
+    heap.insert(testNodes[5], 5);
+    heap.delete(testNodes[4]);
+    expect(heap.peek()).toBe(testNodes[1]);
+    heap.delete(testNodes[1]);
+    heap.delete(testNodes[2]);
+    expect(heap.peek()).toBe(testNodes[3]);
+    heap.delete(testNodes[3]);
+    expect(heap.peek()).toBe(testNodes[5]);
   });
 });
