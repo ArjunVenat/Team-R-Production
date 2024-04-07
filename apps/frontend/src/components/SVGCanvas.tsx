@@ -7,6 +7,8 @@ export default function SVGCanvas(props: {
   path?: Nodes[];
   currentMap: string;
   currentLevel: string;
+  nodeColor?: string;
+  edgeColor?: string;
   nodeClicked?: Nodes | undefined;
   handleNodeClicked?: (node: Nodes | undefined) => void;
   edgeClicked?: Edges | undefined;
@@ -106,7 +108,7 @@ export default function SVGCanvas(props: {
               y1={node.Ycoord}
               x2={nextNode.Xcoord}
               y2={nextNode.Ycoord}
-              stroke="blue"
+              stroke={props.edgeColor ?? "blue"}
               strokeWidth="5"
             />
           );
@@ -128,7 +130,7 @@ export default function SVGCanvas(props: {
               y1={startNode.Ycoord}
               x2={endNode.Xcoord}
               y2={endNode.Ycoord}
-              stroke="blue"
+              stroke={props.edgeColor ?? "blue"}
               strokeWidth="5"
             />
           </g>
@@ -137,7 +139,12 @@ export default function SVGCanvas(props: {
       })}
       {filteredNodes.map((node) => (
         <g onClick={() => handleNodeClick(node)}>
-          <circle cx={node.Xcoord} cy={node.Ycoord} r="10" fill="red" />
+          <circle
+            cx={node.Xcoord}
+            cy={node.Ycoord}
+            r="10"
+            fill={props.nodeColor ?? "red"}
+          />
         </g>
       ))}
     </svg>
