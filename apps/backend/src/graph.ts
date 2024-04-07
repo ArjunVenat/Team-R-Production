@@ -139,6 +139,11 @@ export class Graph {
     return path.map((n) => n.id);
   }
 
+  /**
+   * Uses the A* algorithm to find the shortest path between the start and end nodes
+   * @param start A unique identifier representing the node to start from
+   * @param end A unique identifier representing the node to end at.
+   */
   AStar(start: string, end: string): string[] {
     const startNode = this.nodeMap.get(start);
     const endNode = this.nodeMap.get(end);
