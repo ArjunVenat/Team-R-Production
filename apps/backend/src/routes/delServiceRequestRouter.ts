@@ -3,7 +3,7 @@ const delServiceRequestRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 
 /**
- * Asyncrhonous function for handling an HTTP get request for deleting a service request.
+ * Asyncrhonous function for handling an HTTP post request for deleting a service request.
  * API route is /api/admin/service/del
  * Specified with /requestID (e.g. /api/admin/service/del/3)
  * @param req HTTP request information

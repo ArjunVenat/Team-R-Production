@@ -10,6 +10,7 @@ import serviceRequestRouter from "./routes/serviceRequestRouter.ts";
 import CSVRouter from "./routes/CSVRouter.ts";
 import editServiceRequestRouter from "./routes/editServiceRequestRouter.ts";
 import delServiceRequestRouter from "./routes/delServiceRequestRouter.ts";
+import editEdgeRouter from "./routes/editEdgeRouter.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -39,6 +40,7 @@ app.use("/api/map/pathfind", pathfindRouter);
 app.use("/api/admin/csv", CSVRouter);
 app.use("/api/admin/service/edit", editServiceRequestRouter);
 app.use("/api/admin/service/del", delServiceRequestRouter);
+app.use("/api/admin/edge/edit", editEdgeRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler

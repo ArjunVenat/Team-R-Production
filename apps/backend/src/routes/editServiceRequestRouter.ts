@@ -4,7 +4,7 @@ import PrismaClient from "../bin/database-connection.ts";
 import { GeneralRequest } from "database";
 
 /**
- * Asyncrhonous function for handling an HTTP get request for editing the status of a service request.
+ * Asyncrhonous function for handling an HTTP post request for editing the status of a service request.
  * API route is /api/admin/service/edit
  * Specified with /requestID and /newStatus (e.g. /api/admin/csv/3/InProgress)
  * @param req HTTP request information
