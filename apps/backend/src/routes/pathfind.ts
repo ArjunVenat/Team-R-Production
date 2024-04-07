@@ -46,23 +46,6 @@ router.get(
       res.sendStatus(204); // and send 204, no data
       return;
     }
-
-    // Synchronously get data
-    // const data: Nodes[] = [];
-    //
-    // for (const nodeID of path) {
-    //   data.push(
-    //     await prisma.nodes.findUniqueOrThrow({
-    //       where: {
-    //         NodeID: nodeID,
-    //       },
-    //     }),
-    //   );
-    // }
-    // res.send(data);
-
-    // Asynchronously get data
-    // This *should* work, but uncomment the previous section if not
     res.send(
       await Promise.all(
         path.map(async (nodeID) => {
