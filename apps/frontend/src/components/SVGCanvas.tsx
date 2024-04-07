@@ -13,6 +13,7 @@ export default function SVGCanvas(props: {
   handleNodeClicked?: (node: Nodes | undefined) => void;
   edgeClicked?: Edges | undefined;
   handleEdgeClicked?: (edge: Edges | undefined) => void;
+  handleNodeHover?: (node: Nodes | undefined) => void;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
@@ -28,6 +29,12 @@ export default function SVGCanvas(props: {
   }, [props.path]);
 
   // console.log(props);
+
+  function handleNodeHover(node: Nodes | undefined) {
+    if (props.handleNodeHover) {
+      props.handleNodeHover(node);
+    }
+  }
 
   async function fetchNodes() {
     try {
@@ -138,7 +145,11 @@ export default function SVGCanvas(props: {
         return null;
       })}
       {filteredNodes.map((node) => (
-        <g onClick={() => handleNodeClick(node)}>
+        <g
+          onClick={() => handleNodeClick(node)}
+          onMouseEnter={() => handleNodeHover(node)}
+          onMouseLeave={() => handleNodeHover(undefined)}
+        >
           <circle
             cx={node.Xcoord}
             cy={node.Ycoord}

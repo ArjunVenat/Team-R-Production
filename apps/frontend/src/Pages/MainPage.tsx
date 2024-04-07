@@ -50,6 +50,7 @@ export default function MainPage() {
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = React.useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
+  const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
 
   const navigate = useNavigate();
   const routeChange = (path: string) => {
@@ -164,6 +165,7 @@ export default function MainPage() {
                       floors.find((floor) => floor.map === currentMap)?.level ||
                       ""
                     }
+                    handleNodeHover={setHoveredNode}
                   />
                 </TransformComponent>
               </section>
@@ -218,6 +220,12 @@ export default function MainPage() {
             Get Directions
           </Button>
         </div>
+        {hoveredNode && (
+          <div>
+            <p>NodeID: {hoveredNode.NodeID}</p>
+            <p>Name: {hoveredNode.LongName}</p>
+          </div>
+        )}
       </aside>
     </div>
   );
