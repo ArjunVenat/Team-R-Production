@@ -75,6 +75,26 @@ export default function SVGCanvas(props: {
     }
   }
 
+  const pathSplices = () => {
+    const pathSplicesList: Array<Array<Nodes>> = [];
+
+    if (props.path !== undefined) {
+      let currentFloorSplice: Nodes[] = [props.path[0]];
+      for (let i = 0; i < props.path?.length - 1; i++) {
+        if (props.path[i].Floor === props.path[i + 1].Floor) {
+          currentFloorSplice.push(props.path[i + 1]);
+        } else {
+          pathSplicesList.push(currentFloorSplice);
+          currentFloorSplice = [props.path[i + 1]];
+        }
+      }
+      pathSplicesList.push(currentFloorSplice);
+    }
+    console.log(pathSplicesList);
+    return pathSplicesList;
+  };
+  console.log(pathSplices());
+
   const filteredNodes = nodesData.filter(
     (node) => node.Floor === props.currentLevel,
   );
