@@ -13,9 +13,9 @@ class minHeap {
    * @param nodeheap the heap that contains nodes. Parallel to weight heap
    * @param weightheap the heap that contains weights. Parallel to node heap
    */
-  public constructor(nodeheap: Array<GraphNode>, weightheap: Array<number>) {
-    this.weightheap = weightheap;
-    this.nodeheap = nodeheap;
+  public constructor() {
+    this.nodeheap = new Array<GraphNode>;
+    this.weightheap = new Array<number>;
   }
 
   // Public methods

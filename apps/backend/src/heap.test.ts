@@ -5,10 +5,8 @@ import { GraphNode } from "./graph.ts";
 //const weightheap: Array<number> = new Array<number>;
 // const g = new GraphNode("test", 2, 2, 2); //graph nodes to test with
 const g2 = new GraphNode("test", 4, 6, 2);
-const weightheap = new Array<GraphNode>();
-const nodeheap = new Array<number>();
 
-const heap = new minHeap(weightheap, nodeheap); //heap to test with
+const heap = new minHeap();
 
 //TEST BATCHES: different ways of populating the heap
 //test batch 1. No repeat numbers
