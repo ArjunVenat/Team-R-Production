@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import axios from "axios";
-import { Nodes } from "database";
-import { Edges } from "database";
+import { Edges, Nodes } from "database";
 
 export default function SVGCanvas(props: {
   path?: Nodes[];
@@ -13,6 +12,7 @@ export default function SVGCanvas(props: {
   handleNodeClicked?: (node: Nodes | undefined) => void;
   edgeClicked?: Edges | undefined;
   handleEdgeClicked?: (edge: Edges | undefined) => void;
+  handleNodeHover?: (node: Nodes | undefined) => void;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
@@ -98,18 +98,32 @@ export default function SVGCanvas(props: {
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
     >
+      <defs>
+        <marker
+          id="arrow"
+          markerUnits="strokeWidth"
+          orient="auto"
+          refX="9"
+          refY="3"
+          markerWidth="5"
+          markerHeight="5"
+        >
+          <path d="M0,3 L9,6 L9,0 z" fill="blue" />
+        </marker>
+      </defs>
       <image href={props.currentMap} height="3400" width="5000" />
       {(props.path ?? []).map((node, i) => {
         if (i < (props.path ?? []).length - 1) {
           const nextNode = (props.path ?? [])[i + 1];
           return (
             <line
-              x1={node.Xcoord}
-              y1={node.Ycoord}
-              x2={nextNode.Xcoord}
-              y2={nextNode.Ycoord}
+              x1={nextNode.Xcoord}
+              y1={nextNode.Ycoord}
+              x2={node.Xcoord}
+              y2={node.Ycoord}
               stroke={props.edgeColor ?? "blue"}
               strokeWidth="5"
+              markerEnd="url(#arrow)"
             />
           );
         }
@@ -138,7 +152,15 @@ export default function SVGCanvas(props: {
         return null;
       })}
       {filteredNodes.map((node) => (
-        <g onClick={() => handleNodeClick(node)}>
+        <g
+          onClick={() => handleNodeClick(node)}
+          onMouseEnter={() =>
+            props.handleNodeHover && props.handleNodeHover(node)
+          }
+          onMouseLeave={() =>
+            props.handleNodeHover && props.handleNodeHover(undefined)
+          }
+        >
           <circle
             cx={node.Xcoord}
             cy={node.Ycoord}
