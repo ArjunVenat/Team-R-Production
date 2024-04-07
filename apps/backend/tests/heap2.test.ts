@@ -1,6 +1,6 @@
 import { expect, test, describe, beforeEach } from "vitest";
-import minHeap from "./heap.ts";
-import { GraphNode } from "./graph.ts";
+import minHeap from "../src/heap.ts";
+import { GraphNode } from "../src/graph.ts";
 
 const testNodes: GraphNode[] = [];
 let heap = new minHeap();

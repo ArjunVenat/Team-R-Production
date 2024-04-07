@@ -1,6 +1,6 @@
 import { expect, test } from "vitest";
-import minHeap from "./heap.ts";
-import { GraphNode } from "./graph.ts";
+import minHeap from "../src/heap.ts";
+import { GraphNode } from "../src/graph.ts";
 
 //const weightheap: Array<number> = new Array<number>;
 // const g = new GraphNode("test", 2, 2, 2); //graph nodes to test with
