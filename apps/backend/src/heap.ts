@@ -10,8 +10,6 @@ class minHeap {
 
   /**
    * constructor: for now, a heap is defined as an array of weights, and an array fo nodes.
-   * @param nodeheap the heap that contains nodes. Parallel to weight heap
-   * @param weightheap the heap that contains weights. Parallel to node heap
    */
   public constructor() {
     this.nodeheap = new Array<GraphNode>();
@@ -67,6 +65,9 @@ class minHeap {
    * @param node the node to be deleted
    */
   delete(node: GraphNode) {
+    if (this.isEmpty()) {
+      return;
+    }
     let i = -1;
     //Finds the node to delete, i is the index of it
     while (node != this.nodeheap[i]) {
