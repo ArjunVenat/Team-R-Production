@@ -14,11 +14,15 @@ class minHeap {
    * @param weightheap the heap that contains weights. Parallel to node heap
    */
   public constructor() {
-    this.nodeheap = new Array<GraphNode>;
-    this.weightheap = new Array<number>;
+    this.nodeheap = new Array<GraphNode>();
+    this.weightheap = new Array<number>();
   }
 
   // Public methods
+
+  public isEmpty(): boolean {
+    return this.nodeheap[0] === undefined;
+  }
 
   /**
    * Insert: inserts a node at the next available space, then sorts it in the min-heap
@@ -143,8 +147,11 @@ class minHeap {
    * Returns the value at the top AND removes it
    */
   pop(): GraphNode {
-    const r = this.nodeheap[0];
-    delete this.nodeheap[0];
+    // const r = this.nodeheap[0];
+    // delete this.nodeheap[0];
+    // return r;
+    const r = this.peek();
+    this.delete(r);
     return r;
   }
 }
