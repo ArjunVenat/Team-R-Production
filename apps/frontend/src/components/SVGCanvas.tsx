@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useCallback } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
 
@@ -16,6 +16,12 @@ export default function SVGCanvas(props: {
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
+  const [fullpathSplice, setFullPathSplice] = React.useState<
+    Array<Array<Nodes>>
+  >([[]]);
+  const [relevantPathSplices, setRelevantPathSplices] = React.useState<
+    Array<Array<Nodes>>
+  >([[]]);
 
   useEffect(() => {
     fetchNodes();
@@ -26,8 +32,6 @@ export default function SVGCanvas(props: {
       fetchEdges();
     }
   }, [props.path]);
-
-  // console.log(props);
 
   async function fetchNodes() {
     try {
@@ -75,10 +79,9 @@ export default function SVGCanvas(props: {
     }
   }
 
-  const pathSplices = () => {
-    const pathSplicesList: Array<Array<Nodes>> = [];
-
-    if (props.path !== undefined) {
+  const handleFullPath = useCallback(() => {
+    if (props.path && fullpathSplice.length === 1) {
+      const pathSplicesList: Array<Array<Nodes>> = [];
       let currentFloorSplice: Nodes[] = [props.path[0]];
       for (let i = 0; i < props.path?.length - 1; i++) {
         if (props.path[i].Floor === props.path[i + 1].Floor) {
@@ -89,27 +92,44 @@ export default function SVGCanvas(props: {
         }
       }
       pathSplicesList.push(currentFloorSplice);
+      console.log("pathSplicesList: ", pathSplicesList);
+      setFullPathSplice(pathSplicesList);
     }
-    console.log(pathSplicesList);
-    return pathSplicesList;
-  };
-  console.log(pathSplices());
+  }, [props.path, fullpathSplice.length]);
+
+  const handleRelevantSplices = useCallback(() => {
+    console.log(fullpathSplice, fullpathSplice.length);
+    if (fullpathSplice.length > 1) {
+      setRelevantPathSplices(
+        fullpathSplice.filter(
+          (splice) => splice[0].Floor === props.currentLevel,
+        ),
+      );
+      console.log("relevantPathSplices: ", relevantPathSplices);
+    }
+  }, [fullpathSplice, props.currentLevel, relevantPathSplices]);
+
+  useEffect(() => {
+    handleFullPath();
+  }, [props.path, props.currentLevel, handleFullPath]);
+
+  useEffect(() => {
+    handleRelevantSplices();
+  }, [fullpathSplice, props.currentLevel, handleRelevantSplices]);
 
   const filteredNodes = nodesData.filter(
     (node) => node.Floor === props.currentLevel,
   );
 
   const filteredEdges: Edges[] = edgesData.filter((edge) => {
-    const startNode = filteredNodes.filter(
+    const startNode = filteredNodes.find(
       (node) => node.NodeID === edge.StartNodeID,
-    )[0];
-    const endNode = filteredNodes.filter(
+    );
+    const endNode = filteredNodes.find(
       (node) => node.NodeID === edge.EndNodeID,
-    )[0];
+    );
     return startNode && endNode;
   });
-
-  console.log(filteredEdges);
 
   return (
     <svg
@@ -133,6 +153,9 @@ export default function SVGCanvas(props: {
       </defs>
       <image href={props.currentMap} height="3400" width="5000" />
       {(props.path ?? []).map((node, i) => {
+        console.log(fullpathSplice);
+        console.log(relevantPathSplices);
+
         if (i < (props.path ?? []).length - 1) {
           const nextNode = (props.path ?? [])[i + 1];
           return (
@@ -150,29 +173,32 @@ export default function SVGCanvas(props: {
         return null;
       })}
 
-      {(filteredEdges ?? []).map((edge) => {
-        const startNode = filteredNodes.filter(
+      {(filteredEdges ?? []).map((edge, index) => {
+        const startNode = filteredNodes.find(
           (node) => node.NodeID === edge.StartNodeID,
-        )[0];
-        const endNode = filteredNodes.filter(
-          (node) => node.NodeID === edge.EndNodeID,
-        )[0];
-        return (
-          <g onClick={() => handleEdgeClick(edge)}>
-            <line
-              x1={startNode.Xcoord}
-              y1={startNode.Ycoord}
-              x2={endNode.Xcoord}
-              y2={endNode.Ycoord}
-              stroke={props.edgeColor ?? "blue"}
-              strokeWidth="5"
-            />
-          </g>
         );
+        const endNode = filteredNodes.find(
+          (node) => node.NodeID === edge.EndNodeID,
+        );
+        if (startNode && endNode) {
+          return (
+            <g key={index} onClick={() => handleEdgeClick(edge)}>
+              <line
+                x1={startNode.Xcoord}
+                y1={startNode.Ycoord}
+                x2={endNode.Xcoord}
+                y2={endNode.Ycoord}
+                stroke={props.edgeColor ?? "blue"}
+                strokeWidth="5"
+              />
+            </g>
+          );
+        }
         return null;
       })}
-      {filteredNodes.map((node) => (
+      {filteredNodes.map((node, index) => (
         <g
+          key={index}
           onClick={() => handleNodeClick(node)}
           onMouseEnter={() =>
             props.handleNodeHover && props.handleNodeHover(node)
