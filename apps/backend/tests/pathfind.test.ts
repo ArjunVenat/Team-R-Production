@@ -45,8 +45,15 @@ beforeAll(async () => {
   }
 });
 
-test("idk", () => {
-  expect(graph.AStar("WELEV00HL1", "IREST00403")).toBe(
+test("pathfind to self", () => {
+  expect(graph.AStar("IREST00403", "IREST00403")).toEqual(
+    graph.BFS("IREST00403", "IREST00403"),
+  );
+  // expect(graph.BFS("WELEV00HL1", "IREST00403")).toBe(false);
+});
+
+test("longer test", () => {
+  expect(graph.AStar("WELEV00HL1", "IREST00403")).toEqual(
     graph.BFS("WELEV00HL1", "IREST00403"),
   );
   // expect(graph.BFS("WELEV00HL1", "IREST00403")).toBe(false);
