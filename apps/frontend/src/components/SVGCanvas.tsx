@@ -30,12 +30,6 @@ export default function SVGCanvas(props: {
 
   // console.log(props);
 
-  function handleNodeHover(node: Nodes | undefined) {
-    if (props.handleNodeHover) {
-      props.handleNodeHover(node);
-    }
-  }
-
   async function fetchNodes() {
     try {
       const res = await axios.get("/api/admin/allnodes");
@@ -72,7 +66,6 @@ export default function SVGCanvas(props: {
       props.handleEdgeClicked(undefined);
     }
   }
-
   function handleEdgeClick(edge: Edges) {
     if (props.handleEdgeClicked) {
       props.handleEdgeClicked(edge);
@@ -147,8 +140,12 @@ export default function SVGCanvas(props: {
       {filteredNodes.map((node) => (
         <g
           onClick={() => handleNodeClick(node)}
-          onMouseEnter={() => handleNodeHover(node)}
-          onMouseLeave={() => handleNodeHover(undefined)}
+          onMouseEnter={() =>
+            props.handleNodeHover && props.handleNodeHover(node)
+          }
+          onMouseLeave={() =>
+            props.handleNodeHover && props.handleNodeHover(undefined)
+          }
         >
           <circle
             cx={node.Xcoord}
