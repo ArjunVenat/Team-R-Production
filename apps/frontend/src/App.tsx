@@ -5,8 +5,7 @@ import MainPage from "./Pages/MainPage.tsx";
 import SignInPage from "./Pages/SignInPage.tsx";
 import MapEditing from "./Pages/MapEditing.tsx";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
-import EdgeTablePage from "./Pages/EdgePage.tsx";
-import NodeTablePage from "./Pages/NodePage.tsx";
+import EdgeNodePage from "./Pages/EdgeNodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
@@ -64,13 +63,10 @@ function App() {
           element: <ServiceRequestTable />,
         },
         {
-          path: "edge-table",
-          element: <EdgeTablePage />,
+          path: "node-edge-table",
+          element: <EdgeNodePage />,
         },
-        {
-          path: "node-table",
-          element: <NodeTablePage />,
-        },
+
         {
           path: "upload-csv",
           element: <UploadCSV />,
