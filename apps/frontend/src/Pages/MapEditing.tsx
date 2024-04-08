@@ -133,7 +133,7 @@ export default function MapEditing() {
           </TransformWrapper>
         </div>
       </main>
-      <aside className="bg-primary text-secondary w-screen">
+      <aside className="bg-primary text-secondary flex-shrink">
         <h1 className="text-xl bg-transparent p-2 text-center">
           Clicked Node/Edge Information:
         </h1>
