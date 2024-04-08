@@ -305,6 +305,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
         <div className="bg-gray-400 bg-opacity-15 flex justify-center h-full">
           <div className="bg-white rounded-lg p-5 w-2/4">
             <h2 className="mb-4 font-bold text-lg">Select Service Type</h2>
+
             <div className="flex flex-col space-y-4">
               <FormControl className="">
                 <InputLabel id="select-service-type-label">
@@ -334,6 +335,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
             <div className="my-5">
               <h2 className="font-bold text-lg">Priority</h2>
+
               <div className="">
                 <RadioGroup
                   row
@@ -461,6 +463,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     {singleServiceRequest.requestType === "Flowers" && (
                       <div className="my-5">
                         <h2 className=" text-lg">Size of Bouquet</h2>
+
                         <RadioGroup
                           row
                           defaultValue="oral"
@@ -489,28 +492,37 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             label="Large"
                           />
                         </RadioGroup>
+                        <h4 className="text-sm">
+                          Made By Lauren Harrison & Zihan Li
+                        </h4>
                       </div>
                     )}
                     {singleServiceRequest.requestType === "Gifts" && (
-                      <div className="flex items-center mt-3">
-                        <input
-                          id="gifts-checkbox"
-                          type="checkbox"
-                          value={singleServiceRequest.details3}
-                          onChange={(e) =>
-                            setSingleServiceRequest({
-                              ...singleServiceRequest,
-                              details3:
-                                "" + e.target.checked ? "true" : "false",
-                            })
-                          }
-                          className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                        />
-                        <label htmlFor="gifts-checkbox" className="ms-2 ">
-                          Wrapped
-                        </label>
+                      <div className="flex flex-col mt-3">
+                        <div className="flex items-center">
+                          <input
+                            id="gifts-checkbox"
+                            type="checkbox"
+                            value={singleServiceRequest.details3}
+                            onChange={(e) =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                details3:
+                                  "" + e.target.checked ? "true" : "false",
+                              })
+                            }
+                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                          />
+                          <label htmlFor="gifts-checkbox" className="ms-2">
+                            Wrapped
+                          </label>
+                        </div>
+                        <h4 className="text-sm">
+                          Made by Artem Frenk and Arjun Venat
+                        </h4>
                       </div>
                     )}
+
                     {singleServiceRequest.requestType === "Maintenance" && (
                       <div className="my-5">
                         <h2 className="mb-2  text-lg">Type of maintenance</h2>
@@ -556,6 +568,10 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                               Hazardous Material
                             </label>
                           </div>
+
+                          <h4 className="text-sm">
+                            Made By Jessie Hart & Hubert Liu
+                          </h4>
                         </FormControl>
                       </div>
                     )}
@@ -609,6 +625,9 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             label="Topical"
                           />
                         </RadioGroup>
+                        <h4 className="text-sm">
+                          Made by Brannon Henson and Alexander Stoyanov
+                        </h4>
                       </div>
                     )}
                     {singleServiceRequest.requestType ===
@@ -662,6 +681,9 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             label="Patient assistance"
                           />
                         </FormGroup>
+                        <h4 className="text-sm">
+                          Made By Javier DeLeon & Nicholas Golparvar{" "}
+                        </h4>
                       </div>
                     )}
                   </div>
