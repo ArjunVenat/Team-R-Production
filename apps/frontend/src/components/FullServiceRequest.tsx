@@ -570,7 +570,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           </div>
 
                           <h4 className="text-sm">
-                            Made By John Diamond & Hubert Liu
+                            Made By Jessie Hart & Hubert Liu
                           </h4>
                         </FormControl>
                       </div>
