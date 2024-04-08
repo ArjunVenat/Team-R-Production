@@ -302,7 +302,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
       </div>
 
       <div className="flex-grow overflow-y-auto">
-        <div className="bg-gray-400 bg-opacity-15 flex justify-center">
+        <div className="bg-gray-400 bg-opacity-15 flex justify-center min-h-screen">
           <div className="bg-white rounded-lg p-5 w-2/4">
             <h2 className="mb-4 font-bold text-lg">Select Service Type</h2>
 
