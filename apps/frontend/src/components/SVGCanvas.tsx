@@ -36,7 +36,7 @@ export default function SVGCanvas(props: {
 
   async function fetchNodes() {
     try {
-      const res = await axios.get("/api/admin/allnodes");
+      const res = await axios.get("/api/admin/allnodes/All");
       if (res.status === 200) {
         console.log("Successfully fetched nodes");
         setNodesData(res.data);
