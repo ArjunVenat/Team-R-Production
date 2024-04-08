@@ -149,6 +149,7 @@ export default function SVGCanvas(props: {
                 if (node && nextNode) {
                   return (
                     <line
+                      key={`${node.NodeID} ${nextNode.NodeID}`}
                       x1={nextNode.Xcoord}
                       y1={nextNode.Ycoord}
                       x2={node.Xcoord}
