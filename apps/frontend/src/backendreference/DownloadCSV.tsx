@@ -1,5 +1,5 @@
 import axios from "axios";
-import SideBar from "../components/SideBar.tsx";
+// import SideBar from "../components/SideBar.tsx";
 import { Stack, Button, Box } from "@mui/material";
 
 //received help from Dan from team o. He fixed some errors.
@@ -48,52 +48,52 @@ export default function DownloadCSV() {
   }
 
   return (
-    <Stack direction="row" spacing={2}>
-      <SideBar />
+    // <Stack direction="row" spacing={2}>
+    //   <SideBar />
+    <div
+      className="grid"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minWidth: "80vw",
+      }}
+    >
       <div
         className="grid"
         style={{
-          display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          minWidth: "80vw",
+          display: "grid",
         }}
       >
-        <div
-          className="grid"
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "grid",
-          }}
-        >
-          <div className="border-2 border-blue rounded-lg p-10">
-            <Stack direction="row" spacing={5}>
-              <Box mt={5}>
-                <Button
-                  onClick={fetchNodes}
-                  variant="contained"
-                  color="success"
-                  type="submit"
-                >
-                  Download Nodes File
-                </Button>
-              </Box>
+        <div className="border-2 border-blue rounded-lg p-10">
+          <Stack direction="row" spacing={5}>
+            <Box mt={5}>
+              <Button
+                onClick={fetchNodes}
+                variant="contained"
+                color="success"
+                type="submit"
+              >
+                Download Nodes File
+              </Button>
+            </Box>
 
-              <Box mt={5}>
-                <Button
-                  onClick={fetchEdges}
-                  variant="contained"
-                  color="success"
-                  type="submit"
-                >
-                  Download Edges File
-                </Button>
-              </Box>
-            </Stack>
-          </div>
+            <Box mt={5}>
+              <Button
+                onClick={fetchEdges}
+                variant="contained"
+                color="success"
+                type="submit"
+              >
+                Download Edges File
+              </Button>
+            </Box>
+          </Stack>
         </div>
       </div>
-    </Stack>
+    </div>
+    // </Stack>
   );
 }
