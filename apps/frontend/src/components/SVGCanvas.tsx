@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
 
@@ -16,6 +16,7 @@ export default function SVGCanvas(props: {
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
+  const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
 
   useEffect(() => {
     fetchNodes();
@@ -26,6 +27,10 @@ export default function SVGCanvas(props: {
       fetchEdges();
     }
   }, [props.path]);
+
+  useEffect(() => {
+    setCurrentFloor(props.currentLevel);
+  }, [props.currentLevel]);
 
   // console.log(props);
 
@@ -112,23 +117,25 @@ export default function SVGCanvas(props: {
         </marker>
       </defs>
       <image href={props.currentMap} height="3400" width="5000" />
-      {(props.path ?? []).map((node, i) => {
-        if (i < (props.path ?? []).length - 1) {
-          const nextNode = (props.path ?? [])[i + 1];
-          return (
-            <line
-              x1={nextNode.Xcoord}
-              y1={nextNode.Ycoord}
-              x2={node.Xcoord}
-              y2={node.Ycoord}
-              stroke={props.edgeColor ?? "blue"}
-              strokeWidth="5"
-              markerEnd="url(#arrow)"
-            />
-          );
-        }
-        return null;
-      })}
+      {(props.path ?? [])
+        .filter((node) => node.Floor === currentFloor)
+        .map((node, i, filteredPath) => {
+          if (i < filteredPath.length - 1) {
+            const nextNode = filteredPath[i + 1];
+            return (
+              <line
+                x1={nextNode.Xcoord}
+                y1={nextNode.Ycoord}
+                x2={node.Xcoord}
+                y2={node.Ycoord}
+                stroke={props.edgeColor ?? "blue"}
+                strokeWidth="5"
+                markerEnd="url(#arrow)"
+              />
+            );
+          }
+          return null;
+        })}
 
       {(filteredEdges ?? []).map((edge) => {
         const startNode = filteredNodes.filter(
