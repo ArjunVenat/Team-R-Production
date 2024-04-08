@@ -3258,6 +3258,13 @@ __metadata:
   languageName: unknown
   linkType: soft
 
+"dayjs@npm:^1.11.10":
+  version: 1.11.10
+  resolution: "dayjs@npm:1.11.10"
+  checksum: 27e8f5bc01c0a76f36c656e62ab7f08c2e7b040b09e613cd4844abf03fb258e0350f0a83b02c887b84d771c1f11e092deda0beef8c6df2a1afbc3f6c1fade279
+  languageName: node
+  linkType: hard
+
 "debug@npm:2.6.9":
   version: 2.6.9
   resolution: "debug@npm:2.6.9"
@@ -4296,6 +4303,7 @@ __metadata:
     bootstrap: "npm:^5.2.3"
     common: "workspace:*"
     database: "workspace:*"
+    dayjs: "npm:^1.11.10"
     eslint: "npm:latest"
     eslint-config-custom: "workspace:*"
     eslint-plugin-react-hooks: "npm:^4.6.0"
