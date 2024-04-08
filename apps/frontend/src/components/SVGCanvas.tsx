@@ -13,6 +13,7 @@ export default function SVGCanvas(props: {
   edgeClicked?: Edges | undefined;
   handleEdgeClicked?: (edge: Edges | undefined) => void;
   handleNodeHover?: (node: Nodes | undefined) => void;
+  isHome: boolean;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
@@ -97,12 +98,17 @@ export default function SVGCanvas(props: {
     }
   }
 
-  const filteredNodes = nodesData.filter(
-    (node) =>
-      node.Floor === props.currentLevel &&
-      props.path &&
-      props.path.some((pathNode) => pathNode.NodeID === node.NodeID),
-  );
+  const filteredNodes = nodesData.filter((node) => {
+    if (!props.isHome) {
+      return node.Floor === props.currentLevel;
+    } else {
+      return (
+        node.Floor === props.currentLevel &&
+        props.path &&
+        props.path.some((pathNode) => pathNode.NodeID === node.NodeID)
+      );
+    }
+  });
 
   const splices = () => {
     if (props.path) {
