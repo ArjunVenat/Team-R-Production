@@ -27,7 +27,8 @@ function ServiceRequestTable() {
     fetch().then();
   }, []);
 
-  const deleteService = (service: GeneralRequest) => {
+  const deleteService = async (service: GeneralRequest) => {
+    await axios.post(`api/admin/service/del/${service.RequestID}`);
     const index = requestData.indexOf(service);
     requestData.splice(index, 1);
     setrequestData([...requestData]);
@@ -99,12 +100,12 @@ function ServiceRequestTable() {
                         id="status"
                         label="Status"
                         sx={{ width: 100 }}
+                        value={row.Status}
                         onChange={(e) => {
                           axios.post(
                             `/api/admin/service/edit/${row.RequestID}/${e.target.value as string}`,
                           );
                         }}
-                        value={row.Status || "Unassigned"}
                       >
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
@@ -180,12 +181,7 @@ function ServiceRequestTable() {
                       <InputLabel id="status-label" htmlFor="status">
                         Status
                       </InputLabel>
-                      <Select
-                        id="status"
-                        label="Status"
-                        sx={{ width: 100 }}
-                        value={row.Status || "Unassigned"}
-                      >
+                      <Select id="status" label="Status" sx={{ width: 100 }}>
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
@@ -265,12 +261,7 @@ function ServiceRequestTable() {
                       <InputLabel id="status-label" htmlFor="status">
                         Status
                       </InputLabel>
-                      <Select
-                        id="status"
-                        label="Status"
-                        sx={{ width: 100 }}
-                        value={row.Status || "Unassigned"}
-                      >
+                      <Select id="status" label="Status" sx={{ width: 100 }}>
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
@@ -346,12 +337,7 @@ function ServiceRequestTable() {
                       <InputLabel id="status-label" htmlFor="status">
                         Status
                       </InputLabel>
-                      <Select
-                        id="status"
-                        label="Status"
-                        sx={{ width: 100 }}
-                        value={row.Status || "Unassigned"}
-                      >
+                      <Select id="status" label="Status" sx={{ width: 100 }}>
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
@@ -429,12 +415,7 @@ function ServiceRequestTable() {
                       <InputLabel id="status-label" htmlFor="status">
                         Status
                       </InputLabel>
-                      <Select
-                        id="status"
-                        label="Status"
-                        sx={{ width: 100 }}
-                        value={row.Status || "Unassigned"}
-                      >
+                      <Select id="status" label="Status" sx={{ width: 100 }}>
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
