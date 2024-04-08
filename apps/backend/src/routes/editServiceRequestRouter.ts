@@ -46,7 +46,7 @@ editServiceRequestRouter.post(
 
       //Determine if there was a request found
       if (changeRequest == null) {
-        console.log("No requests with ID ${requestID} found in database!");
+        console.log("No requests with given requestID found in database!");
         res.sendStatus(204);
         return;
       }
