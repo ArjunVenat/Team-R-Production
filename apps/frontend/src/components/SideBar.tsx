@@ -122,7 +122,7 @@ export default function Sidebar() {
       routeChange("editmap");
     }
     if (title === "Node/Edge Table") {
-      routeChange("edge-table");
+      routeChange("node-edge-table");
     }
     if (title === "Home") {
       routeChange("home");

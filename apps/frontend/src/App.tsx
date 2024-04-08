@@ -72,7 +72,6 @@ function App() {
           path: "node-edge-table",
           element: <EdgeNodePage />,
         },
-
         {
           path: "upload-csv",
           element: <UploadCSV />,
