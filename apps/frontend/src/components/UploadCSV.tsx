@@ -1,7 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import axios from "axios";
-import SideBar from "../components/SideBar.tsx";
-import { Stack, Button, Box } from "@mui/material";
+// import SideBar from "../components/SideBar.tsx";
+import { Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 // import SuccessAlert from "./SuccessAlert.tsx";
 
@@ -46,25 +46,26 @@ export default function UploadCSV() {
   };
 
   return (
-    <Stack direction="row" spacing={2}>
-      <SideBar />
+    // <Stack direction="row" spacing={2}>
+    //   <SideBar />
+    <div
+      className="grid"
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        minWidth: "80vw",
+      }}
+    >
       <div
         className="grid"
         style={{
-          display: "flex",
           justifyContent: "center",
           alignItems: "center",
-          minWidth: "80vw",
+          display: "grid",
         }}
       >
-        <div
-          className="grid"
-          style={{
-            justifyContent: "center",
-            alignItems: "center",
-            display: "grid",
-          }}
-        >
+        <div className="border-2 border-blue rounded-lg p-10">
           <form
             onSubmit={(event) => {
               handleSubmit(event).then();
@@ -80,6 +81,7 @@ export default function UploadCSV() {
           </form>
         </div>
       </div>
-    </Stack>
+    </div>
+    // </Stack>
   );
 }

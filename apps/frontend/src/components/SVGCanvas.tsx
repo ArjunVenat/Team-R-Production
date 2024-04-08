@@ -36,7 +36,7 @@ export default function SVGCanvas(props: {
 
   async function fetchNodes() {
     try {
-      const res = await axios.get("/api/admin/allnodes");
+      const res = await axios.get("/api/admin/allnodes/All");
       if (res.status === 200) {
         console.log("Successfully fetched nodes");
         setNodesData(res.data);
@@ -84,6 +84,27 @@ export default function SVGCanvas(props: {
     (node) => node.Floor === props.currentLevel,
   );
 
+  const splices = () => {
+    if (props.path) {
+      const pathSplicesList: Array<Array<Nodes>> = [];
+      let currentFloorSplice: Nodes[] = [props.path[0]];
+      for (let i = 0; i < props.path?.length - 1; i++) {
+        if (props.path[i].Floor === props.path[i + 1].Floor) {
+          currentFloorSplice.push(props.path[i + 1]);
+        } else {
+          pathSplicesList.push(currentFloorSplice);
+          currentFloorSplice = [props.path[i + 1]];
+        }
+      }
+      pathSplicesList.push(currentFloorSplice);
+      // console.log("pathSplicesList: ", pathSplicesList);
+      return pathSplicesList;
+    }
+    return [[]];
+  };
+
+  console.log(splices());
+
   const filteredEdges: Edges[] = edgesData.filter((edge) => {
     const startNode = filteredNodes.filter(
       (node) => node.NodeID === edge.StartNodeID,
@@ -117,24 +138,31 @@ export default function SVGCanvas(props: {
         </marker>
       </defs>
       <image href={props.currentMap} height="3400" width="5000" />
-      {(props.path ?? [])
-        .filter((node) => node.Floor === currentFloor)
-        .map((node, i, filteredPath) => {
-          if (i < filteredPath.length - 1) {
-            const nextNode = filteredPath[i + 1];
-            return (
-              <line
-                x1={nextNode.Xcoord}
-                y1={nextNode.Ycoord}
-                x2={node.Xcoord}
-                y2={node.Ycoord}
-                stroke={props.edgeColor ?? "blue"}
-                strokeWidth="5"
-                markerEnd="url(#arrow)"
-              />
-            );
-          }
-          return null;
+      {props.path &&
+        splices()[0][0] &&
+        splices().map((splice) => {
+          return splice
+            .filter((node) => node.Floor === currentFloor)
+            .map((node, i, filteredPath) => {
+              if (i < filteredPath.length - 1) {
+                const nextNode = filteredPath[i + 1];
+                if (node && nextNode) {
+                  return (
+                    <line
+                      key={`${node.NodeID} ${nextNode.NodeID}`}
+                      x1={nextNode.Xcoord}
+                      y1={nextNode.Ycoord}
+                      x2={node.Xcoord}
+                      y2={node.Ycoord}
+                      stroke={props.edgeColor ?? "blue"}
+                      strokeWidth="5"
+                      markerEnd="url(#arrow)"
+                    />
+                  );
+                }
+              }
+              return null;
+            });
         })}
 
       {(filteredEdges ?? []).map((edge) => {

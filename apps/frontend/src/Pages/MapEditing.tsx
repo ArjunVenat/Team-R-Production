@@ -1,7 +1,7 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
 import SideBar from "../components/SideBar.tsx";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 // import Canvas from "./Canvas.tsx";
 import SVGCanvas from "../components/SVGCanvas.tsx";
@@ -50,13 +50,9 @@ export default function MapEditing() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("/api/admin/allnodes");
+      const res = await axios.get("/api/admin/allnodes/NoHall");
       const allNodes = res.data;
-      const nonHallwayNodes = allNodes.filter(
-        (node: { LongName: string | string[] }) =>
-          !node.LongName.includes("Hallway"),
-      );
-      setNodes(nonHallwayNodes);
+      setNodes(allNodes);
       console.log("successfully got data from get request");
     }
     fetchData().then();
@@ -133,7 +129,7 @@ export default function MapEditing() {
           </TransformWrapper>
         </div>
       </main>
-      <aside className="bg-primary text-secondary w-screen">
+      <aside className="bg-primary text-secondary flex-shrink">
         <h1 className="text-xl bg-transparent p-2 text-center">
           Clicked Node/Edge Information:
         </h1>

@@ -13,7 +13,7 @@ export default function NodeTable() {
   const [nodeData, setNodeData] = useState<Nodes[]>([]);
   useEffect(() => {
     async function fetch() {
-      const res = await axios.get("/api/admin/allnodes");
+      const res = await axios.get("/api/admin/allnodes/All");
       setNodeData(res.data);
     }
     fetch().then();
