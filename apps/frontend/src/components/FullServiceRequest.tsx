@@ -99,7 +99,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
       case "Flowers":
         contentComponent = (
           <>
-            <div className="bg-white rounded-lg">
+            <div className="bg-white rounded-lg ">
               <h2 className="py-4 font-bold text-lg">Select Type</h2>
               <div className="bg-white gap-2 rounded-lg">
                 <Stack direction="row">
@@ -296,13 +296,13 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   const [openSuccessMessage, setOpenSuccess] = useState(false);
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen ">
       <div className="inline-block flex-none">
         <SideBar />
       </div>
 
       <div className="flex-grow overflow-y-auto">
-        <div className="bg-gray-400 bg-opacity-15 flex justify-center h-full">
+        <div className="bg-gray-400 bg-opacity-15 flex justify-center">
           <div className="bg-white rounded-lg p-5 w-2/4">
             <h2 className="mb-4 font-bold text-lg">Select Service Type</h2>
 
