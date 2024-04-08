@@ -70,13 +70,9 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("/api/admin/allnodes");
+      const res = await axios.get("/api/admin/allnodes/NoHall");
       const allNodes = res.data;
-      const nonHallwayNodes = allNodes.filter(
-        (node: { LongName: string | string[] }) =>
-          !node.LongName.includes("Hallway"),
-      );
-      setNodes(nonHallwayNodes);
+      setNodes(allNodes);
       console.log("successfully got data from get request");
     }
 

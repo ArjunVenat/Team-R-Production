@@ -61,14 +61,9 @@ export default function MainPage() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("/api/admin/allnodes");
+      const res = await axios.get("/api/admin/allnodes/NoHall");
       const allNodes = res.data;
-      const filteredNodes = allNodes.filter(
-        (node: { LongName: string; ShortName: string }) =>
-          !node.LongName.includes("Hallway") &&
-          !node.ShortName.includes("Hall"),
-      );
-      setNodes(filteredNodes);
+      setNodes(allNodes);
       console.log("successfully got data from get request");
     }
 
