@@ -29,7 +29,13 @@ export const RequestContext = createContext<appContextType>({
 });
 
 function App() {
-  const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
+  const guestOptions: string[] = [
+    "Flowers",
+    "Gifts",
+    "Medicine",
+    "Maintenance",
+    "Medical Equipment",
+  ]; //options for service requests
   const [snackbar, setSnackbar] = React.useState({
     severity: "success",
     open: false,
