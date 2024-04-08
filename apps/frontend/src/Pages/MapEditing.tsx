@@ -78,78 +78,79 @@ export default function MapEditing() {
       className="flex h-screen overflow-hidden flex-row bg-[#d6d8d5]"
     >
       <SideBar />
-      <main className="flex content-center justify-center leading-none relative">
-        <div id="map" className="relative">
-          <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
-            {({ zoomIn, zoomOut, resetTransform }) => (
-              <section>
-                <ButtonGroup
-                  variant="contained"
-                  color="primary"
-                  className="flex absolute top-1 left-1 z-10"
+      <main className="flex content-center justify-center leading-none relative flex-grow-1">
+        <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
+          {({ zoomIn, zoomOut, resetTransform }) => (
+            <section>
+              <ButtonGroup
+                variant="contained"
+                color="primary"
+                className="flex absolute top-1 left-1 z-10"
+              >
+                <Button
+                  onClick={() => zoomOut()}
+                  children={<ZoomOutIcon />}
+                  className="p-1"
+                />
+                <Button onClick={() => resetTransform()} children={"Reset"} />
+                <Button
+                  onClick={() => zoomIn()}
+                  children={<ZoomInIcon />}
+                  className="p-1"
+                />
+                <Select
+                  value={currentMap}
+                  onChange={(event) => setCurrentMap(event.target.value)}
+                  sx={{
+                    backgroundColor: "primary.main",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "primary.dark",
+                    },
+                    "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      borderColor: "white",
+                    },
+                  }}
                 >
-                  <Button
-                    onClick={() => zoomOut()}
-                    children={<ZoomOutIcon />}
-                    className="p-1"
-                  />
-                  <Button onClick={() => resetTransform()} children={"Reset"} />
-                  <Button
-                    onClick={() => zoomIn()}
-                    children={<ZoomInIcon />}
-                    className="p-1"
-                  />
-                  <Select
-                    value={currentMap}
-                    onChange={(event) => setCurrentMap(event.target.value)}
-                    sx={{
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "primary.dark",
-                      },
-                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
-                      },
-                    }}
-                  >
-                    {floors.map((floor, index) => (
-                      <MenuItem key={index} value={floor.map}>
-                        {floor.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </ButtonGroup>
-                <TransformComponent>
-                  <SVGCanvas
-                    key={currentMap}
-                    currentMap={currentMap}
-                    currentLevel={
-                      floors.find((floor) => floor.map === currentMap)?.level ||
-                      ""
-                    }
-                    handleNodeClicked={handleNodeClick}
-                    nodeClicked={nodeClicked}
-                    handleEdgeClicked={handleEdgeClicked}
-                    edgeClicked={edgeClicked}
-                    nodeColor={"orange"}
-                    edgeColor={"green"}
-                  />
-                </TransformComponent>
-              </section>
-            )}
-          </TransformWrapper>
-        </div>
+                  {floors.map((floor, index) => (
+                    <MenuItem key={index} value={floor.map}>
+                      {floor.name}
+                    </MenuItem>
+                  ))}
+                </Select>
+              </ButtonGroup>
+              <TransformComponent>
+                <SVGCanvas
+                  key={currentMap}
+                  currentMap={currentMap}
+                  currentLevel={
+                    floors.find((floor) => floor.map === currentMap)?.level ||
+                    ""
+                  }
+                  handleNodeClicked={handleNodeClick}
+                  nodeClicked={nodeClicked}
+                  handleEdgeClicked={handleEdgeClicked}
+                  edgeClicked={edgeClicked}
+                  nodeColor={"orange"}
+                  edgeColor={"green"}
+                />
+              </TransformComponent>
+            </section>
+          )}
+        </TransformWrapper>
       </main>
-      <aside className="bg-primary text-secondary w-screen flex justify-center">
+      <aside className="bg-primary text-secondary flex grow">
         <Stack>
           <h1 className="text-xl bg-transparent p-2 text-center">
             Clicked Node/Edge Information:
           </h1>
           {nodeClicked != undefined && (
             <div>
-              <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+              <TableContainer
+                sx={{ margin: 5, width: "auto" }}
+                component={Paper}
+              >
+                <Table sx={{ minWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Node ID:</TableCell>
                     <TableCell align="left" width="70%">
