@@ -60,7 +60,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     details2: "",
     details3: "",
     deliveryDate: "",
-    status: "",
+    status: "Unassigned",
   };
 
   const [nodes, setNodes] = useState<Nodes[]>();

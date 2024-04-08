@@ -21,7 +21,7 @@ function ServiceRequestTable() {
   const [requestData, setrequestData] = useState<GeneralRequest[]>([]);
   useEffect(() => {
     async function fetch() {
-      const res = await axios.get("/api/service/create");
+      const res = await axios.get("/api/service/create/All");
       setrequestData(res.data);
     }
     fetch().then();
@@ -95,7 +95,17 @@ function ServiceRequestTable() {
                       <InputLabel id="status-label" htmlFor="status">
                         Status
                       </InputLabel>
-                      <Select id="status" label="Status" sx={{ width: 100 }}>
+                      <Select
+                        id="status"
+                        label="Status"
+                        sx={{ width: 100 }}
+                        value={row.Status}
+                        onChange={(e) => {
+                          axios.post(
+                            `/api/admin/service/edit/${row.RequestID}/${e.target.value as string}`,
+                          );
+                        }}
+                      >
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
