@@ -63,11 +63,12 @@ export default function MainPage() {
     async function fetchData() {
       const res = await axios.get("/api/admin/allnodes");
       const allNodes = res.data;
-      const nonHallwayNodes = allNodes.filter(
-        (node: { LongName: string | string[] }) =>
-          !node.LongName.includes("Hallway"),
+      const filteredNodes = allNodes.filter(
+        (node: { LongName: string; ShortName: string }) =>
+          !node.LongName.includes("Hallway") &&
+          !node.ShortName.includes("Hall"),
       );
-      setNodes(nonHallwayNodes);
+      setNodes(filteredNodes);
       console.log("successfully got data from get request");
     }
 
@@ -175,7 +176,7 @@ export default function MainPage() {
           </TransformWrapper>
         </div>
       </main>
-      <aside className="bg-primary text-secondary w-screen">
+      <aside className="bg-primary text-secondary flex-shrink">
         <h1 className="text-xl bg-transparent p-2 text-center">
           Enter your start and end locations:
         </h1>

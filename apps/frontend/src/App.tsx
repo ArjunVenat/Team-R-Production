@@ -5,8 +5,7 @@ import MainPage from "./Pages/MainPage.tsx";
 import SignInPage from "./Pages/SignInPage.tsx";
 import MapEditing from "./Pages/MapEditing.tsx";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
-import EdgeTablePage from "./Pages/EdgePage.tsx";
-import NodeTablePage from "./Pages/NodePage.tsx";
+import EdgeNodePage from "./Pages/EdgeNodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
@@ -29,7 +28,13 @@ export const RequestContext = createContext<appContextType>({
 });
 
 function App() {
-  const guestOptions: string[] = ["Flowers", "Religious", "Food", "other"]; //options for service requests
+  const guestOptions: string[] = [
+    "Flowers",
+    "Gifts",
+    "Medicine",
+    "Maintenance",
+    "Medical Equipment",
+  ]; //options for service requests
   const [snackbar, setSnackbar] = React.useState({
     severity: "success",
     open: false,
@@ -64,12 +69,8 @@ function App() {
           element: <ServiceRequestTable />,
         },
         {
-          path: "edge-table",
-          element: <EdgeTablePage />,
-        },
-        {
-          path: "node-table",
-          element: <NodeTablePage />,
+          path: "node-edge-table",
+          element: <EdgeNodePage />,
         },
         {
           path: "upload-csv",
