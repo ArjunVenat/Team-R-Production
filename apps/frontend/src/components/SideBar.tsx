@@ -1,6 +1,6 @@
 // import MapIcon from '@mui/icons-material/Map';
 // import LoginIcon from '@mui/icons-material/Login';
-import { Logout, UploadFile } from "@mui/icons-material";
+import { Logout } from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -11,7 +11,6 @@ import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from "@mui/icons-material/TableView";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
-import AirlineSeatFlatAngledIcon from "@mui/icons-material/AirlineSeatFlatAngled";
 import EditIcon from "@mui/icons-material/Edit";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
@@ -39,14 +38,13 @@ export default function Sidebar() {
   const editmap: Menu = { title: "Edit Map", icon: <EditIcon /> };
 
   const logout: Menu = { title: "Logout", icon: <Logout /> };
-  const edges: Menu = { title: "Edge Table", icon: <AccessibleForwardIcon /> };
-  const nodes: Menu = {
-    title: "Node Table",
-    icon: <AirlineSeatFlatAngledIcon />,
+  const nodes_edges: Menu = {
+    title: "Node/Edge Table",
+    icon: <AccessibleForwardIcon />,
   };
-  const uploadCSV: Menu = { title: "Upload CSV", icon: <UploadFile /> };
+  // const uploadCSV: Menu = { title: "Upload CSV", icon: <UploadFile /> };
   const downloadCSV: Menu = {
-    title: "Download CSV",
+    title: "Upload/Download CSV",
     icon: <CloudDownloadIcon />,
   };
   const Menus: Menu[] = [
@@ -54,9 +52,8 @@ export default function Sidebar() {
     editmap,
     serviceRequest,
     serviceRequestTable,
-    edges,
-    nodes,
-    uploadCSV,
+    nodes_edges,
+    // uploadCSV,
     downloadCSV,
     logout,
   ];
@@ -83,18 +80,15 @@ export default function Sidebar() {
     case "/service-request-table":
       menuHighlight = "Service Request Table";
       break;
-    case "/edge-table":
-      menuHighlight = "Edge Table";
+    case "/node-edge-table":
+      menuHighlight = "Node/Edge Table";
       break;
-    case "/node-table":
-      menuHighlight = "Node Table";
+    case "/upload-download-csv":
+      menuHighlight = "Upload/Download CSV";
       break;
-    case "/upload-csv":
-      menuHighlight = "Upload CSV";
-      break;
-    case "/download-csv":
-      menuHighlight = "Download CSV";
-      break;
+    // case "/download-csv":
+    //   menuHighlight = "Download CSV";
+    //   break;
     case "/logout":
       menuHighlight = "Logout";
       break;
@@ -127,21 +121,18 @@ export default function Sidebar() {
     if (title === "Edit Map") {
       routeChange("editmap");
     }
-    if (title === "Edge Table") {
-      routeChange("edge-table");
-    }
-    if (title === "Node Table") {
-      routeChange("node-table");
+    if (title === "Node/Edge Table") {
+      routeChange("node-edge-table");
     }
     if (title === "Home") {
       routeChange("home");
     }
-    if (title === "Upload CSV") {
-      routeChange("upload-csv");
+    if (title === "Upload/Download CSV") {
+      routeChange("upload-download-csv");
     }
-    if (title === "Download CSV") {
-      routeChange("download-csv");
-    }
+    // if (title === "Download CSV") {
+    //   routeChange("download-csv");
+    // }
   };
 
   return (
