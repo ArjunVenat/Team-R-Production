@@ -138,7 +138,7 @@ export default function Sidebar() {
   return (
     <div className="flex h-screen">
       <div
-        className={`bg-primary h-full p-5 pt-9 flex flex-col drop-shadow-2xl justify-between ${
+        className={`bg-primary h-full p-5 pt-9 flex flex-col drop-shadow-2xl justify-between rounded-r-xl ${
           open ? "w-72" : "w-20"
         } duration-300 relative`}
       >

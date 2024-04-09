@@ -140,7 +140,7 @@ export default function MapEditing() {
           )}
         </TransformWrapper>
       </main>
-      <aside className="bg-primary text-secondary flex grow">
+      <aside className="bg-primary text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
         <Stack>
           <h1 className="text-xl bg-transparent p-2 text-center">
             Clicked Node/Edge Information:
@@ -148,10 +148,10 @@ export default function MapEditing() {
           {nodeClicked != undefined && (
             <div>
               <TableContainer
-                sx={{ margin: 5, width: "auto" }}
+                sx={{ margin: 5, maxWidth: 350, overflow: "auto" }}
                 component={Paper}
               >
-                <Table sx={{ minWidth: 350 }} aria-label="simple table">
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Node ID:</TableCell>
                     <TableCell align="left" width="70%">
@@ -203,7 +203,7 @@ export default function MapEditing() {
           {edgeClicked != undefined && (
             <div>
               <TableContainer component={Paper}>
-                <Table sx={{ minWidth: 650 }} aria-label="simple table">
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Edge ID:</TableCell>
                     <TableCell align="left" width="70%">

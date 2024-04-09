@@ -200,7 +200,7 @@ export default function MainPage() {
           </TransformWrapper>
         </div>
       </main>
-      <aside className="bg-primary text-secondary flex-shrink">
+      <aside className="bg-primary text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
         <h1 className="text-xl bg-transparent p-2 text-center">
           Enter your start and end locations:
         </h1>
