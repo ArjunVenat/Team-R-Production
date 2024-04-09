@@ -35,10 +35,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Nodes } from "database";
 import axios from "axios";
 
-// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
-// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
-// import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
-// import dayjs from "dayjs";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+import dayjs from "dayjs";
 
 //Define interface for each service request
 //ToDo: add type of service request to update with name, room, date
@@ -58,7 +58,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     details1: "",
     details2: "",
     details3: "",
-    deliveryDate: "",
+    deliveryDate: dayjs(),
     status: "Unassigned",
   };
 
@@ -291,253 +291,188 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   const [openSuccessMessage, setOpenSuccess] = useState(false);
 
   return (
-    // <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div className="flex h-screen ">
-      <div className="inline-block flex-none">
-        <SideBar />
-      </div>
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <div className="flex h-screen ">
+        <div className="inline-block flex-none">
+          <SideBar />
+        </div>
 
-      <div className="flex-grow overflow-y-auto">
-        <div className="bg-gray-400 bg-opacity-15 flex justify-center min-h-screen">
-          <div className="bg-white rounded-lg p-5 w-2/4">
-            <h2 className="mb-4 font-bold text-lg">Select Service Type</h2>
+        <div className="flex-grow overflow-y-auto">
+          <div className="bg-gray-400 bg-opacity-15 flex justify-center min-h-screen">
+            <div className="bg-white rounded-lg p-5 w-2/4">
+              <h2 className="mb-4 font-bold text-lg">Select Service Type</h2>
 
-            <div className="flex flex-col space-y-4">
-              <FormControl className="">
-                <InputLabel id="select-service-type-label">
-                  Service Type
-                </InputLabel>
-                <Select
-                  labelId="select-service-type-label"
-                  value={singleServiceRequest.requestType}
-                  label="Service Type"
-                  onChange={(e) => {
-                    setSingleServiceRequest({
-                      ...singleServiceRequest,
-                      requestType: e.target.value as string,
-                    });
-                  }}
-                >
-                  {availableServices.map((serviceOption: string) => (
-                    <MenuItem key={serviceOption} value={serviceOption}>
-                      {serviceOption}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-
-            {switchService(singleServiceRequest.requestType)}
-
-            <div className="my-5">
-              <h2 className="font-bold text-lg">Priority</h2>
-
-              <div className="">
-                <RadioGroup
-                  row
-                  defaultValue="low"
-                  name="priority-label"
-                  value={singleServiceRequest.priority}
-                  onChange={(e) => {
-                    setSingleServiceRequest({
-                      ...singleServiceRequest,
-                      priority: e.target.value as string,
-                    });
-                  }}
-                >
-                  <FormControlLabel
-                    value="Low"
-                    control={<Radio />}
-                    label="Low"
-                  />
-                  <FormControlLabel
-                    value="Medium"
-                    control={<Radio />}
-                    label="Medium"
-                  />
-                  <FormControlLabel
-                    value="High"
-                    control={<Radio />}
-                    label="High"
-                  />
-                  <FormControlLabel
-                    value="Emergency"
-                    control={<Radio />}
-                    label="Emergency"
-                  />
-                </RadioGroup>
+              <div className="flex flex-col space-y-4">
+                <FormControl className="">
+                  <InputLabel id="select-service-type-label">
+                    Service Type
+                  </InputLabel>
+                  <Select
+                    labelId="select-service-type-label"
+                    value={singleServiceRequest.requestType}
+                    label="Service Type"
+                    onChange={(e) => {
+                      setSingleServiceRequest({
+                        ...singleServiceRequest,
+                        requestType: e.target.value as string,
+                      });
+                    }}
+                  >
+                    {availableServices.map((serviceOption: string) => (
+                      <MenuItem key={serviceOption} value={serviceOption}>
+                        {serviceOption}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </FormControl>
               </div>
-            </div>
 
-            <div className="content" id="content">
-              <div className="mt-2">
-                <div className="bg-white rounded-lg ">
-                  <h2 className="mb-4 font-bold text-lg">
-                    Service Request Form
-                  </h2>
-                  <div className="space-y-4">
-                    <div className="form-item flex flex-col">
-                      <div className="flex mb:flex-row">
-                        <div className="flex-1 mb-3 ">
-                          <TextField
-                            className="border rounded-md px-2 py-1 w-3/4"
-                            type="text"
-                            id="name"
-                            label="Name"
-                            variant="outlined"
-                            value={singleServiceRequest.requesterName}
-                            onChange={(e) =>
-                              setSingleServiceRequest({
-                                ...singleServiceRequest,
-                                requesterName: e.target.value,
-                              })
-                            }
-                          />
-                        </div>
+              {switchService(singleServiceRequest.requestType)}
 
-                        <div className="flex-1 mb-3">
-                          <div className="flex flex-col">
-                            <input
-                              className="border border-gray-390 rounded-md px-2 py-4 w-3/4"
-                              type="datetime-local"
-                              id="deliveryDate"
-                              value={singleServiceRequest.deliveryDate}
+              <div className="my-5">
+                <h2 className="font-bold text-lg">Priority</h2>
+
+                <div className="">
+                  <RadioGroup
+                    row
+                    defaultValue="low"
+                    name="priority-label"
+                    value={singleServiceRequest.priority}
+                    onChange={(e) => {
+                      setSingleServiceRequest({
+                        ...singleServiceRequest,
+                        priority: e.target.value as string,
+                      });
+                    }}
+                  >
+                    <FormControlLabel
+                      value="Low"
+                      control={<Radio />}
+                      label="Low"
+                    />
+                    <FormControlLabel
+                      value="Medium"
+                      control={<Radio />}
+                      label="Medium"
+                    />
+                    <FormControlLabel
+                      value="High"
+                      control={<Radio />}
+                      label="High"
+                    />
+                    <FormControlLabel
+                      value="Emergency"
+                      control={<Radio />}
+                      label="Emergency"
+                    />
+                  </RadioGroup>
+                </div>
+              </div>
+
+              <div className="content" id="content">
+                <div className="mt-2">
+                  <div className="bg-white rounded-lg ">
+                    <h2 className="mb-4 font-bold text-lg">
+                      Service Request Form
+                    </h2>
+                    <div className="space-y-4">
+                      <div className="form-item flex flex-col">
+                        <div className="flex mb:flex-row">
+                          <div className="flex-1 mb-3 ">
+                            <TextField
+                              className="border rounded-md px-2 py-1 w-3/4"
+                              type="text"
+                              id="name"
+                              label="Name"
+                              variant="outlined"
+                              value={singleServiceRequest.requesterName}
                               onChange={(e) =>
                                 setSingleServiceRequest({
                                   ...singleServiceRequest,
-                                  deliveryDate: e.target.value,
+                                  requesterName: e.target.value,
                                 })
                               }
-                              placeholder="Delivery Date"
-                              style={{
-                                height: "3.5rem",
-                                paddingBottom: "1rem",
-                                paddingTop: "1rem",
-                              }}
                             />
-                            {/*  <DateTimePicker*/}
-                            {/*    value={singleServiceRequest.deliveryDate}*/}
-                            {/*    onChange={(e) =>*/}
-                            {/*        setSingleServiceRequest({*/}
-                            {/*            ...singleServiceRequest,*/}
-                            {/*            deliveryDate: e.target.value,*/}
-                            {/*        })*/}
-                            {/*    }*/}
-                            {/*/>*/}
+                          </div>
+
+                          <div className="flex-1 mb-3">
+                            <div className="flex flex-col">
+                              {/*<input*/}
+                              {/*  className="border border-gray-390 rounded-md px-2 py-4 w-3/4"*/}
+                              {/*  type="datetime-local"*/}
+                              {/*  id="deliveryDate"*/}
+                              {/*  value={singleServiceRequest.deliveryDate}*/}
+                              {/*  onChange={(e) =>*/}
+                              {/*    setSingleServiceRequest({*/}
+                              {/*      ...singleServiceRequest,*/}
+                              {/*      deliveryDate: e.target.value,*/}
+                              {/*    })*/}
+                              {/*  }*/}
+                              {/*  placeholder="Delivery Date"*/}
+                              {/*  style={{*/}
+                              {/*    height: "3.5rem",*/}
+                              {/*    paddingBottom: "1rem",*/}
+                              {/*    paddingTop: "1rem",*/}
+                              {/*  }}*/}
+                              {/*/>*/}
+                              <DateTimePicker
+                                value={singleServiceRequest.deliveryDate}
+                                onChange={(e) =>
+                                  setSingleServiceRequest({
+                                    ...singleServiceRequest,
+                                    deliveryDate: e.target.value,
+                                  })
+                                }
+                              />
+                            </div>
                           </div>
                         </div>
-                      </div>
 
-                      <div className="flex-1">
-                        <Autocomplete
-                          value={singleServiceRequest.locationNodeID}
-                          onChange={(
-                            e: ChangeEvent<unknown>,
-                            getRoom: string | null,
-                          ) =>
-                            setSingleServiceRequest({
-                              ...singleServiceRequest,
-                              locationNodeID: getRoom!,
-                            })
-                          }
-                          disablePortal
-                          id="combo-box-end"
-                          options={Locations}
-                          renderInput={(params) => (
-                            <TextField {...params} label="Room Name" />
-                          )}
-                        />
+                        <div className="flex-1">
+                          <Autocomplete
+                            value={singleServiceRequest.locationNodeID}
+                            onChange={(
+                              e: ChangeEvent<unknown>,
+                              getRoom: string | null,
+                            ) =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                locationNodeID: getRoom!,
+                              })
+                            }
+                            disablePortal
+                            id="combo-box-end"
+                            options={Locations}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Room Name" />
+                            )}
+                          />
+                        </div>
                       </div>
-                    </div>
-                    <div className="form-item">
-                      <TextField
-                        className="w-full "
-                        id="details"
-                        label="Details"
-                        multiline
-                        maxRows={2}
-                        value={singleServiceRequest.details1}
-                        onChange={(e) =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: e.target.value,
-                          })
-                        }
-                      />
-                    </div>
-                    {singleServiceRequest.requestType === "Flowers" && (
-                      <div className="my-5">
-                        <h2 className=" text-lg">Size of Bouquet</h2>
-
-                        <RadioGroup
-                          row
-                          defaultValue="oral"
-                          name="route"
-                          value={singleServiceRequest.details2}
+                      <div className="form-item">
+                        <TextField
+                          className="w-full "
+                          id="details"
+                          label="Details"
+                          multiline
+                          maxRows={2}
+                          value={singleServiceRequest.details1}
                           onChange={(e) =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              details2: e.target.value as string,
+                              details1: e.target.value,
                             })
                           }
-                        >
-                          <FormControlLabel
-                            value="Small"
-                            control={<Radio />}
-                            label="Small"
-                          />
-                          <FormControlLabel
-                            value="Medium"
-                            control={<Radio />}
-                            label="Medium"
-                          />
-                          <FormControlLabel
-                            value="Large"
-                            control={<Radio />}
-                            label="Large"
-                          />
-                        </RadioGroup>
-                        <h4 className="text-sm">
-                          Made By Lauren Harrison & Zihan Li
-                        </h4>
+                        />
                       </div>
-                    )}
-                    {singleServiceRequest.requestType === "Gifts" && (
-                      <div className="flex flex-col mt-3">
-                        <div className="flex items-center">
-                          <input
-                            id="gifts-checkbox"
-                            type="checkbox"
-                            value={singleServiceRequest.details3}
-                            onChange={(e) =>
-                              setSingleServiceRequest({
-                                ...singleServiceRequest,
-                                details3:
-                                  "" + e.target.checked ? "true" : "false",
-                              })
-                            }
-                            className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                          />
-                          <label htmlFor="gifts-checkbox" className="ms-2">
-                            Wrapped
-                          </label>
-                        </div>
-                        <h4 className="text-sm">
-                          Made by Artem Frenk and Arjun Venat
-                        </h4>
-                      </div>
-                    )}
+                      {singleServiceRequest.requestType === "Flowers" && (
+                        <div className="my-5">
+                          <h2 className=" text-lg">Size of Bouquet</h2>
 
-                    {singleServiceRequest.requestType === "Maintenance" && (
-                      <div className="my-5">
-                        <h2 className="mb-2  text-lg">Type of maintenance</h2>
-                        <FormControl fullWidth>
-                          <InputLabel id="type-maintenance-label">
-                            Type of maintenance
-                          </InputLabel>
-                          <Select
-                            labelId="type-maintenance-label"
-                            label="Type of maintenance"
+                          <RadioGroup
+                            row
+                            defaultValue="oral"
+                            name="route"
                             value={singleServiceRequest.details2}
                             onChange={(e) =>
                               setSingleServiceRequest({
@@ -546,183 +481,248 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                               })
                             }
                           >
-                            <MenuItem value="spill">Spill</MenuItem>
-                            <MenuItem value="down elevator">
-                              Down elevator
-                            </MenuItem>
-                            <MenuItem value="electricity issue">
-                              Electricity issue
-                            </MenuItem>
-                            <MenuItem value="bathroom">Bathroom</MenuItem>
-                          </Select>
-
-                          <div className="flex items-center mt-3">
+                            <FormControlLabel
+                              value="Small"
+                              control={<Radio />}
+                              label="Small"
+                            />
+                            <FormControlLabel
+                              value="Medium"
+                              control={<Radio />}
+                              label="Medium"
+                            />
+                            <FormControlLabel
+                              value="Large"
+                              control={<Radio />}
+                              label="Large"
+                            />
+                          </RadioGroup>
+                          <h4 className="text-sm">
+                            Made By Lauren Harrison & Zihan Li
+                          </h4>
+                        </div>
+                      )}
+                      {singleServiceRequest.requestType === "Gifts" && (
+                        <div className="flex flex-col mt-3">
+                          <div className="flex items-center">
                             <input
-                              id="link-checkbox"
+                              id="gifts-checkbox"
                               type="checkbox"
                               value={singleServiceRequest.details3}
                               onChange={(e) =>
                                 setSingleServiceRequest({
                                   ...singleServiceRequest,
-                                  details3: "" + e.target.checked,
+                                  details3:
+                                    "" + e.target.checked ? "true" : "false",
                                 })
                               }
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                             />
-                            <label htmlFor="link-checkbox" className="ms-2 ">
-                              Hazardous Material
+                            <label htmlFor="gifts-checkbox" className="ms-2">
+                              Wrapped
                             </label>
                           </div>
-
                           <h4 className="text-sm">
-                            Made By Jessie Hart & Hubert Liu
+                            Made by Artem Frenk and Arjun Venat
                           </h4>
-                        </FormControl>
-                      </div>
-                    )}
-                    {singleServiceRequest.requestType === "Medicine" && (
-                      <div className="my-5">
-                        <form className="max-w-sm ">
-                          <label htmlFor="dosage" className="mb-2 text-lg">
-                            Dosage
-                          </label>
-                          <input
-                            type="number"
-                            id="dosage"
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Dosage"
-                            value={singleServiceRequest.details2}
+                        </div>
+                      )}
+
+                      {singleServiceRequest.requestType === "Maintenance" && (
+                        <div className="my-5">
+                          <h2 className="mb-2  text-lg">Type of maintenance</h2>
+                          <FormControl fullWidth>
+                            <InputLabel id="type-maintenance-label">
+                              Type of maintenance
+                            </InputLabel>
+                            <Select
+                              labelId="type-maintenance-label"
+                              label="Type of maintenance"
+                              value={singleServiceRequest.details2}
+                              onChange={(e) =>
+                                setSingleServiceRequest({
+                                  ...singleServiceRequest,
+                                  details2: e.target.value as string,
+                                })
+                              }
+                            >
+                              <MenuItem value="spill">Spill</MenuItem>
+                              <MenuItem value="down elevator">
+                                Down elevator
+                              </MenuItem>
+                              <MenuItem value="electricity issue">
+                                Electricity issue
+                              </MenuItem>
+                              <MenuItem value="bathroom">Bathroom</MenuItem>
+                            </Select>
+
+                            <div className="flex items-center mt-3">
+                              <input
+                                id="link-checkbox"
+                                type="checkbox"
+                                value={singleServiceRequest.details3}
+                                onChange={(e) =>
+                                  setSingleServiceRequest({
+                                    ...singleServiceRequest,
+                                    details3: "" + e.target.checked,
+                                  })
+                                }
+                                className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                              />
+                              <label htmlFor="link-checkbox" className="ms-2 ">
+                                Hazardous Material
+                              </label>
+                            </div>
+
+                            <h4 className="text-sm">
+                              Made By Jessie Hart & Hubert Liu
+                            </h4>
+                          </FormControl>
+                        </div>
+                      )}
+                      {singleServiceRequest.requestType === "Medicine" && (
+                        <div className="my-5">
+                          <form className="max-w-sm ">
+                            <label htmlFor="dosage" className="mb-2 text-lg">
+                              Dosage
+                            </label>
+                            <input
+                              type="number"
+                              id="dosage"
+                              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Dosage"
+                              value={singleServiceRequest.details2}
+                              onChange={(e) =>
+                                setSingleServiceRequest({
+                                  ...singleServiceRequest,
+                                  details2: e.target.value as string,
+                                })
+                              }
+                              required
+                            />
+                          </form>
+
+                          <h2 className="text-lg mt-3">Route</h2>
+                          <RadioGroup
+                            defaultValue="oral"
+                            name="route"
+                            value={singleServiceRequest.details3}
                             onChange={(e) =>
                               setSingleServiceRequest({
                                 ...singleServiceRequest,
-                                details2: e.target.value as string,
+                                details3: e.target.value as string,
                               })
                             }
-                            required
-                          />
-                        </form>
+                          >
+                            <FormControlLabel
+                              value="oral"
+                              control={<Radio />}
+                              label="Oral"
+                            />
+                            <FormControlLabel
+                              value="injected"
+                              control={<Radio />}
+                              label="Injected"
+                            />
+                            <FormControlLabel
+                              value="topical"
+                              control={<Radio />}
+                              label="Topical"
+                            />
+                          </RadioGroup>
+                          <h4 className="text-sm">
+                            Made by Brannon Henson and Alexander Stoyanov
+                          </h4>
+                        </div>
+                      )}
+                      {singleServiceRequest.requestType ===
+                        "Medical Equipment" && (
+                        <div className="my-5">
+                          <form className="max-w-sm ">
+                            <label htmlFor="Quantity" className="mb-2 text-lg">
+                              Quantity
+                            </label>
+                            <input
+                              type="number"
+                              id="dosage"
+                              className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                              placeholder="Quantity"
+                              value={singleServiceRequest.details2}
+                              onChange={(e) =>
+                                setSingleServiceRequest({
+                                  ...singleServiceRequest,
+                                  details2: e.target.value as string,
+                                })
+                              }
+                              required
+                            />
+                          </form>
 
-                        <h2 className="text-lg mt-3">Route</h2>
-                        <RadioGroup
-                          defaultValue="oral"
-                          name="route"
-                          value={singleServiceRequest.details3}
-                          onChange={(e) =>
-                            setSingleServiceRequest({
-                              ...singleServiceRequest,
-                              details3: e.target.value as string,
-                            })
-                          }
-                        >
-                          <FormControlLabel
-                            value="oral"
-                            control={<Radio />}
-                            label="Oral"
-                          />
-                          <FormControlLabel
-                            value="injected"
-                            control={<Radio />}
-                            label="Injected"
-                          />
-                          <FormControlLabel
-                            value="topical"
-                            control={<Radio />}
-                            label="Topical"
-                          />
-                        </RadioGroup>
-                        <h4 className="text-sm">
-                          Made by Brannon Henson and Alexander Stoyanov
-                        </h4>
-                      </div>
-                    )}
-                    {singleServiceRequest.requestType ===
-                      "Medical Equipment" && (
-                      <div className="my-5">
-                        <form className="max-w-sm ">
-                          <label htmlFor="Quantity" className="mb-2 text-lg">
-                            Quantity
-                          </label>
-                          <input
-                            type="number"
-                            id="dosage"
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Quantity"
-                            value={singleServiceRequest.details2}
+                          <h2 className="mb-4 font-bold text-lg">
+                            Requires Supervision
+                          </h2>
+                          <FormGroup
                             onChange={(e) =>
                               setSingleServiceRequest({
                                 ...singleServiceRequest,
-                                details2: e.target.value as string,
+                                details3: (e.target as HTMLInputElement)
+                                  .value as string,
                               })
                             }
-                            required
-                          />
-                        </form>
-
-                        <h2 className="mb-4 font-bold text-lg">
-                          Requires Supervision
-                        </h2>
-                        <FormGroup
-                          onChange={(e) =>
-                            setSingleServiceRequest({
-                              ...singleServiceRequest,
-                              details3: (e.target as HTMLInputElement)
-                                .value as string,
-                            })
-                          }
-                        >
-                          <FormControlLabel
-                            value="Complex setup"
-                            control={<Checkbox />}
-                            label="Complex setup"
-                          />
-                          <FormControlLabel
-                            value="Risk of injury"
-                            control={<Checkbox />}
-                            label="Risk of injury"
-                          />
-                          <FormControlLabel
-                            value="Patient assistance"
-                            control={<Checkbox />}
-                            label="Patient assistance"
-                          />
-                        </FormGroup>
-                        <h4 className="text-sm">
-                          Made By Javier DeLeon & Nicholas Golparvar{" "}
-                        </h4>
-                      </div>
-                    )}
+                          >
+                            <FormControlLabel
+                              value="Complex setup"
+                              control={<Checkbox />}
+                              label="Complex setup"
+                            />
+                            <FormControlLabel
+                              value="Risk of injury"
+                              control={<Checkbox />}
+                              label="Risk of injury"
+                            />
+                            <FormControlLabel
+                              value="Patient assistance"
+                              control={<Checkbox />}
+                              label="Patient assistance"
+                            />
+                          </FormGroup>
+                          <h4 className="text-sm">
+                            Made By Javier DeLeon & Nicholas Golparvar{" "}
+                          </h4>
+                        </div>
+                      )}
+                    </div>
                   </div>
-                </div>
 
-                <div className="form-item flex justify-end mt-5">
-                  <Button
-                    variant="contained"
-                    color="success"
-                    onClick={submitRequest}
-                  >
-                    Submit Request
-                  </Button>
+                  <div className="form-item flex justify-end mt-5">
+                    <Button
+                      variant="contained"
+                      color="success"
+                      onClick={submitRequest}
+                    >
+                      Submit Request
+                    </Button>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
 
-      {/* Modal for success message */}
-      <Modal open={openSuccessMessage}>
-        <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
-          <h1
-            id="successMessage"
-            className="text-center text-green-600 text-xl mb-4"
-          >
-            Success! Request Submitted
-          </h1>
-          <Button onClick={() => clearRequests()}>Close</Button>
-        </Card>
-      </Modal>
-    </div>
-    // </LocalizationProvider>
+        {/* Modal for success message */}
+        <Modal open={openSuccessMessage}>
+          <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
+            <h1
+              id="successMessage"
+              className="text-center text-green-600 text-xl mb-4"
+            >
+              Success! Request Submitted
+            </h1>
+            <Button onClick={() => clearRequests()}>Close</Button>
+          </Card>
+        </Modal>
+      </div>
+    </LocalizationProvider>
   );
 }
 
