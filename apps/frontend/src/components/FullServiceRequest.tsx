@@ -65,7 +65,16 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   const [nodes, setNodes] = useState<Nodes[]>();
 
   // const [room, setRoom] = useState("");
-  const Locations = nodes?.map((node: Nodes) => node.NodeID) || [];
+  const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
+  Locations.sort((longname1, longname2) => {
+    if (longname1 > longname2) {
+      return 1;
+    } else if (longname1 < longname2) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
 
   useEffect(() => {
     async function fetchData() {
@@ -423,14 +432,22 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
                       <div className="flex-1">
                         <Autocomplete
-                          value={singleServiceRequest.locationNodeID}
+                          value={
+                            nodes?.filter(
+                              (node) =>
+                                node.LongName ===
+                                singleServiceRequest.locationNodeID,
+                            )[0]?.LongName
+                          }
                           onChange={(
                             e: ChangeEvent<unknown>,
                             getRoom: string | null,
                           ) =>
                             setSingleServiceRequest({
                               ...singleServiceRequest,
-                              locationNodeID: getRoom!,
+                              locationNodeID: nodes!.filter(
+                                (node) => node.LongName === getRoom,
+                              )[0].NodeID,
                             })
                           }
                           disablePortal

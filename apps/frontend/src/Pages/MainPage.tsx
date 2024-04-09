@@ -74,6 +74,15 @@ export default function MainPage() {
   console.log(nodes);
 
   const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
+  Locations.sort((longname1, longname2) => {
+    if (longname1 > longname2) {
+      return 1;
+    } else if (longname1 < longname2) {
+      return -1;
+    } else {
+      return 0;
+    }
+  });
 
   async function getDirections() {
     const startNodeArray = nodes?.filter(
