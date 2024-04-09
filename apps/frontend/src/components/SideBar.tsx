@@ -205,7 +205,7 @@ export default function Sidebar() {
 
         <div className="pb-2">
           <li
-            className="text-white text-2xl flex items-center gap-x-8 cursor-pointer p-2 hover:bg-blue-300 rounded-md mt-2"
+            className="text-white text-2xl flex items-center gap-x-8 cursor-pointer p-2 hover:bg-blue-300 hover:bg-secondary/25 hover:border-r-4 rounded-md mt-2"
             onClick={() => setOpen(!open)}
           >
             <span>

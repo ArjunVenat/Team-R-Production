@@ -21,6 +21,8 @@ import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
 import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { ThemeProvider } from "@mui/material";
+import { appTheme } from "../Interfaces/MuiTheme.ts";
 
 const autocompleteStyle = {
   "& .MuiInputBase-input": { color: "white" },
@@ -138,43 +140,47 @@ export default function MainPage() {
           <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
             {({ zoomIn, zoomOut, resetTransform }) => (
               <section>
-                <ButtonGroup
-                  variant="contained"
-                  color="primary"
-                  className="flex absolute top-1 left-1 z-10"
-                >
-                  <Button
-                    onClick={() => zoomOut()}
-                    children={<ZoomOutIcon />}
-                    className="p-1"
-                  />
-                  <Button onClick={() => resetTransform()} children={"Reset"} />
-                  <Button
-                    onClick={() => zoomIn()}
-                    children={<ZoomInIcon />}
-                    className="p-1"
-                  />
-                  <Select
-                    value={currentMap}
-                    onChange={(event) => setCurrentMap(event.target.value)}
-                    sx={{
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "primary.dark",
-                      },
-                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
-                      },
-                    }}
+                <ThemeProvider theme={appTheme}>
+                  <ButtonGroup
+                    variant="contained"
+                    className="flex absolute top-1 left-1 z-10"
                   >
-                    {floors.map((floor, index) => (
-                      <MenuItem key={index} value={floor.map}>
-                        {floor.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </ButtonGroup>
+                    <Button
+                      onClick={() => zoomOut()}
+                      children={<ZoomOutIcon />}
+                      className="p-1"
+                    />
+                    <Button
+                      onClick={() => resetTransform()}
+                      children={"Reset"}
+                    />
+                    <Button
+                      onClick={() => zoomIn()}
+                      children={<ZoomInIcon />}
+                      className="p-1"
+                    />
+                    <Select
+                      value={currentMap}
+                      onChange={(event) => setCurrentMap(event.target.value)}
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: "primary.dark",
+                        },
+                        "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "white",
+                        },
+                      }}
+                    >
+                      {floors.map((floor, index) => (
+                        <MenuItem key={index} value={floor.map}>
+                          {floor.name}
+                        </MenuItem>
+                      ))}
+                    </Select>
+                  </ButtonGroup>
+                </ThemeProvider>
                 <TransformComponent>
                   <SVGCanvas
                     key={currentMap}

@@ -27,6 +27,8 @@ import TableContainer from "@mui/material/TableContainer";
 // import TableHead from '@mui/material/TableHead';
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import { appTheme } from "../Interfaces/MuiTheme.ts";
+import { ThemeProvider } from "@mui/material";
 
 const floors = [
   { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
@@ -78,43 +80,45 @@ export default function MapEditing() {
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
           {({ zoomIn, zoomOut, resetTransform }) => (
             <section>
-              <ButtonGroup
-                variant="contained"
-                color="primary"
-                className="flex absolute top-1 left-1 z-10"
-              >
-                <Button
-                  onClick={() => zoomOut()}
-                  children={<ZoomOutIcon />}
-                  className="p-1"
-                />
-                <Button onClick={() => resetTransform()} children={"Reset"} />
-                <Button
-                  onClick={() => zoomIn()}
-                  children={<ZoomInIcon />}
-                  className="p-1"
-                />
-                <Select
-                  value={currentMap}
-                  onChange={(event) => setCurrentMap(event.target.value)}
-                  sx={{
-                    backgroundColor: "primary.main",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "primary.dark",
-                    },
-                    "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                      borderColor: "white",
-                    },
-                  }}
+              <ThemeProvider theme={appTheme}>
+                <ButtonGroup
+                  variant="contained"
+                  color="primary"
+                  className="flex absolute top-1 left-1 z-10"
                 >
-                  {floors.map((floor, index) => (
-                    <MenuItem key={index} value={floor.map}>
-                      {floor.name}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </ButtonGroup>
+                  <Button
+                    onClick={() => zoomOut()}
+                    children={<ZoomOutIcon />}
+                    className="p-1"
+                  />
+                  <Button onClick={() => resetTransform()} children={"Reset"} />
+                  <Button
+                    onClick={() => zoomIn()}
+                    children={<ZoomInIcon />}
+                    className="p-1"
+                  />
+                  <Select
+                    value={currentMap}
+                    onChange={(event) => setCurrentMap(event.target.value)}
+                    sx={{
+                      backgroundColor: "primary.main",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "primary.dark",
+                      },
+                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                    }}
+                  >
+                    {floors.map((floor, index) => (
+                      <MenuItem key={index} value={floor.map}>
+                        {floor.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </ButtonGroup>
+              </ThemeProvider>
               <TransformComponent>
                 <SVGCanvas
                   key={currentMap}

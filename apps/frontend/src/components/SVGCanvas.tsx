@@ -79,7 +79,7 @@ export default function SVGCanvas(props: {
     console.log(props.path?.[props.path?.length - 1].NodeID);
     switch (node.NodeID) {
       case props.path?.[0].NodeID:
-        return `green`;
+        return "black";
         break;
       case props.path?.[props.path?.length - 1].NodeID:
         return "red";
