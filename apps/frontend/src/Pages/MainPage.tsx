@@ -5,7 +5,7 @@ import React, { ChangeEvent, useEffect, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 // import Canvas from "./Canvas.tsx";
 import SVGCanvas from "../components/SVGCanvas.tsx";
-import { useNavigate } from "react-router-dom";
+// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Nodes } from "database";
 //import { Stack } from "react-bootstrap";
@@ -53,11 +53,11 @@ export default function MainPage() {
   const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
   const [clickedNode, setClickedNode] = React.useState<Nodes | undefined>();
 
-  const navigate = useNavigate();
-  const routeChange = (path: string) => {
-    const newPath = `/${path}`;
-    navigate(newPath);
-  };
+  // const navigate = useNavigate();
+  // const routeChange = (path: string) => {
+  //   const newPath = `/${path}`;
+  //   navigate(newPath);
+  // };
 
   useEffect(() => {
     async function fetchData() {
@@ -85,6 +85,28 @@ export default function MainPage() {
       endNodeArray.length > 0
     ) {
       const startNode: string = startNodeArray[0]["NodeID"];
+      // console.log("starting node floor" + startNodeArray[0].Floor);
+      const startingFloor: string = startNodeArray[0].Floor;
+      console.log("starting floor:" + startingFloor);
+      switch (startingFloor) {
+        case "L1":
+          setCurrentMap(lowerLevel1Map);
+          break;
+        case "L2":
+          setCurrentMap(lowerLevel2Map);
+          break;
+        case "1":
+          setCurrentMap(firstFloorMap);
+          break;
+        case "2":
+          setCurrentMap(secondFloorMap);
+          break;
+        case "3":
+          setCurrentMap(thirdFloorMap);
+          break;
+        default:
+          setCurrentMap(lowerLevel1Map);
+      }
       const endNode: string = endNodeArray[0]["NodeID"];
       const res = await axios.get("/api/map/pathfind", {
         params: {
@@ -102,7 +124,7 @@ export default function MainPage() {
     } else {
       console.error("Start or end node not found");
     }
-    routeChange("home");
+    // routeChange("home");
   }
 
   return (
@@ -164,6 +186,7 @@ export default function MainPage() {
                     }
                     handleNodeHover={setHoveredNode}
                     handleNodeClicked={setClickedNode}
+                    isHome={true}
                   />
                 </TransformComponent>
               </section>

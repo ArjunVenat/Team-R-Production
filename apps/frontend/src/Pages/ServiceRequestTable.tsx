@@ -27,7 +27,8 @@ function ServiceRequestTable() {
     fetch().then();
   }, []);
 
-  const deleteService = (service: GeneralRequest) => {
+  const deleteService = async (service: GeneralRequest) => {
+    await axios.post(`api/admin/service/del/${service.RequestID}`);
     const index = requestData.indexOf(service);
     requestData.splice(index, 1);
     setrequestData([...requestData]);

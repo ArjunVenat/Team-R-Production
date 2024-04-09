@@ -13,6 +13,7 @@ export default function SVGCanvas(props: {
   edgeClicked?: Edges | undefined;
   handleEdgeClicked?: (edge: Edges | undefined) => void;
   handleNodeHover?: (node: Nodes | undefined) => void;
+  isHome: boolean;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
@@ -71,6 +72,23 @@ export default function SVGCanvas(props: {
     }
   }
 
+  const getNodeColor = (node: Nodes) => {
+    console.log(
+      "choosing color: " + node.NodeID + "      " + props.path?.[0].NodeID,
+    );
+    console.log(props.path?.[props.path?.length - 1].NodeID);
+    switch (node.NodeID) {
+      case props.path?.[0].NodeID:
+        return `green`;
+        break;
+      case props.path?.[props.path?.length - 1].NodeID:
+        return "red";
+        break;
+      default:
+        return "blue";
+    }
+  };
+
   function handleEdgeClick(edge: Edges) {
     if (props.handleEdgeClicked) {
       props.handleEdgeClicked(edge);
@@ -80,9 +98,17 @@ export default function SVGCanvas(props: {
     }
   }
 
-  const filteredNodes = nodesData.filter(
-    (node) => node.Floor === props.currentLevel,
-  );
+  const filteredNodes = nodesData.filter((node) => {
+    if (!props.isHome) {
+      return node.Floor === props.currentLevel;
+    } else {
+      return (
+        node.Floor === props.currentLevel &&
+        props.path &&
+        props.path.some((pathNode) => pathNode.NodeID === node.NodeID)
+      );
+    }
+  });
 
   const splices = () => {
     if (props.path) {
@@ -200,7 +226,7 @@ export default function SVGCanvas(props: {
             cx={node.Xcoord}
             cy={node.Ycoord}
             r="10"
-            fill={props.nodeColor ?? "red"}
+            fill={props.nodeColor ?? getNodeColor(node)}
           />
         </g>
       ))}

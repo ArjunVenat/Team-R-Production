@@ -35,11 +35,10 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Nodes } from "database";
 import axios from "axios";
 
-// calander imports
-// import { DemoContainer } from '@mui/x-date-pickers/internals/demo';
-// import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
-// import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-// import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+// import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+// import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+// import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
+// import dayjs from "dayjs";
 
 //Define interface for each service request
 //ToDo: add type of service request to update with name, room, date
@@ -292,6 +291,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   const [openSuccessMessage, setOpenSuccess] = useState(false);
 
   return (
+    // <LocalizationProvider dateAdapter={AdapterDayjs}>
     <div className="flex h-screen ">
       <div className="inline-block flex-none">
         <SideBar />
@@ -415,6 +415,15 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                                 paddingTop: "1rem",
                               }}
                             />
+                            {/*  <DateTimePicker*/}
+                            {/*    value={singleServiceRequest.deliveryDate}*/}
+                            {/*    onChange={(e) =>*/}
+                            {/*        setSingleServiceRequest({*/}
+                            {/*            ...singleServiceRequest,*/}
+                            {/*            deliveryDate: e.target.value,*/}
+                            {/*        })*/}
+                            {/*    }*/}
+                            {/*/>*/}
                           </div>
                         </div>
                       </div>
@@ -713,6 +722,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
         </Card>
       </Modal>
     </div>
+    // </LocalizationProvider>
   );
 }
 
