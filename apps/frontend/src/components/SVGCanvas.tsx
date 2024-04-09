@@ -73,20 +73,25 @@ export default function SVGCanvas(props: {
   }
 
   const getNodeColor = (node: Nodes) => {
-    console.log(
-      "choosing color: " + node.NodeID + "      " + props.path?.[0].NodeID,
-    );
-    console.log(props.path?.[props.path?.length - 1].NodeID);
-    switch (node.NodeID) {
-      case props.path?.[0].NodeID:
-        return "black";
-        break;
-      case props.path?.[props.path?.length - 1].NodeID:
+    if (props.path && props.path?.length > 0) {
+      console.log(
+        "choosing color: " + node.NodeID + "      " + props.path?.[0].NodeID,
+      );
+      console.log(props.path?.[props.path?.length - 1].NodeID);
+
+      if (props.path?.[0].NodeID === node.NodeID) {
+        return "chartreuse";
+      } else if (props.path?.[props.path?.length - 1].NodeID === node.NodeID) {
         return "red";
-        break;
-      default:
-        return "blue";
+      } else if (
+        props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)
+      ) {
+        return "violet";
+      } else {
+        return "gray";
+      }
     }
+    return "gray";
   };
 
   function handleEdgeClick(edge: Edges) {
@@ -98,17 +103,11 @@ export default function SVGCanvas(props: {
     }
   }
 
-  const filteredNodes = nodesData.filter((node) => {
-    if (!props.isHome) {
-      return node.Floor === props.currentLevel;
-    } else {
-      return (
-        node.Floor === props.currentLevel &&
-        props.path &&
-        props.path.some((pathNode) => pathNode.NodeID === node.NodeID)
-      );
-    }
-  });
+  const filteredNodes = nodesData.filter(
+    (node) => node.Floor === props.currentLevel,
+  );
+
+  console.log(filteredNodes);
 
   const splices = () => {
     if (props.path) {
