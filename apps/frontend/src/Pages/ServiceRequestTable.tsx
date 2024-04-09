@@ -96,69 +96,70 @@ function ServiceRequestTable() {
                 </tr>
               </thead>
               <tbody>
-                {requestData
-                  .filter((row) => row.RequestType === "Flowers")
-                  .map((row, index) => (
-                    <tr key={index}>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequestType}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details1}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequesterName}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.DeliveryDate.toString()}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.LocationNodeID}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Priority}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details1}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details2}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor="status">Status</InputLabel>
-                          <Select
-                            label="Status"
-                            sx={{ width: 100 }}
-                            value={row.Status}
-                            onChange={(e) => {
-                              updateServiceStatus(
-                                row,
-                                e.target.value as string,
-                              ).then();
-                            }}
+                {requestData.length > 0 &&
+                  requestData
+                    .filter((row) => row.RequestType === "Flowers")
+                    .map((row, index) => (
+                      <tr key={index}>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequestType}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details1}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequesterName}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.DeliveryDate.toString()}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.LocationNodeID}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Priority}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details1}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details2}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor="status">Status</InputLabel>
+                            <Select
+                              label="Status"
+                              sx={{ width: 100 }}
+                              value={row.Status}
+                              onChange={(e) => {
+                                updateServiceStatus(
+                                  row,
+                                  e.target.value as string,
+                                ).then();
+                              }}
+                            >
+                              <MenuItem value="Unassigned">Unassigned</MenuItem>
+                              <MenuItem value="Assigned">Assigned</MenuItem>
+                              <MenuItem value="InProgress">InProgress</MenuItem>
+                              <MenuItem value="Closed">Closed</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => deleteService(row)}
                           >
-                            <MenuItem value="Unassigned">Unassigned</MenuItem>
-                            <MenuItem value="Assigned">Assigned</MenuItem>
-                            <MenuItem value="InProgress">InProgress</MenuItem>
-                            <MenuItem value="Closed">Closed</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => deleteService(row)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                      {/*<td className="border border-slate-300 text-center">*/}
-                      {/*  {row. }//flowers doesnt store details */}
-                      {/*</td>*/}
-                    </tr>
-                  ))}
+                            Delete
+                          </Button>
+                        </td>
+                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*  {row. }//flowers doesnt store details */}
+                        {/*</td>*/}
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
@@ -183,69 +184,70 @@ function ServiceRequestTable() {
                 </tr>
               </thead>
               <tbody>
-                {requestData
-                  .filter((row) => row.RequestType === "Gifts")
-                  .map((row, index) => (
-                    <tr key={index}>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequestType}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details1}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequesterName}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.DeliveryDate.toString()}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.LocationNodeID}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Priority}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details1}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details3}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor="status">Status</InputLabel>
-                          <Select
-                            label="Status"
-                            sx={{ width: 100 }}
-                            value={row.Status}
-                            onChange={(e) => {
-                              updateServiceStatus(
-                                row,
-                                e.target.value as string,
-                              ).then();
-                            }}
+                {requestData.length > 0 &&
+                  requestData
+                    .filter((row) => row.RequestType === "Gifts")
+                    .map((row, index) => (
+                      <tr key={index}>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequestType}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details1}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequesterName}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.DeliveryDate.toString()}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.LocationNodeID}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Priority}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details1}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details3}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor="status">Status</InputLabel>
+                            <Select
+                              label="Status"
+                              sx={{ width: 100 }}
+                              value={row.Status}
+                              onChange={(e) => {
+                                updateServiceStatus(
+                                  row,
+                                  e.target.value as string,
+                                ).then();
+                              }}
+                            >
+                              <MenuItem value="Unassigned">Unassigned</MenuItem>
+                              <MenuItem value="Assigned">Assigned</MenuItem>
+                              <MenuItem value="InProgress">InProgress</MenuItem>
+                              <MenuItem value="Closed">Closed</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => deleteService(row)}
                           >
-                            <MenuItem value="Unassigned">Unassigned</MenuItem>
-                            <MenuItem value="Assigned">Assigned</MenuItem>
-                            <MenuItem value="InProgress">InProgress</MenuItem>
-                            <MenuItem value="Closed">Closed</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => deleteService(row)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                      {/*<td className="border border-slate-300 text-center">*/}
-                      {/*  {row. }//flowers doesnt store details */}
-                      {/*</td>*/}
-                    </tr>
-                  ))}
+                            Delete
+                          </Button>
+                        </td>
+                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*  {row. }//flowers doesnt store details */}
+                        {/*</td>*/}
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
@@ -274,69 +276,70 @@ function ServiceRequestTable() {
                 </tr>
               </thead>
               <tbody>
-                {requestData
-                  .filter((row) => row.RequestType === "Maintenance")
-                  .map((row, index) => (
-                    <tr key={index}>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequestType}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequesterName}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.DeliveryDate.toString()}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.LocationNodeID}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Priority}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details1}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details2}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details3}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor="status">Status</InputLabel>
-                          <Select
-                            label="Status"
-                            sx={{ width: 100 }}
-                            value={row.Status}
-                            onChange={(e) => {
-                              updateServiceStatus(
-                                row,
-                                e.target.value as string,
-                              ).then();
-                            }}
+                {requestData.length > 0 &&
+                  requestData
+                    .filter((row) => row.RequestType === "Maintenance")
+                    .map((row, index) => (
+                      <tr key={index}>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequestType}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequesterName}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.DeliveryDate.toString()}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.LocationNodeID}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Priority}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details1}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details2}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details3}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor="status">Status</InputLabel>
+                            <Select
+                              label="Status"
+                              sx={{ width: 100 }}
+                              value={row.Status}
+                              onChange={(e) => {
+                                updateServiceStatus(
+                                  row,
+                                  e.target.value as string,
+                                ).then();
+                              }}
+                            >
+                              <MenuItem value="Unassigned">Unassigned</MenuItem>
+                              <MenuItem value="Assigned">Assigned</MenuItem>
+                              <MenuItem value="InProgress">InProgress</MenuItem>
+                              <MenuItem value="Closed">Closed</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => deleteService(row)}
                           >
-                            <MenuItem value="Unassigned">Unassigned</MenuItem>
-                            <MenuItem value="Assigned">Assigned</MenuItem>
-                            <MenuItem value="InProgress">InProgress</MenuItem>
-                            <MenuItem value="Closed">Closed</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => deleteService(row)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                      {/*<td className="border border-slate-300 text-center">*/}
-                      {/*  {row. }//flowers doesnt store details */}
-                      {/*</td>*/}
-                    </tr>
-                  ))}
+                            Delete
+                          </Button>
+                        </td>
+                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*  {row. }//flowers doesnt store details */}
+                        {/*</td>*/}
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
@@ -361,69 +364,70 @@ function ServiceRequestTable() {
                 </tr>
               </thead>
               <tbody>
-                {requestData
-                  .filter((row) => row.RequestType === "Medicine")
-                  .map((row, index) => (
-                    <tr key={index}>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequestType}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequesterName}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.DeliveryDate.toString()}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.LocationNodeID}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Priority}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details1}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details2}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details3}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor="status">Status</InputLabel>
-                          <Select
-                            label="Status"
-                            sx={{ width: 100 }}
-                            value={row.Status}
-                            onChange={(e) => {
-                              updateServiceStatus(
-                                row,
-                                e.target.value as string,
-                              ).then();
-                            }}
+                {requestData.length > 0 &&
+                  requestData
+                    .filter((row) => row.RequestType === "Medicine")
+                    .map((row, index) => (
+                      <tr key={index}>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequestType}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequesterName}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.DeliveryDate.toString()}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.LocationNodeID}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Priority}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details1}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details2}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details3}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor="status">Status</InputLabel>
+                            <Select
+                              label="Status"
+                              sx={{ width: 100 }}
+                              value={row.Status}
+                              onChange={(e) => {
+                                updateServiceStatus(
+                                  row,
+                                  e.target.value as string,
+                                ).then();
+                              }}
+                            >
+                              <MenuItem value="Unassigned">Unassigned</MenuItem>
+                              <MenuItem value="Assigned">Assigned</MenuItem>
+                              <MenuItem value="InProgress">InProgress</MenuItem>
+                              <MenuItem value="Closed">Closed</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => deleteService(row)}
                           >
-                            <MenuItem value="Unassigned">Unassigned</MenuItem>
-                            <MenuItem value="Assigned">Assigned</MenuItem>
-                            <MenuItem value="InProgress">InProgress</MenuItem>
-                            <MenuItem value="Closed">Closed</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => deleteService(row)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                      {/*<td className="border border-slate-300 text-center">*/}
-                      {/*  {row. }//flowers doesnt store details */}
-                      {/*</td>*/}
-                    </tr>
-                  ))}
+                            Delete
+                          </Button>
+                        </td>
+                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*  {row. }//flowers doesnt store details */}
+                        {/*</td>*/}
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
@@ -450,69 +454,70 @@ function ServiceRequestTable() {
                 </tr>
               </thead>
               <tbody>
-                {requestData
-                  .filter((row) => row.RequestType === "Medical Equipment")
-                  .map((row, index) => (
-                    <tr key={index}>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequestType}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.RequesterName}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.DeliveryDate.toString()}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.LocationNodeID}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Priority}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details1}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details2}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        {row.Details3}
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <FormControl fullWidth>
-                          <InputLabel htmlFor="status">Status</InputLabel>
-                          <Select
-                            label="Status"
-                            sx={{ width: 100 }}
-                            value={row.Status}
-                            onChange={(e) => {
-                              updateServiceStatus(
-                                row,
-                                e.target.value as string,
-                              ).then();
-                            }}
+                {requestData.length > 0 &&
+                  requestData
+                    .filter((row) => row.RequestType === "Medical Equipment")
+                    .map((row, index) => (
+                      <tr key={index}>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequestType}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.RequesterName}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.DeliveryDate.toString()}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.LocationNodeID}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Priority}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details1}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details2}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          {row.Details3}
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <FormControl fullWidth>
+                            <InputLabel htmlFor="status">Status</InputLabel>
+                            <Select
+                              label="Status"
+                              sx={{ width: 100 }}
+                              value={row.Status}
+                              onChange={(e) => {
+                                updateServiceStatus(
+                                  row,
+                                  e.target.value as string,
+                                ).then();
+                              }}
+                            >
+                              <MenuItem value="Unassigned">Unassigned</MenuItem>
+                              <MenuItem value="Assigned">Assigned</MenuItem>
+                              <MenuItem value="InProgress">InProgress</MenuItem>
+                              <MenuItem value="Closed">Closed</MenuItem>
+                            </Select>
+                          </FormControl>
+                        </td>
+                        <td className="border border-slate-300 text-center p-2">
+                          <Button
+                            variant="contained"
+                            color="error"
+                            onClick={() => deleteService(row)}
                           >
-                            <MenuItem value="Unassigned">Unassigned</MenuItem>
-                            <MenuItem value="Assigned">Assigned</MenuItem>
-                            <MenuItem value="InProgress">InProgress</MenuItem>
-                            <MenuItem value="Closed">Closed</MenuItem>
-                          </Select>
-                        </FormControl>
-                      </td>
-                      <td className="border border-slate-300 text-center p-2">
-                        <Button
-                          variant="contained"
-                          color="error"
-                          onClick={() => deleteService(row)}
-                        >
-                          Delete
-                        </Button>
-                      </td>
-                      {/*<td className="border border-slate-300 text-center">*/}
-                      {/*  {row. }//flowers doesnt store details */}
-                      {/*</td>*/}
-                    </tr>
-                  ))}
+                            Delete
+                          </Button>
+                        </td>
+                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*  {row. }//flowers doesnt store details */}
+                        {/*</td>*/}
+                      </tr>
+                    ))}
               </tbody>
             </table>
           </div>
