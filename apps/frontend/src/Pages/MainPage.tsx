@@ -186,6 +186,7 @@ export default function MainPage() {
                     }
                     handleNodeHover={setHoveredNode}
                     handleNodeClicked={setClickedNode}
+                    isHome={true}
                   />
                 </TransformComponent>
               </section>

@@ -129,6 +129,7 @@ export default function MapEditing() {
                   edgeClicked={edgeClicked}
                   nodeColor={"orange"}
                   edgeColor={"green"}
+                  isHome={false}
                 />
               </TransformComponent>
             </section>
