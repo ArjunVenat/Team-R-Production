@@ -14,7 +14,7 @@ const EdgeTablePage = () => {
       <div className="overflow-y-auto h-screen flex-grow">
         {isNode ? <NodeTable /> : <EdgeTable />}
       </div>
-      <aside className="bg-primary text-secondary">
+      <aside className="bg-primary text-secondary rounded-l-xl">
         <div className="flex flex-col items-center justify-center h-full">
           <h1 className="text-xl bg-transparent p-2 text-center">
             View Node or Edge Tables
