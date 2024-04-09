@@ -180,7 +180,11 @@ export class Graph {
           shortestPath.get(currNode)! + currNode.getDistance(tempNode);
 
         // Compare to best known path
-        if (dist < (shortestPath.get(tempNode) || BASICALLY_INFINITY)) {
+        if (
+          shortestPath.has(tempNode)
+            ? shortestPath.get(tempNode)
+            : BASICALLY_INFINITY
+        ) {
           arrivedFrom.set(tempNode, currNode);
           shortestPath.set(tempNode, dist);
 
