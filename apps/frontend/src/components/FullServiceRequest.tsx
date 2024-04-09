@@ -259,8 +259,10 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     }
     return contentComponent;
   };
+
   const submitRequest = () => {
     console.log("submitting");
+
     if (
       singleServiceRequest.requesterName &&
       // !isNaN(singleServiceRequest.room) &&
@@ -415,15 +417,6 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                                 paddingTop: "1rem",
                               }}
                             />
-                            {/*  <DateTimePicker*/}
-                            {/*    value={singleServiceRequest.deliveryDate}*/}
-                            {/*    onChange={(e) =>*/}
-                            {/*        setSingleServiceRequest({*/}
-                            {/*            ...singleServiceRequest,*/}
-                            {/*            deliveryDate: e.target.value,*/}
-                            {/*        })*/}
-                            {/*    }*/}
-                            {/*/>*/}
                           </div>
                         </div>
                       </div>
@@ -497,7 +490,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             label="Large"
                           />
                         </RadioGroup>
-                        <h4 className="text-sm">
+                        <h4 className="flex justify-end text-xs text-gray-200">
                           Made By Lauren Harrison & Zihan Li
                         </h4>
                       </div>
@@ -522,7 +515,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             Wrapped
                           </label>
                         </div>
-                        <h4 className="text-sm">
+                        <h4 className="flex justify-end text-xs text-gray-200">
                           Made by Artem Frenk and Arjun Venat
                         </h4>
                       </div>
@@ -574,7 +567,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             </label>
                           </div>
 
-                          <h4 className="text-sm">
+                          <h4 className="flex justify-end text-xs text-gray-200">
                             Made By Jessie Hart & Hubert Liu
                           </h4>
                         </FormControl>
@@ -582,24 +575,43 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     )}
                     {singleServiceRequest.requestType === "Medicine" && (
                       <div className="my-5">
-                        <form className="max-w-sm ">
+                        <form className="w-2/3">
                           <label htmlFor="dosage" className="mb-2 text-lg">
                             Dosage
                           </label>
-                          <input
-                            type="number"
-                            id="dosage"
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            placeholder="Dosage"
-                            value={singleServiceRequest.details2}
-                            onChange={(e) =>
-                              setSingleServiceRequest({
-                                ...singleServiceRequest,
-                                details2: e.target.value as string,
-                              })
-                            }
-                            required
-                          />
+                          <div className="flex mb:flex-row">
+                            <input
+                              type="number"
+                              id="dosage"
+                              className="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                              placeholder="Dosage"
+                              // value={dosage}
+                              // onChange={(e) =>
+                              //   setDosage(e.target.value.toString())
+                              // }
+                              value={singleServiceRequest.details2}
+                              onChange={(e) =>
+                                setSingleServiceRequest({
+                                  ...singleServiceRequest,
+                                  details2: e.target.value as string,
+                                })
+                              }
+                              required
+                            />
+
+                            <Select
+                              className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-r-lg bg-white focus:ring-blue-500"
+                              // value={unit}
+                              // onChange={(e) =>
+                              //   setUnit(e.target.value.toString())
+                              // }
+                            >
+                              <MenuItem value="grams">grams</MenuItem>
+                              <MenuItem value="milligrams">milligrams</MenuItem>
+                              <MenuItem value="micrograms">micrograms</MenuItem>
+                              <MenuItem value="liters">liters</MenuItem>
+                            </Select>
+                          </div>
                         </form>
 
                         <h2 className="text-lg mt-3">Route</h2>
@@ -630,7 +642,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             label="Topical"
                           />
                         </RadioGroup>
-                        <h4 className="text-sm">
+                        <h4 className="flex justify-end text-xs text-gray-200">
                           Made by Brannon Henson and Alexander Stoyanov
                         </h4>
                       </div>
@@ -638,7 +650,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     {singleServiceRequest.requestType ===
                       "Medical Equipment" && (
                       <div className="my-5">
-                        <form className="max-w-sm ">
+                        <form className="max-w-sm w-1/4 ">
                           <label htmlFor="Quantity" className="mb-2 text-lg">
                             Quantity
                           </label>
@@ -658,9 +670,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           />
                         </form>
 
-                        <h2 className="mb-4 font-bold text-lg">
-                          Requires Supervision
-                        </h2>
+                        <h2 className="text-lg mt-3">Requires Supervision</h2>
                         <FormGroup
                           onChange={(e) =>
                             setSingleServiceRequest({
@@ -686,7 +696,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             label="Patient assistance"
                           />
                         </FormGroup>
-                        <h4 className="text-sm">
+                        <h4 className="flex justify-end text-xs text-gray-200">
                           Made By Javier DeLeon & Nicholas Golparvar{" "}
                         </h4>
                       </div>
@@ -694,7 +704,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   </div>
                 </div>
 
-                <div className="form-item flex justify-end mt-5">
+                <div className="form-item flex justify-end mt-4">
                   <Button
                     variant="contained"
                     color="success"
