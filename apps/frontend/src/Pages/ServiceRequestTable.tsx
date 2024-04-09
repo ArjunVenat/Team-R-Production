@@ -34,6 +34,19 @@ function ServiceRequestTable() {
     setrequestData([...requestData]);
   };
 
+  const updateServiceStatus = async (
+    service: GeneralRequest,
+    newStatus: string,
+  ) => {
+    await axios
+      .post(`/api/admin/service/edit/${service.RequestID}/${newStatus}`)
+      .then();
+    const index = requestData.indexOf(service);
+    const requestData2: GeneralRequest[] = [...requestData];
+    requestData2[index].Status = newStatus;
+    setrequestData(requestData2);
+  };
+
   return (
     <Box display="flex">
       <Sidebar />
@@ -93,18 +106,16 @@ function ServiceRequestTable() {
                   </td>
                   <td className="border border-slate-300 text-center p-2">
                     <FormControl fullWidth>
-                      <InputLabel id="status-label" htmlFor="status">
-                        Status
-                      </InputLabel>
+                      <InputLabel htmlFor="status">Status</InputLabel>
                       <Select
-                        id="status"
                         label="Status"
                         sx={{ width: 100 }}
                         value={row.Status}
                         onChange={(e) => {
-                          axios.post(
-                            `/api/admin/service/edit/${row.RequestID}/${e.target.value as string}`,
-                          );
+                          updateServiceStatus(
+                            row,
+                            e.target.value as string,
+                          ).then();
                         }}
                       >
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
@@ -178,10 +189,18 @@ function ServiceRequestTable() {
                   </td>
                   <td className="border border-slate-300 text-center p-2">
                     <FormControl fullWidth>
-                      <InputLabel id="status-label" htmlFor="status">
-                        Status
-                      </InputLabel>
-                      <Select id="status" label="Status" sx={{ width: 100 }}>
+                      <InputLabel htmlFor="status">Status</InputLabel>
+                      <Select
+                        label="Status"
+                        sx={{ width: 100 }}
+                        value={row.Status}
+                        onChange={(e) => {
+                          updateServiceStatus(
+                            row,
+                            e.target.value as string,
+                          ).then();
+                        }}
+                      >
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
@@ -258,10 +277,18 @@ function ServiceRequestTable() {
                   </td>
                   <td className="border border-slate-300 text-center p-2">
                     <FormControl fullWidth>
-                      <InputLabel id="status-label" htmlFor="status">
-                        Status
-                      </InputLabel>
-                      <Select id="status" label="Status" sx={{ width: 100 }}>
+                      <InputLabel htmlFor="status">Status</InputLabel>
+                      <Select
+                        label="Status"
+                        sx={{ width: 100 }}
+                        value={row.Status}
+                        onChange={(e) => {
+                          updateServiceStatus(
+                            row,
+                            e.target.value as string,
+                          ).then();
+                        }}
+                      >
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
@@ -334,10 +361,18 @@ function ServiceRequestTable() {
                   </td>
                   <td className="border border-slate-300 text-center p-2">
                     <FormControl fullWidth>
-                      <InputLabel id="status-label" htmlFor="status">
-                        Status
-                      </InputLabel>
-                      <Select id="status" label="Status" sx={{ width: 100 }}>
+                      <InputLabel htmlFor="status">Status</InputLabel>
+                      <Select
+                        label="Status"
+                        sx={{ width: 100 }}
+                        value={row.Status}
+                        onChange={(e) => {
+                          updateServiceStatus(
+                            row,
+                            e.target.value as string,
+                          ).then();
+                        }}
+                      >
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
@@ -412,10 +447,18 @@ function ServiceRequestTable() {
                   </td>
                   <td className="border border-slate-300 text-center p-2">
                     <FormControl fullWidth>
-                      <InputLabel id="status-label" htmlFor="status">
-                        Status
-                      </InputLabel>
-                      <Select id="status" label="Status" sx={{ width: 100 }}>
+                      <InputLabel htmlFor="status">Status</InputLabel>
+                      <Select
+                        label="Status"
+                        sx={{ width: 100 }}
+                        value={row.Status}
+                        onChange={(e) => {
+                          updateServiceStatus(
+                            row,
+                            e.target.value as string,
+                          ).then();
+                        }}
+                      >
                         <MenuItem value="Unassigned">Unassigned</MenuItem>
                         <MenuItem value="Assigned">Assigned</MenuItem>
                         <MenuItem value="InProgress">InProgress</MenuItem>
