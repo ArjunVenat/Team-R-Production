@@ -14,6 +14,7 @@ export default function SVGCanvas(props: {
   handleEdgeClicked?: (edge: Edges | undefined) => void;
   handleNodeHover?: (node: Nodes | undefined) => void;
   isHome: boolean;
+  showPathOnly: boolean;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
@@ -71,7 +72,6 @@ export default function SVGCanvas(props: {
       props.handleEdgeClicked(undefined);
     }
   }
-
   const getNodeColor = (node: Nodes) => {
     if (props.path && props.path?.length > 0) {
       console.log(
@@ -86,12 +86,10 @@ export default function SVGCanvas(props: {
       } else if (
         props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)
       ) {
-        return "violet";
-      } else {
-        return "gray";
+        return "transparent";
       }
     }
-    return "gray";
+    return "#003da6";
   };
 
   function handleEdgeClick(edge: Edges) {
@@ -104,12 +102,11 @@ export default function SVGCanvas(props: {
   }
 
   const filteredNodes = nodesData.filter(
-    (node) => node.Floor === props.currentLevel,
+    (node) =>
+      node.Floor === props.currentLevel &&
+      (!props.showPathOnly ||
+        props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)),
   );
-
-  // const filteredNodes = nodesData.filter(
-  //     (node) => node.Floor === props.currentLevel && props.path?.some(pathNode => pathNode.NodeID === node.NodeID),
-  // );
 
   console.log(filteredNodes);
 
@@ -185,7 +182,6 @@ export default function SVGCanvas(props: {
                       y2={node.Ycoord}
                       stroke={props.edgeColor ?? "blue"}
                       strokeWidth="5"
-                      markerEnd="url(#arrow)"
                     />
                   );
                 }
@@ -215,24 +211,6 @@ export default function SVGCanvas(props: {
         );
         return null;
       })}
-      {/*{filteredNodes.map((node) => (*/}
-      {/*    <g*/}
-      {/*        onClick={() => handleNodeClick(node)}*/}
-      {/*        onMouseEnter={() =>*/}
-      {/*            props.handleNodeHover && props.handleNodeHover(node)*/}
-      {/*        }*/}
-      {/*        onMouseLeave={() =>*/}
-      {/*            props.handleNodeHover && props.handleNodeHover(undefined)*/}
-      {/*        }*/}
-      {/*    >*/}
-      {/*        <circle*/}
-      {/*            cx={node.Xcoord}*/}
-      {/*            cy={node.Ycoord}*/}
-      {/*            r="10"*/}
-      {/*            fill={props.nodeColor ?? getNodeColor(node)}*/}
-      {/*        />*/}
-      {/*    </g>*/}
-      {/*))}*/}
       {filteredNodes.map((node) => (
         <g
           onClick={() => handleNodeClick(node)}

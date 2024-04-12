@@ -59,7 +59,7 @@ export default function MainPage() {
   const [clickTimes, setClickTimes] = React.useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
-
+  const [showPathOnly, setShowPathOnly] = useState(false);
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
   //   const newPath = `/${path}`;
@@ -89,6 +89,13 @@ export default function MainPage() {
     }
   });
 
+  const resetCanvas = () => {
+    setShowPathOnly(false);
+    setPath([]); // Clear the path
+    setStart(""); // Clear the start location
+    setEnd(""); // Clear the end location
+  };
+
   async function getDirections() {
     const startNodeArray = nodes?.filter(
       (node: Nodes) => node.LongName === start,
@@ -101,9 +108,7 @@ export default function MainPage() {
       endNodeArray.length > 0
     ) {
       const startNode: string = startNodeArray[0]["NodeID"];
-      // console.log("starting node floor" + startNodeArray[0].Floor);
       const startingFloor: string = startNodeArray[0].Floor;
-      console.log("starting floor:" + startingFloor);
       switch (startingFloor) {
         case "L1":
           setCurrentMap(lowerLevel1Map);
@@ -130,6 +135,7 @@ export default function MainPage() {
           endNodeID: endNode,
         },
       });
+      setShowPathOnly(true);
       if (res.status === 200) {
         console.log("Successfully fetched path");
       } else {
@@ -140,7 +146,6 @@ export default function MainPage() {
     } else {
       console.error("Start or end node not found");
     }
-    // routeChange("home");
   }
 
   return (
@@ -256,6 +261,7 @@ export default function MainPage() {
                     setClickedNode(node);
                   }}
                   isHome={true}
+                  showPathOnly={showPathOnly}
                 />
               </TransformComponent>
             </section>
@@ -308,7 +314,16 @@ export default function MainPage() {
           >
             Get Directions
           </Button>
+          <Button
+            className="content-center"
+            variant="contained"
+            color="secondary"
+            onClick={resetCanvas}
+          >
+            Reset Map
+          </Button>
         </div>
+
         {hoveredNode && (
           <div
             style={{
