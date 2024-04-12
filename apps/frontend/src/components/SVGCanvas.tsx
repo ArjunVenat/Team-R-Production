@@ -74,7 +74,6 @@ export default function SVGCanvas(props: {
   }
   const getNodeColor = (node: Nodes) => {
     if (props.path && props.path?.length > 0) {
-      // Check if the node is an elevator
       const isElevator = node.NodeType === "ELEV";
 
       // Check if the elevator is relevant
