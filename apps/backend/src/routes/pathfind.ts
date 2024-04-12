@@ -52,6 +52,53 @@ router.get(
   },
 );
 
+// Find a path to the end node using Dijkstra's
+router.get(
+  "/dijkstra",
+  async function (
+    req: Request<
+      object,
+      object,
+      object,
+      {
+        startNodeID?: string;
+        endNodeID?: string;
+      }
+    >,
+    res: Response,
+  ): Promise<void> {
+    const { startNodeID, endNodeID } = req.query;
+
+    // Validate query params before continuing
+    if (startNodeID == undefined || endNodeID == undefined) {
+      res.status(400).send("startNodeID and/or endNodeID is required");
+      return;
+    }
+
+    const graph = await createGraph();
+
+    const path: string[] = graph.Dijkstra(startNodeID, endNodeID);
+    console.log(path);
+
+    // Check if the path is empty
+    if (path.length === 0) {
+      res.sendStatus(204); // and send 204, no data
+      return;
+    }
+    res.send(
+      await Promise.all(
+        path.map(async (nodeID) => {
+          return prisma.nodes.findUniqueOrThrow({
+            where: {
+              NodeID: nodeID,
+            },
+          });
+        }),
+      ),
+    );
+  },
+);
+
 // Find a path to the end node using a BFS
 router.get(
   "/bfs",
@@ -99,6 +146,52 @@ router.get(
   },
 );
 
+// Find a path to the end node using a DFS
+router.get(
+  "/dfs",
+  async function (
+    req: Request<
+      object,
+      object,
+      object,
+      {
+        startNodeID?: string;
+        endNodeID?: string;
+      }
+    >,
+    res: Response,
+  ): Promise<void> {
+    const { startNodeID, endNodeID } = req.query;
+
+    // Validate query params before continuing
+    if (startNodeID == undefined || endNodeID == undefined) {
+      res.status(400).send("startNodeID and/or endNodeID is required");
+      return;
+    }
+
+    const graph = await createGraph();
+
+    const path: string[] = graph.DFS(startNodeID, endNodeID);
+    console.log(path);
+
+    // Check if the path is empty
+    if (path.length === 0) {
+      res.sendStatus(204); // and send 204, no data
+      return;
+    }
+    res.send(
+      await Promise.all(
+        path.map(async (nodeID) => {
+          return prisma.nodes.findUniqueOrThrow({
+            where: {
+              NodeID: nodeID,
+            },
+          });
+        }),
+      ),
+    );
+  },
+);
 async function createGraph(): Promise<Graph> {
   const floorToZMap = new Map<string, number>();
   floorToZMap.set("L1", -100);
