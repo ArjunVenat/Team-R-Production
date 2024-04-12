@@ -74,15 +74,28 @@ export default function SVGCanvas(props: {
   }
   const getNodeColor = (node: Nodes) => {
     if (props.path && props.path?.length > 0) {
-      console.log(
-        "choosing color: " + node.NodeID + "      " + props.path?.[0].NodeID,
-      );
-      console.log(props.path?.[props.path?.length - 1].NodeID);
+      const isElevator = node.NodeType === "ELEV";
+
+      // Check if the elevator is relevant
+      let isRelevantElevator = false;
+      if (isElevator) {
+        for (let i = 0; i < props.path.length - 1; i++) {
+          if (
+            props.path[i].NodeID === node.NodeID &&
+            props.path[i].Floor !== props.path[i + 1].Floor
+          ) {
+            isRelevantElevator = true;
+            break;
+          }
+        }
+      }
 
       if (props.path?.[0].NodeID === node.NodeID) {
         return "chartreuse";
       } else if (props.path?.[props.path?.length - 1].NodeID === node.NodeID) {
         return "red";
+      } else if (isElevator && isRelevantElevator) {
+        return "purple"; // Change this to the color you want for relevant elevator nodes
       } else if (
         props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)
       ) {
@@ -101,12 +114,33 @@ export default function SVGCanvas(props: {
     }
   }
 
-  const filteredNodes = nodesData.filter(
-    (node) =>
+  const filteredNodes = nodesData.filter((node) => {
+    const isPartOfPath = props.path?.some(
+      (pathNode) => pathNode.NodeID === node.NodeID,
+    );
+
+    const isElevator = node.NodeType === "ELEV";
+
+    let isRelevantElevator = false;
+    if (isElevator && props.path) {
+      for (let i = 0; i < props.path.length - 1; i++) {
+        if (
+          props.path[i].NodeID === node.NodeID &&
+          props.path[i].Floor !== props.path[i + 1].Floor
+        ) {
+          isRelevantElevator = true;
+          break;
+        }
+      }
+    }
+
+    return (
       node.Floor === props.currentLevel &&
       (!props.showPathOnly ||
-        props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)),
-  );
+        isPartOfPath ||
+        (isElevator && isRelevantElevator))
+    );
+  });
 
   console.log(filteredNodes);
 
