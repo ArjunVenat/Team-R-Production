@@ -69,7 +69,13 @@ export class Graph {
     node2.addNeighbor(node1);
   }
 
-  static backtrack(
+  /**
+   * Helper method to find a path from startNode to endNode given a mapping of nodes.
+   * @param arrivedFrom A mapping of nodes to the previous node on the path
+   * @param startNode The node to start the path from
+   * @param endNode The node to end the path at
+   */
+  private static backtrack(
     arrivedFrom: Map<GraphNode, GraphNode>,
     startNode: GraphNode,
     endNode: GraphNode,
