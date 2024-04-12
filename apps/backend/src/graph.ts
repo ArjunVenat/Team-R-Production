@@ -69,6 +69,32 @@ export class Graph {
     node2.addNeighbor(node1);
   }
 
+  static backtrack(
+    arrivedFrom: Map<GraphNode, GraphNode>,
+    startNode: GraphNode,
+    endNode: GraphNode,
+  ): string[] {
+    // Error handling in case a node cannot be reached
+    if (!arrivedFrom.has(endNode)) {
+      console.error(`endNode: ${endNode.id} cannot be reached`);
+      return [];
+    }
+
+    // Backtrack to find the path
+    const path: GraphNode[] = [];
+    let currNode = endNode;
+    path.push(currNode);
+
+    while (currNode != startNode) {
+      currNode = arrivedFrom.get(currNode)!;
+      path.push(currNode);
+    }
+
+    // path contains the order of nodes from end to start
+    path.reverse();
+    return path.map((n) => n.id);
+  }
+
   /**
    * Performs a BFS to find the shortest path between the start and end nodes
    * @param start A unique identifier representing the node to start from
@@ -109,25 +135,7 @@ export class Graph {
       }
     }
 
-    // Error handling in case a node cannot be reached
-    if (!arrivedFrom.has(endNode)) {
-      console.error(`endNode: ${endNode.id} cannot be reached`);
-      return [];
-    }
-
-    // Backtrack to find the path
-    const path: GraphNode[] = [];
-    let currNode = endNode;
-    path.push(currNode);
-
-    while (currNode != startNode) {
-      currNode = arrivedFrom.get(currNode)!;
-      path.push(currNode);
-    }
-
-    // path contains the order of nodes from end to start
-    path.reverse();
-    return path.map((n) => n.id);
+    return Graph.backtrack(arrivedFrom, startNode, endNode);
   }
 
   /**
@@ -187,24 +195,6 @@ export class Graph {
       }
     }
 
-    // Check if the end node can be reached
-    if (!arrivedFrom.has(endNode)) {
-      console.error(`endNode: ${endNode.id} cannot be reached`);
-      return [];
-    }
-
-    // Backtrack to find the path
-    const path: GraphNode[] = [];
-    let currNode = endNode;
-    path.push(currNode);
-
-    while (currNode != startNode) {
-      currNode = arrivedFrom.get(currNode)!;
-      path.push(currNode);
-    }
-
-    // path contains the order of nodes from end to start
-    path.reverse();
-    return path.map((n) => n.id);
+    return Graph.backtrack(arrivedFrom, startNode, endNode);
   }
 }
