@@ -79,10 +79,12 @@ export default function SVGCanvas(props: {
       // Check if the elevator is relevant
       let isRelevantElevator = false;
       if (isElevator) {
-        for (let i = 0; i < props.path.length - 1; i++) {
+        for (let i = 0; i < props.path.length; i++) {
           if (
             props.path[i].NodeID === node.NodeID &&
-            props.path[i].Floor !== props.path[i + 1].Floor
+            ((i > 0 && props.path[i].Floor !== props.path[i - 1].Floor) ||
+              (i < props.path.length - 1 &&
+                props.path[i].Floor !== props.path[i + 1].Floor))
           ) {
             isRelevantElevator = true;
             break;
