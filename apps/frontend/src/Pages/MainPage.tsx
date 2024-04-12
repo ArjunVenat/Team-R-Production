@@ -58,7 +58,7 @@ export default function MainPage() {
   const [clickedNode, setClickedNode] = React.useState<Nodes | undefined>();
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
-
+  const [showPathOnly, setShowPathOnly] = useState(false);
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
   //   const newPath = `/${path}`;
@@ -129,6 +129,7 @@ export default function MainPage() {
           endNodeID: endNode,
         },
       });
+      setShowPathOnly(true);
       if (res.status === 200) {
         console.log("Successfully fetched path");
       } else {
@@ -246,6 +247,7 @@ export default function MainPage() {
                   handleNodeHover={setHoveredNode}
                   handleNodeClicked={setClickedNode}
                   isHome={true}
+                  showPathOnly={showPathOnly}
                 />
               </TransformComponent>
             </section>

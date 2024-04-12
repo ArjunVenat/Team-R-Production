@@ -14,6 +14,7 @@ export default function SVGCanvas(props: {
   handleEdgeClicked?: (edge: Edges | undefined) => void;
   handleNodeHover?: (node: Nodes | undefined) => void;
   isHome: boolean;
+  showPathOnly: boolean;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
@@ -103,13 +104,16 @@ export default function SVGCanvas(props: {
     }
   }
 
-  const filteredNodes = nodesData.filter(
-    (node) => node.Floor === props.currentLevel,
-  );
-
   // const filteredNodes = nodesData.filter(
-  //     (node) => node.Floor === props.currentLevel && props.path?.some(pathNode => pathNode.NodeID === node.NodeID),
+  //   (node) => node.Floor === props.currentLevel,
   // );
+
+  const filteredNodes = nodesData.filter(
+    (node) =>
+      node.Floor === props.currentLevel &&
+      (!props.showPathOnly ||
+        props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)),
+  );
 
   console.log(filteredNodes);
 
