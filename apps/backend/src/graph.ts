@@ -216,4 +216,15 @@ export class Graph {
     path.reverse();
     return path.map((n) => n.id);
   }
+
+  DFS(start: string, end: string) {
+    const startNode = this.nodeMap.get(start);
+    const endNode = this.nodeMap.get(end);
+
+    if (startNode === undefined || endNode === undefined) {
+      return [];
+    }
+
+    //const stack: GraphNode[] = [];
+  }
 }
