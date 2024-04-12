@@ -107,6 +107,10 @@ export default function SVGCanvas(props: {
     (node) => node.Floor === props.currentLevel,
   );
 
+  // const filteredNodes = nodesData.filter(
+  //     (node) => node.Floor === props.currentLevel && props.path?.some(pathNode => pathNode.NodeID === node.NodeID),
+  // );
+
   console.log(filteredNodes);
 
   const splices = () => {
@@ -211,6 +215,24 @@ export default function SVGCanvas(props: {
         );
         return null;
       })}
+      {/*{filteredNodes.map((node) => (*/}
+      {/*    <g*/}
+      {/*        onClick={() => handleNodeClick(node)}*/}
+      {/*        onMouseEnter={() =>*/}
+      {/*            props.handleNodeHover && props.handleNodeHover(node)*/}
+      {/*        }*/}
+      {/*        onMouseLeave={() =>*/}
+      {/*            props.handleNodeHover && props.handleNodeHover(undefined)*/}
+      {/*        }*/}
+      {/*    >*/}
+      {/*        <circle*/}
+      {/*            cx={node.Xcoord}*/}
+      {/*            cy={node.Ycoord}*/}
+      {/*            r="10"*/}
+      {/*            fill={props.nodeColor ?? getNodeColor(node)}*/}
+      {/*        />*/}
+      {/*    </g>*/}
+      {/*))}*/}
       {filteredNodes.map((node) => (
         <g
           onClick={() => handleNodeClick(node)}
