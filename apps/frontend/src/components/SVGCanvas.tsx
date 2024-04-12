@@ -76,7 +76,6 @@ export default function SVGCanvas(props: {
     if (props.path && props.path?.length > 0) {
       const isElevator = node.NodeType === "ELEV";
 
-      // Check if the elevator is relevant
       let isRelevantElevator = false;
       if (isElevator) {
         for (let i = 0; i < props.path.length; i++) {
