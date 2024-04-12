@@ -54,6 +54,8 @@ export default function MainPage() {
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
   const [clickedNode, setClickedNode] = React.useState<Nodes | undefined>();
+  const [pathfindingAlgorithm, setPathfindingAlgorithm] =
+    useState("/api/map/pathfind");
 
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
@@ -119,7 +121,7 @@ export default function MainPage() {
           setCurrentMap(lowerLevel1Map);
       }
       const endNode: string = endNodeArray[0]["NodeID"];
-      const res = await axios.get("/api/map/pathfind", {
+      const res = await axios.get(pathfindingAlgorithm, {
         params: {
           startNodeID: startNode,
           endNodeID: endNode,
@@ -187,6 +189,33 @@ export default function MainPage() {
                           {floor.name}
                         </MenuItem>
                       ))}
+                    </Select>
+                    <Select
+                      value={pathfindingAlgorithm}
+                      onChange={(event) =>
+                        setPathfindingAlgorithm(event.target.value)
+                      }
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: "primary.dark",
+                        },
+                        "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "white",
+                        },
+                      }}
+                    >
+                      <MenuItem value="/api/map/pathfind">A*</MenuItem>
+                      <MenuItem value="/api/map/pathfind/bfs">
+                        Breadth-First Search
+                      </MenuItem>
+                      <MenuItem value="/api/map/pathfind/dfs">
+                        Depth-First Search
+                      </MenuItem>
+                      <MenuItem value="/api/map/pathfind/djikstra">
+                        Djikstra's
+                      </MenuItem>
                     </Select>
                   </ButtonGroup>
                 </ThemeProvider>
