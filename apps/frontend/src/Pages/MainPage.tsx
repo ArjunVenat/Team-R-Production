@@ -13,7 +13,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Button, ButtonGroup } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
+ 
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
 import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
@@ -150,7 +150,7 @@ export default function MainPage() {
       <SideBar />
       <main className="flex content-center justify-center leading-none relative">
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
-          {/* eslint-disable-next-line @typescript-eslint/no-unused-vars */}
+          { }
           {({ zoomIn, zoomOut, resetTransform }) => (
             <section id="map">
               <ThemeProvider theme={appTheme}>
@@ -169,7 +169,17 @@ export default function MainPage() {
                       onClick={() => resetTransform()}
                       children={"Reset"}
                     />
-
+                    <Button
+                      onClick={() => zoomIn()}
+                      children={<ZoomInIcon />}
+                      className="p-1"
+                      sx={{
+                        borderTopLeftRadius: "0.75rem",
+                        borderBottomLeftRadius: "0.75rem",
+                      }}
+                    />
+                  </ButtonGroup>
+                  <ButtonGroup variant="contained">
                     <Select
                       value={pathfindingAlgorithm}
                       onChange={(event) =>
