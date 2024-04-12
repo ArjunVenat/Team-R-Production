@@ -13,6 +13,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Button, ButtonGroup } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
+ 
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
 import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
@@ -55,6 +56,8 @@ export default function MainPage() {
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
   const [clickedNode, setClickedNode] = React.useState<Nodes | undefined>();
+  const [pathfindingAlgorithm, setPathfindingAlgorithm] =
+    useState("/api/map/pathfind");
 
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
@@ -120,7 +123,7 @@ export default function MainPage() {
           setCurrentMap(lowerLevel1Map);
       }
       const endNode: string = endNodeArray[0]["NodeID"];
-      const res = await axios.get("/api/map/pathfind", {
+      const res = await axios.get(pathfindingAlgorithm, {
         params: {
           startNodeID: startNode,
           endNodeID: endNode,
@@ -147,6 +150,7 @@ export default function MainPage() {
       <SideBar />
       <main className="flex content-center justify-center leading-none relative">
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
+          { }
           {({ zoomIn, zoomOut, resetTransform }) => (
             <section id="map">
               <ThemeProvider theme={appTheme}>
@@ -170,10 +174,39 @@ export default function MainPage() {
                       children={<ZoomInIcon />}
                       className="p-1"
                       sx={{
-                        borderTopRightRadius: "0.75rem",
-                        borderBottomRightRadius: "0.75rem",
+                        borderTopLeftRadius: "0.75rem",
+                        borderBottomLeftRadius: "0.75rem",
                       }}
                     />
+                  </ButtonGroup>
+                  <ButtonGroup variant="contained">
+                    <Select
+                      value={pathfindingAlgorithm}
+                      onChange={(event) =>
+                        setPathfindingAlgorithm(event.target.value)
+                      }
+                      sx={{
+                        backgroundColor: "primary.main",
+                        color: "white",
+                        "&:hover": {
+                          backgroundColor: "primary.dark",
+                        },
+                        "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                          borderColor: "white",
+                        },
+                      }}
+                    >
+                      <MenuItem value="/api/map/pathfind">A*</MenuItem>
+                      <MenuItem value="/api/map/pathfind/bfs">
+                        Breadth-First Search
+                      </MenuItem>
+                      <MenuItem value="/api/map/pathfind/dfs">
+                        Depth-First Search
+                      </MenuItem>
+                      <MenuItem value="/api/map/pathfind/djikstra">
+                        Djikstra's
+                      </MenuItem>
+                    </Select>
                   </ButtonGroup>
                   <Select
                     value={currentMap}
