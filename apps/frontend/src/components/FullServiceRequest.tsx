@@ -600,7 +600,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                             <input
                               type="number"
                               id="dosage"
-                              min = "0"
+                              min="0"
                               className="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                               placeholder="Dosage"
                               // value={dosage}
