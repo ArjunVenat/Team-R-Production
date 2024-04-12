@@ -203,4 +203,16 @@ export class Graph {
 
     return Graph.backtrack(arrivedFrom, startNode, endNode);
   }
+
+  // TODO: IMPLEMENT THIS!!
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  Dijkstra(start: string, end: string): string[] {
+    return [];
+  }
+
+  // TODO: IMPLEMENT THIS!!
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  DFS(start: string, end: string): string[] {
+    return [];
+  }
 }
