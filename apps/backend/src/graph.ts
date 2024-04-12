@@ -56,21 +56,12 @@ export class Graph {
     this.nodeMap.set(id, tempNode);
   }
 
-  // TODO: update documentation
   /**
-   * Creates an edge connecting the two nodes. Adds the two nodes to the graph
-   * if they do not already exist
+   * Creates an edge connecting two nodes. Throws an error if the nodes do not exist
    * @param id1 A unique identifier for the first node to connect.
    * @param id2 A unique identifier for the second node to connect.
    */
   addEdge(id1: string, id2: string): void {
-    // Add nodes to the graph if they do not exist yet
-    if (!this.nodeMap.has(id1) || !this.nodeMap.has(id2)) {
-      // TODO: This should throw an error as this is an invalid state
-      return;
-    }
-
-    // use '!' to assert that nodeMap.get will not return undefined
     const node1 = this.nodeMap.get(id1)!;
     const node2 = this.nodeMap.get(id2)!;
 
