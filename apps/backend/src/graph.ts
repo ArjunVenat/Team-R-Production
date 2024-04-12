@@ -136,6 +136,7 @@ export class Graph {
 
     // path contains the order of nodes from end to start
     path.reverse();
+    console.log(path);
     return path.map((n) => n.id);
   }
 
@@ -221,10 +222,91 @@ export class Graph {
     const startNode = this.nodeMap.get(start);
     const endNode = this.nodeMap.get(end);
 
+    // Check if the nodes are within the graph
     if (startNode === undefined || endNode === undefined) {
       return [];
     }
+    const visited: GraphNode[] = [];
+    const arrivedFrom = new Map<GraphNode, GraphNode>();
+    // Use queue.push and queue.shift to perform queue operations (push and pop)
+    const stack: GraphNode[] = [];
 
-    //const stack: GraphNode[] = [];
+    // Initialize BFS
+    arrivedFrom.set(startNode, startNode);
+    stack.push(startNode);
+
+    // Main BFS loop
+    while (stack.length != 0) {
+      // Grab the first node off of the queue
+      const currNode = stack.pop()!;
+      // We traversed to the destination
+      if (currNode == endNode) {
+        break;
+      }
+      // Keep searching for the destination node
+      for (const neighbor of currNode.neighbors) {
+        if (arrivedFrom.has(neighbor)) {
+          continue;
+        }
+        arrivedFrom.set(neighbor, currNode);
+        if (visited.indexOf(neighbor) < 0) {
+          stack.push(neighbor);
+          visited.push(neighbor);
+        }
+
+        //arrivedFrom.set(neighbor, currNode);
+      }
+    }
+
+    // Error handling in case a node cannot be reached
+    if (!arrivedFrom.has(endNode)) {
+      console.error(`endNode: ${endNode.id} cannot be reached`);
+      return [];
+    }
+
+    // Backtrack to find the path
+    const path: GraphNode[] = [];
+    let currNode = endNode;
+    path.push(currNode);
+
+    while (currNode != startNode) {
+      currNode = arrivedFrom.get(currNode)!;
+      path.push(currNode);
+    }
+
+    // path contains the order of nodes from end to start
+    path.reverse();
+    console.log(path);
+    return path.map((n) => n.id);
   }
 }
+
+//let S = new GraphNode("1",1,1,1);
+//let g1 = new GraphNode("2",1,1,1);
+//let g2 = new GraphNode("3",1,1,1);
+//let E = new GraphNode("4",1,1,1);
+const testGraph = new Graph();
+
+testGraph.addNode("START", 1, 1, 1);
+
+testGraph.addNode("E", 1, 1, 1);
+testGraph.addNode("F", 1, 1, 1);
+testGraph.addNode("G", 1, 1, 1);
+testGraph.addNode("H", 1, 1, 1);
+testGraph.addNode("I", 1, 1, 1);
+testGraph.addNode("J", 1, 1, 1);
+testGraph.addNode("K", 1, 1, 1);
+testGraph.addNode("GOAL", 1, 1, 1);
+testGraph.addNode("Brannon", 1, 1, 1);
+
+testGraph.addEdge("START", "E");
+testGraph.addEdge("START", "H");
+testGraph.addEdge("H", "G");
+testGraph.addEdge("G", "I");
+testGraph.addEdge("I", "J");
+testGraph.addEdge("J", "K");
+testGraph.addEdge("K", "GOAL");
+testGraph.addEdge("E", "GOAL");
+
+testGraph.DFS("START", "GOAL");
+testGraph.BFS("START", "Brannon");
