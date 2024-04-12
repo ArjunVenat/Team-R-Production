@@ -13,7 +13,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Button, ButtonGroup } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
- 
+
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
 import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
@@ -150,7 +150,7 @@ export default function MainPage() {
       <SideBar />
       <main className="flex content-center justify-center leading-none relative">
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
-          { }
+          {}
           {({ zoomIn, zoomOut, resetTransform }) => (
             <section id="map">
               <ThemeProvider theme={appTheme}>
@@ -174,8 +174,8 @@ export default function MainPage() {
                       children={<ZoomInIcon />}
                       className="p-1"
                       sx={{
-                        borderTopLeftRadius: "0.75rem",
-                        borderBottomLeftRadius: "0.75rem",
+                        borderTopRightRadius: "0.75rem",
+                        borderBottomRightRadius: "0.75rem",
                       }}
                     />
                   </ButtonGroup>
@@ -194,6 +194,10 @@ export default function MainPage() {
                         "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
                           borderColor: "white",
                         },
+                        borderTopLeftRadius: "0.75rem",
+                        borderBottomLeftRadius: "0.75rem",
+                        borderTopRightRadius: "0.75rem",
+                        borderBottomRightRadius: "0.75rem",
                       }}
                     >
                       <MenuItem value="/api/map/pathfind">A*</MenuItem>
