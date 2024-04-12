@@ -72,7 +72,6 @@ export default function SVGCanvas(props: {
       props.handleEdgeClicked(undefined);
     }
   }
-
   const getNodeColor = (node: Nodes) => {
     if (props.path && props.path?.length > 0) {
       console.log(
@@ -87,12 +86,10 @@ export default function SVGCanvas(props: {
       } else if (
         props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)
       ) {
-        return "violet";
-      } else {
-        return "gray";
+        return "transparent";
       }
     }
-    return "gray";
+    return "#003da6";
   };
 
   function handleEdgeClick(edge: Edges) {
@@ -103,10 +100,6 @@ export default function SVGCanvas(props: {
       props.handleNodeClicked(undefined);
     }
   }
-
-  // const filteredNodes = nodesData.filter(
-  //   (node) => node.Floor === props.currentLevel,
-  // );
 
   const filteredNodes = nodesData.filter(
     (node) =>
@@ -189,7 +182,6 @@ export default function SVGCanvas(props: {
                       y2={node.Ycoord}
                       stroke={props.edgeColor ?? "blue"}
                       strokeWidth="5"
-                      markerEnd="url(#arrow)"
                     />
                   );
                 }
@@ -219,24 +211,6 @@ export default function SVGCanvas(props: {
         );
         return null;
       })}
-      {/*{filteredNodes.map((node) => (*/}
-      {/*    <g*/}
-      {/*        onClick={() => handleNodeClick(node)}*/}
-      {/*        onMouseEnter={() =>*/}
-      {/*            props.handleNodeHover && props.handleNodeHover(node)*/}
-      {/*        }*/}
-      {/*        onMouseLeave={() =>*/}
-      {/*            props.handleNodeHover && props.handleNodeHover(undefined)*/}
-      {/*        }*/}
-      {/*    >*/}
-      {/*        <circle*/}
-      {/*            cx={node.Xcoord}*/}
-      {/*            cy={node.Ycoord}*/}
-      {/*            r="10"*/}
-      {/*            fill={props.nodeColor ?? getNodeColor(node)}*/}
-      {/*        />*/}
-      {/*    </g>*/}
-      {/*))}*/}
       {filteredNodes.map((node) => (
         <g
           onClick={() => handleNodeClick(node)}
