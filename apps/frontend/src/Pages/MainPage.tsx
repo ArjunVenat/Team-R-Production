@@ -56,6 +56,7 @@ export default function MainPage() {
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
   const [clickedNode, setClickedNode] = React.useState<Nodes | undefined>();
+  const [clickTimes, setClickTimes] = React.useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
 
@@ -244,7 +245,16 @@ export default function MainPage() {
                     ""
                   }
                   handleNodeHover={setHoveredNode}
-                  handleNodeClicked={setClickedNode}
+                  handleNodeClicked={(node) => {
+                    const newClickTimes = clickTimes + 1;
+                    setClickTimes(newClickTimes);
+                    if (newClickTimes % 2 === 1) {
+                      setStart(node ? node.LongName : "");
+                    } else {
+                      setEnd(node ? node.LongName : "");
+                    }
+                    setClickedNode(node);
+                  }}
                   isHome={true}
                 />
               </TransformComponent>
