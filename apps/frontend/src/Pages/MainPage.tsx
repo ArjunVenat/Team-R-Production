@@ -23,6 +23,7 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider } from "@mui/material";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
+import "../styles/MainPage.css";
 
 const autocompleteStyle = {
   "& .MuiInputBase-input": { color: "white" },
@@ -145,19 +146,20 @@ export default function MainPage() {
     >
       <SideBar />
       <main className="flex content-center justify-center leading-none relative">
-        <div id="map" className="relative">
-          <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
-            {({ zoomIn, zoomOut, resetTransform }) => (
-              <section>
-                <ThemeProvider theme={appTheme}>
-                  <ButtonGroup
-                    variant="contained"
-                    className="flex absolute top-1 left-1 z-10"
-                  >
+        <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
+          {({ zoomIn, zoomOut, resetTransform }) => (
+            <section id="map">
+              <ThemeProvider theme={appTheme}>
+                <div id="controls">
+                  <ButtonGroup variant="contained">
                     <Button
                       onClick={() => zoomOut()}
                       children={<ZoomOutIcon />}
                       className="p-1"
+                      sx={{
+                        borderTopLeftRadius: "0.75rem",
+                        borderBottomLeftRadius: "0.75rem",
+                      }}
                     />
                     <Button
                       onClick={() => resetTransform()}
@@ -167,47 +169,51 @@ export default function MainPage() {
                       onClick={() => zoomIn()}
                       children={<ZoomInIcon />}
                       className="p-1"
-                    />
-                    <Select
-                      value={currentMap}
-                      onChange={(event) => setCurrentMap(event.target.value)}
                       sx={{
-                        backgroundColor: "primary.main",
-                        color: "white",
-                        "&:hover": {
-                          backgroundColor: "primary.dark",
-                        },
-                        "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                          borderColor: "white",
-                        },
+                        borderTopRightRadius: "0.75rem",
+                        borderBottomRightRadius: "0.75rem",
                       }}
-                    >
-                      {floors.map((floor, index) => (
-                        <MenuItem key={index} value={floor.map}>
-                          {floor.name}
-                        </MenuItem>
-                      ))}
-                    </Select>
+                    />
                   </ButtonGroup>
-                </ThemeProvider>
-                <TransformComponent>
-                  <SVGCanvas
-                    key={currentMap}
-                    path={path}
-                    currentMap={currentMap}
-                    currentLevel={
-                      floors.find((floor) => floor.map === currentMap)?.level ||
-                      ""
-                    }
-                    handleNodeHover={setHoveredNode}
-                    handleNodeClicked={setClickedNode}
-                    isHome={true}
-                  />
-                </TransformComponent>
-              </section>
-            )}
-          </TransformWrapper>
-        </div>
+                  <Select
+                    value={currentMap}
+                    onChange={(event) => setCurrentMap(event.target.value)}
+                    sx={{
+                      backgroundColor: "primary.main",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "primary.dark",
+                      },
+                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                    }}
+                  >
+                    {floors.map((floor, index) => (
+                      <MenuItem key={index} value={floor.map}>
+                        {floor.name}
+                      </MenuItem>
+                    ))}
+                  </Select>
+                </div>
+              </ThemeProvider>
+              <TransformComponent>
+                <SVGCanvas
+                  key={currentMap}
+                  path={path}
+                  currentMap={currentMap}
+                  currentLevel={
+                    floors.find((floor) => floor.map === currentMap)?.level ||
+                    ""
+                  }
+                  handleNodeHover={setHoveredNode}
+                  handleNodeClicked={setClickedNode}
+                  isHome={true}
+                />
+              </TransformComponent>
+            </section>
+          )}
+        </TransformWrapper>
       </main>
       <aside className="bg-primary text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
         <h1 className="text-xl bg-transparent p-2 text-center">
