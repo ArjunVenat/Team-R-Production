@@ -134,6 +134,7 @@ export default function MapEditing() {
                   nodeColor={"orange"}
                   edgeColor={"green"}
                   isHome={false}
+                  showPathOnly={false}
                 />
               </TransformComponent>
             </section>

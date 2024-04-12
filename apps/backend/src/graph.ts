@@ -56,26 +56,49 @@ export class Graph {
     this.nodeMap.set(id, tempNode);
   }
 
-  // TODO: update documentation
   /**
-   * Creates an edge connecting the two nodes. Adds the two nodes to the graph
-   * if they do not already exist
+   * Creates an edge connecting two nodes. Throws an error if the nodes do not exist
    * @param id1 A unique identifier for the first node to connect.
    * @param id2 A unique identifier for the second node to connect.
    */
   addEdge(id1: string, id2: string): void {
-    // Add nodes to the graph if they do not exist yet
-    if (!this.nodeMap.has(id1) || !this.nodeMap.has(id2)) {
-      // TODO: This should throw an error as this is an invalid state
-      return;
-    }
-
-    // use '!' to assert that nodeMap.get will not return undefined
     const node1 = this.nodeMap.get(id1)!;
     const node2 = this.nodeMap.get(id2)!;
 
     node1.addNeighbor(node2);
     node2.addNeighbor(node1);
+  }
+
+  /**
+   * Helper method to find a path from startNode to endNode given a mapping of nodes.
+   * @param arrivedFrom A mapping of nodes to the previous node on the path
+   * @param startNode The node to start the path from
+   * @param endNode The node to end the path at
+   */
+  private static backtrack(
+    arrivedFrom: Map<GraphNode, GraphNode>,
+    startNode: GraphNode,
+    endNode: GraphNode,
+  ): string[] {
+    // Error handling in case a node cannot be reached
+    if (!arrivedFrom.has(endNode)) {
+      console.error(`endNode: ${endNode.id} cannot be reached`);
+      return [];
+    }
+
+    // Backtrack to find the path
+    const path: GraphNode[] = [];
+    let currNode = endNode;
+    path.push(currNode);
+
+    while (currNode != startNode) {
+      currNode = arrivedFrom.get(currNode)!;
+      path.push(currNode);
+    }
+
+    // path contains the order of nodes from end to start
+    path.reverse();
+    return path.map((n) => n.id);
   }
 
   /**
@@ -118,26 +141,7 @@ export class Graph {
       }
     }
 
-    // Error handling in case a node cannot be reached
-    if (!arrivedFrom.has(endNode)) {
-      console.error(`endNode: ${endNode.id} cannot be reached`);
-      return [];
-    }
-
-    // Backtrack to find the path
-    const path: GraphNode[] = [];
-    let currNode = endNode;
-    path.push(currNode);
-
-    while (currNode != startNode) {
-      currNode = arrivedFrom.get(currNode)!;
-      path.push(currNode);
-    }
-
-    // path contains the order of nodes from end to start
-    path.reverse();
-    console.log(path);
-    return path.map((n) => n.id);
+    return Graph.backtrack(arrivedFrom, startNode, endNode);
   }
 
   /**
@@ -197,25 +201,13 @@ export class Graph {
       }
     }
 
-    // Check if the end node can be reached
-    if (!arrivedFrom.has(endNode)) {
-      console.error(`endNode: ${endNode.id} cannot be reached`);
-      return [];
-    }
+    return Graph.backtrack(arrivedFrom, startNode, endNode);
+  }
 
-    // Backtrack to find the path
-    const path: GraphNode[] = [];
-    let currNode = endNode;
-    path.push(currNode);
-
-    while (currNode != startNode) {
-      currNode = arrivedFrom.get(currNode)!;
-      path.push(currNode);
-    }
-
-    // path contains the order of nodes from end to start
-    path.reverse();
-    return path.map((n) => n.id);
+  // TODO: IMPLEMENT THIS!!
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  Dijkstra(start: string, end: string): string[] {
+    return [];
   }
 
   DFS(start: string, end: string) {
@@ -258,29 +250,11 @@ export class Graph {
       }
     }
 
-    // Error handling in case a node cannot be reached
-    if (!arrivedFrom.has(endNode)) {
-      console.error(`endNode: ${endNode.id} cannot be reached`);
-      return [];
-    }
-
-    // Backtrack to find the path
-    const path: GraphNode[] = [];
-    let currNode = endNode;
-    path.push(currNode);
-
-    while (currNode != startNode) {
-      currNode = arrivedFrom.get(currNode)!;
-      path.push(currNode);
-    }
-
-    // path contains the order of nodes from end to start
-    path.reverse();
-    console.log(path);
-    return path.map((n) => n.id);
+    return Graph.backtrack(arrivedFrom, startNode, endNode);
   }
 }
 
+/* Code from Brannon's test
 //let S = new GraphNode("1",1,1,1);
 //let g1 = new GraphNode("2",1,1,1);
 //let g2 = new GraphNode("3",1,1,1);
@@ -310,3 +284,4 @@ testGraph.addEdge("E", "GOAL");
 
 testGraph.DFS("START", "GOAL");
 testGraph.BFS("START", "Brannon");
+ */
