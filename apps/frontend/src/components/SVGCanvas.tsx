@@ -23,7 +23,7 @@ export default function SVGCanvas(props: {
   useEffect(() => {
     async function fetchNodes() {
       try {
-        const res = await axios.get("/api/admin/allnodes/All");
+        const res = await axios.get("/api/admin/allnodes/NoHall");
         if (res.status === 200) {
           console.log("Successfully fetched nodes");
           setNodesData(res.data);

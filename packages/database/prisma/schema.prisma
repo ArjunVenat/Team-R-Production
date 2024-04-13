@@ -13,11 +13,6 @@ datasource db {
 }
 
 // example table used in the express router example
-model HighScore {
-  id    Int      @id
-  time  DateTime
-  score Int
-}
 
 // schema.prisma
 // making Edges table
@@ -51,6 +46,17 @@ model Nodes {
   LongName  String
   ShortName String
   Requests  GeneralRequest[]
+}
+
+//--------------- Iteration 3-----------------------------
+// Adding staff table for use with auth0
+// 4 columns
+// Email which is a string, ideally in the format XXXXX@XXXXX.XXXXX
+// UserID which is a string of the staff memeber's auth0 userID
+
+model staff {
+  userid String @id
+  email  String
 }
 
 //--------------- Iteration 2 -----------------------------
