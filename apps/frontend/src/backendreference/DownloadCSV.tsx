@@ -1,12 +1,21 @@
 import axios from "axios";
 // import SideBar from "../components/SideBar.tsx";
 import { Stack, Button, Box } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
 
 //received help from Dan from team o. He fixed some errors.
 export default function DownloadCSV() {
+  //Use auth0 react hook
+  const { getAccessTokenSilently } = useAuth0();
+
   async function fetchEdges() {
     // make an http get request to backend
-    const res = await axios.get("/api/admin/csv/Edges");
+    const token = await getAccessTokenSilently();
+    const res = await axios.get("/api/admin/csv/Edges", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     //make a new blob
     const receiveEdges = new Blob([res.data], {
@@ -17,7 +26,12 @@ export default function DownloadCSV() {
 
   async function fetchNodes() {
     // make an http get request to backend
-    const res = await axios.get("/api/admin/csv/Nodes");
+    const token = await getAccessTokenSilently();
+    const res = await axios.get("/api/admin/csv/Nodes", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
 
     //make a new blob
     const receiveNodes = new Blob([res.data], {

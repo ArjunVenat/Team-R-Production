@@ -9,15 +9,24 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
+import { useAuth0 } from "@auth0/auth0-react";
 export default function NodeTable() {
+  //Use auth0 react hook
+  const { getAccessTokenSilently } = useAuth0();
+
   const [nodeData, setNodeData] = useState<Nodes[]>([]);
   useEffect(() => {
     async function fetch() {
-      const res = await axios.get("/api/admin/allnodes/All");
+      const token = await getAccessTokenSilently();
+      const res = await axios.get("/api/admin/allnodes/All", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setNodeData(res.data);
     }
     fetch().then();
-  }, []);
+  }, [getAccessTokenSilently]);
   const arrayNode = nodeData.map((node: Nodes) => (
     <TableRow
       key={node.NodeID}

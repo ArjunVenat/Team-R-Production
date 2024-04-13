@@ -3437,7 +3437,7 @@ const RAW_RUNTIME_STATE =
           ["express-oauth2-jwt-bearer", "npm:1.6.0"],\
           ["http-errors", "npm:1.6.3"],\
           ["http-terminator", "npm:3.2.0"],\
-          ["jose", "npm:4.15.4"],\
+          ["jose", "npm:5.2.4"],\
           ["morgan", "npm:1.9.1"],\
           ["multer", "npm:1.4.5-lts.1"],\
           ["nodemon", "npm:3.0.3"],\
@@ -6197,6 +6197,13 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/jose-npm-4.15.4-c518ec3da8-20fa941597.zip/node_modules/jose/",\
         "packageDependencies": [\
           ["jose", "npm:4.15.4"]\
+        ],\
+        "linkType": "HARD"\
+      }],\
+      ["npm:5.2.4", {\
+        "packageLocation": "./.yarn/cache/jose-npm-5.2.4-e36f68377d-0b09df51d7.zip/node_modules/jose/",\
+        "packageDependencies": [\
+          ["jose", "npm:5.2.4"]\
         ],\
         "linkType": "HARD"\
       }]\

@@ -108,7 +108,7 @@ function App() {
         }}
         authorizationParams={{
           redirect_uri: window.location.origin,
-          // audience: "/api", Add back in
+          audience: "/api",
           scope: "openid profile email offline_access",
         }}
       >

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
+import { useAuth0 } from "@auth0/auth0-react";
 
 export default function SVGCanvas(props: {
   path?: Nodes[];
@@ -16,53 +17,66 @@ export default function SVGCanvas(props: {
   isHome: boolean;
   showPathOnly: boolean;
 }) {
+  //Use auth0 react hook
+  const { getAccessTokenSilently } = useAuth0();
+
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
   const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
 
   useEffect(() => {
+    async function fetchNodes() {
+      try {
+        const token = await getAccessTokenSilently();
+        const res = await axios.get("/api/admin/allnodes/All", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          console.log("Successfully fetched nodes");
+          setNodesData(res.data);
+        } else {
+          console.error("Failed to fetch nodes");
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching nodes:", error);
+      }
+    }
+
     fetchNodes();
-  }, []);
+  }, [getAccessTokenSilently]);
 
   useEffect(() => {
+    async function fetchEdges() {
+      try {
+        const token = await getAccessTokenSilently();
+        const res = await axios.get("/api/admin/alledges", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        if (res.status === 200) {
+          console.log("Successfully fetched edges");
+          setEdgesData(res.data);
+        } else {
+          console.error("Failed to fetch nodes");
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching nodes:", error);
+      }
+    }
+
     if (props.path === undefined) {
       fetchEdges();
     }
-  }, [props.path]);
+  }, [props.path, getAccessTokenSilently]);
 
   useEffect(() => {
     setCurrentFloor(props.currentLevel);
   }, [props.currentLevel]);
 
   // console.log(props);
-
-  async function fetchNodes() {
-    try {
-      const res = await axios.get("/api/admin/allnodes/All");
-      if (res.status === 200) {
-        console.log("Successfully fetched nodes");
-        setNodesData(res.data);
-      } else {
-        console.error("Failed to fetch nodes");
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching nodes:", error);
-    }
-  }
-
-  async function fetchEdges() {
-    try {
-      const res = await axios.get("/api/admin/alledges");
-      if (res.status === 200) {
-        console.log("Successfully fetched edges");
-        setEdgesData(res.data);
-      } else {
-        console.error("Failed to fetch nodes");
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching nodes:", error);
-    }
-  }
 
   function handleNodeClick(node: Nodes) {
     if (props.handleNodeClicked) {

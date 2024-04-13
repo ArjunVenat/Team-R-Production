@@ -34,6 +34,7 @@ import { RequestContext } from "../App.tsx";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Nodes } from "database";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -49,6 +50,21 @@ export interface ListOfServices {
 
 //Define functions for "My Request" log
 function ServiceRequestLog({ availableServices }: ListOfServices) {
+  //Use auth0 react hook
+  const {
+    getAccessTokenSilently,
+    isLoading,
+    isAuthenticated,
+    loginWithRedirect,
+  } = useAuth0();
+  if (!isLoading && !isAuthenticated) {
+    loginWithRedirect({
+      appState: {
+        returnTo: location.pathname,
+      },
+    }).then();
+  }
+
   /*DefaultServiceRequest is the default state of the Service Request object, where everything is empty*/
   const defaultServiceRequest: ServiceRequest = {
     requesterName: "",
@@ -78,14 +94,19 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("/api/admin/allnodes/NoHall");
+      const token = await getAccessTokenSilently();
+      const res = await axios.get("/api/admin/allnodes/NoHall", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const allNodes = res.data;
       setNodes(allNodes);
       console.log("successfully got data from get request");
     }
 
     fetchData().then();
-  }, []);
+  }, [getAccessTokenSilently]);
 
   /*useState for a single service request, where any changes update the specific key-value pair*/
   const [singleServiceRequest, setSingleServiceRequest] =
@@ -269,8 +290,9 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     return contentComponent;
   };
 
-  const submitRequest = () => {
+  const submitRequest = async () => {
     console.log("submitting");
+    const token = await getAccessTokenSilently();
 
     if (
       singleServiceRequest.requesterName &&
@@ -278,7 +300,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
       singleServiceRequest.deliveryDate
     ) {
       setRequests([...requests, singleServiceRequest]);
-      submitRequestDB(singleServiceRequest).then();
+      submitRequestDB(singleServiceRequest, token).then();
       clearForm();
     }
   };
@@ -726,7 +748,9 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <Button
                     variant="contained"
                     color="success"
-                    onClick={submitRequest}
+                    onClick={() => {
+                      submitRequest();
+                    }}
                   >
                     Submit Request
                   </Button>
