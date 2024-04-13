@@ -33,7 +33,7 @@ export default function Sidebar() {
     isLoading,
     loginWithRedirect,
     getAccessTokenSilently,
-    // logout
+    logout,
   } = useAuth0();
 
   const home: Menu = { title: "Home", icon: <RiHome3Fill /> };
@@ -144,15 +144,15 @@ export default function Sidebar() {
   const handleMenuClick = (title: string) => {
     setActiveMenu(title);
     if (title === "Logout") {
-      // if(isAuthenticated && !isLoading) {
-      //     logout({
-      //         logoutParams: {
-      //             returnTo: window.location.origin,
-      //         },
-      //     }).then();
-      // } else {
-      routeChange("");
-      // }
+      if (isAuthenticated && !isLoading) {
+        logout({
+          logoutParams: {
+            returnTo: window.location.origin,
+          },
+        }).then();
+      } else {
+        routeChange("");
+      }
     }
     if (title === "Service Request") {
       routeChange("servicerequest");

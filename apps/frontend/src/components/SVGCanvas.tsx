@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
-import { useAuth0 } from "@auth0/auth0-react";
 
 export default function SVGCanvas(props: {
   path?: Nodes[];
@@ -17,9 +16,6 @@ export default function SVGCanvas(props: {
   isHome: boolean;
   showPathOnly: boolean;
 }) {
-  //Use auth0 react hook
-  const { getAccessTokenSilently } = useAuth0();
-
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
   const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
@@ -27,12 +23,7 @@ export default function SVGCanvas(props: {
   useEffect(() => {
     async function fetchNodes() {
       try {
-        const token = await getAccessTokenSilently();
-        const res = await axios.get("/api/admin/allnodes/All", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get("/api/admin/allnodes/All");
         if (res.status === 200) {
           console.log("Successfully fetched nodes");
           setNodesData(res.data);
@@ -45,17 +36,12 @@ export default function SVGCanvas(props: {
     }
 
     fetchNodes();
-  }, [getAccessTokenSilently]);
+  }, []);
 
   useEffect(() => {
     async function fetchEdges() {
       try {
-        const token = await getAccessTokenSilently();
-        const res = await axios.get("/api/admin/alledges", {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await axios.get("/api/admin/alledges");
         if (res.status === 200) {
           console.log("Successfully fetched edges");
           setEdgesData(res.data);
@@ -70,7 +56,7 @@ export default function SVGCanvas(props: {
     if (props.path === undefined) {
       fetchEdges();
     }
-  }, [props.path, getAccessTokenSilently]);
+  }, [props.path]);
 
   useEffect(() => {
     setCurrentFloor(props.currentLevel);

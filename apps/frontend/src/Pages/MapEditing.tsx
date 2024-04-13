@@ -77,12 +77,7 @@ export default function MapEditing() {
 
   useEffect(() => {
     async function fetchData() {
-      const token = await getAccessTokenSilently();
-      const res = await axios.get("/api/admin/allnodes/NoHall", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get("/api/admin/allnodes/NoHall");
       const allNodes = res.data;
       setNodes(allNodes);
       console.log("successfully got data from get request");

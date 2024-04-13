@@ -2,7 +2,7 @@ import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import exampleRouter from "./routes/example.ts";
+// import exampleRouter from "./routes/example.ts";
 import allNodesRouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import pathfindRouter from "./routes/pathfind.ts";
@@ -35,7 +35,7 @@ app.use("/healthcheck", (req, res) => {
   res.status(200).send();
 });
 
-app.use("/api/admin/allnodes", allNodesRouter); //GET request for all Nodes Data
+app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/map/pathfind", pathfindRouter);
 
@@ -47,7 +47,7 @@ app.use(
   }),
 );
 
-app.use("/api/high-score", exampleRouter);
+// app.use("/api/high-score", exampleRouter);
 app.use("/api/service/create", serviceRequestRouter);
 app.use("/api/admin/csv", CSVRouter);
 app.use("/api/admin/service/edit", editServiceRequestRouter);

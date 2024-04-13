@@ -9,24 +9,15 @@ import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
-import { useAuth0 } from "@auth0/auth0-react";
 export default function EdgeTable() {
-  //Use auth0 react hook
-  const { getAccessTokenSilently } = useAuth0();
-
   const [edgeData, setEdgeData] = useState<Edges[]>([]);
   useEffect(() => {
     async function fetch() {
-      const token = await getAccessTokenSilently();
-      const res = await axios.get("/api/admin/alledges", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      const res = await axios.get("/api/admin/alledges");
       setEdgeData(res.data);
     }
     fetch().then();
-  }, [getAccessTokenSilently]);
+  }, []);
   const arrayEdge = edgeData.map((edge: Edges) => (
     <TableRow
       key={edge.EdgeID}
