@@ -270,6 +270,7 @@ export default function MainPage() {
                   }}
                   isHome={true}
                   showPathOnly={showPathOnly}
+                  allnodes={nodes}
                 />
               </TransformComponent>
             </section>

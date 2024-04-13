@@ -77,7 +77,7 @@ export default function MapEditing() {
 
   useEffect(() => {
     async function fetchData() {
-      const res = await axios.get("/api/admin/allnodes/NoHall");
+      const res = await axios.get("/api/admin/allnodes/All");
       const allNodes = res.data;
       setNodes(allNodes);
       console.log("successfully got data from get request");
@@ -151,6 +151,7 @@ export default function MapEditing() {
                   edgeColor={"green"}
                   isHome={false}
                   showPathOnly={false}
+                  allnodes={nodes}
                 />
               </TransformComponent>
             </section>
