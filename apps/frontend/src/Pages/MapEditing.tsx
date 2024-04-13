@@ -18,6 +18,7 @@ import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
 import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
+import { useAuth0 } from "@auth0/auth0-react";
 
 //import Table Items
 import Table from "@mui/material/Table";
@@ -39,6 +40,21 @@ const floors = [
 ];
 
 export default function MapEditing() {
+  //Use auth0 react hook
+  const {
+    getAccessTokenSilently,
+    isLoading,
+    isAuthenticated,
+    loginWithRedirect,
+  } = useAuth0();
+  if (!isLoading && !isAuthenticated) {
+    loginWithRedirect({
+      appState: {
+        returnTo: location.pathname,
+      },
+    }).then();
+  }
+
   const [nodes, setNodes] = useState<Nodes[]>();
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
@@ -67,7 +83,7 @@ export default function MapEditing() {
       console.log("successfully got data from get request");
     }
     fetchData().then();
-  }, []);
+  }, [getAccessTokenSilently]);
   console.log(nodes);
 
   return (

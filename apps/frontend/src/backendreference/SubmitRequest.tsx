@@ -2,7 +2,7 @@ import { ServiceRequest } from "../Interfaces/ServiceRequest.ts";
 import axios from "axios";
 // import SuccessAlert from "./SuccessAlert.tsx";
 
-export async function submitRequestDB(request: ServiceRequest) {
+export async function submitRequestDB(request: ServiceRequest, token: string) {
   const data = JSON.stringify({
     RequesterName: request.requesterName,
     RequestType: request.requestType,
@@ -20,6 +20,7 @@ export async function submitRequestDB(request: ServiceRequest) {
   const res = await axios.post("/api/service/create", data, {
     headers: {
       "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
     },
   });
   if (res.status == 200) {

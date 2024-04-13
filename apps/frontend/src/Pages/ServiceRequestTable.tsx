@@ -13,38 +13,81 @@ import {
 import Sidebar from "../components/SideBar.tsx";
 import { GeneralRequest } from "database";
 import axios from "axios";
+import { useAuth0 } from "@auth0/auth0-react";
 
 function ServiceRequestTable() {
+  //Use auth0 react hook
+  const {
+    getAccessTokenSilently,
+    isAuthenticated,
+    isLoading,
+    loginWithRedirect,
+  } = useAuth0();
+  if (!isLoading && !isAuthenticated) {
+    loginWithRedirect({
+      appState: {
+        returnTo: location.pathname,
+      },
+    }).then();
+  }
+
   // const { requests } = useContext(RequestContext);
 
   // const navigate = useNavigate();
   const [requestData, setrequestData] = useState<GeneralRequest[]>([]);
   useEffect(() => {
     async function fetch() {
-      const res = await axios.get("/api/service/create/All");
+      const token = await getAccessTokenSilently();
+      const res = await axios.get("/api/service/create/All", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       setrequestData(res.data);
     }
     fetch().then();
-  }, []);
+  }, [getAccessTokenSilently]);
 
   const deleteService = async (service: GeneralRequest) => {
-    await axios.post(`api/admin/service/del/${service.RequestID}`);
+    const token = await getAccessTokenSilently();
+    const res = await axios.post(
+      `api/admin/service/del/${service.RequestID}`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
     const index = requestData.indexOf(service);
     requestData.splice(index, 1);
     setrequestData([...requestData]);
+
+    if (res.status == 200) {
+      console.log("request deleted");
+    }
   };
 
   const updateServiceStatus = async (
     service: GeneralRequest,
     newStatus: string,
   ) => {
-    await axios
-      .post(`/api/admin/service/edit/${service.RequestID}/${newStatus}`)
+    const token = await getAccessTokenSilently();
+    const res = await axios
+      .post(`/api/admin/service/edit/${service.RequestID}/${newStatus}`, "", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .then();
     const index = requestData.indexOf(service);
     const requestData2: GeneralRequest[] = [...requestData];
     requestData2[index].Status = newStatus;
     setrequestData(requestData2);
+
+    if (res.status == 200) {
+      console.log("request status changed");
+    }
   };
   const [selectedTable, setSelectedTable] = useState("Flowers");
 

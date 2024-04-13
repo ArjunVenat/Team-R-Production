@@ -2,7 +2,7 @@ import createError, { HttpError } from "http-errors";
 import express, { Express, NextFunction, Request, Response } from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-import exampleRouter from "./routes/example.ts";
+// import exampleRouter from "./routes/example.ts";
 import allNodesRouter from "./routes/node-data.ts";
 import allEdgesRouter from "./routes/allEdgesRouter.ts";
 import pathfindRouter from "./routes/pathfind.ts";
@@ -12,6 +12,7 @@ import editServiceRequestRouter from "./routes/editServiceRequestRouter.ts";
 import delServiceRequestRouter from "./routes/delServiceRequestRouter.ts";
 import editEdgeRouter from "./routes/editEdgeRouter.ts";
 import editNodeRouter from "./routes/editNodeRouter.ts";
+import { auth } from "express-oauth2-jwt-bearer";
 
 const app: Express = express(); // Setup the backend
 
@@ -33,11 +34,21 @@ app.use(cookieParser()); // Cookie parser
 app.use("/healthcheck", (req, res) => {
   res.status(200).send();
 });
-app.use("/api/high-score", exampleRouter);
+
+app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
-app.use("/api/service/create", serviceRequestRouter);
-app.use("/api/admin/allnodes", allNodesRouter); //GET request for all Nodes Data
 app.use("/api/map/pathfind", pathfindRouter);
+
+app.use(
+  auth({
+    audience: "/api",
+    issuerBaseURL: "https://redrockverify.us.auth0.com/",
+    tokenSigningAlg: "RS256",
+  }),
+);
+
+// app.use("/api/high-score", exampleRouter);
+app.use("/api/service/create", serviceRequestRouter);
 app.use("/api/admin/csv", CSVRouter);
 app.use("/api/admin/service/edit", editServiceRequestRouter);
 app.use("/api/admin/service/del", delServiceRequestRouter);

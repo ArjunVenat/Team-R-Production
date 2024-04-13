@@ -3,10 +3,14 @@ import axios from "axios";
 // import SideBar from "../components/SideBar.tsx";
 import { Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 // import SuccessAlert from "./SuccessAlert.tsx";
 
 // received help from Dan from team o. He fixed some errors.
 export default function UploadCSV() {
+  //Use auth0 react hook
+  const { getAccessTokenSilently } = useAuth0();
+
   // a local state to store the currently selected file.
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
 
@@ -19,6 +23,7 @@ export default function UploadCSV() {
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData();
+    const token = await getAccessTokenSilently();
     if (selectedFile != undefined) {
       console.log(selectedFile.name);
       formData.append("uploadFile.csv", selectedFile);
@@ -26,7 +31,10 @@ export default function UploadCSV() {
       console.log(formData);
 
       const response = await axios.post("/api/admin/csv", formData, {
-        headers: { "Content-Type": "multipart/form-data" },
+        headers: {
+          "Content-Type": "multipart/form-data",
+          Authorization: `Bearer ${token}`,
+        },
       });
 
       if (response.status == 200) {
