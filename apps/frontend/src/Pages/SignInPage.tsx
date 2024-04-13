@@ -2,12 +2,14 @@ import React from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import bwh from "../assets/bwh.jpeg";
 import { useAuth0 } from "@auth0/auth0-react";
+import { useNavigate } from "react-router-dom";
 
 const UserTypeList = motion.div;
 const UserTypeButton = motion.button;
 
 function SignInPage() {
   const { loginWithRedirect } = useAuth0();
+  const navigate = useNavigate();
 
   return (
     <>
@@ -43,9 +45,19 @@ function SignInPage() {
                       appState: { returnTo: "/home" },
                     })
                   }
-                  className="m-10 p-4 w-48 bg-primary text-white font-bold rounded-lg hover:bg-[#012d5a]"
+                  className="m-5 p-4 w-48 bg-primary text-white font-bold rounded-lg hover:bg-[#012d5a]"
                 >
                   Log In
+                </UserTypeButton>
+                <UserTypeButton
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => {
+                    navigate("/home");
+                  }}
+                  className="m-5 p-4 w-48 bg-primary text-white font-bold rounded-lg hover:bg-[#012d5a]"
+                >
+                  Log In As Guest
                 </UserTypeButton>
               </UserTypeList>
             }
