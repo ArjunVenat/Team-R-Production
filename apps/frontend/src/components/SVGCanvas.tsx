@@ -21,10 +21,38 @@ export default function SVGCanvas(props: {
   const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
 
   useEffect(() => {
+    async function fetchNodes() {
+      try {
+        const res = await axios.get("/api/admin/allnodes/All");
+        if (res.status === 200) {
+          console.log("Successfully fetched nodes");
+          setNodesData(res.data);
+        } else {
+          console.error("Failed to fetch nodes");
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching nodes:", error);
+      }
+    }
+
     fetchNodes();
   }, []);
 
   useEffect(() => {
+    async function fetchEdges() {
+      try {
+        const res = await axios.get("/api/admin/alledges");
+        if (res.status === 200) {
+          console.log("Successfully fetched edges");
+          setEdgesData(res.data);
+        } else {
+          console.error("Failed to fetch nodes");
+        }
+      } catch (error) {
+        console.error("An error occurred while fetching nodes:", error);
+      }
+    }
+
     if (props.path === undefined) {
       fetchEdges();
     }
@@ -35,34 +63,6 @@ export default function SVGCanvas(props: {
   }, [props.currentLevel]);
 
   // console.log(props);
-
-  async function fetchNodes() {
-    try {
-      const res = await axios.get("/api/admin/allnodes/All");
-      if (res.status === 200) {
-        console.log("Successfully fetched nodes");
-        setNodesData(res.data);
-      } else {
-        console.error("Failed to fetch nodes");
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching nodes:", error);
-    }
-  }
-
-  async function fetchEdges() {
-    try {
-      const res = await axios.get("/api/admin/alledges");
-      if (res.status === 200) {
-        console.log("Successfully fetched edges");
-        setEdgesData(res.data);
-      } else {
-        console.error("Failed to fetch nodes");
-      }
-    } catch (error) {
-      console.error("An error occurred while fetching nodes:", error);
-    }
-  }
 
   function handleNodeClick(node: Nodes) {
     if (props.handleNodeClicked) {

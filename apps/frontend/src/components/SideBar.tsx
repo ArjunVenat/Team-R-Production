@@ -5,13 +5,14 @@ import { Logout } from "@mui/icons-material";
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
 import AccessibleForwardIcon from "@mui/icons-material/AccessibleForward";
-import { ReactNode, useState } from "react";
+import { ReactNode, useState, useEffect } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from "@mui/icons-material/TableView";
 import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import { useAuth0 } from "@auth0/auth0-react";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -26,6 +27,15 @@ interface Menu {
 }
 
 export default function Sidebar() {
+  //Use auth0 react hook
+  const {
+    isAuthenticated,
+    isLoading,
+    loginWithRedirect,
+    getAccessTokenSilently,
+    logout,
+  } = useAuth0();
+
   const home: Menu = { title: "Home", icon: <RiHome3Fill /> };
   const serviceRequest: Menu = {
     title: "Service Request",
@@ -37,7 +47,7 @@ export default function Sidebar() {
   };
   const editmap: Menu = { title: "Edit Map", icon: <EditIcon /> };
 
-  const logout: Menu = { title: "Logout", icon: <Logout /> };
+  const logoutOption: Menu = { title: "Logout", icon: <Logout /> };
   const nodes_edges: Menu = {
     title: "Node/Edge Table",
     icon: <AccessibleForwardIcon />,
@@ -55,11 +65,35 @@ export default function Sidebar() {
     nodes_edges,
     // uploadCSV,
     downloadCSV,
-    logout,
+    logoutOption,
   ];
 
   const location = useLocation();
   const currentURL = location.pathname;
+
+  //Refresh the access token with a useEffect
+  useEffect(() => {
+    const refreshToken = async () => {
+      try {
+        await getAccessTokenSilently();
+      } catch (error) {
+        await loginWithRedirect({
+          appState: {
+            returnTo: location.pathname,
+          },
+        });
+      }
+    };
+    if (!isLoading && isAuthenticated) {
+      refreshToken().then();
+    }
+  }, [
+    getAccessTokenSilently,
+    loginWithRedirect,
+    location.pathname,
+    isLoading,
+    isAuthenticated,
+  ]);
 
   let menuHighlight: string = "";
   console.log({ currentURL });
@@ -110,7 +144,15 @@ export default function Sidebar() {
   const handleMenuClick = (title: string) => {
     setActiveMenu(title);
     if (title === "Logout") {
-      routeChange("");
+      if (isAuthenticated && !isLoading) {
+        logout({
+          logoutParams: {
+            returnTo: window.location.origin,
+          },
+        }).then();
+      } else {
+        routeChange("");
+      }
     }
     if (title === "Service Request") {
       routeChange("servicerequest");

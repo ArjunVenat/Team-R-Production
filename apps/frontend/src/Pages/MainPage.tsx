@@ -25,6 +25,7 @@ import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider } from "@mui/material";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import "../styles/MainPage.css";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const autocompleteStyle = {
   "& .MuiInputBase-input": { color: "white" },
@@ -49,6 +50,9 @@ const floors = [
 ];
 
 export default function MainPage() {
+  //Use auth0 react hook
+  const { getAccessTokenSilently } = useAuth0();
+
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
@@ -75,7 +79,7 @@ export default function MainPage() {
     }
 
     fetchData().then();
-  }, []);
+  }, [getAccessTokenSilently]);
   console.log(nodes);
 
   const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
@@ -97,6 +101,7 @@ export default function MainPage() {
   };
 
   async function getDirections() {
+    const token = await getAccessTokenSilently();
     const startNodeArray = nodes?.filter(
       (node: Nodes) => node.LongName === start,
     );
@@ -133,6 +138,9 @@ export default function MainPage() {
         params: {
           startNodeID: startNode,
           endNodeID: endNode,
+        },
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
       setShowPathOnly(true);

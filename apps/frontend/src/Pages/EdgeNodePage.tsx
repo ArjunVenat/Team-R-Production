@@ -5,8 +5,19 @@ import { Box, Select } from "@mui/material";
 import { useState } from "react";
 import MenuItem from "@mui/material/MenuItem";
 import NodeTable from "../backendreference/Nodes.tsx";
+import { useAuth0 } from "@auth0/auth0-react";
 
 const EdgeTablePage = () => {
+  //Use auth0 react hook
+  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  if (!isLoading && !isAuthenticated) {
+    loginWithRedirect({
+      appState: {
+        returnTo: location.pathname,
+      },
+    }).then();
+  }
+
   const [isNode, setIsNode] = useState<boolean>(false);
   return (
     <Box display="flex">
