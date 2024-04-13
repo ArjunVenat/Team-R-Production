@@ -74,11 +74,11 @@ export default function SVGCanvas(props: {
   }
   const getNodeColor = (node: Nodes) => {
     if (props.path && props.path?.length > 0) {
-      const isElevator = node.NodeType === "ELEV";
+      const isElevatorOrStairs =
+        node.NodeType === "ELEV" || node.NodeType === "STAI";
 
-      // Check if the elevator is relevant
-      let isRelevantElevator = false;
-      if (isElevator) {
+      let isRelevantElevatorOrStairs = false;
+      if (isElevatorOrStairs) {
         for (let i = 0; i < props.path.length; i++) {
           if (
             props.path[i].NodeID === node.NodeID &&
@@ -86,7 +86,7 @@ export default function SVGCanvas(props: {
               (i < props.path.length - 1 &&
                 props.path[i].Floor !== props.path[i + 1].Floor))
           ) {
-            isRelevantElevator = true;
+            isRelevantElevatorOrStairs = true;
             break;
           }
         }
@@ -96,7 +96,7 @@ export default function SVGCanvas(props: {
         return "chartreuse";
       } else if (props.path?.[props.path?.length - 1].NodeID === node.NodeID) {
         return "red";
-      } else if (isElevator && isRelevantElevator) {
+      } else if (isElevatorOrStairs && isRelevantElevatorOrStairs) {
         return "purple";
       } else if (
         props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)
