@@ -2,6 +2,9 @@ import { GraphNode } from "./graph.ts";
 import { Graph } from "./graph.ts";
 import { Ipathfind } from "./Ipathfind.ts";
 
+/**
+ * DFS: A class that contains the DFS algorithm
+ */
 export class DFS implements Ipathfind {
   pathfind(graph: Graph, start: string, end: string) {
     const startNode = Graph.nodeMap.get(start);

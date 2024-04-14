@@ -2,8 +2,10 @@ import { GraphNode } from "./graph.ts";
 import { Graph } from "./graph.ts";
 import minHeap from "./heap.ts";
 import { Ipathfind } from "./Ipathfind.ts";
-//import {Ipathfind} from "./Ipathfind.ts";
 
+/**
+ * AStar: A class that contains the AStar algorithm
+ */
 export class AStar implements Ipathfind {
   pathfind(graph: Graph, start: string, end: string) {
     const startNode = Graph.nodeMap.get(start);

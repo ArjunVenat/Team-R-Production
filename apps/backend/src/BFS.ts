@@ -3,6 +3,9 @@ import { Graph } from "./graph.ts";
 import { Ipathfind } from "./Ipathfind.ts";
 //import {Ipathfind} from "./Ipathfind.ts";
 
+/**
+ * BFS: A class that contains the BFS algorithm
+ */
 export class BFS implements Ipathfind {
   pathfind(graph: Graph, start: string, end: string) {
     const startNode = Graph.nodeMap.get(start);

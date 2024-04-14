@@ -3,6 +3,9 @@ import { Graph } from "./graph.ts";
 import minHeap from "./heap.ts";
 import { Ipathfind } from "./Ipathfind.ts";
 
+/**
+ * Dijkstra: A class that contains the Dijkstra algorithm
+ */
 export class Dijkstra implements Ipathfind {
   pathfind(graph: Graph, start: string, end: string) {
     const startNode = Graph.nodeMap.get(start);
