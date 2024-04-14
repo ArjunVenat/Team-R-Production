@@ -188,19 +188,6 @@ export default function SVGCanvas(props: {
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
     >
-      <defs>
-        <marker
-          id="arrow"
-          markerUnits="strokeWidth"
-          orient="auto"
-          refX="9"
-          refY="3"
-          markerWidth="5"
-          markerHeight="5"
-        >
-          <path d="M0,3 L9,6 L9,0 z" fill="blue" />
-        </marker>
-      </defs>
       <image href={props.currentMap} height="3400" width="5000" />
       {props.path &&
         splices()[0][0] &&
@@ -264,7 +251,25 @@ export default function SVGCanvas(props: {
             cy={node.Ycoord}
             r="10"
             fill={props.nodeColor ?? getNodeColor(node)}
-          />
+            className={
+              "hover:stroke-[3px] hover:stroke-primary hover:fill-tertiary group"
+            }
+          >
+            {/*<title>{node.LongName}</title>*/}
+            <foreignObject
+              x={node.Xcoord}
+              y={node.Ycoord}
+              width="100"
+              height="50"
+              className={
+                "group-hover:visible relative inline-block border-[1px dotted black] "
+              }
+            >
+              <div className="text-center text-white group-hover:visible hidden bg-black">
+                {node.LongName}
+              </div>
+            </foreignObject>
+          </circle>
         </g>
       ))}
     </svg>
