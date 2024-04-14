@@ -7,9 +7,15 @@ import { Edges, Nodes } from "database";
 // import { IconButton } from '@mui/material';
 // import StairsTwoToneIcon from '@mui/icons-material/StairsTwoTone';
 import ElevatorIcon from "../assets/image/Elevator_Icon.svg";
+import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
+import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
+import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
+import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
+import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 export default function SVGCanvas(props: {
   path?: Nodes[];
   currentMap: string;
+  setCurrentMap?: (map: string) => void;
   currentLevel: string;
   nodeColor?: string;
   edgeColor?: string;
@@ -79,10 +85,40 @@ export default function SVGCanvas(props: {
   }
 
   function handleElevatorHover(node: Nodes, path: Nodes[]) {
-    if (path.indexOf(node) === -1) {
-      console.log("here1", node);
+    const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
+    if (getTypePopup(node, path) === -1) {
+      console.log("Click to go back to ", path[idx - 1].Floor);
+    } else if (getTypePopup(node, path) === 1) {
+      console.log("Click to go forwards to ", path[idx + 1].Floor);
+    }
+  }
+
+  function handleElevatorClick(node: Nodes, nextFloor: number, path: Nodes[]) {
+    const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
+    let changedFloor: string = path[0].Floor;
+    if (nextFloor == 1) {
+      changedFloor = path[idx + 1].Floor;
     } else {
-      console.log(path.indexOf(node));
+      changedFloor = path[idx - 1].Floor;
+    }
+    switch (changedFloor) {
+      case "L1":
+        props.setCurrentMap!(lowerLevel1Map);
+        break;
+      case "L2":
+        props.setCurrentMap!(lowerLevel2Map);
+        break;
+      case "1":
+        props.setCurrentMap!(firstFloorMap);
+        break;
+      case "2":
+        props.setCurrentMap!(secondFloorMap);
+        break;
+      case "3":
+        props.setCurrentMap!(thirdFloorMap);
+        break;
+      default:
+        props.setCurrentMap!(lowerLevel1Map);
     }
   }
 
@@ -306,6 +342,13 @@ export default function SVGCanvas(props: {
             <g>
               <image
                 onMouseOver={() => handleElevatorHover(node, props.path!)}
+                onClick={() =>
+                  handleElevatorClick(
+                    node,
+                    getTypePopup(node, props.path!),
+                    props.path!,
+                  )
+                }
                 key={node.NodeID}
                 href={ElevatorIcon}
                 x={+node.Xcoord - 30}

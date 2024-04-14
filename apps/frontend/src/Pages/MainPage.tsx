@@ -56,11 +56,11 @@ export default function MainPage() {
   const [start, setStart] = useState("");
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
-  const [path, setPath] = React.useState<Nodes[]>([]);
+  const [path, setPath] = useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
-  const [clickedNode, setClickedNode] = React.useState<Nodes | undefined>();
-  const [clickTimes, setClickTimes] = React.useState<number>(0);
+  const [clickedNode, setClickedNode] = useState<Nodes | undefined>();
+  const [clickTimes, setClickTimes] = useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
   const [showPathOnly, setShowPathOnly] = useState(false);
@@ -81,6 +81,10 @@ export default function MainPage() {
     fetchData().then();
   }, [getAccessTokenSilently]);
   console.log(nodes);
+
+  function handleMapChange(newMap: string) {
+    setCurrentMap(newMap);
+  }
 
   const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
   Locations.sort((longname1, longname2) => {
@@ -253,6 +257,7 @@ export default function MainPage() {
                   key={currentMap}
                   path={path}
                   currentMap={currentMap}
+                  setCurrentMap={handleMapChange}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
