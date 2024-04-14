@@ -340,6 +340,12 @@ export default function SVGCanvas(props: {
             /* condition for if it is elevator or stairs && */
             // (<rect x={node.Xcoord} y={node.Ycoord} stroke={"red"} fill={"transparent"} width={"30"} height={"30"}/>):
             <g>
+              <circle
+                r="15"
+                cx={+node.Xcoord}
+                cy={+node.Ycoord}
+                fill={getNodeColor(node)}
+              />
               <image
                 onMouseOver={() => handleElevatorHover(node, props.path!)}
                 onClick={() =>
