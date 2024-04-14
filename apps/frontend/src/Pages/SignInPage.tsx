@@ -31,7 +31,7 @@ function SignInPage() {
       {/* Carousel */}
       <div
         id="default-carousel"
-        className="bg-gray-600 absolute top-0 left-0 w-full h-full"
+        className="bg-transparent absolute top-0 left-0 w-full h-full"
         data-carousel="slide"
       >
         <AnimatePresence>
@@ -42,9 +42,9 @@ function SignInPage() {
                 src={blurHall}
                 className="absolute inset-0 w-full h-full object-cover ease-in-out"
                 alt="..."
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                }}
               />
             )}
             {currentSlide === 2 && (
@@ -53,9 +53,9 @@ function SignInPage() {
                 src={bwhoutside}
                 className="absolute inset-0 w-full h-full object-cover ease-in-out"
                 alt="..."
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                }}
               />
             )}
             {currentSlide === 3 && (
@@ -64,9 +64,9 @@ function SignInPage() {
                 src={hall}
                 className="absolute inset-0 w-full h-full object-cover ease-in-out"
                 alt="..."
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                }}
               />
             )}
             {currentSlide === 4 && (
@@ -75,9 +75,9 @@ function SignInPage() {
                 src={outsidebwh}
                 className="absolute inset-0 w-full h-full object-cover ease-in-out"
                 alt="..."
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
+                animate={{
+                  opacity: 1,
+                }}
               />
             )}
           </div>
