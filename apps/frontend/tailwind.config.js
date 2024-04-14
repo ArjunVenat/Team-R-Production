@@ -10,6 +10,8 @@ export default {
       },
       fontFamily: {
         sans: ["Open Sans", "sans-serif"],
+        helvetica: ["helvetica"],
+        Garamond: ["Garamond"],
       },
     },
   },
