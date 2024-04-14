@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
-
+// import ElevatorIcon from '@mui/icons-material/Elevator';
+// import {SvgIcon} from "@mui/material";
+// import {Icon} from "@mui/material";
+// import { IconButton } from '@mui/material';
+// import StairsTwoToneIcon from '@mui/icons-material/StairsTwoTone';
+import ElevatorIcon from "../assets/image/Elevator_Icon.svg";
 export default function SVGCanvas(props: {
   path?: Nodes[];
   currentMap: string;
@@ -72,6 +77,48 @@ export default function SVGCanvas(props: {
       props.handleEdgeClicked(undefined);
     }
   }
+
+  function handleElevatorHover(node: Nodes, path: Nodes[]) {
+    if (path.indexOf(node) === -1) {
+      console.log("here1", node);
+    } else {
+      console.log(path.indexOf(node));
+    }
+  }
+
+  function getTypePopup(node: Nodes, path: Nodes[]): number {
+    console.log(node);
+    console.log(path);
+    //0 == no floor change, 1 == next floor change, -1 == prev floor change
+    const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
+    console.log("idx:", idx);
+
+    if (idx != -1) {
+      if (idx != 0 && idx != path.length - 1) {
+        const prevNode: Nodes = path[idx - 1];
+        const nextNode: Nodes = path[idx + 1];
+        console.log(prevNode, nextNode);
+        if (node.Floor != prevNode.Floor) {
+          return -1;
+        }
+        if (node.Floor != nextNode.Floor) {
+          return 1;
+        }
+      } else if (idx === 0) {
+        const nextNode: Nodes = path[idx + 1];
+        if (node.Floor != nextNode.Floor) {
+          return 1;
+        }
+      } else if (idx === path.length - 1) {
+        const prevNode: Nodes = path[idx - 1];
+        if (node.Floor != prevNode.Floor) {
+          return -1;
+        }
+      }
+    }
+    return 0;
+  }
+
   const getNodeColor = (node: Nodes) => {
     if (props.path && props.path?.length > 0) {
       const isElevatorOrStairs =
@@ -248,21 +295,40 @@ export default function SVGCanvas(props: {
         return null;
       })}
       {filteredNodes.map((node) => (
-        <g
-          onClick={() => handleNodeClick(node)}
-          onMouseEnter={() =>
-            props.handleNodeHover && props.handleNodeHover(node)
-          }
-          onMouseLeave={() =>
-            props.handleNodeHover && props.handleNodeHover(undefined)
-          }
-        >
-          <circle
-            cx={node.Xcoord}
-            cy={node.Ycoord}
-            r="10"
-            fill={props.nodeColor ?? getNodeColor(node)}
-          />
+        <g>
+          {props.path &&
+          props.path.length > 0 &&
+          props.path.some((pathNode) => pathNode.NodeID === node.NodeID) &&
+          (getTypePopup(node, props.path!) == 1 ||
+            getTypePopup(node, props.path!) == -1) ? (
+            /* condition for if it is elevator or stairs && */
+            // (<rect x={node.Xcoord} y={node.Ycoord} stroke={"red"} fill={"transparent"} width={"30"} height={"30"}/>):
+            <g>
+              <image
+                onMouseOver={() => handleElevatorHover(node, props.path!)}
+                key={node.NodeID}
+                href={ElevatorIcon}
+                x={+node.Xcoord - 30}
+                y={+node.Ycoord - 30}
+                width="60"
+                height="60"
+              />
+            </g>
+          ) : (
+            <circle
+              onClick={() => handleNodeClick(node)}
+              onMouseEnter={() =>
+                props.handleNodeHover && props.handleNodeHover(node)
+              }
+              onMouseLeave={() =>
+                props.handleNodeHover && props.handleNodeHover(undefined)
+              }
+              cx={node.Xcoord}
+              cy={node.Ycoord}
+              r="10"
+              fill={props.nodeColor ?? getNodeColor(node)}
+            />
+          )}
         </g>
       ))}
     </svg>
