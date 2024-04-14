@@ -10,7 +10,6 @@ export class Dijkstra implements Ipathfind {
   pathfind(graph: Graph, start: string, end: string) {
     const startNode = Graph.nodeMap.get(start);
     const endNode = Graph.nodeMap.get(end);
-
     // Check if the nodes are within the graph
     if (startNode === undefined || endNode === undefined) {
       return [];

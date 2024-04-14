@@ -1,5 +1,3 @@
-//import {Ipathfind} from "./Ipathfind.ts";
-
 import { BFS } from "./BFS.ts";
 import { AStar } from "./AStar.ts";
 import { DFS } from "./DFS.ts";
