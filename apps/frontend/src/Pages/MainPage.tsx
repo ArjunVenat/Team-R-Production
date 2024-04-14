@@ -101,7 +101,6 @@ export default function MainPage() {
   };
 
   async function getDirections() {
-    const token = await getAccessTokenSilently();
     const startNodeArray = nodes?.filter(
       (node: Nodes) => node.LongName === start,
     );
@@ -138,9 +137,6 @@ export default function MainPage() {
         params: {
           startNodeID: startNode,
           endNodeID: endNode,
-        },
-        headers: {
-          Authorization: `Bearer ${token}`,
         },
       });
       setShowPathOnly(true);
@@ -270,6 +266,7 @@ export default function MainPage() {
                   }}
                   isHome={true}
                   showPathOnly={showPathOnly}
+                  allnodes={nodes}
                 />
               </TransformComponent>
             </section>

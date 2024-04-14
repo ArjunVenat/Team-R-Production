@@ -15,28 +15,30 @@ export default function SVGCanvas(props: {
   handleNodeHover?: (node: Nodes | undefined) => void;
   isHome: boolean;
   showPathOnly: boolean;
+  allnodes?: Nodes[];
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
   const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
-
   useEffect(() => {
-    async function fetchNodes() {
-      try {
-        const res = await axios.get("/api/admin/allnodes/NoHall");
-        if (res.status === 200) {
-          console.log("Successfully fetched nodes");
-          setNodesData(res.data);
-        } else {
-          console.error("Failed to fetch nodes");
-        }
-      } catch (error) {
-        console.error("An error occurred while fetching nodes:", error);
-      }
-    }
+    if (props.allnodes) setNodesData(props.allnodes);
 
-    fetchNodes();
-  }, []);
+    // async function fetchNodes() {
+    //   try {
+    //     const res = await axios.get("/api/admin/allnodes/All");
+    //     if (res.status === 200) {
+    //       console.log("Successfully fetched nodes");
+    //       setNodesData(res.data);
+    //     } else {
+    //       console.error("Failed to fetch nodes");
+    //     }
+    //   } catch (error) {
+    //     console.error("An error occurred while fetching nodes:", error);
+    //   }
+    // }
+
+    // fetchNodes();
+  }, [props.allnodes]);
 
   useEffect(() => {
     async function fetchEdges() {
