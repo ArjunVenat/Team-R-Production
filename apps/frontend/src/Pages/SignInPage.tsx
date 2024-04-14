@@ -8,6 +8,7 @@ import blurHall from "../assets/hero/blurHall.png";
 import bwhoutside from "../assets/hero/bwhoutside.png";
 import hall from "../assets/hero/hall.png";
 import outsidebwh from "../assets/hero/outsidebwh.png";
+import ViewMap from "../assets/hero/ViewMap.png";
 
 const UserTypeList = motion.div;
 const UserTypeButton = motion.button;
@@ -33,35 +34,57 @@ function SignInPage() {
       </Carousel>
 
       {/* Sign-in Content */}
-      <div className="absolute top-0 left-0 right-0 bottom-0 flex justify-center items-center">
-        <div className="grid place-items-center bg-white bg-opacity-75 rounded-xl border-solid border-4 border-gray-300 z-20">
+      <div className="absolute top-0 right-0 bottom-0 flex w-full justify-end">
+        <div className="grid place-items-center w-1/3 bg-primary bg-opacity-35 backdrop-blur-sm z-20">
           <div>
-            <UserTypeList className="flex flex-col items-center">
-              <h1 id="sign_in_h1" className="text-4xl">
+            <UserTypeList className="flex flex-col items-center h-screen justify-start">
+              <h1
+                id="sign_in_h1"
+                className="mt-8 shadow-md text-8xl text-secondary font-sans font-bold"
+              >
                 Welcome
               </h1>
-              <UserTypeButton
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() =>
-                  loginWithRedirect({
-                    appState: { returnTo: "/home" },
-                  })
-                }
-                className="m-5 p-4 w-48 bg-primary text-white font-bold rounded-lg hover:bg-[#012d5a]"
-              >
-                Log In
-              </UserTypeButton>
-              <UserTypeButton
-                whileHover={{ scale: 1.1 }}
-                whileTap={{ scale: 0.9 }}
-                onClick={() => {
-                  navigate("/home");
-                }}
-                className="m-5 p-4 w-48 bg-primary text-white font-bold rounded-lg hover:bg-[#012d5a]"
-              >
-                Log In As Guest
-              </UserTypeButton>
+              <p className="mt-10 text-2xl text-center text-secondary font-sans">
+                Helping our patients and their families get back to what matters
+                most.
+              </p>
+
+              <div className="flex flex-col items-center mt-36">
+                <UserTypeButton
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() => {
+                    navigate("/home");
+                  }}
+                  className="w-80 h-72 bg-primary rounded-lg text-white text-xl font-bold hover:bg-[#012d5a]"
+                >
+                  <div className="flex justify-center items-start w-full rounded-t-lg">
+                    <img
+                      className="block w-full mb-[0.5rem] rounded-t-lg"
+                      src={ViewMap}
+                      alt="ViewMap"
+                    />
+                  </div>
+                  <div className="flex justify-center items-center h-16">
+                    View Map
+                  </div>
+                </UserTypeButton>
+              </div>
+
+              <div className="flex justify-end w-full mt-auto">
+                <UserTypeButton
+                  whileHover={{ scale: 1.1 }}
+                  whileTap={{ scale: 0.9 }}
+                  onClick={() =>
+                    loginWithRedirect({
+                      appState: { returnTo: "/home" },
+                    })
+                  }
+                  className="m-5 p-4 w-48 bg-primary text-white font-semibold rounded-lg hover:bg-[#012d5a]"
+                >
+                  Staff? Sign in Here
+                </UserTypeButton>
+              </div>
             </UserTypeList>
           </div>
         </div>
