@@ -24,6 +24,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 interface Menu {
   title: string;
   icon: ReactNode;
+  displayLoggedIn: boolean;
 }
 
 export default function Sidebar() {
@@ -36,26 +37,42 @@ export default function Sidebar() {
     logout,
   } = useAuth0();
 
-  const home: Menu = { title: "Home", icon: <RiHome3Fill /> };
+  const home: Menu = {
+    title: "Home",
+    icon: <RiHome3Fill />,
+    displayLoggedIn: false,
+  };
   const serviceRequest: Menu = {
     title: "Service Request",
     icon: <BsBellFill />,
+    displayLoggedIn: true,
   };
   const serviceRequestTable: Menu = {
     title: "Service Request Table",
     icon: <TableViewIcon />,
+    displayLoggedIn: true,
   };
-  const editmap: Menu = { title: "Edit Map", icon: <EditIcon /> };
+  const editmap: Menu = {
+    title: "Edit Map",
+    icon: <EditIcon />,
+    displayLoggedIn: true,
+  };
 
-  const logoutOption: Menu = { title: "Logout", icon: <Logout /> };
+  const logoutOption: Menu = {
+    title: "Logout",
+    icon: <Logout />,
+    displayLoggedIn: false,
+  };
   const nodes_edges: Menu = {
     title: "Node/Edge Table",
     icon: <AccessibleForwardIcon />,
+    displayLoggedIn: true,
   };
   // const uploadCSV: Menu = { title: "Upload CSV", icon: <UploadFile /> };
   const downloadCSV: Menu = {
     title: "Upload/Download CSV",
     icon: <CloudDownloadIcon />,
+    displayLoggedIn: true,
   };
   const Menus: Menu[] = [
     home,
@@ -214,10 +231,13 @@ export default function Sidebar() {
         </div>
 
         <ul className="pt-2">
-          {Menus.map((menu, index) => (
+          {Menus.filter(
+            (menu: Menu) =>
+              (isAuthenticated || !menu.displayLoggedIn) && !isLoading,
+          ).map((menu, index) => (
             <li
               key={index}
-              className={`text-white text-2xl flex items-center gap-x-10 cursor-pointer p-2 rounded-md mt-2 hover:border-r-4 hover:border-secondary${
+              className={`text-white text-2xl flex items-center gap-x-5 cursor-pointer p-2 rounded-md mt-2 hover:border-r-4 hover:border-secondary${
                 activeMenu === menu.title
                   ? "border-r-4 border-tertiary bg-tertiary/25"
                   : "hover:bg-blue-300 hover:bg-secondary/25"
