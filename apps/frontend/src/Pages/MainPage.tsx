@@ -278,7 +278,7 @@ export default function MainPage() {
           )}
         </TransformWrapper>
       </main>
-      <aside className="bg-primary text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
+      <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
         <h1 className="text-xl bg-transparent p-2 text-center">
           Enter your start and end locations:
         </h1>
@@ -351,11 +351,11 @@ export default function MainPage() {
         )}
         {clickedNode && (
           <div
+            className="bg-primary/50"
             style={{
               position: "absolute",
               top: "50%",
               width: "fit-content",
-              backgroundColor: "#012d5a",
               color: "white",
               padding: "10px",
               borderRadius: "5px",
