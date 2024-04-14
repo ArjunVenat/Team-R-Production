@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
+import { Tooltip } from "@mui/material";
 
 export default function SVGCanvas(props: {
   path?: Nodes[];
@@ -187,6 +188,7 @@ export default function SVGCanvas(props: {
       width="auto"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
+      overflow={"visible"}
     >
       <image href={props.currentMap} height="3400" width="5000" />
       {props.path &&
@@ -246,30 +248,17 @@ export default function SVGCanvas(props: {
             props.handleNodeHover && props.handleNodeHover(undefined)
           }
         >
-          <circle
-            cx={node.Xcoord}
-            cy={node.Ycoord}
-            r="10"
-            fill={props.nodeColor ?? getNodeColor(node)}
-            className={
-              "hover:stroke-[3px] hover:stroke-primary hover:fill-tertiary group"
-            }
-          >
-            {/*<title>{node.LongName}</title>*/}
-            <foreignObject
-              x={node.Xcoord}
-              y={node.Ycoord}
-              width="100"
-              height="50"
+          <Tooltip title={node.LongName} arrow>
+            <circle
+              cx={node.Xcoord}
+              cy={node.Ycoord}
+              r="10"
+              fill={props.nodeColor ?? getNodeColor(node)}
               className={
-                "group-hover:visible relative inline-block border-[1px dotted black] "
+                "hover:stroke-[3px] hover:stroke-primary hover:fill-tertiary"
               }
-            >
-              <div className="text-center text-white group-hover:visible hidden bg-black">
-                {node.LongName}
-              </div>
-            </foreignObject>
-          </circle>
+            />
+          </Tooltip>
         </g>
       ))}
     </svg>
