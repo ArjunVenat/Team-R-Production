@@ -229,7 +229,6 @@ export default function MapEditing() {
               {/*<p>ShortName: {nodeClicked.ShortName}</p>*/}
             </div>
           )}
-
           {edgeClicked != undefined && (
             <div>
               <TableContainer component={Paper}>
