@@ -278,7 +278,7 @@ export default function MainPage() {
           )}
         </TransformWrapper>
       </main>
-      <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
+      <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full">
         <h1 className="text-xl bg-transparent p-2 text-center">
           Enter your start and end locations:
         </h1>
@@ -318,6 +318,7 @@ export default function MainPage() {
         <div className="flex justify-center">
           <Button
             className="content-center"
+            style={{ marginRight: "5px" }}
             variant="contained"
             color="success"
             onClick={getDirections}
@@ -326,6 +327,7 @@ export default function MainPage() {
           </Button>
           <Button
             className="content-center"
+            style={{ marginLeft: "5px" }}
             variant="contained"
             color="secondary"
             onClick={resetCanvas}
