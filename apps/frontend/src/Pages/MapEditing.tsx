@@ -190,31 +190,122 @@ export default function MapEditing() {
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">X Coord:</TableCell>
-                    <TableCell align="left">{nodeClicked.Xcoord}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Xcoord || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, Xcoord: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Y Coord:</TableCell>
-                    <TableCell align="left">{nodeClicked.Ycoord}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Ycoord || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, Ycoord: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Floor:</TableCell>
-                    <TableCell align="left">{nodeClicked.Floor}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Floor || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, Floor: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Building:</TableCell>
-                    <TableCell align="left">{nodeClicked.Building}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Building || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, Building: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Node Type:</TableCell>
-                    <TableCell align="left">{nodeClicked.NodeType}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.NodeType || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, NodeType: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Long Name:</TableCell>
-                    <TableCell align="left">{nodeClicked.LongName}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.LongName || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, LongName: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Short Name:</TableCell>
-                    <TableCell align="left">{nodeClicked.ShortName}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.ShortName || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, ShortName: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                 </Table>
               </TableContainer>
@@ -253,12 +344,36 @@ export default function MapEditing() {
                   <TableRow>
                     <TableCell align="left">Start Node:</TableCell>
                     <TableCell align="left">
-                      {edgeClicked.StartNodeID}
+                      <input
+                        value={editableEdge?.StartNodeID || ""}
+                        onChange={(e) =>
+                          editableEdge &&
+                          setEditableEdge((prev) => {
+                            if (prev) {
+                              return { ...prev, StartNodeID: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">End Node:</TableCell>
-                    <TableCell align="left">{edgeClicked.EndNodeID}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableEdge?.EndNodeID || ""}
+                        onChange={(e) =>
+                          editableEdge &&
+                          setEditableEdge((prev) => {
+                            if (prev) {
+                              return { ...prev, EndNodeID: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                 </Table>
               </TableContainer>
