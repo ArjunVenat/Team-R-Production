@@ -40,11 +40,17 @@ function SignInPage() {
             <UserTypeList className="flex flex-col items-center h-screen justify-start">
               <h1
                 id="sign_in_h1"
-                className="mt-8 shadow-md text-8xl text-secondary font-sans font-bold"
+                className="mt-8  text-5xl text-secondary font-Garamond font-bold"
               >
-                Welcome
+                Welcome To
               </h1>
-              <p className="mt-10 text-3xl text-center text-gray-200 font-sans">
+              <h2
+                id="sign_in_h2"
+                className="mt-8  text-4xl text-secondary font-Garamond font-bold"
+              >
+                Brigham And Women's Hospital
+              </h2>
+              <p className="mt-10 text-3xl text-center text-gray-200 font-Garamond">
                 Helping our patients and their families get back to what matters
                 most.
               </p>
