@@ -35,14 +35,14 @@ function SignInPage() {
 
       {/* Sign-in Content */}
       <div className="absolute top-0 right-0 bottom-0 flex w-full justify-end">
-        <div className="grid place-items-center w-1/3 bg-primary bg-opacity-35 backdrop-blur-sm z-20">
+        <div className="grid place-items-center w-1/3 bg-primary bg-opacity-45 backdrop-blur-sm z-20">
           <div>
             <UserTypeList className="flex flex-col items-center h-screen justify-start">
               <h1
                 id="sign_in_h1"
-                className="mt-8  text-5xl text-secondary font-Garamond font-bold"
+                className="mt-8  text-6xl text-secondary font-Garamond font-bold"
               >
-                Welcome To
+                Welcome
               </h1>
               <h2
                 id="sign_in_h2"
@@ -71,7 +71,7 @@ function SignInPage() {
                       alt="ViewMap"
                     />
                   </div>
-                  <div className="flex justify-center items-center h-16">
+                  <div className="flex justify-center items-center h-16 pb-1.5">
                     View Map
                   </div>
                 </UserTypeButton>

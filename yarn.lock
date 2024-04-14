@@ -110,6 +110,15 @@ __metadata:
   languageName: node
   linkType: hard
 
+"@babel/runtime@npm:^7.8.3":
+  version: 7.24.4
+  resolution: "@babel/runtime@npm:7.24.4"
+  dependencies:
+    regenerator-runtime: "npm:^0.14.0"
+  checksum: 8ec8ce2c145bc7e31dd39ab66df124f357f65c11489aefacb30f431bae913b9aaa66aa5efe5321ea2bf8878af3fcee338c87e7599519a952e3a6f83aa1b03308
+  languageName: node
+  linkType: hard
+
 "@babel/types@npm:^7.24.0":
   version: 7.24.0
   resolution: "@babel/types@npm:7.24.0"
@@ -3319,6 +3328,16 @@ __metadata:
   languageName: node
   linkType: hard
 
+"css-vendor@npm:^2.0.8":
+  version: 2.0.8
+  resolution: "css-vendor@npm:2.0.8"
+  dependencies:
+    "@babel/runtime": "npm:^7.8.3"
+    is-in-browser: "npm:^1.0.2"
+  checksum: 3868a17c84b01f1ad9f6d8a44ca84a44453594ea63202e58b20aef63ead801cad021ab0b7816ff8815506c9cc6f971173433fe56b9d150fa76cab09da3041a50
+  languageName: node
+  linkType: hard
+
 "css.escape@npm:^1.5.1":
   version: 1.5.1
   resolution: "css.escape@npm:1.5.1"
@@ -4445,6 +4464,7 @@ __metadata:
     prettier: "npm:latest"
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
+    react-background-slider: "npm:^4.0.0-next.2"
     react-bootstrap: "npm:^2.7.4"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.51.2"
@@ -5023,6 +5043,13 @@ __metadata:
   dependencies:
     is-extglob: "npm:^2.1.1"
   checksum: 3ed74f2b0cdf4f401f38edb0442ddfde3092d79d7d35c9919c86641efdbcbb32e45aa3c0f70ce5eecc946896cd5a0f26e4188b9f2b881876f7cb6c505b82da11
+  languageName: node
+  linkType: hard
+
+"is-in-browser@npm:^1.0.2":
+  version: 1.1.3
+  resolution: "is-in-browser@npm:1.1.3"
+  checksum: f7411dbea0875ac609a794e28a545d654331e2a51f42a8c1629abbedf21ecb642ca726a4a9c8be28f9854990a764693483652b65612ccf7b5bc68aa4657e9a26
   languageName: node
   linkType: hard
 
@@ -6637,6 +6664,19 @@ __metadata:
   languageName: node
   linkType: hard
 
+"react-background-slider@npm:^4.0.0-next.2":
+  version: 4.0.0-next.2
+  resolution: "react-background-slider@npm:4.0.0-next.2"
+  dependencies:
+    css-vendor: "npm:^2.0.8"
+    prop-types: "npm:^15.8.1"
+  peerDependencies:
+    react: ^18.2.0
+    react-dom: ^18.2.0
+  checksum: a1e0c548e23ee0fbc4df13b31af195d8a99947338dd31fcbd32b64821bd87ef0d63b9886b94413d0ba39747e7e6135caa2f44285ab95f6c726b1f5ff35f70258
+  languageName: node
+  linkType: hard
+
 "react-bootstrap@npm:^2.10.0, react-bootstrap@npm:^2.7.4":
   version: 2.10.0
   resolution: "react-bootstrap@npm:2.10.0"
@@ -7383,6 +7423,7 @@ __metadata:
     prettier: "npm:2.8.8"
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
+    react-background-slider: "npm:^4.0.0-next.2"
     react-bootstrap: "npm:^2.10.0"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.51.2"
