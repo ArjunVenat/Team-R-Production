@@ -44,7 +44,7 @@ function SignInPage() {
               >
                 Welcome
               </h1>
-              <p className="mt-10 text-2xl text-center text-secondary font-sans">
+              <p className="mt-10 text-3xl text-center text-gray-200 font-sans">
                 Helping our patients and their families get back to what matters
                 most.
               </p>
