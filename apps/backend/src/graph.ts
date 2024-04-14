@@ -38,10 +38,10 @@ export class GraphNode {
  * Represents a graph structure. Nodes are assumed to have unique names.
  */
 export class Graph {
-  private nodeMap: Map<string, GraphNode>;
+  public static nodeMap: Map<string, GraphNode>;
 
   constructor() {
-    this.nodeMap = new Map<string, GraphNode>();
+    Graph.nodeMap = new Map<string, GraphNode>();
   }
 
   /**
@@ -53,7 +53,7 @@ export class Graph {
    */
   addNode(id: string, x: number, y: number, z: number): void {
     const tempNode = new GraphNode(id, x, y, z);
-    this.nodeMap.set(id, tempNode);
+    Graph.nodeMap.set(id, tempNode);
   }
 
   /**
@@ -62,8 +62,8 @@ export class Graph {
    * @param id2 A unique identifier for the second node to connect.
    */
   addEdge(id1: string, id2: string): void {
-    const node1 = this.nodeMap.get(id1)!;
-    const node2 = this.nodeMap.get(id2)!;
+    const node1 = Graph.nodeMap.get(id1)!;
+    const node2 = Graph.nodeMap.get(id2)!;
 
     node1.addNeighbor(node2);
     node2.addNeighbor(node1);
@@ -75,7 +75,7 @@ export class Graph {
    * @param startNode The node to start the path from
    * @param endNode The node to end the path at
    */
-  private static backtrack(
+  public static backtrack(
     arrivedFrom: Map<GraphNode, GraphNode>,
     startNode: GraphNode,
     endNode: GraphNode,
@@ -107,8 +107,8 @@ export class Graph {
    * @param end A unique identifier representing the node to end at.
    */
   BFS(start: string, end: string): string[] {
-    const startNode = this.nodeMap.get(start);
-    const endNode = this.nodeMap.get(end);
+    const startNode = Graph.nodeMap.get(start);
+    const endNode = Graph.nodeMap.get(end);
 
     // Check if the nodes are within the graph
     if (startNode === undefined || endNode === undefined) {
@@ -150,8 +150,8 @@ export class Graph {
    * @param end A unique identifier representing the node to end at.
    */
   AStar(start: string, end: string): string[] {
-    const startNode = this.nodeMap.get(start);
-    const endNode = this.nodeMap.get(end);
+    const startNode = Graph.nodeMap.get(start);
+    const endNode = Graph.nodeMap.get(end);
 
     // Check if the nodes are within the graph
     if (startNode === undefined || endNode === undefined) {
@@ -205,14 +205,14 @@ export class Graph {
   }
 
   // TODO: IMPLEMENT THIS!!
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  Dijkstra(start: string, end: string): string[] {
-    return [];
-  }
+   
+  //Dijkstra(start: string, end: string): string[] {
+  //  return [];
+  //}
 
   DFS(start: string, end: string) {
-    const startNode = this.nodeMap.get(start);
-    const endNode = this.nodeMap.get(end);
+    const startNode = Graph.nodeMap.get(start);
+    const endNode = Graph.nodeMap.get(end);
 
     // Check if the nodes are within the graph
     if (startNode === undefined || endNode === undefined) {

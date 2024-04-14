@@ -1,6 +1,8 @@
 import express, { Router, Request, Response } from "express";
 import { Graph } from "../graph.ts";
 import { PrismaClient } from "database";
+import { findpath } from "../findpath.ts";
+
 const prisma = new PrismaClient();
 
 const router: Router = express.Router();
@@ -30,7 +32,13 @@ router.get(
 
     const graph = await createGraph();
 
-    const path: string[] = graph.AStar(startNodeID, endNodeID);
+    //const path: string[] = graph.AStar(startNodeID, endNodeID);
+    const path: string[] = findpath.doAlgo(
+      graph,
+      "AStar",
+      startNodeID,
+      endNodeID,
+    );
     console.log(path);
 
     // Check if the path is empty
@@ -77,7 +85,12 @@ router.get(
 
     const graph = await createGraph();
 
-    const path: string[] = graph.Dijkstra(startNodeID, endNodeID);
+    const path: string[] = findpath.doAlgo(
+      graph,
+      "Dijkstra",
+      startNodeID,
+      endNodeID,
+    );
     console.log(path);
 
     // Check if the path is empty
@@ -124,7 +137,12 @@ router.get(
 
     const graph = await createGraph();
 
-    const path: string[] = graph.BFS(startNodeID, endNodeID);
+    const path: string[] = findpath.doAlgo(
+      graph,
+      "BFS",
+      startNodeID,
+      endNodeID,
+    );
     console.log(path);
 
     // Check if the path is empty
@@ -171,7 +189,12 @@ router.get(
 
     const graph = await createGraph();
 
-    const path: string[] = graph.DFS(startNodeID, endNodeID);
+    const path: string[] = findpath.doAlgo(
+      graph,
+      "DFS",
+      startNodeID,
+      endNodeID,
+    );
     console.log(path);
 
     // Check if the path is empty
