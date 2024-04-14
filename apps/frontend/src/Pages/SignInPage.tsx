@@ -26,6 +26,13 @@ function SignInPage() {
     return () => clearInterval(interval);
   }, []);
 
+  // Preload images
+  const images = [blurHall, bwhoutside, hall, outsidebwh];
+  images.forEach((image) => {
+    const img = new Image();
+    img.src = image;
+  });
+
   return (
     <div className="relative">
       {/* Carousel */}
@@ -35,7 +42,7 @@ function SignInPage() {
         data-carousel="slide"
       >
         <AnimatePresence>
-          <div className="relative h-full overflow-hidden rounded-lg transition-transform">
+          <div className="relative h-full overflow-hidden transition-transform">
             {currentSlide === 1 && (
               <motion.img
                 key={blurHall}
