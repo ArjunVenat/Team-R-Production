@@ -59,20 +59,21 @@ export default function MapEditing() {
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
   const [edgeClicked, setEdgeClicked] = useState<Edges>();
+  const [editableEdge, setEditableEdge] = useState<Edges | undefined>();
+  const [editableNode, setEditableNode] = useState<Nodes | undefined>();
 
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
-    console.log("node Xcoord: ", node?.Xcoord, "node Ycoord: ", node?.Ycoord);
+    if (node) {
+      setEditableNode({ ...node });
+    }
   };
 
   const handleEdgeClicked = (edge: Edges | undefined) => {
     setEdgeClicked(edge);
-    console.log(
-      "edge startNodeID: ",
-      edge?.StartNodeID,
-      "edge startNodeID: ",
-      edge?.EndNodeID,
-    );
+    if (edge) {
+      setEditableEdge({ ...edge });
+    }
   };
 
   useEffect(() => {
@@ -172,8 +173,19 @@ export default function MapEditing() {
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Node ID:</TableCell>
-                    <TableCell align="left" width="70%">
-                      {nodeClicked.NodeID}
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.NodeID || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              return { ...prev, NodeID: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -224,8 +236,19 @@ export default function MapEditing() {
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Edge ID:</TableCell>
-                    <TableCell align="left" width="70%">
-                      {edgeClicked.EdgeID}
+                    <TableCell align="left">
+                      <input
+                        value={editableEdge?.EdgeID || ""}
+                        onChange={(e) =>
+                          editableEdge &&
+                          setEditableEdge((prev) => {
+                            if (prev) {
+                              return { ...prev, EdgeID: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                   <TableRow>
