@@ -5501,6 +5501,16 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["framesync", [\
+      ["npm:5.3.0", {\
+        "packageLocation": "./.yarn/cache/framesync-npm-5.3.0-6dde4726f5-b4c2653876.zip/node_modules/framesync/",\
+        "packageDependencies": [\
+          ["framesync", "npm:5.3.0"],\
+          ["tslib", "npm:2.6.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["fresh", [\
       ["npm:0.5.2", {\
         "packageLocation": "./.yarn/cache/fresh-npm-0.5.2-ad2bb4c0a2-64c88e489b.zip/node_modules/fresh/",\
@@ -5859,6 +5869,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/hexoid-npm-1.0.0-2274609209-f2271b8b6b.zip/node_modules/hexoid/",\
         "packageDependencies": [\
           ["hexoid", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["hey-listen", [\
+      ["npm:1.0.8", {\
+        "packageLocation": "./.yarn/cache/hey-listen-npm-1.0.8-adb7dae9da-744b5f4c18.zip/node_modules/hey-listen/",\
+        "packageDependencies": [\
+          ["hey-listen", "npm:1.0.8"]\
         ],\
         "linkType": "HARD"\
       }]\
@@ -7597,6 +7616,19 @@ const RAW_RUNTIME_STATE =
         "linkType": "HARD"\
       }]\
     ]],\
+    ["popmotion", [\
+      ["npm:9.3.6", {\
+        "packageLocation": "./.yarn/cache/popmotion-npm-9.3.6-7554353804-ac9c2f0e5d.zip/node_modules/popmotion/",\
+        "packageDependencies": [\
+          ["popmotion", "npm:9.3.6"],\
+          ["framesync", "npm:5.3.0"],\
+          ["hey-listen", "npm:1.0.8"],\
+          ["style-value-types", "npm:4.1.4"],\
+          ["tslib", "npm:2.6.2"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
     ["postcss", [\
       ["npm:8.4.33", {\
         "packageLocation": "./.yarn/cache/postcss-npm-8.4.33-6ba8157009-e22a4594c2.zip/node_modules/postcss/",\
@@ -8262,6 +8294,52 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/react-lifecycles-compat-npm-3.0.4-d5e285a39e-c66b9c98c1.zip/node_modules/react-lifecycles-compat/",\
         "packageDependencies": [\
           ["react-lifecycles-compat", "npm:3.0.4"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["react-material-ui-carousel", [\
+      ["npm:3.4.2", {\
+        "packageLocation": "./.yarn/cache/react-material-ui-carousel-npm-3.4.2-24998fa973-3f0dff5df0.zip/node_modules/react-material-ui-carousel/",\
+        "packageDependencies": [\
+          ["react-material-ui-carousel", "npm:3.4.2"]\
+        ],\
+        "linkType": "SOFT"\
+      }],\
+      ["virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:3.4.2", {\
+        "packageLocation": "./.yarn/__virtual__/react-material-ui-carousel-virtual-15f11dc456/0/cache/react-material-ui-carousel-npm-3.4.2-24998fa973-3f0dff5df0.zip/node_modules/react-material-ui-carousel/",\
+        "packageDependencies": [\
+          ["react-material-ui-carousel", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:3.4.2"],\
+          ["@emotion/react", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:11.11.4"],\
+          ["@emotion/styled", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:11.11.5"],\
+          ["@mui/icons-material", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:5.15.14"],\
+          ["@mui/material", "virtual:d3996bc66f5a97675d735c6457b44af0f25df32a5e5981f61ff7f22e93004839ccc5d56298eff651f971a908820429de35800a3f2669be95e1c0f6bb82e8a700#npm:5.15.14"],\
+          ["@mui/system", "virtual:15f11dc4560e7a83d901f621fd785d4afc400f673cb68c981ab8ae3bfcabb65a5071ae3b33f14c40329685ee92ad162b2a67c8dd639b00790b243dd63c6d1df7#npm:5.15.15"],\
+          ["@types/emotion__react", null],\
+          ["@types/emotion__styled", null],\
+          ["@types/mui__icons-material", null],\
+          ["@types/mui__material", null],\
+          ["@types/mui__system", null],\
+          ["@types/react", "npm:18.2.48"],\
+          ["@types/react-dom", "npm:18.2.18"],\
+          ["framer-motion", "virtual:15f11dc4560e7a83d901f621fd785d4afc400f673cb68c981ab8ae3bfcabb65a5071ae3b33f14c40329685ee92ad162b2a67c8dd639b00790b243dd63c6d1df7#npm:4.1.17"],\
+          ["react", "npm:18.2.0"],\
+          ["react-dom", "virtual:f7b030241781449f9f163484f540f772ec3707fc5214186cd12bce9e472ad0dbf6db26b799fb1d7d9f7a9e4faeedac41da01e533ee775acb5c8a31c546a0661d#npm:18.2.0"]\
+        ],\
+        "packagePeers": [\
+          "@emotion/react",\
+          "@emotion/styled",\
+          "@mui/icons-material",\
+          "@mui/material",\
+          "@types/emotion__react",\
+          "@types/emotion__styled",\
+          "@types/mui__icons-material",\
+          "@types/mui__material",\
+          "@types/mui__system",\
+          "@types/react-dom",\
+          "@types/react",\
+          "react-dom",\
+          "react"\
         ],\
         "linkType": "HARD"\
       }]\
@@ -9178,6 +9256,17 @@ const RAW_RUNTIME_STATE =
         "packageDependencies": [\
           ["strip-literal", "npm:1.3.0"],\
           ["acorn", "npm:8.11.3"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["style-value-types", [\
+      ["npm:4.1.4", {\
+        "packageLocation": "./.yarn/cache/style-value-types-npm-4.1.4-a70d22eaab-e2787c24a6.zip/node_modules/style-value-types/",\
+        "packageDependencies": [\
+          ["style-value-types", "npm:4.1.4"],\
+          ["hey-listen", "npm:1.0.8"],\
+          ["tslib", "npm:2.6.2"]\
         ],\
         "linkType": "HARD"\
       }]\
