@@ -59,20 +59,21 @@ export default function MapEditing() {
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
   const [edgeClicked, setEdgeClicked] = useState<Edges>();
+  const [editableEdge, setEditableEdge] = useState<Edges | undefined>();
+  const [editableNode, setEditableNode] = useState<Nodes | undefined>();
 
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
-    console.log("node Xcoord: ", node?.Xcoord, "node Ycoord: ", node?.Ycoord);
+    if (node) {
+      setEditableNode({ ...node });
+    }
   };
 
   const handleEdgeClicked = (edge: Edges | undefined) => {
     setEdgeClicked(edge);
-    console.log(
-      "edge startNodeID: ",
-      edge?.StartNodeID,
-      "edge startNodeID: ",
-      edge?.EndNodeID,
-    );
+    if (edge) {
+      setEditableEdge({ ...edge });
+    }
   };
 
   useEffect(() => {
@@ -83,8 +84,42 @@ export default function MapEditing() {
       console.log("successfully got data from get request");
     }
     fetchData().then();
-  }, [getAccessTokenSilently]);
+  }, [editableNode, editableEdge]);
   console.log(nodes);
+
+  const editNodeDB = async (
+    nodeID: string,
+    changeField: string,
+    newVal: string,
+  ) => {
+    const token = await getAccessTokenSilently();
+    await axios.post(
+      `/api/admin/node/edit/${nodeID}/${changeField}/${newVal}`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  };
+
+  const editEdgeDB = async (
+    edgeID: string,
+    changeField: string,
+    newVal: string,
+  ) => {
+    const token = await getAccessTokenSilently();
+    await axios.post(
+      `/api/admin/edge/edit/${edgeID}/${changeField}/${newVal}`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  };
 
   return (
     <div
@@ -164,7 +199,7 @@ export default function MapEditing() {
             Clicked Node/Edge Information:
           </h1>
           {nodeClicked != undefined && (
-            <div>
+            <div className={"items- "}>
               <TableContainer
                 sx={{ margin: 5, maxWidth: 350, overflow: "auto" }}
                 component={Paper}
@@ -172,37 +207,161 @@ export default function MapEditing() {
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Node ID:</TableCell>
-                    <TableCell align="left" width="70%">
-                      {nodeClicked.NodeID}
-                    </TableCell>
+                    <TableCell align="left">{editableNode?.NodeID}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">X Coord:</TableCell>
-                    <TableCell align="left">{nodeClicked.Xcoord}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Xcoord || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Xcoord",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, Xcoord: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Y Coord:</TableCell>
-                    <TableCell align="left">{nodeClicked.Ycoord}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Ycoord || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Ycoord",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, Ycoord: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Floor:</TableCell>
-                    <TableCell align="left">{nodeClicked.Floor}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Floor || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Floor",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, Floor: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Building:</TableCell>
-                    <TableCell align="left">{nodeClicked.Building}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.Building || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Building",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, Building: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Node Type:</TableCell>
-                    <TableCell align="left">{nodeClicked.NodeType}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.NodeType || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "NodeType",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, NodeType: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Long Name:</TableCell>
-                    <TableCell align="left">{nodeClicked.LongName}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.LongName || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "LongName",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, LongName: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Short Name:</TableCell>
-                    <TableCell align="left">{nodeClicked.ShortName}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableNode?.ShortName || ""}
+                        onChange={(e) =>
+                          editableNode &&
+                          setEditableNode((prev) => {
+                            if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "ShortName",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, ShortName: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                 </Table>
               </TableContainer>
@@ -217,26 +376,59 @@ export default function MapEditing() {
               {/*<p>ShortName: {nodeClicked.ShortName}</p>*/}
             </div>
           )}
-
           {edgeClicked != undefined && (
             <div>
               <TableContainer component={Paper}>
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Edge ID:</TableCell>
-                    <TableCell align="left" width="70%">
-                      {edgeClicked.EdgeID}
+                    <TableCell align="left">
+                      {editableEdge?.EdgeID || ""}
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">Start Node:</TableCell>
                     <TableCell align="left">
-                      {edgeClicked.StartNodeID}
+                      <input
+                        value={editableEdge?.StartNodeID || ""}
+                        onChange={(e) =>
+                          editableEdge &&
+                          setEditableEdge((prev) => {
+                            if (prev) {
+                              editEdgeDB(
+                                prev.EdgeID,
+                                "StartNodeID",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, StartNodeID: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
                     </TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">End Node:</TableCell>
-                    <TableCell align="left">{edgeClicked.EndNodeID}</TableCell>
+                    <TableCell align="left">
+                      <input
+                        value={editableEdge?.EndNodeID || ""}
+                        onChange={(e) =>
+                          editableEdge &&
+                          setEditableEdge((prev) => {
+                            if (prev) {
+                              editEdgeDB(
+                                prev.EdgeID,
+                                "EndNodeID",
+                                e.target.value,
+                              ).then();
+                              return { ...prev, EndNodeID: e.target.value };
+                            }
+                            return prev;
+                          })
+                        }
+                      />
+                    </TableCell>
                   </TableRow>
                 </Table>
               </TableContainer>
