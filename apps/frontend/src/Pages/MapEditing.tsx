@@ -84,8 +84,42 @@ export default function MapEditing() {
       console.log("successfully got data from get request");
     }
     fetchData().then();
-  }, [getAccessTokenSilently]);
+  }, [editableNode, editableEdge]);
   console.log(nodes);
+
+  const editNodeDB = async (
+    nodeID: string,
+    changeField: string,
+    newVal: string,
+  ) => {
+    const token = await getAccessTokenSilently();
+    await axios.post(
+      `/api/admin/node/edit/${nodeID}/${changeField}/${newVal}`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  };
+
+  const editEdgeDB = async (
+    edgeID: string,
+    changeField: string,
+    newVal: string,
+  ) => {
+    const token = await getAccessTokenSilently();
+    await axios.post(
+      `/api/admin/edge/edit/${edgeID}/${changeField}/${newVal}`,
+      "",
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      },
+    );
+  };
 
   return (
     <div
@@ -165,7 +199,7 @@ export default function MapEditing() {
             Clicked Node/Edge Information:
           </h1>
           {nodeClicked != undefined && (
-            <div>
+            <div className={"items- "}>
               <TableContainer
                 sx={{ margin: 5, maxWidth: 350, overflow: "auto" }}
                 component={Paper}
@@ -173,20 +207,7 @@ export default function MapEditing() {
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Node ID:</TableCell>
-                    <TableCell align="left">
-                      <input
-                        value={editableNode?.NodeID || ""}
-                        onChange={(e) =>
-                          editableNode &&
-                          setEditableNode((prev) => {
-                            if (prev) {
-                              return { ...prev, NodeID: e.target.value };
-                            }
-                            return prev;
-                          })
-                        }
-                      />
-                    </TableCell>
+                    <TableCell align="left">{editableNode?.NodeID}</TableCell>
                   </TableRow>
                   <TableRow>
                     <TableCell align="left">X Coord:</TableCell>
@@ -197,6 +218,11 @@ export default function MapEditing() {
                           editableNode &&
                           setEditableNode((prev) => {
                             if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Xcoord",
+                                e.target.value,
+                              ).then();
                               return { ...prev, Xcoord: e.target.value };
                             }
                             return prev;
@@ -214,6 +240,11 @@ export default function MapEditing() {
                           editableNode &&
                           setEditableNode((prev) => {
                             if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Ycoord",
+                                e.target.value,
+                              ).then();
                               return { ...prev, Ycoord: e.target.value };
                             }
                             return prev;
@@ -231,6 +262,11 @@ export default function MapEditing() {
                           editableNode &&
                           setEditableNode((prev) => {
                             if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Floor",
+                                e.target.value,
+                              ).then();
                               return { ...prev, Floor: e.target.value };
                             }
                             return prev;
@@ -248,6 +284,11 @@ export default function MapEditing() {
                           editableNode &&
                           setEditableNode((prev) => {
                             if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "Building",
+                                e.target.value,
+                              ).then();
                               return { ...prev, Building: e.target.value };
                             }
                             return prev;
@@ -265,6 +306,11 @@ export default function MapEditing() {
                           editableNode &&
                           setEditableNode((prev) => {
                             if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "NodeType",
+                                e.target.value,
+                              ).then();
                               return { ...prev, NodeType: e.target.value };
                             }
                             return prev;
@@ -282,6 +328,11 @@ export default function MapEditing() {
                           editableNode &&
                           setEditableNode((prev) => {
                             if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "LongName",
+                                e.target.value,
+                              ).then();
                               return { ...prev, LongName: e.target.value };
                             }
                             return prev;
@@ -299,6 +350,11 @@ export default function MapEditing() {
                           editableNode &&
                           setEditableNode((prev) => {
                             if (prev) {
+                              editNodeDB(
+                                prev.NodeID,
+                                "ShortName",
+                                e.target.value,
+                              ).then();
                               return { ...prev, ShortName: e.target.value };
                             }
                             return prev;
@@ -327,18 +383,7 @@ export default function MapEditing() {
                   <TableRow>
                     <TableCell align="left">Edge ID:</TableCell>
                     <TableCell align="left">
-                      <input
-                        value={editableEdge?.EdgeID || ""}
-                        onChange={(e) =>
-                          editableEdge &&
-                          setEditableEdge((prev) => {
-                            if (prev) {
-                              return { ...prev, EdgeID: e.target.value };
-                            }
-                            return prev;
-                          })
-                        }
-                      />
+                      {editableEdge?.EdgeID || ""}
                     </TableCell>
                   </TableRow>
                   <TableRow>
@@ -350,6 +395,11 @@ export default function MapEditing() {
                           editableEdge &&
                           setEditableEdge((prev) => {
                             if (prev) {
+                              editEdgeDB(
+                                prev.EdgeID,
+                                "StartNodeID",
+                                e.target.value,
+                              ).then();
                               return { ...prev, StartNodeID: e.target.value };
                             }
                             return prev;
@@ -367,6 +417,11 @@ export default function MapEditing() {
                           editableEdge &&
                           setEditableEdge((prev) => {
                             if (prev) {
+                              editEdgeDB(
+                                prev.EdgeID,
+                                "EndNodeID",
+                                e.target.value,
+                              ).then();
                               return { ...prev, EndNodeID: e.target.value };
                             }
                             return prev;
