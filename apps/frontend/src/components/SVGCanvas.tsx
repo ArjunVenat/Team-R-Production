@@ -105,6 +105,7 @@ export default function SVGCanvas(props: {
     } else {
       changedFloor = path[idx - 1].Floor;
     }
+    //switch statement to handle floor changes in changedFloor method. Defaults to L1 on splash screen.
     switch (changedFloor) {
       case "L1":
         props.setCurrentMap!(lowerLevel1Map);
