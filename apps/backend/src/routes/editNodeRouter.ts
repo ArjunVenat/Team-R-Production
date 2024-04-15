@@ -75,6 +75,20 @@ editNodeRouter.post(
           });
           break;
         case "Floor":
+          if (
+            newVal != "L2" &&
+            newVal != "L1" &&
+            newVal != "1" &&
+            newVal != "2" &&
+            newVal != "3"
+          ) {
+            console.log(
+              "newVal is not of a supported Floor! Must be L2, L1, 1, 2, or 3",
+            );
+            res.sendStatus(400);
+            return;
+          }
+
           changeNode = await PrismaClient.nodes.update({
             where: {
               NodeID: nodeID,
@@ -85,6 +99,20 @@ editNodeRouter.post(
           });
           break;
         case "Building":
+          if (
+            newVal != "15 Francis" &&
+            newVal != "45 Francis" &&
+            newVal != "BTM" &&
+            newVal != "Shapiro" &&
+            newVal != "Tower"
+          ) {
+            console.log(
+              "newVal is not of a supported Building! Must be 15 Francis, 45 Francis, BTM, Shapiro, or Tower",
+            );
+            res.sendStatus(400);
+            return;
+          }
+
           changeNode = await PrismaClient.nodes.update({
             where: {
               NodeID: nodeID,
@@ -95,6 +123,25 @@ editNodeRouter.post(
           });
           break;
         case "NodeType":
+          if (
+            newVal != "BATH" &&
+            newVal != "CONF" &&
+            newVal != "DEPT" &&
+            newVal != "ELEV" &&
+            newVal != "EXIT" &&
+            newVal != "HALL" &&
+            newVal != "INFO" &&
+            newVal != "LABS" &&
+            newVal != "REST" &&
+            newVal != "RETL" &&
+            newVal != "SERV" &&
+            newVal != "STAI"
+          ) {
+            console.log("newVal is not of a supported NodeType!");
+            res.sendStatus(400);
+            return;
+          }
+
           changeNode = await PrismaClient.nodes.update({
             where: {
               NodeID: nodeID,
