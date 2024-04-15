@@ -116,7 +116,6 @@ BHALL04302,2782,1067,2,45 Francis,HALL,Hallway Intersection 43 level 2,Hallway B
 BHALL04402,3063,963,2,45 Francis,HALL,Hallway Intersection 44 Level 2,Hallway B4402
 CCONF001L1,2255,849,L1,45 Francis,CONF,Anesthesia Conf Floor L1,Conf C001L1
 CCONF002L1,2665,1043,L1,45 Francis,CONF,Medical Records Conference Room Floor L1,Conf C002L1
-CCONF003L1,2445,1245,L1,45 Francis,CONF,Abrams Conference Room,Conf C003L1
 CDEPT002L1,1980,844,L1,Tower,DEPT,Day Surgery Family Waiting Floor L1,Department C002L1
 CDEPT003L1,1845,844,L1,Tower,DEPT,Day Surgery Family Waiting Exit Floor L1,Department C003L1
 CDEPT004L1,2310,1043,L1,45 Francis,DEPT,Medical Records Film Library Floor L1,Department C004L1
@@ -152,9 +151,9 @@ CLABS002L2,2215,1280,L2,45 Francis,LABS,Radiation Oncology Floor L2,Lab C002L2
 CLABS003L1,2290,1284,L1,45 Francis,LABS,Nuclear Medicine Floor L1,Lab C003L1
 CLABS004L1,2320,1284,L1,45 Francis,LABS,Ultrasound Floor L1,Lab C004L1
 CLABS005L1,2770,1284,L1,45 Francis,LABS,CSIR MRI Floor L1,Lab C005L1
-CREST001L1,1732,1019,L1,Tower,REST,Restroom L Elevator Floor L1,Restroom C001L1
 CREST001L2,2300,884,L2,45 Francis,REST,Restroom K Elevator Floor L2,Restroom C001L2
 CREST002L1,2065,1284,L1,Tower,REST,Restroom M Elevator Floor L1,Restroom C002L1
+CCONF003L1,1234,1245,L2,45 Francis,CONF,Abrams Conference Room,Conf C003L1
 CREST002L2,1930,1280,L2,45 Francis,REST,Restroom L Elevator Floor L2,Restroom C002L2
 CREST003L1,2300,879,L1,45 Francis,REST,Restroom K Elevator Floor L1,Restroom C003L1
 CREST004L1,2770,1160,L1,45 Francis,REST,Restroom H Elevator Floor L1,Restroom C004L1
@@ -579,3 +578,4 @@ WHALL00702,1740,1500,2,Tower,HALL,Hallway Connector 7 Floor 2,Hallway W0702
 WHALL00802,1720,1745,2,Shapiro,HALL,Hallway Connector 8 Floor 2,Hallway W0802
 WHALL00902,1690,2240,2,Shapiro,HALL,Hallway Connector 9 Floor 2,Hallway W0902
 WHALL01002,1690,2455,2,BTM,HALL,Hallway Connector 10 Floor 2,Hallway W1002
+CREST001L1,1750,1019,L1,Tower,REST,Restroom L Elevator Floor L1,Restroom C001L1
