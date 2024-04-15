@@ -3,9 +3,21 @@ import axios from "axios";
 import { Edges, Nodes } from "database";
 import { Tooltip } from "@mui/material";
 
+// import ElevatorIcon from '@mui/icons-material/Elevator';
+// import {SvgIcon} from "@mui/material";
+// import {Icon} from "@mui/material";
+// import { IconButton } from '@mui/material';
+// import StairsTwoToneIcon from '@mui/icons-material/StairsTwoTone';
+import ElevatorIcon from "../assets/image/Elevator_Icon.svg";
+import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
+import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
+import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
+import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
+import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 export default function SVGCanvas(props: {
   path?: Nodes[];
   currentMap: string;
+  setCurrentMap?: (map: string) => void;
   currentLevel: string;
   nodeColor?: string;
   edgeColor?: string;
@@ -75,6 +87,78 @@ export default function SVGCanvas(props: {
       props.handleEdgeClicked(undefined);
     }
   }
+
+  function handleElevatorHover(node: Nodes, path: Nodes[]) {
+    const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
+    if (getTypePopup(node, path) === -1) {
+      console.log("Click to go back to ", path[idx - 1].Floor);
+    } else if (getTypePopup(node, path) === 1) {
+      console.log("Click to go forwards to ", path[idx + 1].Floor);
+    }
+  }
+
+  function handleElevatorClick(node: Nodes, nextFloor: number, path: Nodes[]) {
+    const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
+    let changedFloor: string = path[0].Floor;
+    if (nextFloor == 1) {
+      changedFloor = path[idx + 1].Floor;
+    } else {
+      changedFloor = path[idx - 1].Floor;
+    }
+    switch (changedFloor) {
+      case "L1":
+        props.setCurrentMap!(lowerLevel1Map);
+        break;
+      case "L2":
+        props.setCurrentMap!(lowerLevel2Map);
+        break;
+      case "1":
+        props.setCurrentMap!(firstFloorMap);
+        break;
+      case "2":
+        props.setCurrentMap!(secondFloorMap);
+        break;
+      case "3":
+        props.setCurrentMap!(thirdFloorMap);
+        break;
+      default:
+        props.setCurrentMap!(lowerLevel1Map);
+    }
+  }
+
+  function getTypePopup(node: Nodes, path: Nodes[]): number {
+    console.log(node);
+    console.log(path);
+    //0 == no floor change, 1 == next floor change, -1 == prev floor change
+    const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
+    console.log("idx:", idx);
+
+    if (idx != -1) {
+      if (idx != 0 && idx != path.length - 1) {
+        const prevNode: Nodes = path[idx - 1];
+        const nextNode: Nodes = path[idx + 1];
+        console.log(prevNode, nextNode);
+        if (node.Floor != prevNode.Floor) {
+          return -1;
+        }
+        if (node.Floor != nextNode.Floor) {
+          return 1;
+        }
+      } else if (idx === 0) {
+        const nextNode: Nodes = path[idx + 1];
+        if (node.Floor != nextNode.Floor) {
+          return 1;
+        }
+      } else if (idx === path.length - 1) {
+        const prevNode: Nodes = path[idx - 1];
+        if (node.Floor != prevNode.Floor) {
+          return -1;
+        }
+      }
+    }
+    return 0;
+  }
+
   const getNodeColor = (node: Nodes) => {
     if (props.path && props.path?.length > 0) {
       const isElevatorOrStairs =
@@ -188,7 +272,7 @@ export default function SVGCanvas(props: {
       width="auto"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
-      overflow={"visible"}
+      overflow="visible"
     >
       <image href={props.currentMap} height="3400" width="5000" />
       {props.path &&
@@ -239,26 +323,58 @@ export default function SVGCanvas(props: {
         return null;
       })}
       {filteredNodes.map((node) => (
-        <g
-          onClick={() => handleNodeClick(node)}
-          onMouseEnter={() =>
-            props.handleNodeHover && props.handleNodeHover(node)
-          }
-          onMouseLeave={() =>
-            props.handleNodeHover && props.handleNodeHover(undefined)
-          }
-        >
-          <Tooltip title={node.LongName} arrow>
-            <circle
-              cx={node.Xcoord}
-              cy={node.Ycoord}
-              r="10"
-              fill={props.nodeColor ?? getNodeColor(node)}
-              className={
-                "hover:stroke-[3px] hover:stroke-primary hover:fill-tertiary"
-              }
-            />
-          </Tooltip>
+        <g>
+          {props.path &&
+          props.path.length > 0 &&
+          props.path.some((pathNode) => pathNode.NodeID === node.NodeID) &&
+          (getTypePopup(node, props.path!) == 1 ||
+            getTypePopup(node, props.path!) == -1) ? (
+            /* condition for if it is elevator or stairs && */
+            // (<rect x={node.Xcoord} y={node.Ycoord} stroke={"red"} fill={"transparent"} width={"30"} height={"30"}/>):
+            <g>
+              <circle
+                r="15"
+                cx={node.Xcoord}
+                cy={node.Ycoord}
+                fill={getNodeColor(node)}
+              />
+              <image
+                onMouseOver={() => handleElevatorHover(node, props.path!)}
+                onClick={() =>
+                  handleElevatorClick(
+                    node,
+                    getTypePopup(node, props.path!),
+                    props.path!,
+                  )
+                }
+                key={node.NodeID}
+                href={ElevatorIcon}
+                x={+node.Xcoord - 30}
+                y={+node.Ycoord - 30}
+                width="60"
+                height="60"
+              />
+            </g>
+          ) : (
+            <Tooltip title={node.LongName} arrow>
+              <circle
+                onClick={() => handleNodeClick(node)}
+                onMouseEnter={() =>
+                  props.handleNodeHover && props.handleNodeHover(node)
+                }
+                onMouseLeave={() =>
+                  props.handleNodeHover && props.handleNodeHover(undefined)
+                }
+                cx={node.Xcoord}
+                cy={node.Ycoord}
+                r="10"
+                fill={props.nodeColor ?? getNodeColor(node)}
+                className={
+                  "hover:stroke-[3px] hover:stroke-primary hover:fill-tertiary"
+                }
+              />
+            </Tooltip>
+          )}
         </g>
       ))}
     </svg>

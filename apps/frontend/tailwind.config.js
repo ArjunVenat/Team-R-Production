@@ -8,6 +8,11 @@ export default {
         secondary: "#e4e4e4",
         tertiary: "#f6bd39",
       },
+      fontFamily: {
+        sans: ["Open Sans", "sans-serif"],
+        helvetica: ["helvetica"],
+        Garamond: ["Garamond"],
+      },
     },
   },
   plugins: [],
