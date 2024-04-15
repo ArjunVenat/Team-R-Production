@@ -7423,7 +7423,6 @@ __metadata:
     prettier: "npm:2.8.8"
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
-    react-background-slider: "npm:^4.0.0-next.2"
     react-bootstrap: "npm:^2.10.0"
     react-dom: "npm:^18.2.0"
     react-hook-form: "npm:^7.51.2"
