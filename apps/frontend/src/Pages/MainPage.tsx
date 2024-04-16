@@ -41,8 +41,8 @@ const autocompleteStyle = {
 };
 
 const floors = [
-  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
   { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
+  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
   { name: "First Floor", map: firstFloorMap, level: "1" },
   { name: "Second Floor", map: secondFloorMap, level: "2" },
   { name: "Third Floor", map: thirdFloorMap, level: "3" },
@@ -225,26 +225,31 @@ export default function MainPage() {
                       </MenuItem>
                     </Select>
                   </ButtonGroup>
-                  <Select
-                    value={currentMap}
-                    onChange={(event) => setCurrentMap(event.target.value)}
+                  <ButtonGroup
+                    orientation="vertical"
+                    variant="contained"
                     sx={{
+                      position: "fixed",
+                      bottom: 0,
                       backgroundColor: "primary.main",
                       color: "white",
                       "&:hover": {
                         backgroundColor: "primary.dark",
                       },
-                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      "& .MuiButton-root": {
                         borderColor: "white",
                       },
                     }}
                   >
                     {floors.map((floor, index) => (
-                      <MenuItem key={index} value={floor.map}>
-                        {floor.name}
-                      </MenuItem>
+                      <Button
+                        key={index}
+                        onClick={() => setCurrentMap(floor.map)}
+                      >
+                        {floor.level}
+                      </Button>
                     ))}
-                  </Select>
+                  </ButtonGroup>
                 </div>
               </ThemeProvider>
               <TransformComponent>
