@@ -157,6 +157,7 @@ export default function SVGCanvas(props: {
     }
 
     // Update the current map based on the changed floor
+
     switch (changedFloor) {
       case "L1":
         props.setCurrentMap!(lowerLevel1Map);
