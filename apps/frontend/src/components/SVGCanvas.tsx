@@ -35,6 +35,7 @@ export default function SVGCanvas(props: {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
   const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
+  const [hoverElevatorTooltip, setHoverElevatorTooltip] = useState("");
 
   /**
    * This useEffect hook is responsible for updating the component's state with new node data.
@@ -128,10 +129,17 @@ export default function SVGCanvas(props: {
     const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
 
     // Determine the type of popup to display based on the node's position in the path array
+    // Set tool tip description use state
     if (getTypePopup(node, path) === -1) {
       console.log("Click to go back to ", path[idx - 1].Floor);
+      setHoverElevatorTooltip(
+        `Click to go return to Floor ${path[idx - 1].Floor}`,
+      );
     } else if (getTypePopup(node, path) === 1) {
       console.log("Click to go forwards to ", path[idx + 1].Floor);
+      setHoverElevatorTooltip(
+        `Click to go proceed to Floor ${path[idx + 1].Floor}`,
+      );
     }
   }
 
@@ -463,7 +471,8 @@ export default function SVGCanvas(props: {
                 cy={+node.Ycoord}
                 fill={getNodeColor(node)}
               />
-              <Tooltip title="Click node to traverse floors" arrow>
+              {/* Set description for floor tool tip */}
+              <Tooltip title={hoverElevatorTooltip} arrow>
                 <image
                   onMouseOver={() => handleElevatorHover(node, props.path!)}
                   onClick={() =>
