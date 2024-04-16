@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
 import { Tooltip } from "@mui/material";
+import { motion } from "framer-motion";
 
 // import ElevatorIcon from '@mui/icons-material/Elevator';
 // import {SvgIcon} from "@mui/material";
@@ -14,6 +15,7 @@ import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
 import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
 import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
 import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
+
 export default function SVGCanvas(props: {
   path?: Nodes[]; //Array of nodes representing the path to be highlighted
   currentMap: string; //The current map being displayed
@@ -155,7 +157,6 @@ export default function SVGCanvas(props: {
       // If the elevator is going down, switch to the previous floor
       changedFloor = path[idx - 1].Floor;
     }
-
 
     // Update the current map based on the changed floor
 
@@ -387,35 +388,39 @@ export default function SVGCanvas(props: {
       overflow="visible"
     >
       <image href={props.currentMap} height="3400" width="5000" />
-      {props.path && // Conditional rendering: Render the following content only if props.path is truthy
-        splices()[0][0] && // Check if the first splice exists and contains at least one node
-        splices().map((splice) => {
-          // Map over each splice in the array returned by the splices function
-          return splice
-            .filter((node) => node.Floor === currentFloor) // Filter nodes in the current splice that are on the current floor
-            .map((node, i, filteredPath) => {
-              // Map over the filtered nodes in the current splice
-              if (i < filteredPath.length - 1) {
-                // Check if the current node is not the last node in the filtered path
-                const nextNode = filteredPath[i + 1]; // Get the next node in the filtered path
-                if (node && nextNode) {
-                  // Check if both the current node and the next node exist
-                  // Render a line connecting the current node to the next node
-                  return (
-                    <line
-                      key={`${node.NodeID} ${nextNode.NodeID}`}
-                      x1={nextNode.Xcoord}
-                      y1={nextNode.Ycoord}
-                      x2={node.Xcoord}
-                      y2={node.Ycoord}
-                      stroke={props.edgeColor ?? "blue"} // Use props.edgeColor if provided, otherwise default to "blue"
-                      strokeWidth="5"
-                    />
-                  );
-                }
+      {props.path && // Render the path only if props.path is defined
+        splices()[0][0] && // Ensure the splices array is not empty
+        splices().map((splice, index) => {
+          if (splice.every((node) => node.Floor === currentFloor)) {
+            const totalLength = splice.length;
+            return splice.map((node, i) => {
+              const nextNode = splice[i + 1];
+              if (nextNode) {
+                return (
+                  <motion.path
+                    key={`${index}`}
+                    d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
+                      .slice(1)
+                      .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
+                      .join(" ")}`}
+                    stroke={props.edgeColor ?? "blue"}
+                    strokeWidth="5"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: 2 }}
+                    transition={{
+                      duration: 0.5 * totalLength,
+                      ease: "linear",
+                      repeat: Infinity,
+                      repeatDelay: 0.01,
+                    }}
+                  />
+                );
               }
               return null; // Return null if the conditions are not met (no line to render)
             });
+          }
+          return null;
         })}
 
       {/* Map over each edge in the filteredEdges array, defaulting to an empty array if filteredEdges is null or undefined */}
@@ -441,6 +446,7 @@ export default function SVGCanvas(props: {
             />
           </g>
         );
+        return null;
       })}
       {filteredNodes.map((node) => (
         <g>
@@ -454,8 +460,8 @@ export default function SVGCanvas(props: {
             <g>
               <circle
                 r="15"
-                cx={node.Xcoord}
-                cy={node.Ycoord}
+                cx={+node.Xcoord}
+                cy={+node.Ycoord}
                 fill={getNodeColor(node)}
               />
               <image
