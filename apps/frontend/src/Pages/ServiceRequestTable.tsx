@@ -88,8 +88,8 @@ function ServiceRequestTable() {
     <Box display="flex">
       <Sidebar />
 
-      <div className="overflow-y-auto flex-grow bg-gradient-to-r from-teal-100 via-blue-100 to-blue-200 ">
-        <div className="bg-gradient-to-r to-blue-100 via-blue-200 from-blue-100 p-4">
+      <div className="overflow-y-auto flex-grow bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400">
+        <div className="p-4">
           <h1 className="mt-2 text-5xl text-primary font-bold p-2 text-center">
             Service Request Tables
           </h1>

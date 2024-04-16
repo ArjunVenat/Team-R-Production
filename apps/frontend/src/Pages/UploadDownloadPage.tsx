@@ -17,9 +17,9 @@ export default function UploadDownloadCSV() {
   }
   return (
     <>
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row">
         <SideBar />
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center items-center h-screen w-full bg-gradient-to-r from-blue-200 via-blue-300 to-blue-400">
           <Stack spacing={4}>
             <div className="text-center text-lg">
               <h1>Upload CSV File:</h1>
