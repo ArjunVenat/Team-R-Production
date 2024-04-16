@@ -456,7 +456,6 @@ export default function SVGCanvas(props: {
           (getTypePopup(node, props.path!) == 1 || // Check if the current node goes up a floor OR
             getTypePopup(node, props.path!) == -1) ? ( // Check if the current node goes down a floor OR
             /* condition for if it is elevator or stairs && */
-            // (<rect x={node.Xcoord} y={node.Ycoord} stroke={"red"} fill={"transparent"} width={"30"} height={"30"}/>):
             <g>
               <circle
                 r="15"
@@ -464,23 +463,25 @@ export default function SVGCanvas(props: {
                 cy={+node.Ycoord}
                 fill={getNodeColor(node)}
               />
-              <image
-                onMouseOver={() => handleElevatorHover(node, props.path!)}
-                onClick={() =>
-                  // Handle click event for elevator or stairs icon to switch the floor of map
-                  handleElevatorClick(
-                    node,
-                    getTypePopup(node, props.path!),
-                    props.path!,
-                  )
-                }
-                key={node.NodeID}
-                href={ElevatorIcon}
-                x={+node.Xcoord - 30}
-                y={+node.Ycoord - 30}
-                width="60"
-                height="60"
-              />
+              <Tooltip title="Click node to traverse floors" arrow>
+                <image
+                  onMouseOver={() => handleElevatorHover(node, props.path!)}
+                  onClick={() =>
+                    // Handle click event for elevator or stairs icon to switch the floor of map
+                    handleElevatorClick(
+                      node,
+                      getTypePopup(node, props.path!),
+                      props.path!,
+                    )
+                  }
+                  key={node.NodeID}
+                  href={ElevatorIcon}
+                  x={+node.Xcoord - 30}
+                  y={+node.Ycoord - 30}
+                  width="60"
+                  height="60"
+                />
+              </Tooltip>
             </g>
           ) : (
             <Tooltip title={node.LongName} arrow>
