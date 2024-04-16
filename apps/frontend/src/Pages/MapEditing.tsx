@@ -7,8 +7,7 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
 import { Edges, Nodes } from "database";
-import { Stack } from "react-bootstrap";
-import { Button, ButtonGroup, MenuItem } from "@mui/material";
+import { Button, ButtonGroup, MenuItem, Stack } from "@mui/material";
 import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
@@ -193,7 +192,7 @@ export default function MapEditing() {
           )}
         </TransformWrapper>
       </main>
-      <aside className="bg-primary text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
+      <aside className="bg-primary text-secondary flex-shrink fixed top-0 right-0 h-full">
         <Stack>
           <h1 className="text-xl bg-transparent p-2 text-center">
             Clicked Node/Edge Information:

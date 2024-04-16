@@ -41,8 +41,8 @@ const autocompleteStyle = {
 };
 
 const floors = [
-  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
   { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
+  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
   { name: "First Floor", map: firstFloorMap, level: "1" },
   { name: "Second Floor", map: secondFloorMap, level: "2" },
   { name: "Third Floor", map: thirdFloorMap, level: "3" },
@@ -57,8 +57,6 @@ export default function MainPage() {
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
-  const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
-  const [clickedNode, setClickedNode] = useState<Nodes | undefined>();
   const [clickTimes, setClickTimes] = useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
@@ -104,6 +102,7 @@ export default function MainPage() {
   };
 
   async function getDirections() {
+    resetCanvas();
     const startNodeArray = nodes?.filter(
       (node: Nodes) => node.LongName === start,
     );
@@ -225,26 +224,31 @@ export default function MainPage() {
                       </MenuItem>
                     </Select>
                   </ButtonGroup>
-                  <Select
-                    value={currentMap}
-                    onChange={(event) => setCurrentMap(event.target.value)}
+                  <ButtonGroup
+                    orientation="vertical"
+                    variant="contained"
                     sx={{
+                      position: "fixed",
+                      bottom: 0,
                       backgroundColor: "primary.main",
                       color: "white",
                       "&:hover": {
                         backgroundColor: "primary.dark",
                       },
-                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      "& .MuiButton-root": {
                         borderColor: "white",
                       },
                     }}
                   >
                     {floors.map((floor, index) => (
-                      <MenuItem key={index} value={floor.map}>
-                        {floor.name}
-                      </MenuItem>
+                      <Button
+                        key={index}
+                        onClick={() => setCurrentMap(floor.map)}
+                      >
+                        {floor.level}
+                      </Button>
                     ))}
-                  </Select>
+                  </ButtonGroup>
                 </div>
               </ThemeProvider>
               <TransformComponent>
@@ -257,7 +261,6 @@ export default function MainPage() {
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
                   }
-                  handleNodeHover={setHoveredNode}
                   handleNodeClicked={(node) => {
                     const newClickTimes = clickTimes + 1;
                     setClickTimes(newClickTimes);
@@ -266,7 +269,6 @@ export default function MainPage() {
                     } else {
                       setEnd(node ? node.LongName : "");
                     }
-                    setClickedNode(node);
                   }}
                   isHome={true}
                   showPathOnly={showPathOnly}
@@ -277,7 +279,7 @@ export default function MainPage() {
           )}
         </TransformWrapper>
       </main>
-      <aside className="bg-primary text-secondary flex-shrink fixed top-0 right-0 h-full rounded-l-xl">
+      <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full">
         <h1 className="text-xl bg-transparent p-2 text-center">
           Enter your start and end locations:
         </h1>
@@ -317,6 +319,7 @@ export default function MainPage() {
         <div className="flex justify-center">
           <Button
             className="content-center"
+            style={{ marginRight: "5px" }}
             variant="contained"
             color="success"
             onClick={getDirections}
@@ -325,6 +328,7 @@ export default function MainPage() {
           </Button>
           <Button
             className="content-center"
+            style={{ marginLeft: "5px" }}
             variant="contained"
             color="secondary"
             onClick={resetCanvas}
@@ -332,40 +336,6 @@ export default function MainPage() {
             Reset Map
           </Button>
         </div>
-
-        {hoveredNode && (
-          <div
-            style={{
-              backgroundColor: "#012d5a",
-              color: "white",
-              padding: "10px",
-              borderRadius: "5px",
-              margin: "10px 0",
-            }}
-          >
-            <p>Hovered Node:</p>
-            <p>NodeID: {hoveredNode.NodeID}</p>
-            <p>Name: {hoveredNode.LongName}</p>
-          </div>
-        )}
-        {clickedNode && (
-          <div
-            style={{
-              position: "absolute",
-              top: "50%",
-              width: "fit-content",
-              backgroundColor: "#012d5a",
-              color: "white",
-              padding: "10px",
-              borderRadius: "5px",
-              margin: "10px 0",
-            }}
-          >
-            <p>Clicked Node:</p>
-            <p>NodeID: {clickedNode.NodeID}</p>
-            <p>Name: {clickedNode.LongName}</p>
-          </div>
-        )}
       </aside>
     </div>
   );
