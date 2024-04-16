@@ -35,6 +35,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { Nodes } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import blueback from "../assets/blueback.png";
 
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -331,7 +332,14 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
   return (
     // <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div className="flex h-screen ">
+    <div
+      className="flex h-screen bg-cover bg-center bg-no-repeat overflow-y-auto flex-grow  "
+      style={{
+        backgroundImage: `url(${blueback})`,
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
       <div className="inline-block flex-none">
         <SideBar />
       </div>
