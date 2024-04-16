@@ -125,7 +125,7 @@ function ServiceRequestTable() {
           <div>
             <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
+                <tr className="text-xl">
                   <th className="bg-primary border border-black p-2 text-white">
                     Service Type
                   </th>
@@ -164,7 +164,7 @@ function ServiceRequestTable() {
                   requestData
                     .filter((row) => row.RequestType === "Flowers")
                     .map((row, index) => (
-                      <tr key={index} className="font-semibold">
+                      <tr key={index}>
                         <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
@@ -192,7 +192,7 @@ function ServiceRequestTable() {
                         <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
                             <Select
-                              sx={{ width: 200, fontWeight: "bold" }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -231,7 +231,7 @@ function ServiceRequestTable() {
           <div>
             <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
+                <tr className="text-xl">
                   <th className="bg-primary border border-black p-2 text-white">
                     Service Type
                   </th>
@@ -270,7 +270,7 @@ function ServiceRequestTable() {
                   requestData
                     .filter((row) => row.RequestType === "Gifts")
                     .map((row, index) => (
-                      <tr key={index} className="font-semibold">
+                      <tr key={index}>
                         <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
@@ -298,7 +298,7 @@ function ServiceRequestTable() {
                         <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
                             <Select
-                              sx={{ width: 200, fontWeight: "bold" }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -337,7 +337,7 @@ function ServiceRequestTable() {
           <div>
             <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
+                <tr className="text-xl">
                   <th className="bg-primary border border-black p-2 text-white">
                     Service Type
                   </th>
@@ -376,7 +376,7 @@ function ServiceRequestTable() {
                   requestData
                     .filter((row) => row.RequestType === "Maintenance")
                     .map((row, index) => (
-                      <tr key={index} className="font-semibold">
+                      <tr key={index}>
                         <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
@@ -404,7 +404,7 @@ function ServiceRequestTable() {
                         <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
                             <Select
-                              sx={{ width: 200, fontWeight: "bold" }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -443,7 +443,7 @@ function ServiceRequestTable() {
           <div>
             <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
+                <tr className="text-xl">
                   <th className="bg-primary text-white border border-black p-2">
                     Service Type
                   </th>
@@ -482,7 +482,7 @@ function ServiceRequestTable() {
                   requestData
                     .filter((row) => row.RequestType === "Medicine")
                     .map((row, index) => (
-                      <tr key={index} className="font-semibold">
+                      <tr key={index}>
                         <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
@@ -510,7 +510,7 @@ function ServiceRequestTable() {
                         <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
                             <Select
-                              sx={{ width: 200, fontWeight: "bold" }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -549,7 +549,7 @@ function ServiceRequestTable() {
           <div>
             <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
+                <tr className="text-xl">
                   <th className="bg-primary text-white border border-black p-2">
                     Service Type
                   </th>
@@ -588,7 +588,7 @@ function ServiceRequestTable() {
                   requestData
                     .filter((row) => row.RequestType === "Medical Equipment")
                     .map((row, index) => (
-                      <tr key={index} className="font-semibold">
+                      <tr key={index}>
                         <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
@@ -616,7 +616,7 @@ function ServiceRequestTable() {
                         <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
                             <Select
-                              sx={{ width: 200, fontWeight: "bold" }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
