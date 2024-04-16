@@ -8,7 +8,6 @@ import SVGCanvas from "../components/SVGCanvas.tsx";
 // import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Nodes } from "database";
-//import { Stack } from "react-bootstrap";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
 import { Button, ButtonGroup } from "@mui/material";
@@ -105,6 +104,7 @@ export default function MainPage() {
   };
 
   async function getDirections() {
+    resetCanvas();
     const startNodeArray = nodes?.filter(
       (node: Nodes) => node.LongName === start,
     );

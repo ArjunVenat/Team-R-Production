@@ -28,7 +28,7 @@ interface Menu {
 }
 
 export default function Sidebar() {
-  //Use auth0 react hook
+  // Use the Auth0 React hook to handle authentication.
   const {
     isAuthenticated,
     isLoading,
@@ -88,29 +88,37 @@ export default function Sidebar() {
   const location = useLocation();
   const currentURL = location.pathname;
 
-  //Refresh the access token with a useEffect
-  useEffect(() => {
-    const refreshToken = async () => {
-      try {
-        await getAccessTokenSilently();
-      } catch (error) {
-        await loginWithRedirect({
-          appState: {
-            returnTo: location.pathname,
-          },
-        });
+  // This useEffect hook is responsible for refreshing the access token when necessary.
+  useEffect(
+    () => {
+      // Define an asynchronous function to refresh the access token.
+      const refreshToken = async () => {
+        try {
+          await getAccessTokenSilently();
+        } catch (error) {
+          // If an error occurs during token refresh, redirect the user to the login page.
+          await loginWithRedirect({
+            appState: {
+              returnTo: location.pathname,
+            },
+          });
+        }
+      };
+
+      // Check if authentication is not in progress and the user is authenticated.
+      if (!isLoading && isAuthenticated) {
+        refreshToken().then();
       }
-    };
-    if (!isLoading && isAuthenticated) {
-      refreshToken().then();
-    }
-  }, [
-    getAccessTokenSilently,
-    loginWithRedirect,
-    location.pathname,
-    isLoading,
-    isAuthenticated,
-  ]);
+    },
+    // Dependencies array to re-run the effect when any of these values change.
+    [
+      getAccessTokenSilently, // Auth0 hook for getting access token.
+      loginWithRedirect, // Auth0 hook for redirecting to login page.
+      location.pathname, // Pathname of the current location.
+      isLoading, // Boolean indicating whether authentication is in progress.
+      isAuthenticated, // Boolean indicating whether the user is authenticated.
+    ],
+  );
 
   let menuHighlight: string = "";
   console.log({ currentURL });
@@ -153,14 +161,22 @@ export default function Sidebar() {
   const collapse = { title: "Collapse", icon: <FirstPageIcon /> };
 
   const navigate = useNavigate();
+
+  // Define a function to change the route/navigation within the application.
   const routeChange = (path: string) => {
     const newPath = `/${path}`;
-    navigate(newPath);
+    navigate(newPath); //  Navigate to new path within the application
   };
 
+  // Define a function to handle clicks on the menu items.
   const handleMenuClick = (title: string) => {
+    // Set the active menu to the clicked menu item's title.
     setActiveMenu(title);
+
+    // Handle different menu item clicks.
     if (title === "Logout") {
+      // If the user clicks Logout and is authenticated and not loading,
+      // initiate logout process and redirect to the home page after logout.
       if (isAuthenticated && !isLoading) {
         logout({
           logoutParams: {
@@ -168,30 +184,29 @@ export default function Sidebar() {
           },
         }).then();
       } else {
+        // If the user is not authenticated or is still loading,
+        // call routeChange function to the home page.
         routeChange("");
       }
-    }
-    if (title === "Service Request") {
+    } else if (title === "Service Request") {
+      // Redirect to the service request page.
       routeChange("servicerequest");
-    }
-    if (title === "Service Request Table") {
+    } else if (title === "Service Request Table") {
+      // Redirect to the service request table page.
       routeChange("service-request-table");
-    }
-    if (title === "Edit Map") {
+    } else if (title === "Edit Map") {
+      // Redirect to the edit map page.
       routeChange("editmap");
-    }
-    if (title === "Node/Edge Table") {
+    } else if (title === "Node/Edge Table") {
+      // Redirect to the node/edge table page.
       routeChange("node-edge-table");
-    }
-    if (title === "Home") {
+    } else if (title === "Home") {
+      // Redirect to the home page.
       routeChange("home");
-    }
-    if (title === "Upload/Download CSV") {
+    } else if (title === "Upload/Download CSV") {
+      // Redirect to the upload/download CSV page.
       routeChange("upload-download-csv");
     }
-    // if (title === "Download CSV") {
-    //   routeChange("download-csv");
-    // }
   };
 
   return (
@@ -232,6 +247,9 @@ export default function Sidebar() {
 
         <ul className="pt-2">
           {Menus.filter(
+            // Filter the menu items based on whether the user is authenticated
+            // or what menu items should be displayed even when the user is not logged in,
+            // and ensure that the loading state is false.
             (menu: Menu) =>
               (isAuthenticated || !menu.displayLoggedIn) && !isLoading,
           ).map((menu, index) => (

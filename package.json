@@ -57,10 +57,11 @@
     "dotenv": "^16.4.5",
     "dotenv-cli": "^7.4.0",
     "framer-motion": "^11.0.24",
+    "frontend": "workspace:^",
     "multer": "^1.4.5-lts.1",
     "react": "^18.2.0",
-    "react-bootstrap": "^2.10.0",
     "react-dom": "^18.2.0",
-    "react-hook-form": "^7.51.2"
+    "react-hook-form": "^7.51.2",
+    "react-material-ui-carousel": "^3.4.2"
   }
 }
