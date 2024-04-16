@@ -73,12 +73,13 @@ export default function UploadCSV() {
           display: "grid",
         }}
       >
-        <div className="border-2 border-blue rounded-lg p-10">
+        <div className="bg-white bg-opacity-60 backdrop-blur-md rounded-lg p-10">
           <form
             onSubmit={(event) => {
               handleSubmit(event).then();
             }}
           >
+            <h1 className="font-semibold text-xl mb-10">Upload CSV File:</h1>
             <input type="file" onChange={handleFileSelect} />
             <br />
             <Box mt={5}>

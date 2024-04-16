@@ -81,7 +81,8 @@ export default function DownloadCSV() {
           display: "grid",
         }}
       >
-        <div className="border-2 border-blue rounded-lg p-10">
+        <div className="bg-white bg-opacity-60 backdrop-blur-md rounded-lg p-10">
+          <h1 className="font-semibold text-xl mb-10">Download CSV File:</h1>
           <Stack direction="row" spacing={5}>
             <Box mt={5}>
               <Button

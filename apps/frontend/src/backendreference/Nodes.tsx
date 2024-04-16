@@ -7,7 +7,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 import { Box } from "@mui/material";
 export default function NodeTable() {
   const [nodeData, setNodeData] = useState<Nodes[]>([]);
@@ -34,22 +33,88 @@ export default function NodeTable() {
     </TableRow>
   ));
   return (
-    <Box flex={1}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <Box className="w-4/5 mx-auto">
+      <TableContainer>
+        <Table aria-label="simple table">
           <TableHead>
-            <TableRow>
-              <TableCell>NodeID</TableCell>
-              <TableCell>Xcoord</TableCell>
-              <TableCell>Ycoord</TableCell>
-              <TableCell>Floor</TableCell>
-              <TableCell>Building</TableCell>
-              <TableCell>NodeType</TableCell>
-              <TableCell>LongName</TableCell>
-              <TableCell>ShortName</TableCell>
+            <TableRow className="bg-primary">
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                NodeID
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                Xcoord
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                Ycoord
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                Floor
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                Building
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                NodeType
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                LongName
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                ShortName
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{arrayNode}</TableBody>
+          <TableBody className="bg-white bg-opacity-60 backdrop-blur-md">
+            {arrayNode}
+          </TableBody>
         </Table>
       </TableContainer>
     </Box>

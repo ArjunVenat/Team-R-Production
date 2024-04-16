@@ -8,7 +8,6 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-import Paper from "@mui/material/Paper";
 export default function EdgeTable() {
   const [edgeData, setEdgeData] = useState<Edges[]>([]);
   useEffect(() => {
@@ -29,17 +28,43 @@ export default function EdgeTable() {
     </TableRow>
   ));
   return (
-    <Box flex={1}>
-      <TableContainer component={Paper}>
-        <Table sx={{ minWidth: 650 }} aria-label="simple table">
+    <Box className="w-4/5 mx-auto">
+      <TableContainer>
+        <Table aria-label="simple table">
           <TableHead>
-            <TableRow>
-              <TableCell>Edge ID</TableCell>
-              <TableCell>Start Node ID</TableCell>
-              <TableCell>End Node ID</TableCell>
+            <TableRow className="bg-primary">
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                Edge ID
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                Start Node ID
+              </TableCell>
+              <TableCell
+                sx={{
+                  color: "white",
+                  fontWeight: "bold",
+                  fontSize: "h6.fontSize",
+                }}
+              >
+                End Node ID
+              </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>{arrayEdge}</TableBody>
+          <TableBody className="bg-white bg-opacity-60 backdrop-blur-md">
+            {arrayEdge}
+          </TableBody>
         </Table>
       </TableContainer>
     </Box>
