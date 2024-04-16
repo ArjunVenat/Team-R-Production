@@ -156,7 +156,6 @@ export default function SVGCanvas(props: {
       changedFloor = path[idx - 1].Floor;
     }
 
-
     // Update the current map based on the changed floor
 
     switch (changedFloor) {
