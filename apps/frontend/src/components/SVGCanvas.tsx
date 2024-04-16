@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
+import { Tooltip } from "@mui/material";
+
 // import ElevatorIcon from '@mui/icons-material/Elevator';
 // import {SvgIcon} from "@mui/material";
 // import {Icon} from "@mui/material";
@@ -103,6 +105,7 @@ export default function SVGCanvas(props: {
     } else {
       changedFloor = path[idx - 1].Floor;
     }
+    //switch statement to handle floor changes in changedFloor method. Defaults to L1 on splash screen.
     switch (changedFloor) {
       case "L1":
         props.setCurrentMap!(lowerLevel1Map);
@@ -270,20 +273,8 @@ export default function SVGCanvas(props: {
       width="auto"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
+      overflow="visible"
     >
-      <defs>
-        <marker
-          id="arrow"
-          markerUnits="strokeWidth"
-          orient="auto"
-          refX="9"
-          refY="3"
-          markerWidth="5"
-          markerHeight="5"
-        >
-          <path d="M0,3 L9,6 L9,0 z" fill="blue" />
-        </marker>
-      </defs>
       <image href={props.currentMap} height="3400" width="5000" />
       {props.path &&
         splices()[0][0] &&
@@ -344,8 +335,8 @@ export default function SVGCanvas(props: {
             <g>
               <circle
                 r="15"
-                cx={+node.Xcoord}
-                cy={+node.Ycoord}
+                cx={node.Xcoord}
+                cy={node.Ycoord}
                 fill={getNodeColor(node)}
               />
               <image
@@ -366,19 +357,24 @@ export default function SVGCanvas(props: {
               />
             </g>
           ) : (
-            <circle
-              onClick={() => handleNodeClick(node)}
-              onMouseEnter={() =>
-                props.handleNodeHover && props.handleNodeHover(node)
-              }
-              onMouseLeave={() =>
-                props.handleNodeHover && props.handleNodeHover(undefined)
-              }
-              cx={node.Xcoord}
-              cy={node.Ycoord}
-              r="10"
-              fill={props.nodeColor ?? getNodeColor(node)}
-            />
+            <Tooltip title={node.LongName} arrow>
+              <circle
+                onClick={() => handleNodeClick(node)}
+                onMouseEnter={() =>
+                  props.handleNodeHover && props.handleNodeHover(node)
+                }
+                onMouseLeave={() =>
+                  props.handleNodeHover && props.handleNodeHover(undefined)
+                }
+                cx={node.Xcoord}
+                cy={node.Ycoord}
+                r="10"
+                fill={props.nodeColor ?? getNodeColor(node)}
+                className={
+                  "hover:stroke-[3px] hover:stroke-primary hover:fill-tertiary"
+                }
+              />
+            </Tooltip>
           )}
         </g>
       ))}
