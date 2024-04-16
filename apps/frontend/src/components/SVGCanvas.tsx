@@ -12,6 +12,7 @@ import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
 import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
 import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
 import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
+import { motion } from "framer-motion";
 export default function SVGCanvas(props: {
   path?: Nodes[];
   currentMap: string;
@@ -287,28 +288,37 @@ export default function SVGCanvas(props: {
       <image href={props.currentMap} height="3400" width="5000" />
       {props.path &&
         splices()[0][0] &&
-        splices().map((splice) => {
-          return splice
-            .filter((node) => node.Floor === currentFloor)
-            .map((node, i, filteredPath) => {
-              if (i < filteredPath.length - 1) {
-                const nextNode = filteredPath[i + 1];
-                if (node && nextNode) {
-                  return (
-                    <line
-                      key={`${node.NodeID} ${nextNode.NodeID}`}
-                      x1={nextNode.Xcoord}
-                      y1={nextNode.Ycoord}
-                      x2={node.Xcoord}
-                      y2={node.Ycoord}
-                      stroke={props.edgeColor ?? "blue"}
-                      strokeWidth="5"
-                    />
-                  );
-                }
+        splices().map((splice, index) => {
+          if (splice.every((node) => node.Floor === currentFloor)) {
+            const totalLength = splice.length;
+            return splice.map((node, i) => {
+              const nextNode = splice[i + 1];
+              if (nextNode) {
+                return (
+                  <motion.path
+                    key={`${index}`}
+                    d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
+                      .slice(1)
+                      .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
+                      .join(" ")}`}
+                    stroke={props.edgeColor ?? "blue"}
+                    strokeWidth="5"
+                    fill="none"
+                    initial={{ pathLength: 0 }}
+                    animate={{ pathLength: totalLength }}
+                    transition={{
+                      duration: 2 * totalLength,
+                      ease: "linear",
+                      repeat: Infinity,
+                      repeatDelay: Math.floor(totalLength / 4),
+                    }}
+                  />
+                );
               }
               return null;
             });
+          }
+          // return null;
         })}
 
       {(filteredEdges ?? []).map((edge) => {
