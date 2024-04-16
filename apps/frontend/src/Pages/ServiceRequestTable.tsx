@@ -2,18 +2,12 @@ import * as React from "react";
 import { useState, useEffect } from "react";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
-import {
-  Box,
-  Button,
-  FormControl,
-  InputLabel,
-  MenuItem,
-  Select,
-} from "@mui/material";
+import { Box, Button, FormControl, MenuItem, Select } from "@mui/material";
 import Sidebar from "../components/SideBar.tsx";
 import { GeneralRequest } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
+import blueback from "../assets/blueback.png";
 
 function ServiceRequestTable() {
   //Use auth0 react hook
@@ -95,13 +89,22 @@ function ServiceRequestTable() {
     <Box display="flex">
       <Sidebar />
 
-      <div className="overflow-y-auto h-screen flex-grow">
-        <div>
-          <h1 className="text-2xl font-bold p-2 text-center">
+      <div
+        className="overflow-y-auto flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: `url(${blueback})`,
+          width: "100vw",
+          height: "100vh",
+        }}
+      >
+        <div className="p-4">
+          <h1 className="mt-2 text-5xl text-primary font-bold p-2 text-center">
             Service Request Tables
           </h1>
           <div className="ml-4">
             <Select
+              className="w-1/4 "
+              sx={{ fontWeight: "bold" }}
               value={selectedTable}
               onChange={(event) => setSelectedTable(event.target.value)}
             >
@@ -120,22 +123,40 @@ function ServiceRequestTable() {
 
         {selectedTable === "Flowers" && (
           <div>
-            <table className="mt-5 border border-slate-400 w-full">
+            <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
-                  <th className="border border-slate-300 p-2">Service Type</th>
-                  <th className="border border-slate-300 p-2">Sub Type</th>
-                  <th className="border border-slate-300 p-2">Name</th>
-                  <th className="border border-slate-300 p-2">Delivery Date</th>
-                  <th className="border border-slate-300 p-2">Room</th>
-                  <th className="border border-slate-300 p-2">Priority</th>
-                  <th className="border border-slate-300 p-2">Details</th>
-                  <th className="border border-slate-300 p-2">
+                <tr className="text-xl">
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Service Type
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Sub Type
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Name
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Delivery Date
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Room
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Priority
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Details
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
                     Size of Bouquet
                   </th>
-                  <th className="border border-slate-300 p-2">Status</th>
-                  <th className="border border-slate-300 p-2">Actions</th>
-                  {/*<th className="border border-slate-300">Details</th>*/}
+                  <th className="bg-primary border border-black w-10 text-white">
+                    Status
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Actions
+                  </th>
+                  {/*<th className="border border-black">Details</th>*/}
                 </tr>
               </thead>
               <tbody>
@@ -144,36 +165,34 @@ function ServiceRequestTable() {
                     .filter((row) => row.RequestType === "Flowers")
                     .map((row, index) => (
                       <tr key={index}>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details1}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequesterName}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.DeliveryDate.toString()}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.LocationNodeID}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Priority}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details1}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details2}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
-                            <InputLabel htmlFor="status">Status</InputLabel>
                             <Select
-                              label="Status"
-                              sx={{ width: 100 }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -189,7 +208,7 @@ function ServiceRequestTable() {
                             </Select>
                           </FormControl>
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <Button
                             variant="contained"
                             color="error"
@@ -198,7 +217,7 @@ function ServiceRequestTable() {
                             Delete
                           </Button>
                         </td>
-                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*<td className="border border-black text-center">*/}
                         {/*  {row. }//flowers doesnt store details */}
                         {/*</td>*/}
                       </tr>
@@ -210,20 +229,40 @@ function ServiceRequestTable() {
 
         {selectedTable === "Gifts" && (
           <div>
-            <table className="mt-5 border border-slate-400 w-full">
+            <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
-                  <th className="border border-slate-300 p-2">Service Type</th>
-                  <th className="border border-slate-300 p-2">Sub Type</th>
-                  <th className="border border-slate-300 p-2">Name</th>
-                  <th className="border border-slate-300 p-2">Delivery Date</th>
-                  <th className="border border-slate-300 p-2">Room</th>
-                  <th className="border border-slate-300 p-2">Priority</th>
-                  <th className="border border-slate-300 p-2">Message</th>
-                  <th className="border border-slate-300 p-2">Wrapped</th>
-                  <th className="border border-slate-300 p-2">Status</th>
-                  <th className="border border-slate-300 p-2">Actions</th>
-                  {/*<th className="border border-slate-300">Details</th>*/}
+                <tr className="text-xl">
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Service Type
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Sub Type
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Name
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Delivery Date
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Room
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Priority
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Message
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Wrapped
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Status
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Actions
+                  </th>
+                  {/*<th className="border border-black">Details</th>*/}
                 </tr>
               </thead>
               <tbody>
@@ -232,36 +271,34 @@ function ServiceRequestTable() {
                     .filter((row) => row.RequestType === "Gifts")
                     .map((row, index) => (
                       <tr key={index}>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details1}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequesterName}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.DeliveryDate.toString()}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.LocationNodeID}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Priority}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details1}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details3}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
-                            <InputLabel htmlFor="status">Status</InputLabel>
                             <Select
-                              label="Status"
-                              sx={{ width: 100 }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -277,7 +314,7 @@ function ServiceRequestTable() {
                             </Select>
                           </FormControl>
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <Button
                             variant="contained"
                             color="error"
@@ -286,7 +323,7 @@ function ServiceRequestTable() {
                             Delete
                           </Button>
                         </td>
-                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*<td className="border border-black text-center">*/}
                         {/*  {row. }//flowers doesnt store details */}
                         {/*</td>*/}
                       </tr>
@@ -298,24 +335,40 @@ function ServiceRequestTable() {
 
         {selectedTable === "Maintenance" && (
           <div>
-            <table className="mt-5 border border-slate-400 w-full">
+            <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
-                  <th className="border border-slate-300 p-2">Service Type</th>
-                  <th className="border border-slate-300 p-2">Name</th>
-                  <th className="border border-slate-300 p-2">Delivery Date</th>
-                  <th className="border border-slate-300 p-2">Room</th>
-                  <th className="border border-slate-300 p-2">Priority</th>
-                  <th className="border border-slate-300 p-2">Details</th>
-                  <th className="border border-slate-300 p-2">
+                <tr className="text-xl">
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Service Type
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Name
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Delivery Date
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Room
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Priority
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Details
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
                     Type of maintenance
                   </th>
-                  <th className="border border-slate-300 p-2">
+                  <th className="bg-primary border border-black p-2 text-white">
                     Hazardous Material
                   </th>
-                  <th className="border border-slate-300 p-2">Status</th>
-                  <th className="border border-slate-300 p-2">Actions</th>
-                  {/*<th className="border border-slate-300">Details</th>*/}
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Status
+                  </th>
+                  <th className="bg-primary border border-black p-2 text-white">
+                    Actions
+                  </th>
+                  {/*<th className="border border-black">Details</th>*/}
                 </tr>
               </thead>
               <tbody>
@@ -324,36 +377,34 @@ function ServiceRequestTable() {
                     .filter((row) => row.RequestType === "Maintenance")
                     .map((row, index) => (
                       <tr key={index}>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequesterName}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.DeliveryDate.toString()}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.LocationNodeID}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Priority}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details1}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details2}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details3}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
-                            <InputLabel htmlFor="status">Status</InputLabel>
                             <Select
-                              label="Status"
-                              sx={{ width: 100 }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -369,7 +420,7 @@ function ServiceRequestTable() {
                             </Select>
                           </FormControl>
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <Button
                             variant="contained"
                             color="error"
@@ -378,7 +429,7 @@ function ServiceRequestTable() {
                             Delete
                           </Button>
                         </td>
-                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*<td className="border border-black text-center">*/}
                         {/*  {row. }//flowers doesnt store details */}
                         {/*</td>*/}
                       </tr>
@@ -390,20 +441,40 @@ function ServiceRequestTable() {
 
         {selectedTable === "Medicine" && (
           <div>
-            <table className="mt-5 border border-slate-400 w-full">
+            <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
-                  <th className="border border-slate-300 p-2">Service Type</th>
-                  <th className="border border-slate-300 p-2">Name</th>
-                  <th className="border border-slate-300 p-2">Delivery Date</th>
-                  <th className="border border-slate-300 p-2">Room</th>
-                  <th className="border border-slate-300 p-2">Priority</th>
-                  <th className="border border-slate-300 p-2">Details</th>
-                  <th className="border border-slate-300 p-2">Dosage</th>
-                  <th className="border border-slate-300 p-2">Route</th>
-                  <th className="border border-slate-300 p-2">Status</th>
-                  <th className="border border-slate-300 p-2">Actions</th>
-                  {/*<th className="border border-slate-300">Details</th>*/}
+                <tr className="text-xl">
+                  <th className="bg-primary text-white border border-black p-2">
+                    Service Type
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Name
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Delivery Date
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Room
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Priority
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Details
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Dosage
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Route
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Status
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Actions
+                  </th>
+                  {/*<th className="border border-black">Details</th>*/}
                 </tr>
               </thead>
               <tbody>
@@ -412,36 +483,34 @@ function ServiceRequestTable() {
                     .filter((row) => row.RequestType === "Medicine")
                     .map((row, index) => (
                       <tr key={index}>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequesterName}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.DeliveryDate.toString()}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.LocationNodeID}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Priority}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details1}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details2}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details3}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
-                            <InputLabel htmlFor="status">Status</InputLabel>
                             <Select
-                              label="Status"
-                              sx={{ width: 100 }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -457,7 +526,7 @@ function ServiceRequestTable() {
                             </Select>
                           </FormControl>
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <Button
                             variant="contained"
                             color="error"
@@ -466,7 +535,7 @@ function ServiceRequestTable() {
                             Delete
                           </Button>
                         </td>
-                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*<td className="border border-black text-center">*/}
                         {/*  {row. }//flowers doesnt store details */}
                         {/*</td>*/}
                       </tr>
@@ -478,22 +547,40 @@ function ServiceRequestTable() {
 
         {selectedTable === "Medical Equipment" && (
           <div>
-            <table className="mt-5 border border-slate-400 w-full">
+            <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
               <thead>
-                <tr>
-                  <th className="border border-slate-300 p-2">Service Type</th>
-                  <th className="border border-slate-300 p-2">Name</th>
-                  <th className="border border-slate-300 p-2">Delivery Date</th>
-                  <th className="border border-slate-300 p-2">Room</th>
-                  <th className="border border-slate-300 p-2">Priority</th>
-                  <th className="border border-slate-300 p-2">Details</th>
-                  <th className="border border-slate-300 p-2">Quantity</th>
-                  <th className="border border-slate-300 p-2">
+                <tr className="text-xl">
+                  <th className="bg-primary text-white border border-black p-2">
+                    Service Type
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Name
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Delivery Date
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Room
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Priority
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Details
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Quantity
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
                     Requires Supervision
                   </th>
-                  <th className="border border-slate-300 p-2">Status</th>
-                  <th className="border border-slate-300 p-2">Actions</th>
-                  {/*<th className="border border-slate-300">Details</th>*/}
+                  <th className="bg-primary text-white border border-black p-2">
+                    Status
+                  </th>
+                  <th className="bg-primary text-white border border-black p-2">
+                    Actions
+                  </th>
+                  {/*<th className="border border-black">Details</th>*/}
                 </tr>
               </thead>
               <tbody>
@@ -502,36 +589,34 @@ function ServiceRequestTable() {
                     .filter((row) => row.RequestType === "Medical Equipment")
                     .map((row, index) => (
                       <tr key={index}>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequestType}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.RequesterName}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.DeliveryDate.toString()}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.LocationNodeID}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Priority}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details1}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details2}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           {row.Details3}
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <FormControl fullWidth>
-                            <InputLabel htmlFor="status">Status</InputLabel>
                             <Select
-                              label="Status"
-                              sx={{ width: 100 }}
+                              sx={{ width: 200 }}
                               value={row.Status}
                               onChange={(e) => {
                                 updateServiceStatus(
@@ -547,7 +632,7 @@ function ServiceRequestTable() {
                             </Select>
                           </FormControl>
                         </td>
-                        <td className="border border-slate-300 text-center p-2">
+                        <td className="border border-black text-center p-2">
                           <Button
                             variant="contained"
                             color="error"
@@ -556,7 +641,7 @@ function ServiceRequestTable() {
                             Delete
                           </Button>
                         </td>
-                        {/*<td className="border border-slate-300 text-center">*/}
+                        {/*<td className="border border-black text-center">*/}
                         {/*  {row. }//flowers doesnt store details */}
                         {/*</td>*/}
                       </tr>
