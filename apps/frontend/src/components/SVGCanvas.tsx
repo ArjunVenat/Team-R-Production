@@ -305,12 +305,12 @@ export default function SVGCanvas(props: {
                     strokeWidth="5"
                     fill="none"
                     initial={{ pathLength: 0 }}
-                    animate={{ pathLength: totalLength }}
+                    animate={{ pathLength: 2 }}
                     transition={{
-                      duration: 2 * totalLength,
+                      duration: 0.5 * totalLength,
                       ease: "linear",
                       repeat: Infinity,
-                      repeatDelay: Math.floor(totalLength / 4),
+                      repeatDelay: 0.01,
                     }}
                   />
                 );
