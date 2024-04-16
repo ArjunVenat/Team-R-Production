@@ -9,31 +9,36 @@ import { useAuth0 } from "@auth0/auth0-react";
 // received help from Dan from team o. He fixed some errors.
 export default function UploadCSV() {
   //Use auth0 react hook
-  const { getAccessTokenSilently } = useAuth0();
+  const { getAccessTokenSilently } = useAuth0(); // Using Auth0 hook to get access token
 
   // a local state to store the currently selected file.
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [selectedFile, setSelectedFile] = useState<File | null>(null); // State to store selected file
 
-  const navigate = useNavigate();
+  const navigate = useNavigate(); // Hook for navigating to different pages
+
+  // Function to navigate to a specific path
   const routeChange = (path: string) => {
     const newPath = `/${path}`;
     navigate(newPath);
   };
 
+  // Function to handle form submission
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
-    event.preventDefault();
-    const formData = new FormData();
-    const token = await getAccessTokenSilently();
+    event.preventDefault(); // Prevent default form submission behavior
+    const formData = new FormData(); // Create FormData object to store form data
+    const token = await getAccessTokenSilently(); // Get access token for authentication
+
     if (selectedFile != undefined) {
       console.log(selectedFile.name);
-      formData.append("uploadFile.csv", selectedFile);
+      formData.append("uploadFile.csv", selectedFile); // Append selected file to FormData object
 
       console.log(formData);
 
+      // Send POST request backend server to upload the file
       const response = await axios.post("/api/admin/csv", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`,
+          Authorization: `Bearer ${token}`, // Include access token for authentication
         },
       });
 
@@ -47,6 +52,7 @@ export default function UploadCSV() {
     }
   };
 
+  // Function to handle file selection useState
   const handleFileSelect = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files.length > 0) {
       setSelectedFile(event.target.files[0]);

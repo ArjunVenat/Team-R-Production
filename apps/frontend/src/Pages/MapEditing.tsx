@@ -61,13 +61,15 @@ export default function MapEditing() {
   const [editableEdge, setEditableEdge] = useState<Edges | undefined>();
   const [editableNode, setEditableNode] = useState<Nodes | undefined>();
 
+  // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
     if (node) {
-      setEditableNode({ ...node });
+      setEditableNode({ ...node }); // Handles clicked node and sets it as editable
     }
   };
 
+  // handles edgeClicked and editableEdge useState whenever edge is clicked
   const handleEdgeClicked = (edge: Edges | undefined) => {
     setEdgeClicked(edge);
     if (edge) {
@@ -75,23 +77,29 @@ export default function MapEditing() {
     }
   };
 
+  //
+
   useEffect(() => {
     async function fetchData() {
+      // GET request from backend to populate nodes data
       const res = await axios.get("/api/admin/allnodes/All");
       const allNodes = res.data;
       setNodesData(allNodes);
       console.log("successfully got data from get request");
     }
+    // Call the fetchData function when the component mounts or when setEditableNode or setEditableEdge change
     fetchData().then();
   }, [setEditableNode, setEditableEdge]);
   console.log(nodesData);
 
+  //This function asynchronously edits a node's information in the database
   const editNodeDB = async (
     nodeID: string,
     changeField: string,
     newVal: string,
   ) => {
-    const token = await getAccessTokenSilently();
+    const token = await getAccessTokenSilently(); //Retrieve an access token asynchronously
+    //Send POST request to update the node's information
     await axios.post(
       `/api/admin/node/edit/${nodeID}/${changeField}/${newVal}`,
       "",
@@ -103,12 +111,14 @@ export default function MapEditing() {
     );
   };
 
+  //This function asynchronously edits a node's information in the database
   const editEdgeDB = async (
     edgeID: string,
     changeField: string,
     newVal: string,
   ) => {
-    const token = await getAccessTokenSilently();
+    const token = await getAccessTokenSilently(); //Retrieve an access token asynchronously
+    //Send POST request to update the node's information
     await axios.post(
       `/api/admin/edge/edit/${edgeID}/${changeField}/${newVal}`,
       "",

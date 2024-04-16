@@ -102,7 +102,8 @@ export default function MainPage() {
   };
 
   async function getDirections() {
-    resetCanvas();
+    setShowPathOnly(false);
+    setPath([]);
     const startNodeArray = nodes?.filter(
       (node: Nodes) => node.LongName === start,
     );
