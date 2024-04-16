@@ -57,8 +57,6 @@ export default function MainPage() {
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
-  const [hoveredNode, setHoveredNode] = useState<Nodes | undefined>();
-  const [clickedNode, setClickedNode] = useState<Nodes | undefined>();
   const [clickTimes, setClickTimes] = useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
@@ -263,7 +261,6 @@ export default function MainPage() {
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
                   }
-                  handleNodeHover={setHoveredNode}
                   handleNodeClicked={(node) => {
                     const newClickTimes = clickTimes + 1;
                     setClickTimes(newClickTimes);
@@ -272,7 +269,6 @@ export default function MainPage() {
                     } else {
                       setEnd(node ? node.LongName : "");
                     }
-                    setClickedNode(node);
                   }}
                   isHome={true}
                   showPathOnly={showPathOnly}
@@ -340,40 +336,6 @@ export default function MainPage() {
             Reset Map
           </Button>
         </div>
-
-        {hoveredNode && (
-          <div
-            style={{
-              backgroundColor: "#012d5a",
-              color: "white",
-              padding: "10px",
-              borderRadius: "5px",
-              margin: "10px 0",
-            }}
-          >
-            <p>Hovered Node:</p>
-            <p>NodeID: {hoveredNode.NodeID}</p>
-            <p>Name: {hoveredNode.LongName}</p>
-          </div>
-        )}
-        {clickedNode && (
-          <div
-            className="bg-primary/50"
-            style={{
-              position: "absolute",
-              top: "50%",
-              width: "fit-content",
-              color: "white",
-              padding: "10px",
-              borderRadius: "5px",
-              margin: "10px 0",
-            }}
-          >
-            <p>Clicked Node:</p>
-            <p>NodeID: {clickedNode.NodeID}</p>
-            <p>Name: {clickedNode.LongName}</p>
-          </div>
-        )}
       </aside>
     </div>
   );
