@@ -39,13 +39,30 @@ const autocompleteStyle = {
   "& .MuiAutocomplete-popupIndicator": { color: "white" },
   "& .MuiAutocomplete-clearIndicator": { color: "white" },
 };
+const buttonStyle = {
+  backgroundColor: "primary.main",
+  color: "white",
+  "&:hover": {
+    backgroundColor: "primary.dark",
+  },
+  "& .MuiButton-root": {
+    borderColor: "white",
+  },
+};
 
 const floors = [
-  { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
-  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
-  { name: "First Floor", map: firstFloorMap, level: "1" },
-  { name: "Second Floor", map: secondFloorMap, level: "2" },
   { name: "Third Floor", map: thirdFloorMap, level: "3" },
+  { name: "Second Floor", map: secondFloorMap, level: "2" },
+  { name: "First Floor", map: firstFloorMap, level: "1" },
+  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
+  { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
+];
+
+const pathfindingAlgorithms = [
+  { name: "A*", path: "/api/map/pathfind" },
+  { name: "Breadth-First Search", path: "/api/map/pathfind/bfs" },
+  { name: "Depth-First Search", path: "/api/map/pathfind/dfs" },
+  { name: "Dijkstra's", path: "/api/map/pathfind/dijkstra" },
 ];
 
 export default function MainPage() {
@@ -56,7 +73,7 @@ export default function MainPage() {
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = useState<Nodes[]>([]);
-  const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
+  const [currentMap, setCurrentMap] = useState(firstFloorMap);
   const [clickTimes, setClickTimes] = useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
@@ -132,25 +149,11 @@ export default function MainPage() {
       const startingFloor: string = startNodeArray[0].Floor;
 
       // Setting current map based on the starting floor
-      switch (startingFloor) {
-        case "L1":
-          setCurrentMap(lowerLevel1Map);
-          break;
-        case "L2":
-          setCurrentMap(lowerLevel2Map);
-          break;
-        case "1":
-          setCurrentMap(firstFloorMap);
-          break;
-        case "2":
-          setCurrentMap(secondFloorMap);
-          break;
-        case "3":
-          setCurrentMap(thirdFloorMap);
-          break;
-        default:
-          setCurrentMap(lowerLevel1Map);
-      }
+      setCurrentMap(
+        floors.find((floor) => floor.level === startingFloor)?.map ||
+          firstFloorMap,
+      );
+
       // Extracting end node ID
       const endNode: string = endNodeArray[0]["NodeID"];
 
@@ -212,7 +215,7 @@ export default function MainPage() {
               <ThemeProvider theme={appTheme}>
                 <div
                   id="zoom-and-algorithm"
-                  className="absolute top-1 left-1 flex gap-1.5"
+                  className="absolute top-1 left-1 flex gap-1"
                 >
                   <ButtonGroup variant="contained">
                     <Button
@@ -236,47 +239,32 @@ export default function MainPage() {
                     onChange={
                       (event) => setPathfindingAlgorithm(event.target.value) // select the proper API call for pathfinding
                     }
-                    sx={{
-                      boxShadow:
-                        "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "primary.dark",
+                    sx={[
+                      {
+                        boxShadow:
+                          "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
                       },
-                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
-                      },
-                    }}
+                      { ...buttonStyle },
+                    ]}
                   >
-                    <MenuItem value="/api/map/pathfind">A*</MenuItem>
-                    <MenuItem value="/api/map/pathfind/bfs">
-                      Breadth-First Search
-                    </MenuItem>
-                    <MenuItem value="/api/map/pathfind/dfs">
-                      Depth-First Search
-                    </MenuItem>
-                    <MenuItem value="/api/map/pathfind/dijkstra">
-                      Dijkstra's
-                    </MenuItem>
+                    {pathfindingAlgorithms.map((algorithm) => (
+                      <MenuItem value={algorithm.path}>
+                        {algorithm.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </div>
                 <ButtonGroup
                   orientation="vertical"
                   variant="contained"
-                  sx={{
-                    position: "absolute",
-                    bottom: "0.25rem",
-                    left: "0.25rem",
-                    backgroundColor: "primary.main",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "primary.dark",
+                  sx={[
+                    {
+                      position: "absolute",
+                      bottom: "0.25rem",
+                      left: "0.25rem",
                     },
-                    "& .MuiButton-root": {
-                      borderColor: "white",
-                    },
-                  }}
+                    { ...buttonStyle },
+                  ]}
                 >
                   {floors.map((floor, index) => (
                     <Button
@@ -292,7 +280,11 @@ export default function MainPage() {
           )}
         </TransformWrapper>
       </main>
-      <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full">
+      <aside
+        className="bg-primary/65 backdrop-blur-sm
+                        text-secondary flex-shrink
+                        fixed top-0 right-0 h-full"
+      >
         <h1 className="text-xl bg-transparent p-2 text-center ">
           Enter your start and end locations:
         </h1>
@@ -329,10 +321,9 @@ export default function MainPage() {
           )}
         />
 
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-3">
           <Button
             className="content-center"
-            style={{ marginRight: "5px" }}
             variant="contained"
             color="success"
             onClick={getDirections}
@@ -341,13 +332,13 @@ export default function MainPage() {
           </Button>
           <Button
             className="content-center"
-            style={{ marginLeft: "5px" }}
             variant="outlined"
             sx={{
               color: "white",
               borderColor: "white",
               "&:hover": {
                 borderColor: "#f6bd38",
+                color: "#f6bd38",
               },
             }}
             onClick={resetCanvas}
