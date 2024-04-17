@@ -301,7 +301,7 @@ export default function MainPage() {
         </TransformWrapper>
       </main>
       <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full">
-        <h1 className="text-xl bg-transparent p-2 text-center">
+        <h1 className="text-xl bg-transparent p-2 text-center ">
           Enter your start and end locations:
         </h1>
         <Autocomplete
@@ -350,8 +350,14 @@ export default function MainPage() {
           <Button
             className="content-center"
             style={{ marginLeft: "5px" }}
-            variant="contained"
-            color="secondary"
+            variant="outlined"
+            sx={{
+              color: "white",
+              borderColor: "white",
+              "&:hover": {
+                borderColor: "#f6bd38",
+              },
+            }}
             onClick={resetCanvas}
           >
             Reset Map
