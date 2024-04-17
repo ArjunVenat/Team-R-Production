@@ -3,12 +3,12 @@ const delNodesRouter: Router = express.Router();
 import PrismaClient from "../bin/database-connection.ts";
 
 /**
- * Asyncrhonous function for handling an HTTP post request for deleting all nodes.
+ * Asyncrhonous function for handling an HTTP delete request for deleting all nodes.
  * API route is /api/admin/node/del
  * @param req HTTP request information
- * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
+ * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST)
  */
-delNodesRouter.post("/", async function (req: Request, res: Response) {
+delNodesRouter.delete("/", async function (req: Request, res: Response) {
   try {
     //Attempt to delete al nodes in the database.
     console.log(req.body);
