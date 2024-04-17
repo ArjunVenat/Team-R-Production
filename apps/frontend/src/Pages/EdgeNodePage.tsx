@@ -63,8 +63,8 @@ const EdgeTablePage = () => {
                 onChange={(event, newValue) => setNodeTab(newValue)}
                 aria-label="basic tabs example"
               >
-                <Tab label="Edge Table" />
                 <Tab label="Node Table" />
+                <Tab label="Edge Table" />
               </Tabs>
             </Box>
             <CustomTabPanel value={nodeTab} index={0}>
