@@ -21,6 +21,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 //     handleOpenServiceRequestModal: () => void;
 //     handleOpenNavigationScreenModal: () => void;
 // }
+import BWHLogo from "../assets/Brigham_and_Womens_Hospital_logo.svg.png";
 interface Menu {
   title: string;
   icon: ReactNode;
@@ -232,7 +233,7 @@ export default function Sidebar() {
         <div className="inline-flex">
           <img
             className="w-10 rounded cursor-pointer block float-left mr-2"
-            src="/src/assets/Brigham_and_Womens_Hospital_logo.svg.png"
+            src={BWHLogo}
             alt={""}
             onClick={() => handleMenuClick(home.title)}
           ></img>
