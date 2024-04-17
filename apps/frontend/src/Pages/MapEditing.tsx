@@ -10,7 +10,6 @@ import { MenuItem, Stack } from "@mui/material";
 import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
 import Select from "@mui/material/Select";
 import { useAuth0 } from "@auth0/auth0-react";
-import "../styles/MapEditing.css";
 // import { EditableEdgeContext } from "../App.tsx";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
 import { floors } from "../components/mapElements.ts";
@@ -128,16 +127,6 @@ export default function MapEditing() {
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
           {({ zoomIn, zoomOut, resetTransform }) => (
             <section>
-              <ThemeProvider theme={appTheme}>
-                <div id="controls">
-                  <MapControls
-                    zoomIn={zoomIn}
-                    zoomOut={zoomOut}
-                    resetTransform={resetTransform}
-                  />
-                  <FloorSelect setMap={setCurrentMap} />
-                </div>
-              </ThemeProvider>
               <TransformComponent>
                 <SVGCanvas
                   key={currentMap}
@@ -157,6 +146,19 @@ export default function MapEditing() {
                   allnodes={nodesData}
                 />
               </TransformComponent>
+              <ThemeProvider theme={appTheme}>
+                <div
+                  id="zoom-and-algorithm"
+                  className="absolute top-1 left-1 flex gap-1"
+                >
+                  <MapControls
+                    zoomIn={zoomIn}
+                    zoomOut={zoomOut}
+                    resetTransform={resetTransform}
+                  />
+                </div>
+                <FloorSelect setMap={setCurrentMap} />
+              </ThemeProvider>
             </section>
           )}
         </TransformWrapper>
