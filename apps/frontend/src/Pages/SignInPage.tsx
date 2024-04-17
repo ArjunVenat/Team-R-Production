@@ -25,7 +25,7 @@ function SignInPage() {
         navButtonsAlwaysInvisible={true}
         indicators={false}
         duration={1000}
-        className="carousel -z-10"
+        className="carousel -z-10 w-screen h-screen overflow-hidden"
       >
         <img src={blurHall} alt="blurHall" />
         <img src={bwhoutside} alt="bwhoutside" />
