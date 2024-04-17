@@ -74,9 +74,8 @@ function ServiceRequestTable() {
 
   const deleteService = async (service: GeneralRequest) => {
     const token = await getAccessTokenSilently();
-    const res = await axios.post(
-      `api/admin/service/del/${service.RequestID}`,
-      "",
+    const res = await axios.delete(
+      `api/admin/service/del/Single/${service.RequestID}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
