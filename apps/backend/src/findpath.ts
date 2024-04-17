@@ -4,7 +4,12 @@ import { DFS } from "./DFS.ts";
 import { Dijkstra } from "./Dijkstra.ts";
 import { Ipathfind } from "./Ipathfind.ts";
 import { Graph } from "./graph.ts";
-
+enum algoType {
+  BFS,
+  AStar,
+  DFS,
+  Dijkstra,
+}
 /**
  * findpath: a god class for all other algos(idk if it acually works how Wong wants)
  */
@@ -21,17 +26,17 @@ export class findpath {
    */
   static doAlgo(
     graph: Graph,
-    AlgorithmType: string,
+    AlgorithmType: algoType,
     start: string,
     end: string,
   ): string[] {
-    if (AlgorithmType == "AStar") {
+    if (AlgorithmType == 1) {
       this.Algorithm = new AStar();
-    } else if (AlgorithmType == "BFS") {
+    } else if (AlgorithmType == 0) {
       this.Algorithm = new BFS();
-    } else if (AlgorithmType == "DFS") {
+    } else if (AlgorithmType == 2) {
       this.Algorithm = new DFS();
-    } else if (AlgorithmType == "Dijkstra") {
+    } else if (AlgorithmType == 3) {
       this.Algorithm = new Dijkstra();
     } else {
       this.Algorithm = new AStar();
