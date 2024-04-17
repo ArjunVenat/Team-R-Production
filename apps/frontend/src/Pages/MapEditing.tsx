@@ -3,22 +3,17 @@
 import SideBar from "../components/SideBar.tsx";
 import React, { useState, useEffect } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-// import Canvas from "./Canvas.tsx";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
 import { Edges, Nodes } from "database";
-import { Button, ButtonGroup, MenuItem, Stack } from "@mui/material";
-import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
+import { MenuItem, Stack } from "@mui/material";
 import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
-import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
-import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
-import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
-import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 import Select from "@mui/material/Select";
 import { useAuth0 } from "@auth0/auth0-react";
 import "../styles/MapEditing.css";
 // import { EditableEdgeContext } from "../App.tsx";
+import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
+import { floors } from "../components/mapElements.ts";
 
 //import Table Items
 import Table from "@mui/material/Table";
@@ -30,14 +25,6 @@ import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
-
-const floors = [
-  { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
-  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
-  { name: "First Floor", map: firstFloorMap, level: "1" },
-  { name: "Second Floor", map: secondFloorMap, level: "2" },
-  { name: "Third Floor", map: thirdFloorMap, level: "3" },
-];
 
 export default function MapEditing() {
   //Use auth0 react hook
@@ -143,55 +130,12 @@ export default function MapEditing() {
             <section>
               <ThemeProvider theme={appTheme}>
                 <div id="controls">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      onClick={() => zoomOut()}
-                      children={<ZoomOutIcon />}
-                      className="p-1"
-                      sx={{
-                        borderTopLeftRadius: "0.75rem",
-                        borderBottomLeftRadius: "0.75rem",
-                      }}
-                    />
-                    <Button
-                      onClick={() => resetTransform()}
-                      children={"Reset"}
-                    />
-                    <Button
-                      onClick={() => zoomIn()}
-                      children={<ZoomInIcon />}
-                      className="p-1"
-                      sx={{
-                        borderTopRightRadius: "0.75rem",
-                        borderBottomRightRadius: "0.75rem",
-                      }}
-                    />
-                  </ButtonGroup>
-                  <ButtonGroup
-                    orientation="vertical"
-                    variant="contained"
-                    sx={{
-                      position: "fixed",
-                      bottom: 0,
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "primary.dark",
-                      },
-                      "& .MuiButton-root": {
-                        borderColor: "white",
-                      },
-                    }}
-                  >
-                    {floors.map((floor, index) => (
-                      <Button
-                        key={index}
-                        onClick={() => setCurrentMap(floor.map)}
-                      >
-                        {floor.level}
-                      </Button>
-                    ))}
-                  </ButtonGroup>
+                  <MapControls
+                    zoomIn={zoomIn}
+                    zoomOut={zoomOut}
+                    resetTransform={resetTransform}
+                  />
+                  <FloorSelect setMap={setCurrentMap} />
                 </div>
               </ThemeProvider>
               <TransformComponent>

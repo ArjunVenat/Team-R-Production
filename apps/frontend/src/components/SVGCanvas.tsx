@@ -10,11 +10,7 @@ import { motion } from "framer-motion";
 // import { IconButton } from '@mui/material';
 // import StairsTwoToneIcon from '@mui/icons-material/StairsTwoTone';
 import ElevatorIcon from "../assets/image/Elevator_Icon.svg";
-import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
-import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
-import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
-import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
-import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
+import { floors, defaultMap } from "./mapElements.ts";
 
 export default function SVGCanvas(props: {
   path?: Nodes[]; //Array of nodes representing the path to be highlighted
@@ -167,26 +163,9 @@ export default function SVGCanvas(props: {
     }
 
     // Update the current map based on the changed floor
-
-    switch (changedFloor) {
-      case "L1":
-        props.setCurrentMap!(lowerLevel1Map);
-        break;
-      case "L2":
-        props.setCurrentMap!(lowerLevel2Map);
-        break;
-      case "1":
-        props.setCurrentMap!(firstFloorMap);
-        break;
-      case "2":
-        props.setCurrentMap!(secondFloorMap);
-        break;
-      case "3":
-        props.setCurrentMap!(thirdFloorMap);
-        break;
-      default:
-        props.setCurrentMap!(lowerLevel1Map);
-    }
+    props.setCurrentMap!(
+      floors.find((floor) => floor.level === changedFloor)?.map || defaultMap,
+    );
   }
 
   /**
