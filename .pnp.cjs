@@ -5560,6 +5560,7 @@ const RAW_RUNTIME_STATE =
           ["sass", "npm:1.70.0"],\
           ["serve", "npm:14.2.1"],\
           ["sort-by", "npm:1.2.0"],\
+          ["swiper", "npm:11.1.1"],\
           ["tailwindcss", "npm:3.4.1"],\
           ["tsconfig-custom", "workspace:configs/tsconfig-custom"],\
           ["typescript", "patch:typescript@npm%3A5.3.3#optional!builtin<compat/typescript>::version=5.3.3&hash=e012d7"],\
@@ -9313,6 +9314,15 @@ const RAW_RUNTIME_STATE =
         "packageLocation": "./.yarn/cache/supports-preserve-symlinks-flag-npm-1.0.0-f17c4d0028-a9dc19ae22.zip/node_modules/supports-preserve-symlinks-flag/",\
         "packageDependencies": [\
           ["supports-preserve-symlinks-flag", "npm:1.0.0"]\
+        ],\
+        "linkType": "HARD"\
+      }]\
+    ]],\
+    ["swiper", [\
+      ["npm:11.1.1", {\
+        "packageLocation": "./.yarn/cache/swiper-npm-11.1.1-fbb4753780-24a3b96f40.zip/node_modules/swiper/",\
+        "packageDependencies": [\
+          ["swiper", "npm:11.1.1"]\
         ],\
         "linkType": "HARD"\
       }]\
