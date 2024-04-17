@@ -33,12 +33,7 @@ router.get(
     const graph = await createGraph();
 
     //const path: string[] = graph.AStar(startNodeID, endNodeID);
-    const path: string[] = findpath.doAlgo(
-      graph,
-      "AStar",
-      startNodeID,
-      endNodeID,
-    );
+    const path: string[] = findpath.doAlgo(graph, 1, startNodeID, endNodeID);
     console.log(path);
 
     // Check if the path is empty
@@ -85,12 +80,7 @@ router.get(
 
     const graph = await createGraph();
 
-    const path: string[] = findpath.doAlgo(
-      graph,
-      "Dijkstra",
-      startNodeID,
-      endNodeID,
-    );
+    const path: string[] = findpath.doAlgo(graph, 3, startNodeID, endNodeID);
     console.log(path);
 
     // Check if the path is empty
@@ -137,12 +127,7 @@ router.get(
 
     const graph = await createGraph();
 
-    const path: string[] = findpath.doAlgo(
-      graph,
-      "BFS",
-      startNodeID,
-      endNodeID,
-    );
+    const path: string[] = findpath.doAlgo(graph, 0, startNodeID, endNodeID);
     console.log(path);
 
     // Check if the path is empty
@@ -189,12 +174,7 @@ router.get(
 
     const graph = await createGraph();
 
-    const path: string[] = findpath.doAlgo(
-      graph,
-      "DFS",
-      startNodeID,
-      endNodeID,
-    );
+    const path: string[] = findpath.doAlgo(graph, 2, startNodeID, endNodeID);
     console.log(path);
 
     // Check if the path is empty
