@@ -238,20 +238,15 @@ export default function MapEditing() {
                     <TableCell align="left">
                       <input
                         value={editableNode?.Xcoord || ""}
-                        onChange={(e) =>
-                          editableNode &&
-                          setEditableNode((prev) => {
-                            if (prev) {
-                              editNodeDB(
-                                prev.NodeID,
-                                "Xcoord",
-                                e.target.value,
-                              ).then();
-                              return { ...prev, Xcoord: e.target.value };
-                            }
-                            return prev;
-                          })
-                        }
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "Xcoord",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.Xcoord = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
                       />
                     </TableCell>
                   </TableRow>
@@ -260,20 +255,15 @@ export default function MapEditing() {
                     <TableCell align="left">
                       <input
                         value={editableNode?.Ycoord || ""}
-                        onChange={(e) =>
-                          editableNode &&
-                          setEditableNode((prev) => {
-                            if (prev) {
-                              editNodeDB(
-                                prev.NodeID,
-                                "Ycoord",
-                                e.target.value,
-                              ).then();
-                              return { ...prev, Ycoord: e.target.value };
-                            }
-                            return prev;
-                          })
-                        }
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "Ycoord",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.Ycoord = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
                       />
                     </TableCell>
                   </TableRow>
@@ -364,20 +354,15 @@ export default function MapEditing() {
                     <TableCell align="left">
                       <input
                         value={editableNode?.LongName || ""}
-                        onChange={(e) =>
-                          editableNode &&
-                          setEditableNode((prev) => {
-                            if (prev) {
-                              editNodeDB(
-                                prev.NodeID,
-                                "LongName",
-                                e.target.value,
-                              ).then();
-                              return { ...prev, LongName: e.target.value };
-                            }
-                            return prev;
-                          })
-                        }
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "LongName",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.LongName = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
                       />
                     </TableCell>
                   </TableRow>
@@ -386,20 +371,15 @@ export default function MapEditing() {
                     <TableCell align="left">
                       <input
                         value={editableNode?.ShortName || ""}
-                        onChange={(e) =>
-                          editableNode &&
-                          setEditableNode((prev) => {
-                            if (prev) {
-                              editNodeDB(
-                                prev.NodeID,
-                                "ShortName",
-                                e.target.value,
-                              ).then();
-                              return { ...prev, ShortName: e.target.value };
-                            }
-                            return prev;
-                          })
-                        }
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "ShortName",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.ShortName = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
                       />
                     </TableCell>
                   </TableRow>
