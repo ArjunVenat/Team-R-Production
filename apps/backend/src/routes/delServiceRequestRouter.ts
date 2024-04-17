@@ -8,7 +8,7 @@ import PrismaClient from "../bin/database-connection.ts";
  * Specified with /delType/requestID (e.g. /api/admin/service/del/All/0 or /api/admin/service/del/Single/3)
  * /requestID is arbitrary when delType is All (deleting all service requests).
  * @param req HTTP request information
- * @param res HTTP response information (200 OK, 400 BAD REQUEST) including all edge data in json format.
+ * @param res HTTP response information (200 OK, 400 BAD REQUEST)
  * Note that the HTTP response will not be 204 due to how prisma delete works! (It throws an exception upon failure).
  */
 delServiceRequestRouter.delete(

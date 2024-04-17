@@ -8,7 +8,7 @@ import { GeneralRequest } from "database";
  * API route is /api/admin/service/edit
  * Specified with /requestID and /newStatus (e.g. /api/admin/csv/3/InProgress)
  * @param req HTTP request information
- * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
+ * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST)
  */
 editServiceRequestRouter.post(
   "/:requestID/:newStatus",
