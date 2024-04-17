@@ -37,6 +37,12 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import blueback from "../assets/blueback.png";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Pagination, Navigation } from "swiper/modules";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -133,77 +139,91 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
             <div className="bg-white rounded-lg ">
               <h2 className="py-4 font-bold text-lg">Select Type</h2>
               <div className="bg-white gap-2 rounded-lg">
-                <Stack direction="row">
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className=""
-                        src={Flower1}
-                        onClick={() =>
-                          //Populates the details1 variable for singleServiceRequest object based on image clicked
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Daffodil",
-                          })
-                        }
-                        alt="Flowers"
-                      />
-                    </button>
-                  </label>
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className=""
-                        src={Flower2}
-                        onClick={() =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Carnation",
-                          })
-                        }
-                        alt="Flowers"
-                      />
-                    </button>
-                  </label>
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className=""
-                        src={Flower3}
-                        onClick={() =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Rose",
-                          })
-                        }
-                        alt="Flowers"
-                      />
-                    </button>
-                  </label>
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className=""
-                        src={Flower4}
-                        onClick={() =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Lily",
-                          })
-                        }
-                        alt="Flowers "
-                      />
-                    </button>
-                  </label>
-                </Stack>
+                <Swiper
+                  pagination={true}
+                  navigation={true}
+                  modules={[Pagination, Navigation]}
+                  spaceBetween={20}
+                  slidesPerView={3}
+                >
+                  <SwiperSlide>
+                    <div className="mr-2">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full"
+                          src={Flower1}
+                          onClick={() =>
+                            //Populates the details1 variable for singleServiceRequest object based on image clicked
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Daffodil",
+                            })
+                          }
+                          alt="Flowers"
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="mr-2">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full"
+                          src={Flower2}
+                          onClick={() =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Carnation",
+                            })
+                          }
+                          alt="Flowers"
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="mr-2">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full"
+                          src={Flower3}
+                          onClick={() =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Rose",
+                            })
+                          }
+                          alt="Flowers"
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="mr-2">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full"
+                          src={Flower4}
+                          onClick={() =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Lily",
+                            })
+                          }
+                          alt="Flowers "
+                        />
+                      </div>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
               </div>
             </div>
           </>
@@ -216,74 +236,90 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
               <h2 className="py-4 font-bold text-lg">Select Type</h2>
               <div className="bg-white gap-2 rounded-lg">
                 <Stack direction="row">
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className="rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                        src={BalloonBasket}
-                        onClick={() =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Balloons",
-                          })
-                        }
-                        alt="Gifts"
-                      />
-                    </button>
-                  </label>
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className="rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                        src={Comfort}
-                        onClick={() =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Comfort Basket",
-                          })
-                        }
-                        alt="Gifts"
-                      />
-                    </button>
-                  </label>
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className="rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                        src={FruitBasket}
-                        onClick={() =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Fruit Basket",
-                          })
-                        }
-                        alt="Gifts"
-                      />
-                    </button>
-                  </label>
-                  <label className="mr-2">
-                    <button
-                      className={`${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                    >
-                      <img
-                        className="rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                        src={GiftSet}
-                        onClick={() =>
-                          setSingleServiceRequest({
-                            ...singleServiceRequest,
-                            details1: "Gift Set",
-                          })
-                        }
-                        alt="Gifts "
-                      />
-                    </button>
-                  </label>
+                  <Swiper
+                    pagination={true}
+                    navigation={true}
+                    modules={[Pagination, Navigation]}
+                    spaceBetween={20}
+                    slidesPerView={3}
+                  >
+                    <SwiperSlide>
+                      <div className="mr-2">
+                        <div
+                          className={`aspect-square ${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        >
+                          <img
+                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            src={BalloonBasket}
+                            onClick={() =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                details1: "Balloons",
+                              })
+                            }
+                            alt="Gifts"
+                          />
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <div className="mr-2">
+                        <div
+                          className={`aspect-square ${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        >
+                          <img
+                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            src={Comfort}
+                            onClick={() =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                details1: "Comfort Basket",
+                              })
+                            }
+                            alt="Gifts"
+                          />
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <div className="mr-2">
+                        <div
+                          className={`aspect-square ${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        >
+                          <img
+                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            src={FruitBasket}
+                            onClick={() =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                details1: "Fruit Basket",
+                              })
+                            }
+                            alt="Gifts"
+                          />
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                    <SwiperSlide>
+                      <div className="mr-2">
+                        <div
+                          className={`aspect-square ${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        >
+                          <img
+                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            src={GiftSet}
+                            onClick={() =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                details1: "Gift Set",
+                              })
+                            }
+                            alt="Gifts "
+                          />
+                        </div>
+                      </div>
+                    </SwiperSlide>
+                  </Swiper>
                 </Stack>
               </div>
             </div>

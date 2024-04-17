@@ -4456,6 +4456,7 @@ __metadata:
     sass: "npm:^1.62.1"
     serve: "npm:^14.2.0"
     sort-by: "npm:^1.2.0"
+    swiper: "npm:^11.1.1"
     tailwindcss: "npm:^3.4.1"
     tsconfig-custom: "workspace:*"
     typescript: "npm:^5.0.2"
@@ -7638,6 +7639,13 @@ __metadata:
   version: 1.0.0
   resolution: "supports-preserve-symlinks-flag@npm:1.0.0"
   checksum: a9dc19ae2220c952bd2231d08ddeecb1b0328b61e72071ff4000c8384e145cc07c1c0bdb3b5a1cb06e186a7b2790f1dee793418b332f6ddf320de25d9125be7e
+  languageName: node
+  linkType: hard
+
+"swiper@npm:^11.1.1":
+  version: 11.1.1
+  resolution: "swiper@npm:11.1.1"
+  checksum: 24a3b96f407f6bdbdceea0c75d796ccc8e8921c234d59d6344b0b07e53ae606ddfecfc1a81d5a6cadddc0b6b0b9e2b458b14e8198b12b1cbc30f5a137370cee9
   languageName: node
   linkType: hard
 

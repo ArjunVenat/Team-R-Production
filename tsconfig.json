@@ -2,6 +2,7 @@
   "$schema": "https://json.schemastore.org/tsconfig",
   "extends": "tsconfig-custom/tsconfig.base.json",
   "compilerOptions": {
+    "jsx": "react",
     "module": "commonjs",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
