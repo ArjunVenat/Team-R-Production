@@ -1,7 +1,7 @@
 import { expect, test, beforeAll } from "vitest";
 import { readCSVFile } from "../src/fileUtils.ts";
 import { Graph } from "../src/graph.ts";
-import { findpath } from "../src/findpath.ts";
+import { algoType, findpath } from "../src/findpath.ts";
 
 const graph = new Graph();
 
@@ -47,13 +47,15 @@ beforeAll(async () => {
 });
 
 test("pathfind to self", () => {
-  expect(findpath.doAlgo(graph, "AStar", "IREST00403", "IREST00403")).toEqual(
-    findpath.doAlgo(graph, "DFS", "IREST00403", "IREST00403"),
-  );
+  expect(
+    findpath.doAlgo(graph, algoType.AStar, "IREST00403", "IREST00403"),
+  ).toEqual(findpath.doAlgo(graph, algoType.DFS, "IREST00403", "IREST00403"));
 });
 
 test("Astar vs Dijkstra test", () => {
-  expect(findpath.doAlgo(graph, "AStar", "IREST00403", "WELEV00HL1")).toEqual(
-    findpath.doAlgo(graph, "Dijkstra", "IREST00403", "WELEV00HL1"),
+  expect(
+    findpath.doAlgo(graph, algoType.AStar, "IREST00403", "WELEV00HL1"),
+  ).toEqual(
+    findpath.doAlgo(graph, algoType.Dijkstra, "IREST00403", "WELEV00HL1"),
   );
 });
