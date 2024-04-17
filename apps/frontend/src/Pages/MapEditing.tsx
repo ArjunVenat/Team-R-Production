@@ -17,6 +17,7 @@ import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
 import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
 import Select from "@mui/material/Select";
 import { useAuth0 } from "@auth0/auth0-react";
+import "../styles/MapEditing.css";
 // import { EditableEdgeContext } from "../App.tsx";
 
 //import Table Items
@@ -31,8 +32,8 @@ import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
 
 const floors = [
-  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
   { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
+  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
   { name: "First Floor", map: firstFloorMap, level: "1" },
   { name: "Second Floor", map: secondFloorMap, level: "2" },
   { name: "Third Floor", map: thirdFloorMap, level: "3" },
@@ -136,48 +137,62 @@ export default function MapEditing() {
       className="flex h-screen overflow-hidden flex-row bg-[#d6d8d5]"
     >
       <SideBar />
-      <main className="flex content-center justify-center leading-none relative flex-grow-1">
+      <main className="flex content-center justify-center leading-none relative">
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
           {({ zoomIn, zoomOut, resetTransform }) => (
             <section>
               <ThemeProvider theme={appTheme}>
-                <ButtonGroup
-                  variant="contained"
-                  color="primary"
-                  className="flex absolute top-1 left-1 z-10"
-                >
-                  <Button
-                    onClick={() => zoomOut()}
-                    children={<ZoomOutIcon />}
-                    className="p-1"
-                  />
-                  <Button onClick={() => resetTransform()} children={"Reset"} />
-                  <Button
-                    onClick={() => zoomIn()}
-                    children={<ZoomInIcon />}
-                    className="p-1"
-                  />
-                  <Select
-                    value={currentMap}
-                    onChange={(event) => setCurrentMap(event.target.value)}
+                <div id="controls">
+                  <ButtonGroup variant="contained">
+                    <Button
+                      onClick={() => zoomOut()}
+                      children={<ZoomOutIcon />}
+                      className="p-1"
+                      sx={{
+                        borderTopLeftRadius: "0.75rem",
+                        borderBottomLeftRadius: "0.75rem",
+                      }}
+                    />
+                    <Button
+                      onClick={() => resetTransform()}
+                      children={"Reset"}
+                    />
+                    <Button
+                      onClick={() => zoomIn()}
+                      children={<ZoomInIcon />}
+                      className="p-1"
+                      sx={{
+                        borderTopRightRadius: "0.75rem",
+                        borderBottomRightRadius: "0.75rem",
+                      }}
+                    />
+                  </ButtonGroup>
+                  <ButtonGroup
+                    orientation="vertical"
+                    variant="contained"
                     sx={{
+                      position: "fixed",
+                      bottom: 0,
                       backgroundColor: "primary.main",
                       color: "white",
                       "&:hover": {
                         backgroundColor: "primary.dark",
                       },
-                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                      "& .MuiButton-root": {
                         borderColor: "white",
                       },
                     }}
                   >
                     {floors.map((floor, index) => (
-                      <MenuItem key={index} value={floor.map}>
-                        {floor.name}
-                      </MenuItem>
+                      <Button
+                        key={index}
+                        onClick={() => setCurrentMap(floor.map)}
+                      >
+                        {floor.level}
+                      </Button>
                     ))}
-                  </Select>
-                </ButtonGroup>
+                  </ButtonGroup>
+                </div>
               </ThemeProvider>
               <TransformComponent>
                 <SVGCanvas

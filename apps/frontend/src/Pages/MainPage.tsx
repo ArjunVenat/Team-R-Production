@@ -68,21 +68,27 @@ export default function MainPage() {
   // };
 
   useEffect(() => {
+    //async function to fetch data from the server
     async function fetchData() {
+      // Send a GET request to retrieve all nodes from the server
       const res = await axios.get("/api/admin/allnodes/NoHall");
       const allNodes = res.data;
+      // Update node state with the fetched node data
       setNodes(allNodes);
       console.log("successfully got data from get request");
     }
 
+    // Call the fetchData function when the component mounts or when getAccessTokenSilently changes
     fetchData().then();
   }, [getAccessTokenSilently]);
   console.log(nodes);
 
+  // handle map change use state
   function handleMapChange(newMap: string) {
     setCurrentMap(newMap);
   }
 
+  // Function to sort the long names of nodes alphabetically
   const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
   Locations.sort((longname1, longname2) => {
     if (longname1 > longname2) {
@@ -94,6 +100,7 @@ export default function MainPage() {
     }
   });
 
+  // function to erase paths draw, make non-path nodes visible, and clear locations
   const resetCanvas = () => {
     setShowPathOnly(false);
     setPath([]); // Clear the path
@@ -101,21 +108,30 @@ export default function MainPage() {
     setEnd(""); // Clear the end location
   };
 
+  // Asynchronous function to retrieve directions between two nodes
   async function getDirections() {
+    // Resetting state variables
     setShowPathOnly(false);
     setPath([]);
+
+    // Filtering nodes array to find start and end nodes based on their long names
     const startNodeArray = nodes?.filter(
       (node: Nodes) => node.LongName === start,
     );
     const endNodeArray = nodes?.filter((node: Nodes) => node.LongName === end);
+
+    // Checking if start and end nodes are found
     if (
       startNodeArray &&
       startNodeArray.length > 0 &&
       endNodeArray &&
       endNodeArray.length > 0
     ) {
+      // Extracting start node ID and starting floor
       const startNode: string = startNodeArray[0]["NodeID"];
       const startingFloor: string = startNodeArray[0].Floor;
+
+      // Setting current map based on the starting floor
       switch (startingFloor) {
         case "L1":
           setCurrentMap(lowerLevel1Map);
@@ -135,7 +151,10 @@ export default function MainPage() {
         default:
           setCurrentMap(lowerLevel1Map);
       }
+      // Extracting end node ID
       const endNode: string = endNodeArray[0]["NodeID"];
+
+      // Fetching path data from the backend using pathfinding algorithm
       const res = await axios.get(pathfindingAlgorithm, {
         params: {
           startNodeID: startNode,
@@ -149,7 +168,7 @@ export default function MainPage() {
         console.error("Failed to fetch path");
       }
       console.log(res.data);
-      setPath(res.data);
+      setPath(res.data); // Update state with retrieved path data
     } else {
       console.error("Start or end node not found");
     }
@@ -193,10 +212,11 @@ export default function MainPage() {
                     />
                   </ButtonGroup>
                   <ButtonGroup variant="contained">
+                    {/*Selecting pathfind algorithm*/}
                     <Select
                       value={pathfindingAlgorithm}
-                      onChange={(event) =>
-                        setPathfindingAlgorithm(event.target.value)
+                      onChange={
+                        (event) => setPathfindingAlgorithm(event.target.value) // select the proper API call for pathfinding
                       }
                       sx={{
                         backgroundColor: "primary.main",
@@ -220,8 +240,8 @@ export default function MainPage() {
                       <MenuItem value="/api/map/pathfind/dfs">
                         Depth-First Search
                       </MenuItem>
-                      <MenuItem value="/api/map/pathfind/djikstra">
-                        Djikstra's
+                      <MenuItem value="/api/map/pathfind/dijkstra">
+                        Dijkstra's
                       </MenuItem>
                     </Select>
                   </ButtonGroup>
