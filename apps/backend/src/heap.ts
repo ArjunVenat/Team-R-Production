@@ -53,11 +53,11 @@ class minHeap {
    * @param b second node to be swapped
    */
   private swapIndex = (a: number, b: number) => {
-    [this.nodeheap[a], this.nodeheap[b]] = [this.nodeheap[b], this.nodeheap[a]];
     [this.weightheap[a], this.weightheap[b]] = [
       this.weightheap[b],
       this.weightheap[a],
     ];
+    [this.nodeheap[a], this.nodeheap[b]] = [this.nodeheap[b], this.nodeheap[a]];
   };
 
   /**
@@ -65,76 +65,48 @@ class minHeap {
    * @param node the node to be deleted
    */
   delete(node: GraphNode) {
+    const n = this.weightheap.length;
+
     if (this.isEmpty()) {
       return;
     }
-    let i = -1;
+    let i = 0;
     //Finds the node to delete, i is the index of it
-    while (node != this.nodeheap[i]) {
+    while (i < n && node !== this.nodeheap[i]) {
       i++;
-      if (i > this.nodeheap.length) {
-        //break;
-        return;
-      }
     }
 
-    //delete first node and replace it with last node
-    this.weightheap[i] = this.weightheap[this.weightheap.length - 1];
-    this.weightheap.splice(this.weightheap.length - 1, 1);
+    if (i === n) {
+      return;
+    }
+    this.weightheap[i] = this.weightheap[n - 1];
+    this.weightheap.pop();
 
-    this.nodeheap[i] = this.nodeheap[this.nodeheap.length - 1];
-    this.nodeheap.splice(this.nodeheap.length - 1, 1);
+    this.nodeheap[i] = this.nodeheap[n - 1];
+    this.nodeheap.pop();
 
-    let parent = 0;
-    let leftChildIndex = 2 * parent + 1;
-    let rightChildIndex = 2 * parent + 2;
-    let left =
-      leftChildIndex > this.weightheap.length
-        ? null
-        : this.weightheap[leftChildIndex];
-    let right =
-      rightChildIndex > this.weightheap.length
-        ? null
-        : this.weightheap[rightChildIndex];
-    do {
-      // no children
-      if (!left && !right) {
-        return;
-      }
+    this.heapify(i);
+  }
 
-      // 1 child
-      else if (!right && left && this.weightheap[parent] > left) {
-        this.swapIndex(parent, leftChildIndex);
-        parent = leftChildIndex;
-      }
+  heapify(i: number) {
+    const n = this.weightheap.length;
+    let smallest = i;
+    const l = 2 * i + 1;
+    const r = 2 * i + 2;
 
-      // 2 children
-      else if (left && right) {
-        if (left < right && this.weightheap[parent] > left) {
-          this.swapIndex(parent, leftChildIndex);
-          parent = leftChildIndex;
-        } else if (left > right && this.weightheap[parent] > right) {
-          this.swapIndex(parent, rightChildIndex);
-          parent = rightChildIndex;
-        }
-      }
+    if (l < n && this.weightheap[l] < this.weightheap[smallest]) {
+      smallest = l;
+    }
 
-      leftChildIndex = 2 * parent + 1;
-      rightChildIndex = 2 * parent + 2;
-      left =
-        leftChildIndex > this.weightheap.length
-          ? null
-          : this.weightheap[leftChildIndex];
-      right =
-        rightChildIndex > this.weightheap.length
-          ? null
-          : this.weightheap[rightChildIndex];
-    } while (
-      left &&
-      right &&
-      (this.weightheap[parent] > left || this.weightheap[parent] > right)
-    );
-    //While data structure is not a heap
+    if (r < n && this.weightheap[r] < this.weightheap[smallest]) {
+      smallest = r;
+    }
+
+    if (smallest !== i) {
+      this.swapIndex(i, smallest);
+
+      this.heapify(smallest);
+    }
   }
 
   /**

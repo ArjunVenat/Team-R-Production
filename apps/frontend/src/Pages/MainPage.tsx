@@ -220,8 +220,8 @@ export default function MainPage() {
                       <MenuItem value="/api/map/pathfind/dfs">
                         Depth-First Search
                       </MenuItem>
-                      <MenuItem value="/api/map/pathfind/djikstra">
-                        Djikstra's
+                      <MenuItem value="/api/map/pathfind/dijkstra">
+                        Dijkstra's
                       </MenuItem>
                     </Select>
                   </ButtonGroup>

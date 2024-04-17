@@ -7,9 +7,10 @@ import { Ipathfind } from "./Ipathfind.ts";
  * Dijkstra: A class that contains the Dijkstra algorithm
  */
 export class Dijkstra implements Ipathfind {
-  pathfind(graph: Graph, start: string, end: string) {
+  pathfind(graph: Graph, start: string, end: string): string[] {
     const startNode = Graph.nodeMap.get(start);
     const endNode = Graph.nodeMap.get(end);
+
     // Check if the nodes are within the graph
     if (startNode === undefined || endNode === undefined) {
       return [];
@@ -24,7 +25,7 @@ export class Dijkstra implements Ipathfind {
 
     arrivedFrom.set(startNode, startNode);
     shortestPath.set(startNode, 0);
-    heap.insert(startNode, startNode.getDistance(endNode));
+    heap.insert(startNode, 0);
     nodeSet.add(startNode);
 
     while (!heap.isEmpty()) {
@@ -53,7 +54,7 @@ export class Dijkstra implements Ipathfind {
 
           // TODO: Add a hashset to check if the node exists instead of performing expensive delete operation
           heap.delete(tempNode);
-          heap.insert(tempNode, dist + tempNode.getDistance(endNode));
+          heap.insert(tempNode, dist);
         }
       }
     }
