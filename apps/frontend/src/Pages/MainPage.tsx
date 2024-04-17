@@ -185,93 +185,6 @@ export default function MainPage() {
           {}
           {({ zoomIn, zoomOut, resetTransform }) => (
             <section id="map">
-              <ThemeProvider theme={appTheme}>
-                <div id="controls">
-                  <ButtonGroup variant="contained">
-                    <Button
-                      onClick={() => zoomOut()}
-                      children={<ZoomOutIcon />}
-                      className="p-1"
-                      sx={{
-                        borderTopLeftRadius: "0.75rem",
-                        borderBottomLeftRadius: "0.75rem",
-                      }}
-                    />
-                    <Button
-                      onClick={() => resetTransform()}
-                      children={"Reset"}
-                    />
-                    <Button
-                      onClick={() => zoomIn()}
-                      children={<ZoomInIcon />}
-                      className="p-1"
-                      sx={{
-                        borderTopRightRadius: "0.75rem",
-                        borderBottomRightRadius: "0.75rem",
-                      }}
-                    />
-                  </ButtonGroup>
-                  <ButtonGroup variant="contained">
-                    {/*Selecting pathfind algorithm*/}
-                    <Select
-                      value={pathfindingAlgorithm}
-                      onChange={
-                        (event) => setPathfindingAlgorithm(event.target.value) // select the proper API call for pathfinding
-                      }
-                      sx={{
-                        backgroundColor: "primary.main",
-                        color: "white",
-                        "&:hover": {
-                          backgroundColor: "primary.dark",
-                        },
-                        "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                          borderColor: "white",
-                        },
-                        borderTopLeftRadius: "0.75rem",
-                        borderBottomLeftRadius: "0.75rem",
-                        borderTopRightRadius: "0.75rem",
-                        borderBottomRightRadius: "0.75rem",
-                      }}
-                    >
-                      <MenuItem value="/api/map/pathfind">A*</MenuItem>
-                      <MenuItem value="/api/map/pathfind/bfs">
-                        Breadth-First Search
-                      </MenuItem>
-                      <MenuItem value="/api/map/pathfind/dfs">
-                        Depth-First Search
-                      </MenuItem>
-                      <MenuItem value="/api/map/pathfind/dijkstra">
-                        Dijkstra's
-                      </MenuItem>
-                    </Select>
-                  </ButtonGroup>
-                  <ButtonGroup
-                    orientation="vertical"
-                    variant="contained"
-                    sx={{
-                      position: "fixed",
-                      bottom: 0,
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "primary.dark",
-                      },
-                      "& .MuiButton-root": {
-                        borderColor: "white",
-                      },
-                    }}
-                  >
-                    {floors.map((floor, index) => (
-                      <Button
-                        key={index}
-                        onClick={() => setCurrentMap(floor.map)}
-                      >
-                        {floor.level}
-                      </Button>
-                    ))}
-                  </ButtonGroup>
-                </div>
-              </ThemeProvider>
               <TransformComponent>
                 <SVGCanvas
                   key={currentMap}
@@ -296,12 +209,91 @@ export default function MainPage() {
                   allnodes={nodes}
                 />
               </TransformComponent>
+              <ThemeProvider theme={appTheme}>
+                <div
+                  id="zoom-and-algorithm"
+                  className="absolute top-1 left-1 flex gap-1.5"
+                >
+                  <ButtonGroup variant="contained">
+                    <Button
+                      onClick={() => zoomOut()}
+                      children={<ZoomOutIcon />}
+                      className="p-1"
+                    />
+                    <Button
+                      onClick={() => resetTransform()}
+                      children={"Reset"}
+                    />
+                    <Button
+                      onClick={() => zoomIn()}
+                      children={<ZoomInIcon />}
+                      className="p-1"
+                    />
+                  </ButtonGroup>
+                  {/*Selecting pathfind algorithm*/}
+                  <Select
+                    value={pathfindingAlgorithm}
+                    onChange={
+                      (event) => setPathfindingAlgorithm(event.target.value) // select the proper API call for pathfinding
+                    }
+                    sx={{
+                      boxShadow:
+                        "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+                      backgroundColor: "primary.main",
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: "primary.dark",
+                      },
+                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
+                        borderColor: "white",
+                      },
+                    }}
+                  >
+                    <MenuItem value="/api/map/pathfind">A*</MenuItem>
+                    <MenuItem value="/api/map/pathfind/bfs">
+                      Breadth-First Search
+                    </MenuItem>
+                    <MenuItem value="/api/map/pathfind/dfs">
+                      Depth-First Search
+                    </MenuItem>
+                    <MenuItem value="/api/map/pathfind/dijkstra">
+                      Dijkstra's
+                    </MenuItem>
+                  </Select>
+                </div>
+                <ButtonGroup
+                  orientation="vertical"
+                  variant="contained"
+                  sx={{
+                    position: "absolute",
+                    bottom: "0.25rem",
+                    left: "0.25rem",
+                    backgroundColor: "primary.main",
+                    color: "white",
+                    "&:hover": {
+                      backgroundColor: "primary.dark",
+                    },
+                    "& .MuiButton-root": {
+                      borderColor: "white",
+                    },
+                  }}
+                >
+                  {floors.map((floor, index) => (
+                    <Button
+                      key={index}
+                      onClick={() => setCurrentMap(floor.map)}
+                    >
+                      {floor.level}
+                    </Button>
+                  ))}
+                </ButtonGroup>
+              </ThemeProvider>
             </section>
           )}
         </TransformWrapper>
       </main>
       <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full">
-        <h1 className="text-xl bg-transparent p-2 text-center">
+        <h1 className="text-xl bg-transparent p-2 text-center ">
           Enter your start and end locations:
         </h1>
         <Autocomplete
@@ -350,8 +342,14 @@ export default function MainPage() {
           <Button
             className="content-center"
             style={{ marginLeft: "5px" }}
-            variant="contained"
-            color="secondary"
+            variant="outlined"
+            sx={{
+              color: "white",
+              borderColor: "white",
+              "&:hover": {
+                borderColor: "#f6bd38",
+              },
+            }}
             onClick={resetCanvas}
           >
             Reset Map

@@ -133,12 +133,12 @@ export default function SVGCanvas(props: {
     if (getTypePopup(node, path) === -1) {
       console.log("Click to go back to ", path[idx - 1].Floor);
       setHoverElevatorTooltip(
-        `Click to go return to Floor ${path[idx - 1].Floor}`,
+        `Click to return to Floor ${path[idx - 1].Floor}`,
       );
     } else if (getTypePopup(node, path) === 1) {
       console.log("Click to go forwards to ", path[idx + 1].Floor);
       setHoverElevatorTooltip(
-        `Click to go proceed to Floor ${path[idx + 1].Floor}`,
+        `Click to proceed to Floor ${path[idx + 1].Floor}`,
       );
     }
   }
