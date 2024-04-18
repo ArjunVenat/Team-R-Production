@@ -36,6 +36,7 @@ export default function MainPage() {
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
   const [showPathOnly, setShowPathOnly] = useState(false);
+  const [isDirectionsClicked, setIsDirectionsClicked] = useState(false);
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
   //   const newPath = `/${path}`;
@@ -192,7 +193,11 @@ export default function MainPage() {
                     ))}
                   </Select>
                 </MapControls>
-                <FloorSelect setMap={setCurrentMap} />
+                <FloorSelect
+                  setMap={setCurrentMap}
+                  isDirectionsClicked={isDirectionsClicked}
+                  path={path}
+                />{" "}
               </ThemeProvider>
             </section>
           )}
@@ -238,7 +243,10 @@ export default function MainPage() {
             className="content-center"
             variant="contained"
             color="success"
-            onClick={getDirections}
+            onClick={() => {
+              getDirections();
+              setIsDirectionsClicked(true);
+            }}
           >
             Get Directions
           </Button>
@@ -253,7 +261,10 @@ export default function MainPage() {
                 color: "#f6bd38",
               },
             }}
-            onClick={resetCanvas}
+            onClick={() => {
+              resetCanvas();
+              setIsDirectionsClicked(false);
+            }}
           >
             Reset Map
           </Button>

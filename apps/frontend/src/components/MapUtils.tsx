@@ -3,6 +3,7 @@ import ZoomOutIcon from "@mui/icons-material/ZoomOut";
 import ZoomInIcon from "@mui/icons-material/ZoomIn";
 import { buttonStyle } from "../styles/muiStyles";
 import { floors } from "./mapElements.ts";
+import { Nodes } from "database";
 
 export function MapControls(props: {
   zoomOut: () => void;
@@ -30,7 +31,11 @@ export function MapControls(props: {
   );
 }
 
-export function FloorSelect(props: { setMap: (newMap: string) => void }) {
+export function FloorSelect(props: {
+  setMap: (newMap: string) => void;
+  isDirectionsClicked: boolean;
+  path: Nodes[];
+}) {
   return (
     <ButtonGroup
       orientation="vertical"
@@ -45,7 +50,23 @@ export function FloorSelect(props: { setMap: (newMap: string) => void }) {
       ]}
     >
       {floors.map((floor, index) => (
-        <Button key={index} onClick={() => props.setMap(floor.map)}>
+        <Button
+          key={index}
+          onClick={() => props.setMap(floor.map)}
+          sx={
+            props.isDirectionsClicked &&
+            props.path.some((node) => node.Floor === floor.level)
+              ? {
+                  animation: "breathing 2s infinite",
+                  "@keyframes breathing": {
+                    "0%": { backgroundColor: "#003da6" },
+                    "50%": { backgroundColor: "#f6bd39" },
+                    "100%": { backgroundColor: "#003da6" },
+                  },
+                }
+              : {}
+          }
+        >
           {floor.level}
         </Button>
       ))}
