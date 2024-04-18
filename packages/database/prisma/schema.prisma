@@ -80,7 +80,7 @@ model GeneralRequest {
   RequesterName  String
   RequestType    String
   Priority       String
-  Location       Nodes    @relation(fields: [LocationNodeID], references: [NodeID])
+  Location       Nodes    @relation(fields: [LocationNodeID], references: [NodeID], onDelete: Cascade)
   LocationNodeID String
   Details1       String
   Details2       String
