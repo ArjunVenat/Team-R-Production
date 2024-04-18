@@ -6,7 +6,7 @@ import PrismaClient from "../bin/database-connection.ts";
  * Asyncrhonous function for handling an HTTP delete request for deleting all edges.
  * API route is /api/admin/edge/del
  * Specified with /delType/delID
- * (e.g. /api/admin/edge/del/Single/CREST003L1_CHALL015L1 or /api/admin/del/All/none)
+ * (e.g. /api/admin/edge/del/Single/CREST003L1_CHALL015L1 or /api/admin/edge/del/All/none)
  * /delID is arbitrary when /delType is All
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST)
