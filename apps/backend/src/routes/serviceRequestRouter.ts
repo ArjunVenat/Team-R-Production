@@ -32,43 +32,111 @@ serviceRequestRouter.post("/", async function (req: Request, res: Response) {
 /**
  * Asyncrhonous function for handling an HTTP get request for getting all service requests
  * API route is /api/service/create
- * Specified with /requestType (e.g. /api/service/create/All or /api/service/create/Flowers)
+ * Specified with /column/sortDirection/typeFilter/priorityFilter
+ * (e.g. /api/service/create/RequestID/asc/Medical Equipment/Low or /api/service/create/LocationNodeID/desc/All/All)
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
  */
 serviceRequestRouter.get(
-  "/:requestType",
+  "/:column/:sortDirection/:typeFilter/:priorityFilter",
   async function (req: Request, res: Response) {
     try {
-      // Get the request type
-      const requestType: string = req.params.requestType;
-
-      // Determine if requestType is not of a supported name
+      // Get the parameters
+      const column: string = req.params.column;
       if (
-        requestType != "Security" &&
-        requestType != "Sanitation" &&
-        requestType != "Gift" &&
-        requestType != "Medicine" &&
-        requestType != "Flowers" &&
-        requestType != "Religious" &&
-        requestType != "Food" &&
-        requestType != "All"
+        column != "RequestID" &&
+        column != "RequesterName" &&
+        column != "RequestType" &&
+        column != "Priority" &&
+        column != "LocationNodeID" &&
+        column != "Details1" &&
+        column != "Details2" &&
+        column != "Details3" &&
+        column != "DeliveryDate" &&
+        column != "Status"
       ) {
-        console.log("Request type is not of a supported name!");
+        console.log("column is not of a supported name!");
+        res.sendStatus(400);
+        return;
+      }
+
+      const sortDirection: string = req.params.sortDirection;
+      if (sortDirection != "asc" && sortDirection != "desc") {
+        console.log("sort direction type is not of a supported name!");
+        res.sendStatus(400);
+        return;
+      }
+
+      const priorityFilter: string = req.params.priorityFilter;
+      // Determine if filterType is not of a supported name
+      if (
+        priorityFilter != "Low" &&
+        priorityFilter != "Medium" &&
+        priorityFilter != "High" &&
+        priorityFilter != "Emergency" &&
+        priorityFilter != "All"
+      ) {
+        console.log("priorityFilter type is not of a supported name!");
+        res.sendStatus(400);
+        return;
+      }
+
+      const typeFilter: string = req.params.typeFilter;
+      if (
+        typeFilter != "Flowers" &&
+        typeFilter != "Gifts" &&
+        typeFilter != "Medicine" &&
+        typeFilter != "Maintenance" &&
+        typeFilter != "Medical Equipment" &&
+        typeFilter != "All"
+      ) {
+        console.log("typeFilter type is not of a supported name!");
         res.sendStatus(400);
         return;
       }
 
       //Now that we know that request is of a supported name, get all requests
       let allRequests: GeneralRequest[];
-      if (requestType == "All") {
-        allRequests = await PrismaClient.generalRequest.findMany();
+      if (typeFilter == "All" && priorityFilter == "All") {
+        allRequests = await PrismaClient.generalRequest.findMany({
+          orderBy: [
+            {
+              [column]: sortDirection,
+            },
+          ],
+        });
+      } else if (typeFilter == "All" && priorityFilter != "All") {
+        allRequests = await PrismaClient.generalRequest.findMany({
+          orderBy: [
+            {
+              [column]: sortDirection,
+            },
+          ],
+          where: {
+            Priority: priorityFilter,
+          },
+        });
+      } else if (typeFilter != "All" && priorityFilter == "All") {
+        allRequests = await PrismaClient.generalRequest.findMany({
+          orderBy: [
+            {
+              [column]: sortDirection,
+            },
+          ],
+          where: {
+            RequestType: typeFilter,
+          },
+        });
       } else {
         allRequests = await PrismaClient.generalRequest.findMany({
-          where: {
-            RequestType: {
-              equals: requestType,
+          orderBy: [
+            {
+              [column]: sortDirection,
             },
+          ],
+          where: {
+            Priority: priorityFilter,
+            RequestType: typeFilter,
           },
         });
       }
