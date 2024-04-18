@@ -21,6 +21,7 @@ import {
   pathfindingAlgorithms,
   defaultMap,
 } from "../components/mapElements.ts";
+import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -165,16 +166,11 @@ export default function MainPage() {
                 />
               </TransformComponent>
               <ThemeProvider theme={appTheme}>
-                <div
-                  id="zoom-and-algorithm"
-                  className="absolute top-1 left-1 flex gap-1"
+                <MapControls
+                  zoomIn={zoomIn}
+                  resetTransform={resetTransform}
+                  zoomOut={zoomOut}
                 >
-                  <MapControls
-                    zoomIn={zoomIn}
-                    resetTransform={resetTransform}
-                    zoomOut={zoomOut}
-                  />
-
                   {/*Selecting pathfind algorithm*/}
                   <Select
                     value={pathfindingAlgorithm}
@@ -195,23 +191,18 @@ export default function MainPage() {
                       </MenuItem>
                     ))}
                   </Select>
-                </div>
+                </MapControls>
                 <FloorSelect setMap={setCurrentMap} />
               </ThemeProvider>
             </section>
           )}
         </TransformWrapper>
       </main>
-      <aside
-        className="bg-primary/65 backdrop-blur-sm
-                        text-secondary flex-shrink
-                        fixed top-0 right-0 h-full"
-      >
-        <h1 className="text-xl bg-transparent p-2 text-center ">
+      <aside className={rightSideBarStyle}>
+        <h1 className="text-xl bg-transparent text-center">
           Enter your start and end locations:
         </h1>
         <Autocomplete
-          className="p-2"
           value={start}
           onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
             return setStart(getStart!);
@@ -227,7 +218,6 @@ export default function MainPage() {
           )}
         />
         <Autocomplete
-          className="p-2"
           value={end}
           onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
             setEnd(getEnd!);

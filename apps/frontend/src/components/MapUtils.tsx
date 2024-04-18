@@ -8,21 +8,25 @@ export function MapControls(props: {
   zoomOut: () => void;
   resetTransform: () => void;
   zoomIn: () => void;
+  children?: React.ReactNode;
 }) {
   return (
-    <ButtonGroup variant="contained">
-      <Button
-        onClick={() => props.zoomOut()}
-        children={<ZoomOutIcon />}
-        className="p-1"
-      />
-      <Button onClick={() => props.resetTransform()} children={"Reset"} />
-      <Button
-        onClick={() => props.zoomIn()}
-        children={<ZoomInIcon />}
-        className="p-1"
-      />
-    </ButtonGroup>
+    <div id="zoom-and-algorithm" className="absolute top-1 left-1 flex gap-1">
+      <ButtonGroup variant="contained">
+        <Button
+          onClick={() => props.zoomOut()}
+          children={<ZoomOutIcon />}
+          className="p-1"
+        />
+        <Button onClick={() => props.resetTransform()} children={"Reset"} />
+        <Button
+          onClick={() => props.zoomIn()}
+          children={<ZoomInIcon />}
+          className="p-1"
+        />
+      </ButtonGroup>
+      {props.children}
+    </div>
   );
 }
 
