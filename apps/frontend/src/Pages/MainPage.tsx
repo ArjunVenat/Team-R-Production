@@ -3,49 +3,24 @@
 import SideBar from "../components/SideBar.tsx";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
-// import Canvas from "./Canvas.tsx";
 import SVGCanvas from "../components/SVGCanvas.tsx";
-// import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { Nodes } from "database";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Button, ButtonGroup } from "@mui/material";
-import ZoomOutIcon from "@mui/icons-material/ZoomOut";
-
-import ZoomInIcon from "@mui/icons-material/ZoomIn";
-import lowerLevel1Map from "../assets/maps/00_thelowerlevel1.png";
-import lowerLevel2Map from "../assets/maps/00_thelowerlevel2.png";
-import firstFloorMap from "../assets/maps/01_thefirstfloor.png";
-import secondFloorMap from "../assets/maps/02_thesecondfloor.png";
-import thirdFloorMap from "../assets/maps/03_thethirdfloor.png";
+import { Button } from "@mui/material";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider } from "@mui/material";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { useAuth0 } from "@auth0/auth0-react";
-
-const autocompleteStyle = {
-  "& .MuiInputBase-input": { color: "white" },
-  "& label.Mui-focused": { color: "white" },
-  "& .MuiInputLabel-outlined": { color: "white" },
-  "& .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-  "&:hover .MuiOutlinedInput-root .MuiOutlinedInput-notchedOutline": {
-    borderColor: "white",
-  },
-  "& .MuiAutocomplete-popupIndicator": { color: "white" },
-  "& .MuiAutocomplete-clearIndicator": { color: "white" },
-};
-
-const floors = [
-  { name: "Lower Level 2", map: lowerLevel2Map, level: "L2" },
-  { name: "Lower Level 1", map: lowerLevel1Map, level: "L1" },
-  { name: "First Floor", map: firstFloorMap, level: "1" },
-  { name: "Second Floor", map: secondFloorMap, level: "2" },
-  { name: "Third Floor", map: thirdFloorMap, level: "3" },
-];
+import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
+import { autocompleteStyle, buttonStyle } from "../styles/muiStyles.ts";
+import {
+  floors,
+  pathfindingAlgorithms,
+  defaultMap,
+} from "../components/mapElements.ts";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -55,7 +30,7 @@ export default function MainPage() {
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = useState<Nodes[]>([]);
-  const [currentMap, setCurrentMap] = useState(lowerLevel1Map);
+  const [currentMap, setCurrentMap] = useState(defaultMap);
   const [clickTimes, setClickTimes] = useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] =
     useState("/api/map/pathfind");
@@ -81,11 +56,6 @@ export default function MainPage() {
     fetchData().then();
   }, [getAccessTokenSilently]);
   console.log(nodes);
-
-  // handle map change use state
-  function handleMapChange(newMap: string) {
-    setCurrentMap(newMap);
-  }
 
   // Function to sort the long names of nodes alphabetically
   const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
@@ -131,25 +101,11 @@ export default function MainPage() {
       const startingFloor: string = startNodeArray[0].Floor;
 
       // Setting current map based on the starting floor
-      switch (startingFloor) {
-        case "L1":
-          setCurrentMap(lowerLevel1Map);
-          break;
-        case "L2":
-          setCurrentMap(lowerLevel2Map);
-          break;
-        case "1":
-          setCurrentMap(firstFloorMap);
-          break;
-        case "2":
-          setCurrentMap(secondFloorMap);
-          break;
-        case "3":
-          setCurrentMap(thirdFloorMap);
-          break;
-        default:
-          setCurrentMap(lowerLevel1Map);
-      }
+      setCurrentMap(
+        floors.find((floor) => floor.level === startingFloor)?.map ||
+          defaultMap,
+      );
+
       // Extracting end node ID
       const endNode: string = endNodeArray[0]["NodeID"];
 
@@ -189,7 +145,7 @@ export default function MainPage() {
                   key={currentMap}
                   path={path}
                   currentMap={currentMap}
-                  setCurrentMap={handleMapChange}
+                  setCurrentMap={setCurrentMap}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
@@ -211,87 +167,46 @@ export default function MainPage() {
               <ThemeProvider theme={appTheme}>
                 <div
                   id="zoom-and-algorithm"
-                  className="absolute top-1 left-1 flex gap-1.5"
+                  className="absolute top-1 left-1 flex gap-1"
                 >
-                  <ButtonGroup variant="contained">
-                    <Button
-                      onClick={() => zoomOut()}
-                      children={<ZoomOutIcon />}
-                      className="p-1"
-                    />
-                    <Button
-                      onClick={() => resetTransform()}
-                      children={"Reset"}
-                    />
-                    <Button
-                      onClick={() => zoomIn()}
-                      children={<ZoomInIcon />}
-                      className="p-1"
-                    />
-                  </ButtonGroup>
+                  <MapControls
+                    zoomIn={zoomIn}
+                    resetTransform={resetTransform}
+                    zoomOut={zoomOut}
+                  />
+
                   {/*Selecting pathfind algorithm*/}
                   <Select
                     value={pathfindingAlgorithm}
                     onChange={
                       (event) => setPathfindingAlgorithm(event.target.value) // select the proper API call for pathfinding
                     }
-                    sx={{
-                      boxShadow:
-                        "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
-                      backgroundColor: "primary.main",
-                      color: "white",
-                      "&:hover": {
-                        backgroundColor: "primary.dark",
+                    sx={[
+                      {
+                        boxShadow:
+                          "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
                       },
-                      "& .Mui-focused .MuiOutlinedInput-notchedOutline": {
-                        borderColor: "white",
-                      },
-                    }}
+                      { ...buttonStyle },
+                    ]}
                   >
-                    <MenuItem value="/api/map/pathfind">A*</MenuItem>
-                    <MenuItem value="/api/map/pathfind/bfs">
-                      Breadth-First Search
-                    </MenuItem>
-                    <MenuItem value="/api/map/pathfind/dfs">
-                      Depth-First Search
-                    </MenuItem>
-                    <MenuItem value="/api/map/pathfind/dijkstra">
-                      Dijkstra's
-                    </MenuItem>
+                    {pathfindingAlgorithms.map((algorithm) => (
+                      <MenuItem value={algorithm.path}>
+                        {algorithm.name}
+                      </MenuItem>
+                    ))}
                   </Select>
                 </div>
-                <ButtonGroup
-                  orientation="vertical"
-                  variant="contained"
-                  sx={{
-                    position: "absolute",
-                    bottom: "0.25rem",
-                    left: "0.25rem",
-                    backgroundColor: "primary.main",
-                    color: "white",
-                    "&:hover": {
-                      backgroundColor: "primary.dark",
-                    },
-                    "& .MuiButton-root": {
-                      borderColor: "white",
-                    },
-                  }}
-                >
-                  {floors.map((floor, index) => (
-                    <Button
-                      key={index}
-                      onClick={() => setCurrentMap(floor.map)}
-                    >
-                      {floor.level}
-                    </Button>
-                  ))}
-                </ButtonGroup>
+                <FloorSelect setMap={setCurrentMap} />
               </ThemeProvider>
             </section>
           )}
         </TransformWrapper>
       </main>
-      <aside className="bg-primary/65 backdrop-blur-sm text-secondary flex-shrink fixed top-0 right-0 h-full">
+      <aside
+        className="bg-primary/65 backdrop-blur-sm
+                        text-secondary flex-shrink
+                        fixed top-0 right-0 h-full"
+      >
         <h1 className="text-xl bg-transparent p-2 text-center ">
           Enter your start and end locations:
         </h1>
@@ -328,10 +243,9 @@ export default function MainPage() {
           )}
         />
 
-        <div className="flex justify-center">
+        <div className="flex justify-center gap-3">
           <Button
             className="content-center"
-            style={{ marginRight: "5px" }}
             variant="contained"
             color="success"
             onClick={getDirections}
@@ -340,13 +254,13 @@ export default function MainPage() {
           </Button>
           <Button
             className="content-center"
-            style={{ marginLeft: "5px" }}
             variant="outlined"
             sx={{
               color: "white",
               borderColor: "white",
               "&:hover": {
                 borderColor: "#f6bd38",
+                color: "#f6bd38",
               },
             }}
             onClick={resetCanvas}
