@@ -12,6 +12,7 @@ delNodesRouter.delete("/", async function (req: Request, res: Response) {
   try {
     //Attempt to delete al nodes in the database.
     console.log(req.body);
+    await PrismaClient.generalRequest.deleteMany();
     await PrismaClient.nodes.deleteMany();
 
     //If successfully wiped Nodes DB, send 200 OK
