@@ -33,8 +33,9 @@ export default function MainPage() {
   const [path, setPath] = useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(defaultMap);
   const [clickTimes, setClickTimes] = useState<number>(0);
-  const [pathfindingAlgorithm, setPathfindingAlgorithm] =
-    useState("/api/map/pathfind");
+  const [pathfindingAlgorithm, setPathfindingAlgorithm] = useState(
+    "/api/map/pathfind/a-star",
+  );
   const [showPathOnly, setShowPathOnly] = useState(false);
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
