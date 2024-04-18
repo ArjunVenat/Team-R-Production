@@ -23,7 +23,6 @@ import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider } from "@mui/material";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
-import "../styles/MainPage.css";
 import { useAuth0 } from "@auth0/auth0-react";
 
 const autocompleteStyle = {
