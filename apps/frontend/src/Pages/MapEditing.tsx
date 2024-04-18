@@ -47,7 +47,8 @@ export default function MapEditing() {
   const [edgeClicked, setEdgeClicked] = useState<Edges>();
   const [editableEdge, setEditableEdge] = useState<Edges | undefined>();
   const [editableNode, setEditableNode] = useState<Nodes | undefined>();
-
+  const [isDirectionsClicked] = useState(false);
+  const [path] = useState<Nodes[]>([]);
   // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
@@ -152,7 +153,11 @@ export default function MapEditing() {
                   zoomOut={zoomOut}
                   resetTransform={resetTransform}
                 />
-                <FloorSelect setMap={setCurrentMap} />
+                <FloorSelect
+                  setMap={setCurrentMap}
+                  isDirectionsClicked={isDirectionsClicked}
+                  path={path}
+                />{" "}
               </ThemeProvider>
             </section>
           )}
