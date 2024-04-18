@@ -62,7 +62,7 @@ function ServiceRequestTable() {
   useEffect(() => {
     async function fetch() {
       const token = await getAccessTokenSilently();
-      const res = await axios.get("/api/service/create/All", {
+      const res = await axios.get("/api/service/create/RequestID/asc/All/All", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -74,9 +74,8 @@ function ServiceRequestTable() {
 
   const deleteService = async (service: GeneralRequest) => {
     const token = await getAccessTokenSilently();
-    const res = await axios.post(
-      `api/admin/service/del/${service.RequestID}`,
-      "",
+    const res = await axios.delete(
+      `api/admin/service/del/Single/${service.RequestID}`,
       {
         headers: {
           Authorization: `Bearer ${token}`,
