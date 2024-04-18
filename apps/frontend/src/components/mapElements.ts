@@ -15,7 +15,7 @@ export const floors = [
 ];
 
 export const pathfindingAlgorithms = [
-  { name: "A*", path: "/api/map/pathfind" },
+  { name: "A*", path: "/api/map/pathfind/a-star" },
   { name: "Breadth-First Search", path: "/api/map/pathfind/bfs" },
   { name: "Depth-First Search", path: "/api/map/pathfind/dfs" },
   { name: "Dijkstra's", path: "/api/map/pathfind/dijkstra" },
