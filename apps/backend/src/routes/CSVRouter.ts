@@ -13,7 +13,7 @@ const upload = multer({
 /**
  * Asyncrhonous function for handling an HTTP get request for downloading a CSV.
  * API route is /api/admin/csv
- * Specified with /Edges or /Nodes (e.g. /api/admin/csv/Edges)
+ * Specified with /Edges or /Nodes or /Employees (e.g. /api/admin/csv/Edges)
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
  */
@@ -39,6 +39,17 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
               (node) =>
                 `${node.NodeID},${node.Xcoord},${node.Ycoord},${node.Floor},${node.Building},${node.NodeType},${node.LongName},${node.ShortName}`,
             )
+            .join("\n"),
+        );
+    } else if (downloadType == "Employees") {
+      const employees = await PrismaClient.employee.findMany(); // Get all employees
+      csvContent = // Build csvString
+        "userID,email,emailVerified,nickname,updatedAt\n".concat(
+          employees
+            .map((employee) => {
+              const formattedUpdatedAt = employee.updatedAt.toISOString();
+              return `${employee.userID},${employee.email},${employee.emailVerified},${employee.nickname},${formattedUpdatedAt}`;
+            })
             .join("\n"),
         );
     }
