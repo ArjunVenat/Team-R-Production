@@ -32,16 +32,27 @@ serviceRequestRouter.post("/", async function (req: Request, res: Response) {
 /**
  * Asyncrhonous function for handling an HTTP get request for getting all service requests
  * API route is /api/service/create
- * Specified with /column/sortDirection/typeFilter/priorityFilter
- * (e.g. /api/service/create/RequestID/asc/Medical Equipment/Low or /api/service/create/LocationNodeID/desc/All/All)
+ * Specified with /column/sortDirection/nameFilter/typeFilter/priorityFilter/locationFilter/employeefilter/dateFilter/statusFilter
+ * /column describes the column to be sorted by
+ * /sortDirection describes the sorting direction (asc or desc)
+ * nameFilter is the requester name to filter by (or "All")
+ * typeFilter is the request type to filter by (or "All")
+ * priorityFilter is the request priority to filter by (or "All")
+ * locationFilter is the request location node ID to filter by (or "All")
+ * employeeFilter is the request employee user ID to filter by (or "All")
+ * dateFilter is the request delivery date (expressed as a string) to filter by (or "All")
+ * statusFilter is the request status to filter by (or "All")
+ * (e.g. /api/service/create/RequestID/asc/All/All/All/All/All/All/All)
+ * (e.g. /api/service/create/DeliveryDate/desc/thom yorke/Gifts/High/WELEV00F01/google-oauth2|116542305867955288154/2024-05-04T18:17:00.000Z/InProgress)
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
  */
 serviceRequestRouter.get(
-  "/:column/:sortDirection/:typeFilter/:priorityFilter",
+  "/:column/:sortDirection/:nameFilter/:typeFilter/:priorityFilter/:locationFilter/:employeeFilter/:dateFilter/:statusFilter",
   async function (req: Request, res: Response) {
     try {
-      // Get the parameters
+      // Get the parameters (there are many parameters)
+
       const column: string = req.params.column;
       if (
         column != "RequestID" &&
@@ -67,6 +78,8 @@ serviceRequestRouter.get(
         res.sendStatus(400);
         return;
       }
+
+      const nameFilter: string = req.params.nameFilter;
 
       const priorityFilter: string = req.params.priorityFilter;
       // Determine if filterType is not of a supported name
@@ -96,54 +109,68 @@ serviceRequestRouter.get(
         return;
       }
 
-      //Now that we know that request is of a supported name, get all requests
-      let allRequests: GeneralRequest[];
-      if (typeFilter == "All" && priorityFilter == "All") {
-        allRequests = await PrismaClient.generalRequest.findMany({
+      const locationFilter: string = req.params.locationFilter;
+
+      //no checks for employee filter since the userID can be anything!
+      const employeeFilter: string = req.params.employeeFilter;
+
+      const dateFilter: string = req.params.dateFilter;
+
+      const statusFilter: string = req.params.statusFilter;
+      if (
+        statusFilter != "Unassigned" &&
+        statusFilter != "Assigned" &&
+        statusFilter != "InProgress" &&
+        statusFilter != "Closed" &&
+        statusFilter != "All"
+      ) {
+        console.log("statusFilter is not of a supported string!");
+        console.log(
+          "statusFilter must be Unassigned, Assigned, InProgress, or Closed",
+        );
+        res.sendStatus(400);
+        return;
+      }
+
+      //Now that we have all the parameters, get all requests (sorted accordingly)
+      let requests: GeneralRequest[] =
+        await PrismaClient.generalRequest.findMany({
           orderBy: [
             {
               [column]: sortDirection,
             },
           ],
         });
-      } else if (typeFilter == "All" && priorityFilter != "All") {
-        allRequests = await PrismaClient.generalRequest.findMany({
-          orderBy: [
-            {
-              [column]: sortDirection,
-            },
-          ],
-          where: {
-            Priority: priorityFilter,
-          },
-        });
-      } else if (typeFilter != "All" && priorityFilter == "All") {
-        allRequests = await PrismaClient.generalRequest.findMany({
-          orderBy: [
-            {
-              [column]: sortDirection,
-            },
-          ],
-          where: {
-            RequestType: typeFilter,
-          },
-        });
-      } else {
-        allRequests = await PrismaClient.generalRequest.findMany({
-          orderBy: [
-            {
-              [column]: sortDirection,
-            },
-          ],
-          where: {
-            Priority: priorityFilter,
-            RequestType: typeFilter,
-          },
-        });
+
+      //Now, time to apply filters (if filter is not set to "All")
+      if (nameFilter != "All") {
+        requests = requests.filter((req) => req.RequesterName == nameFilter);
+      }
+      if (typeFilter != "All") {
+        requests = requests.filter((req) => req.RequestType == typeFilter);
+      }
+      if (priorityFilter != "All") {
+        requests = requests.filter((req) => req.Priority == priorityFilter);
+      }
+      if (locationFilter != "All") {
+        requests = requests.filter(
+          (req) => req.LocationNodeID == locationFilter,
+        );
+      }
+      if (employeeFilter != "All") {
+        requests = requests.filter((req) => req.EmployeeID == employeeFilter);
+      }
+      if (dateFilter != "All") {
+        requests = requests.filter(
+          (req) => req.DeliveryDate.toISOString() == dateFilter,
+        );
+      }
+      if (statusFilter != "All") {
+        requests = requests.filter((req) => req.Status == statusFilter);
       }
 
       //If there is no data to be found in requests table
-      if (allRequests.length == 0) {
+      if (requests.length == 0) {
         //if there is no request data...
         console.error("No requests data found in database!");
         res.sendStatus(204); // and send 204, no data
@@ -151,7 +178,7 @@ serviceRequestRouter.get(
       }
 
       //Send all requests
-      res.json(allRequests);
+      res.json(requests);
     } catch (error) {
       //If there was an error with the HTTP request...
       console.error(`Unable to get all service request data from database`);
