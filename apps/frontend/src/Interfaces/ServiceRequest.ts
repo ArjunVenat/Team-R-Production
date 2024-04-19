@@ -3,7 +3,7 @@ export interface ServiceRequest {
   requestType: string;
   priority: string;
   locationNodeID: string;
-  EmployeeID: string;
+  employeeID: string;
   details1: string;
   details2: string;
   details3: string;
