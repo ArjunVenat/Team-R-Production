@@ -17,6 +17,7 @@ import delEdgesRouter from "./routes/delEdgesRouter.ts";
 import addNodeRouter from "./routes/addNodeRouter.ts";
 import addEdgeRouter from "./routes/addEdgeRouter.ts";
 import resetRouter from "./routes/resetRouter.ts";
+import allEmployeesRouter from "./routes/allEmployeesRouter.ts";
 import { auth } from "express-oauth2-jwt-bearer";
 
 const app: Express = express(); // Setup the backend
@@ -43,6 +44,7 @@ app.use("/healthcheck", (req, res) => {
 app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/map/pathfind", pathfindRouter);
+app.use("/api/admin/allEmployees", allEmployeesRouter);
 
 app.use(
   auth({
