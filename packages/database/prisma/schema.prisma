@@ -58,12 +58,13 @@ model Nodes {
 // serviceRequestsCompleted is an Int
 
 model Employee {
-  userID                   String   @id
+  userID                   String           @id
   email                    String
   emailVerified            Boolean
-  nickname                 String   @unique
+  nickname                 String           @unique
   lastLogin                DateTime
   serviceRequestsCompleted Int
+  Requests                 GeneralRequest[]
 }
 
 //--------------- Iteration 3-----------------------------
@@ -102,6 +103,7 @@ model GeneralRequest {
   Priority       String
   Location       Nodes    @relation(fields: [LocationNodeID], references: [NodeID], onDelete: Cascade)
   LocationNodeID String
+  Employee       Employee @relation(fields: [EmployeeName], references: [nickname], onDelete: Cascade)
   EmployeeName   String
   Details1       String
   Details2       String
