@@ -18,6 +18,7 @@ import addNodeRouter from "./routes/addNodeRouter.ts";
 import addEdgeRouter from "./routes/addEdgeRouter.ts";
 import resetRouter from "./routes/resetRouter.ts";
 import allEmployeesRouter from "./routes/allEmployeesRouter.ts";
+import addEmployeeRouter from "./routes/addEmployeeRouter.ts";
 import { auth } from "express-oauth2-jwt-bearer";
 
 const app: Express = express(); // Setup the backend
@@ -66,6 +67,7 @@ app.use("/api/admin/edge/add", addEdgeRouter);
 app.use("/api/admin/edge/del", delEdgesRouter);
 app.use("/api/admin/node/del", delNodesRouter);
 app.use("/api/admin/reset", resetRouter);
+app.use("/api/admin/employee/add", addEmployeeRouter);
 
 /**
  * Catch all 404 errors, and forward them to the error handler
