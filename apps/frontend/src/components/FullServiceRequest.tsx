@@ -83,6 +83,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     requestType: "",
     priority: "",
     locationNodeID: "",
+    EmployeeID: "",
     details1: "",
     details2: "",
     details3: "",

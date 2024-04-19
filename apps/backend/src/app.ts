@@ -45,7 +45,6 @@ app.use("/healthcheck", (req, res) => {
 app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/map/pathfind", pathfindRouter);
-app.use("/api/admin/allEmployees", allEmployeesRouter);
 
 app.use(
   auth({
@@ -67,6 +66,7 @@ app.use("/api/admin/edge/add", addEdgeRouter);
 app.use("/api/admin/edge/del", delEdgesRouter);
 app.use("/api/admin/node/del", delNodesRouter);
 app.use("/api/admin/reset", resetRouter);
+app.use("/api/admin/allEmployees", allEmployeesRouter);
 app.use("/api/admin/employee/add", addEmployeeRouter);
 
 /**

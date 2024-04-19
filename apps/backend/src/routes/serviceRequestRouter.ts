@@ -53,7 +53,8 @@ serviceRequestRouter.get(
         column != "Details2" &&
         column != "Details3" &&
         column != "DeliveryDate" &&
-        column != "Status"
+        column != "Status" &&
+        column != "EmployeeID"
       ) {
         console.log("column is not of a supported name!");
         res.sendStatus(400);

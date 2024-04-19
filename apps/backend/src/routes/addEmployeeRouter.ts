@@ -9,7 +9,7 @@ import { Employee } from "database";
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST)
  */
-addEmployeeRouter.post("/", async function (req: Request, res: Response) {
+addEmployeeRouter.put("/", async function (req: Request, res: Response) {
   try {
     console.log(req.body);
     const receivedRequest: Employee = req.body;

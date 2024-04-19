@@ -55,27 +55,14 @@ model Nodes {
 // emailVerified is a boolean of whether the employee verified their email
 // nickname is the name of the employee
 // lastLogin is the time the employee last logged in
-// serviceRequestsCompleted is an Int
 
 model Employee {
-  userID                   String           @id
-  email                    String
-  emailVerified            Boolean
-  nickname                 String           @unique
-  lastLogin                DateTime
-  serviceRequestsCompleted Int
-  Requests                 GeneralRequest[]
-}
-
-//--------------- Iteration 3-----------------------------
-// Adding staff table for use with auth0
-// 4 columns
-// Email which is a string, ideally in the format XXXXX@XXXXX.XXXXX
-// UserID which is a string of the staff memeber's auth0 userID
-
-model staff {
-  userid String @id
-  email  String
+  userID        String           @id
+  email         String
+  emailVerified Boolean
+  nickname      String
+  updatedAt     DateTime
+  Requests      GeneralRequest[]
 }
 
 //--------------- Iteration 2 -----------------------------
@@ -103,8 +90,8 @@ model GeneralRequest {
   Priority       String
   Location       Nodes    @relation(fields: [LocationNodeID], references: [NodeID], onDelete: Cascade)
   LocationNodeID String
-  Employee       Employee @relation(fields: [EmployeeName], references: [nickname], onDelete: Cascade)
-  EmployeeName   String
+  Employee       Employee @relation(fields: [EmployeeID], references: [userID], onDelete: Cascade)
+  EmployeeID     String
   Details1       String
   Details2       String
   Details3       String
