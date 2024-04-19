@@ -8,7 +8,7 @@ import axios from "axios";
 import { Nodes } from "database";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import { Button, Box } from "@mui/material";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider } from "@mui/material";
@@ -16,6 +16,10 @@ import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
 import { autocompleteStyle, buttonStyle } from "../styles/muiStyles.ts";
+import TurnLeftIcon from "@mui/icons-material/TurnLeft";
+import TurnRightIcon from "@mui/icons-material/TurnRight";
+import StraightIcon from "@mui/icons-material/Straight";
+import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
   pathfindingAlgorithms,
@@ -131,6 +135,77 @@ export default function MainPage() {
       console.error("Start or end node not found");
     }
   }
+
+  const pathToText = (prevNode: Nodes, startNode: Nodes, endNode: Nodes) => {
+    // straight
+    if (
+      (prevNode.Xcoord === startNode.Xcoord &&
+        startNode.Xcoord === endNode.Xcoord) ||
+      (prevNode.Ycoord === startNode.Ycoord &&
+        startNode.Ycoord === endNode.Ycoord)
+    ) {
+      return (
+        <>
+          <StraightIcon />
+          Continue forward toward {endNode.ShortName}
+        </>
+      );
+    }
+
+    // turn left
+    if (
+      (prevNode.Ycoord === startNode.Ycoord &&
+        prevNode.Xcoord < startNode.Xcoord &&
+        startNode.Xcoord === endNode.Xcoord &&
+        startNode.Ycoord < endNode.Ycoord) ||
+      (prevNode.Xcoord === startNode.Xcoord &&
+        prevNode.Ycoord < startNode.Ycoord &&
+        startNode.Ycoord === endNode.Ycoord &&
+        startNode.Xcoord > endNode.Xcoord) ||
+      (prevNode.Ycoord === startNode.Ycoord &&
+        prevNode.Xcoord > startNode.Xcoord &&
+        startNode.Xcoord === endNode.Xcoord &&
+        startNode.Ycoord > endNode.Ycoord) ||
+      (prevNode.Xcoord === startNode.Xcoord &&
+        prevNode.Ycoord > startNode.Ycoord &&
+        startNode.Ycoord === endNode.Ycoord &&
+        startNode.Xcoord < endNode.Xcoord)
+    ) {
+      return (
+        <>
+          <TurnRightIcon />
+          <div>Turn Right and continue to {endNode.ShortName}</div>
+        </>
+      );
+    }
+
+    // turn right
+    if (
+      (prevNode.Ycoord === startNode.Ycoord &&
+        prevNode.Xcoord < startNode.Xcoord &&
+        startNode.Xcoord === endNode.Xcoord &&
+        startNode.Ycoord > endNode.Ycoord) ||
+      (prevNode.Xcoord === startNode.Xcoord &&
+        prevNode.Ycoord < startNode.Ycoord &&
+        startNode.Ycoord === endNode.Ycoord &&
+        startNode.Xcoord < endNode.Xcoord) ||
+      (prevNode.Ycoord === startNode.Ycoord &&
+        prevNode.Xcoord > startNode.Xcoord &&
+        startNode.Xcoord === endNode.Xcoord &&
+        startNode.Ycoord < endNode.Ycoord) ||
+      (prevNode.Xcoord === startNode.Xcoord &&
+        prevNode.Ycoord > startNode.Ycoord &&
+        startNode.Ycoord === endNode.Ycoord &&
+        startNode.Xcoord > endNode.Xcoord)
+    ) {
+      return (
+        <>
+          <TurnLeftIcon />
+          <div>Turn Left and continue to {endNode.ShortName}</div>
+        </>
+      );
+    }
+  };
 
   return (
     <div
@@ -270,6 +345,31 @@ export default function MainPage() {
             Reset Map
           </Button>
         </div>
+
+        {path.length > 0 && (
+          <Box maxWidth={330}>
+            <Box mb={2} display="flex" gap={1} alignItems="center">
+              <SyncIcon />
+              {end} from {start}
+            </Box>
+            {path.map((item, index) => {
+              if (index === 0 || index === path.length - 1) {
+                return null;
+              }
+              return (
+                <Box
+                  mb={2}
+                  display="flex"
+                  gap={1}
+                  alignItems="center"
+                  key={index}
+                >
+                  {pathToText(path[index - 1], item, path[index + 1])}
+                </Box>
+              );
+            })}
+          </Box>
+        )}
       </aside>
     </div>
   );
