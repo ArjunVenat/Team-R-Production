@@ -13,6 +13,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -75,6 +76,12 @@ export default function Sidebar() {
     icon: <CloudDownloadIcon />,
     displayLoggedIn: true,
   };
+
+  const creditsPage: Menu = {
+    title: "Credits Page",
+    icon: <ImportContactsIcon />,
+    displayLoggedIn: false,
+  };
   const Menus: Menu[] = [
     home,
     editmap,
@@ -83,6 +90,7 @@ export default function Sidebar() {
     nodes_edges,
     // uploadCSV,
     downloadCSV,
+    creditsPage,
     logoutOption,
   ];
 
@@ -146,6 +154,9 @@ export default function Sidebar() {
     case "/upload-download-csv":
       menuHighlight = "Upload/Download CSV";
       break;
+    case "/credits":
+      menuHighlight = "Credits Page";
+      break;
     // case "/download-csv":
     //   menuHighlight = "Download CSV";
     //   break;
@@ -207,6 +218,8 @@ export default function Sidebar() {
     } else if (title === "Upload/Download CSV") {
       // Redirect to the upload/download CSV page.
       routeChange("upload-download-csv");
+    } else if (title === "Credits Page") {
+      routeChange("credits");
     }
   };
 
