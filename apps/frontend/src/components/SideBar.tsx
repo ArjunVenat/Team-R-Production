@@ -14,6 +14,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
+import BarChartIcon from "@mui/icons-material/BarChart";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -77,6 +78,11 @@ export default function Sidebar() {
     icon: <CloudDownloadIcon />,
     displayLoggedIn: true,
   };
+  const stats: Menu = {
+    title: "Stats",
+    icon: <BarChartIcon />,
+    displayLoggedIn: true,
+  };
   const Menus: Menu[] = [
     home,
     editmap,
@@ -86,6 +92,7 @@ export default function Sidebar() {
     // uploadCSV,
     downloadCSV,
     logoutOption,
+    stats,
   ];
 
   const location = useLocation();
@@ -161,6 +168,9 @@ export default function Sidebar() {
     // case "/download-csv":
     //   menuHighlight = "Download CSV";
     //   break;
+    case "/stats":
+      menuHighlight = "Stats";
+      break;
     case "/logout":
       menuHighlight = "Logout";
       break;
@@ -219,6 +229,9 @@ export default function Sidebar() {
     } else if (title === "Upload/Download CSV") {
       // Redirect to the upload/download CSV page.
       routeChange("upload-download-csv");
+    } else if (title === "Stats") {
+      //redirect to stats page
+      routeChange("stats");
     }
   };
 

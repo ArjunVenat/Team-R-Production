@@ -90,7 +90,7 @@ function App() {
           element: <UploadDownloadCSV />,
         },
         {
-          path: "artem",
+          path: "stats",
           element: <St4t5Page />,
         },
       ],
