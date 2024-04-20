@@ -10,6 +10,10 @@ import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
 import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
+
+//Artem Page import
+import ArtemPage from "./Pages/ArtemPage.tsx";
+
 // import DownloadCSV from "./backendreference/DownloadCSV.tsx";
 // import UploadCSV from "./Pages/UploadCSV.tsx";
 import UploadDownloadCSV from "./Pages/UploadDownloadPage.tsx";
@@ -84,6 +88,10 @@ function App() {
         {
           path: "upload-download-csv",
           element: <UploadDownloadCSV />,
+        },
+        {
+          path: "artem",
+          element: <ArtemPage />,
         },
       ],
     },
