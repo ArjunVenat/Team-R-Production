@@ -1,7 +1,7 @@
 // import MapIcon from '@mui/icons-material/Map';
 // import LoginIcon from '@mui/icons-material/Login';
 import { SubmitUserDB } from "../backendreference/addUserToDB.ts";
-import { Logout } from "@mui/icons-material";
+import { Logout, Login } from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -64,7 +64,7 @@ export default function Sidebar() {
   const logoutOption: Menu = {
     title: "Logout",
     icon: <Logout />,
-    displayLoggedIn: false,
+    displayLoggedIn: true,
   };
   const nodes_edges: Menu = {
     title: "Node/Edge Table",
@@ -77,16 +77,48 @@ export default function Sidebar() {
     icon: <CloudDownloadIcon />,
     displayLoggedIn: true,
   };
-  const Menus: Menu[] = [
+
+  const login: Menu = {
+    title: "Staff Login",
+    icon: <Login />,
+    displayLoggedIn: false,
+  };
+  // const Menus: Menu[] = [
+  //   home,
+  //   editmap,
+  //   serviceRequest,
+  //   serviceRequestTable,
+  //   nodes_edges,
+  //   // uploadCSV,
+  //   downloadCSV,
+  //   logoutOption,
+  //   login,
+  // ];
+  const [Menus, setMenus] = useState<Menu[]>([
     home,
     editmap,
     serviceRequest,
     serviceRequestTable,
     nodes_edges,
-    // uploadCSV,
     downloadCSV,
     logoutOption,
-  ];
+    login,
+  ]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setMenus([
+        home,
+        editmap,
+        serviceRequest,
+        serviceRequestTable,
+        nodes_edges,
+        downloadCSV,
+        logoutOption,
+      ]);
+    }
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
 
   const location = useLocation();
   const currentURL = location.pathname;
@@ -219,6 +251,10 @@ export default function Sidebar() {
     } else if (title === "Upload/Download CSV") {
       // Redirect to the upload/download CSV page.
       routeChange("upload-download-csv");
+    } else if (title === "Staff Login") {
+      loginWithRedirect({
+        appState: { returnTo: "/home" },
+      });
     }
   };
 
