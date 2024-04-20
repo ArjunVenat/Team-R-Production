@@ -62,7 +62,7 @@ function ServiceRequestTable() {
   useEffect(() => {
     async function fetch() {
       const token = await getAccessTokenSilently();
-      const res = await axios.get("/api/service/create/RequestID/asc/All/All", {
+      const res = await axios.get("/api/service/create", {
         headers: {
           Authorization: `Bearer ${token}`,
         },

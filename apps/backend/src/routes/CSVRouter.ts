@@ -4,6 +4,7 @@ import PrismaClient from "../bin/database-connection.ts";
 import multer from "multer";
 import { insertNodeIntoDB } from "../node.ts"; // Importing node database functions
 import { insertEdgeIntoDB } from "../edge"; // Importing edge database functions
+import { insertEmployeeIntoDB } from "../employee.ts"; // Importing employee database functions
 import { parseCSVFile } from "../fileUtils.ts";
 
 const upload = multer({
@@ -13,7 +14,7 @@ const upload = multer({
 /**
  * Asyncrhonous function for handling an HTTP get request for downloading a CSV.
  * API route is /api/admin/csv
- * Specified with /Edges or /Nodes (e.g. /api/admin/csv/Edges)
+ * Specified with /Edges or /Nodes or /Employees (e.g. /api/admin/csv/Edges)
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST) including all edge data in json format.
  */
@@ -41,6 +42,17 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
             )
             .join("\n"),
         );
+    } else if (downloadType == "Employees") {
+      const employees = await PrismaClient.employee.findMany(); // Get all employees
+      csvContent = // Build csvString
+        "userID,email,emailVerified,nickname,updatedAt\n".concat(
+          employees
+            .map((employee) => {
+              const formattedUpdatedAt = employee.updatedAt.toISOString();
+              return `${employee.userID},${employee.email},${employee.emailVerified},${employee.nickname},${formattedUpdatedAt}`;
+            })
+            .join("\n"),
+        );
     }
 
     //Determine if the csvContent is empty or not
@@ -62,7 +74,7 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
 /**
  * Asyncrhonous function for handling an HTTP post request for uploading a CSV.
  * API route is /api/admin/csv
- * Specified with /Edges or /Nodes (e.g. /api/admin/csv/Edges)
+ * Specified with /Edges or /Nodes or /Employees (e.g. /api/admin/csv/Edges)
  * @param req HTTP request information
  * @param res HTTP response information (200 OK, 204 NO CONTENT, 400 BAD REQUEST)
  */
@@ -86,10 +98,11 @@ CSVRouter.post(
         !data.includes("edgeID,startNode,endNode") &&
         !data.includes(
           "nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName",
-        )
+        ) &&
+        !data.includes("userID,email,emailVerified,nickname,updatedAt")
       ) {
         console.log(
-          "File uploaded is not of the right type! Must be edges data or nodes data in proper csv format",
+          "File uploaded is not of the right type! Must be edges data or nodes or employees data in proper csv format",
         );
         res.sendStatus(400); //send bad request
         return;
@@ -111,6 +124,8 @@ CSVRouter.post(
       } else if (rows[0].length == 8) {
         await PrismaClient.generalRequest.deleteMany({});
         await PrismaClient.nodes.deleteMany({});
+      } else if (rows[0].length == 5) {
+        await PrismaClient.employee.deleteMany({});
       }
 
       //Now, write file contents to CSV
@@ -119,6 +134,8 @@ CSVRouter.post(
           await insertEdgeIntoDB(row);
         } else if (rows[0].length == 8) {
           await insertNodeIntoDB(row);
+        } else if (rows[0].length == 5) {
+          await insertEmployeeIntoDB(row);
         } else {
           res.sendStatus(400);
           console.log(
