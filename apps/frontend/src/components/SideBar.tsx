@@ -91,8 +91,8 @@ export default function Sidebar() {
     nodes_edges,
     // uploadCSV,
     downloadCSV,
-    logoutOption,
     stats,
+    logoutOption,
   ];
 
   const location = useLocation();
