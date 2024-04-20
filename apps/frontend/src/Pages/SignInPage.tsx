@@ -40,7 +40,7 @@ function SignInPage() {
         ))}
       </Carousel>
       {showWarning && (
-        <div className="fixed bottom-0 bg-red-600 w-2/3 flex justify-between items-center">
+        <div className="fixed top-0 bg-red-600 w-2/3 flex justify-between items-center">
           <div className="flex items-center m-4">
             {" "}
             {/* Container for h1 and icon */}
