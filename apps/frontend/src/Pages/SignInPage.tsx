@@ -9,6 +9,9 @@ import bwhoutside from "../assets/hero/bwhoutside.png";
 import hall from "../assets/hero/hall.png";
 import outsidebwh from "../assets/hero/outsidebwh.png";
 import ViewMap from "../assets/hero/ViewMap.png";
+// import { Button } from "@mui/material";
+import { useState } from "react";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
 const UserTypeButton = motion.button;
 const images: string[] = [blurHall, bwhoutside, hall, outsidebwh];
@@ -16,6 +19,7 @@ const images: string[] = [blurHall, bwhoutside, hall, outsidebwh];
 function SignInPage() {
   const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
+  const [showWarning, setWarning] = useState<boolean>(true);
 
   return (
     <main className="h-screen w-screen">
@@ -35,6 +39,25 @@ function SignInPage() {
           />
         ))}
       </Carousel>
+      {showWarning && (
+        <div className="fixed bottom-0 bg-red-600 w-2/3 flex justify-between items-center">
+          <div className="flex items-center m-4">
+            {" "}
+            {/* Container for h1 and icon */}
+            <h1 className="text-white text-2xl">
+              This website is a term project exercise for WPI CS 3733 Software
+              Engineering (Prof. Wong) and is not to be confused with the actual
+              Brigham & Women’s Hospital website.
+            </h1>
+            <HighlightOffOutlinedIcon
+              sx={{ color: "white", fontSize: "3rem", marginLeft: "1rem" }}
+              onClick={() => {
+                setWarning(false);
+              }}
+            />
+          </div>
+        </div>
+      )}
 
       {/* Sidebar */}
       <aside

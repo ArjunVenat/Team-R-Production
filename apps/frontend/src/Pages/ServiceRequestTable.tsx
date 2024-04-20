@@ -15,7 +15,7 @@ import Sidebar from "../components/SideBar.tsx";
 import { GeneralRequest } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import blueback from "../assets/blueback.png";
+import swoosh from "../assets/swoosh.png";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -62,7 +62,7 @@ function ServiceRequestTable() {
   useEffect(() => {
     async function fetch() {
       const token = await getAccessTokenSilently();
-      const res = await axios.get("/api/service/create", {
+      const res = await axios.get("/api/service/create/RequestID/asc/All/All", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -121,31 +121,34 @@ function ServiceRequestTable() {
       <div
         className="overflow-y-auto flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${blueback})`,
+          backgroundImage: `url(${swoosh})`,
           width: "100vw",
           height: "100vh",
         }}
       >
-        <div className="p-4">
-          <h1 className="mt-2 text-5xl text-primary font-bold p-2 text-center">
-            Service Request Tables
-          </h1>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Tabs
-              value={selectedTable}
-              onChange={(event, newValue) => setSelectedTable(newValue)}
-              aria-label="basic tabs example"
-            >
-              <Tab label=" Flowers " />
-              <Tab label=" Gifts " />
-              <Tab label=" Maintenance " />
-              <Tab label=" Medicine " />
-              <Tab label=" Medical Equipment " />
-            </Tabs>
-          </Box>
+        <div>
+          <div className=" bg-white top-0 min-w-full border-b-8 border-primary ">
+            <h1 className=" text-5xl text-primary font-bold p-2 text-center">
+              Service Request Tables
+            </h1>
+            <Box sx={{ borderBottom: 1, borderColor: "white", margin: 2 }}>
+              <Tabs
+                value={selectedTable}
+                onChange={(event, newValue) => setSelectedTable(newValue)}
+                aria-label="basic tabs example"
+              >
+                <Tab label=" Flowers " />
+                <Tab label=" Gifts " />
+                <Tab label=" Maintenance " />
+                <Tab label=" Medicine " />
+                <Tab label=" Medical Equipment " />
+              </Tabs>
+            </Box>
+          </div>
+
           <CustomTabPanel value={selectedTable} index={0}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className=" bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary border-black p-2 text-white">
@@ -254,7 +257,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={1}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary border-black p-2 text-white">
@@ -363,7 +366,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={2}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className=" bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary border-black p-2 text-white">
@@ -472,7 +475,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={3}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary text-white border-black p-2">
@@ -581,7 +584,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={4}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary text-white border-black p-2">
