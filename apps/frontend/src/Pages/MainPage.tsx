@@ -1,14 +1,20 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
 import SideBar from "../components/SideBar.tsx";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
 import { Nodes } from "database";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Button, Box } from "@mui/material";
+import {
+  Button,
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider } from "@mui/material";
@@ -26,6 +32,7 @@ import {
   defaultMap,
 } from "../components/mapElements.ts";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -136,13 +143,23 @@ export default function MainPage() {
     }
   }
 
-  const pathToText = (prevNode: Nodes, startNode: Nodes, endNode: Nodes) => {
+  const pathToText = (
+    prevNode: Nodes | { Ycoord: number; Xcoord: number },
+    startNode: Nodes,
+    endNode: Nodes,
+  ) => {
+    // Normalization
+    const px = Number(prevNode.Xcoord);
+    const py = Number(prevNode.Ycoord);
+    const sx = Number(startNode.Xcoord);
+    const sy = Number(startNode.Ycoord);
+    const ex = Number(endNode.Xcoord);
+    const ey = Number(endNode.Ycoord);
     // straight
     if (
-      (prevNode.Xcoord === startNode.Xcoord &&
-        startNode.Xcoord === endNode.Xcoord) ||
-      (prevNode.Ycoord === startNode.Ycoord &&
-        startNode.Ycoord === endNode.Ycoord)
+      (px === -1 && py === -1) ||
+      (px === sx && sx === ex) ||
+      (py === sy && sy === ey)
     ) {
       return (
         <>
@@ -154,58 +171,45 @@ export default function MainPage() {
 
     // turn left
     if (
-      (prevNode.Ycoord === startNode.Ycoord &&
-        prevNode.Xcoord < startNode.Xcoord &&
-        startNode.Xcoord === endNode.Xcoord &&
-        startNode.Ycoord < endNode.Ycoord) ||
-      (prevNode.Xcoord === startNode.Xcoord &&
-        prevNode.Ycoord < startNode.Ycoord &&
-        startNode.Ycoord === endNode.Ycoord &&
-        startNode.Xcoord > endNode.Xcoord) ||
-      (prevNode.Ycoord === startNode.Ycoord &&
-        prevNode.Xcoord > startNode.Xcoord &&
-        startNode.Xcoord === endNode.Xcoord &&
-        startNode.Ycoord > endNode.Ycoord) ||
-      (prevNode.Xcoord === startNode.Xcoord &&
-        prevNode.Ycoord > startNode.Ycoord &&
-        startNode.Ycoord === endNode.Ycoord &&
-        startNode.Xcoord < endNode.Xcoord)
+      (py === sy && px < sx && sx === ex && sy > ey) ||
+      (px === sx && py > sy && sy === ey && sx > ex) ||
+      (py === sy && px > sx && sx === ex && sy < ey) ||
+      (px === sx && py < sy && sy === ey && sx < ex)
     ) {
       return (
         <>
-          <TurnRightIcon />
-          <div>Turn Right and continue to {endNode.ShortName}</div>
+          <TurnLeftIcon />
+          <div>Turn left and continue to {endNode.ShortName}</div>
         </>
       );
     }
 
     // turn right
     if (
-      (prevNode.Ycoord === startNode.Ycoord &&
-        prevNode.Xcoord < startNode.Xcoord &&
-        startNode.Xcoord === endNode.Xcoord &&
-        startNode.Ycoord > endNode.Ycoord) ||
-      (prevNode.Xcoord === startNode.Xcoord &&
-        prevNode.Ycoord < startNode.Ycoord &&
-        startNode.Ycoord === endNode.Ycoord &&
-        startNode.Xcoord < endNode.Xcoord) ||
-      (prevNode.Ycoord === startNode.Ycoord &&
-        prevNode.Xcoord > startNode.Xcoord &&
-        startNode.Xcoord === endNode.Xcoord &&
-        startNode.Ycoord < endNode.Ycoord) ||
-      (prevNode.Xcoord === startNode.Xcoord &&
-        prevNode.Ycoord > startNode.Ycoord &&
-        startNode.Ycoord === endNode.Ycoord &&
-        startNode.Xcoord > endNode.Xcoord)
+      (py === sy && px < sx && sx === ex && sy < ey) ||
+      (px === sx && py > sy && sy === ey && sx < ex) ||
+      (py === sy && px > sx && sx === ex && sy > ey) ||
+      (px === sx && py < sy && sy === ey && sx > ex)
     ) {
       return (
         <>
-          <TurnLeftIcon />
-          <div>Turn Left and continue to {endNode.ShortName}</div>
+          <TurnRightIcon />
+          <div>Turn right and continue to {endNode.ShortName}</div>
         </>
       );
     }
   };
+
+  const groupPath: { [key: string]: Nodes[] } = useMemo(() => {
+    const floorMap: {
+      [key: string]: Nodes[];
+    } = {};
+    path.forEach((item) => {
+      (floorMap[item.Floor] || (floorMap[item.Floor] = [])).push(item);
+    });
+    return floorMap;
+  }, [path]);
+  console.log(groupPath);
 
   return (
     <div
@@ -352,22 +356,47 @@ export default function MainPage() {
               <SyncIcon />
               {end} from {start}
             </Box>
-            {path.map((item, index) => {
-              if (index === 0 || index === path.length - 1) {
-                return null;
-              }
-              return (
-                <Box
-                  mb={2}
-                  display="flex"
-                  gap={1}
-                  alignItems="center"
-                  key={index}
-                >
-                  {pathToText(path[index - 1], item, path[index + 1])}
-                </Box>
-              );
-            })}
+            {Object.keys(groupPath).map((key) => (
+              <Accordion
+                key={key}
+                onChange={() => {
+                  // if (expanded) {
+                  const matchedFloor = floors.find(
+                    (floor) => floor.level === key,
+                  );
+                  setCurrentMap(matchedFloor ? matchedFloor.map : "");
+                  // }
+                }}
+              >
+                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                  Floor {key}
+                </AccordionSummary>
+                <AccordionDetails>
+                  {groupPath[key].map((item, index) => {
+                    if (index === groupPath[key].length - 1) {
+                      return null;
+                    }
+                    return (
+                      <Box
+                        mb={2}
+                        display="flex"
+                        gap={1}
+                        alignItems="center"
+                        key={index}
+                      >
+                        {pathToText(
+                          index !== 0
+                            ? groupPath[key][index - 1]
+                            : { Xcoord: -1, Ycoord: -1 },
+                          item,
+                          groupPath[key][index + 1],
+                        )}
+                      </Box>
+                    );
+                  })}
+                </AccordionDetails>
+              </Accordion>
+            ))}
           </Box>
         )}
       </aside>
