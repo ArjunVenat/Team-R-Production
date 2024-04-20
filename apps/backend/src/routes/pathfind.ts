@@ -11,7 +11,10 @@ const router: Router = express.Router();
 router.get(
   "/:algoType",
   async function (req: Request, res: Response): Promise<void> {
-    const { startNodeID, endNodeID } = req.query;
+    const { startNodeID, endNodeID } = req.query as {
+      startNodeID: string;
+      endNodeID: string;
+    };
 
     // Determine which algorithm to use for pathfinding
     let algo: algoType;
@@ -41,12 +44,7 @@ router.get(
     const graph = await createGraph();
 
     //const path: string[] = graph.AStar(startNodeID, endNodeID);
-    const path: string[] = findpath.doAlgo(
-      graph,
-      algo,
-      startNodeID as string,
-      endNodeID as string,
-    );
+    const path: string[] = findpath.doAlgo(graph, algo, startNodeID, endNodeID);
     console.log(path);
 
     // Check if the path is empty
