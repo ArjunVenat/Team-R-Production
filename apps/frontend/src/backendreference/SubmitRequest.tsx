@@ -8,6 +8,7 @@ export async function submitRequestDB(request: ServiceRequest, token: string) {
     RequestType: request.requestType,
     Priority: request.priority,
     LocationNodeID: request.locationNodeID,
+    EmployeeID: request.employeeID,
     Details1: request.details1,
     Details2: request.details2,
     Details3: request.details3,

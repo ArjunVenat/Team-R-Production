@@ -1,5 +1,6 @@
 // import MapIcon from '@mui/icons-material/Map';
 // import LoginIcon from '@mui/icons-material/Login';
+import { SubmitUserDB } from "../backendreference/addUserToDB.ts";
 import { Logout } from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
@@ -37,6 +38,7 @@ export default function Sidebar() {
     loginWithRedirect,
     getAccessTokenSilently,
     logout,
+    user,
   } = useAuth0();
 
   const home: Menu = {
@@ -103,7 +105,16 @@ export default function Sidebar() {
       // Define an asynchronous function to refresh the access token.
       const refreshToken = async () => {
         try {
-          await getAccessTokenSilently();
+          const token: string = await getAccessTokenSilently(); //If the user is logged in and we can get their user...
+          try {
+            //Try to add them to the database...
+            await SubmitUserDB(user!, token);
+          } catch (error) {
+            //If they already exist within the database...
+            console.log(
+              "could not add user to employee databse! This user likely already exists within the database",
+            );
+          }
         } catch (error) {
           // If an error occurs during token refresh, redirect the user to the login page.
           await loginWithRedirect({
@@ -126,6 +137,7 @@ export default function Sidebar() {
       location.pathname, // Pathname of the current location.
       isLoading, // Boolean indicating whether authentication is in progress.
       isAuthenticated, // Boolean indicating whether the user is authenticated.
+      user, // auth0 user
     ],
   );
 
