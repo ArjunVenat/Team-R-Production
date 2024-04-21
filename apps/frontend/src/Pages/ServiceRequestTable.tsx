@@ -1,6 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
 import isAdmin from "../components/adminChecker.ts";
+// import { Employee } from "../Interfaces/Employee.ts";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
 import {
@@ -60,6 +61,7 @@ function ServiceRequestTable() {
 
   // const navigate = useNavigate();
   const [requestData, setrequestData] = useState<GeneralRequest[]>([]);
+  // const [employees, setEmployees] = useState<Employee[]>();
 
   useEffect(() => {
     async function fetch() {
@@ -69,6 +71,16 @@ function ServiceRequestTable() {
       if (!adminStatus) {
         employeeFilter = `?employeeFilter=${user!.sub}`;
       }
+
+      // //Get all employees
+      // const token = await getAccessTokenSilently();
+      // const empRes = await axios.get("/api/admin/allEmployees", {
+      //     headers: {
+      //         Authorization: `Bearer ${token}`,
+      //     },
+      // });
+      // const allEmployees = empRes.data;
+      // setEmployees(allEmployees);
 
       //Get all service requests
       const token = await getAccessTokenSilently();
@@ -163,10 +175,10 @@ function ServiceRequestTable() {
                       Service Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Sub Type
+                      Name
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Name
+                      Sub Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Delivery Date
@@ -182,6 +194,9 @@ function ServiceRequestTable() {
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Size of Bouquet
+                    </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
                     </th>
                     <th className="bg-primary border-black w-10 text-white">
                       Status
@@ -202,10 +217,10 @@ function ServiceRequestTable() {
                             {row.RequestType}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.Details1}
+                            {row.RequesterName}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.RequesterName}
+                            {row.Details1}
                           </td>
                           <td className="border-black text-center p-2">
                             {row.DeliveryDate.toString()}
@@ -221,6 +236,9 @@ function ServiceRequestTable() {
                           </td>
                           <td className="border-black text-center p-2">
                             {row.Details2}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.EmployeeID}
                           </td>
                           <td className="border-black text-center p-2">
                             <FormControl fullWidth>
@@ -272,10 +290,10 @@ function ServiceRequestTable() {
                       Service Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Sub Type
+                      Name
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Name
+                      Sub Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Delivery Date
@@ -291,6 +309,9 @@ function ServiceRequestTable() {
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Wrapped
+                    </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Status
@@ -311,10 +332,10 @@ function ServiceRequestTable() {
                             {row.RequestType}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.Details1}
+                            {row.RequesterName}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.RequesterName}
+                            {row.Details1}
                           </td>
                           <td className="border-black text-center p-2">
                             {row.DeliveryDate.toString()}
@@ -330,6 +351,9 @@ function ServiceRequestTable() {
                           </td>
                           <td className="border-black text-center p-2">
                             {row.Details3}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.EmployeeID}
                           </td>
                           <td className="border-black text-center p-2">
                             <FormControl fullWidth>
@@ -402,6 +426,9 @@ function ServiceRequestTable() {
                       Hazardous Material
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
+                      Employee
+                    </th>
+                    <th className="bg-primary border-black p-2 text-white">
                       Status
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
@@ -439,6 +466,9 @@ function ServiceRequestTable() {
                           </td>
                           <td className="border-black text-center p-2">
                             {row.Details3}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.EmployeeID}
                           </td>
                           <td className="border-black text-center p-2">
                             <FormControl fullWidth>
@@ -510,6 +540,9 @@ function ServiceRequestTable() {
                     <th className="bg-primary text-white border-black p-2">
                       Route
                     </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
+                    </th>
                     <th className="bg-primary text-white border-black p-2">
                       Status
                     </th>
@@ -548,6 +581,9 @@ function ServiceRequestTable() {
                           </td>
                           <td className="border-black text-center p-2">
                             {row.Details3}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.EmployeeID}
                           </td>
                           <td className="border-black text-center p-2">
                             <FormControl fullWidth>
@@ -619,6 +655,9 @@ function ServiceRequestTable() {
                     <th className="bg-primary text-white border-black p-2">
                       Requires Supervision
                     </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
+                    </th>
                     <th className="bg-primary text-white border-black p-2">
                       Status
                     </th>
@@ -657,6 +696,9 @@ function ServiceRequestTable() {
                           </td>
                           <td className="border-black text-center p-2">
                             {row.Details3}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.EmployeeID}
                           </td>
                           <td className="border-black text-center p-2">
                             <FormControl fullWidth>
