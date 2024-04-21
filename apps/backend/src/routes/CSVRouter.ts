@@ -42,7 +42,7 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
             )
             .join("\n"),
         );
-    } else if (downloadType == "Employees") {
+    } else if (downloadType == "Employee") {
       const employees = await PrismaClient.employee.findMany(); // Get all employees
       csvContent = // Build csvString
         "userID,email,emailVerified,nickname,updatedAt\n".concat(
@@ -125,6 +125,7 @@ CSVRouter.post(
         await PrismaClient.generalRequest.deleteMany({});
         await PrismaClient.nodes.deleteMany({});
       } else if (rows[0].length == 5) {
+        await PrismaClient.generalRequest.deleteMany({});
         await PrismaClient.employee.deleteMany({});
       }
 

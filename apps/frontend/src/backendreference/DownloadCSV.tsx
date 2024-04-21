@@ -40,6 +40,22 @@ export default function DownloadCSV() {
     downloadBlob(receiveNodes, "nodes.csv");
   }
 
+  async function fetchEmployees() {
+    // make an http get request to backend
+    const token = await getAccessTokenSilently();
+    const res = await axios.get("/api/admin/csv/Employee", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+
+    //make a new blob
+    const receiveEmployees = new Blob([res.data], {
+      type: "text/csv;encoding:utf-8",
+    });
+    downloadBlob(receiveEmployees, "employees.csv");
+  }
+
   function downloadBlob(blob: Blob, filePath: string) {
     const blobURL = URL.createObjectURL(blob);
 
@@ -103,6 +119,17 @@ export default function DownloadCSV() {
                 type="submit"
               >
                 Download Edges File
+              </Button>
+            </Box>
+
+            <Box mt={5}>
+              <Button
+                onClick={fetchEmployees}
+                variant="contained"
+                color="success"
+                type="submit"
+              >
+                Download Employees File
               </Button>
             </Box>
           </Stack>
