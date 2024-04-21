@@ -17,6 +17,12 @@ import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 import swoosh from "../assets/swoosh.png";
 
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import BuildIcon from "@mui/icons-material/Build";
+import VaccinesIcon from "@mui/icons-material/Vaccines";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+
 interface TabPanelProps {
   children?: React.ReactNode;
   index: number;
@@ -127,21 +133,111 @@ function ServiceRequestTable() {
         }}
       >
         <div>
-          <div className=" bg-white top-0 min-w-full border-b-8 border-primary ">
-            <h1 className=" text-5xl text-primary font-bold p-2 text-center">
+          <div className=" bg-primary top-0 min-w-full pt-8 ">
+            <h1 className="text-5xl text-primary font-bold p-2 text-left bg-white w-full">
               Service Request Tables
             </h1>
-            <Box sx={{ borderBottom: 1, borderColor: "white", margin: 2 }}>
+            <Box
+              sx={{
+                borderBottom: 1,
+                borderColor: "white",
+                display: "flex",
+                justifyContent: "center",
+              }}
+            >
               <Tabs
+                TabIndicatorProps={{ style: { backgroundColor: "#f6bd39" } }}
                 value={selectedTable}
                 onChange={(event, newValue) => setSelectedTable(newValue)}
                 aria-label="basic tabs example"
               >
-                <Tab label=" Flowers " />
-                <Tab label=" Gifts " />
-                <Tab label=" Maintenance " />
-                <Tab label=" Medicine " />
-                <Tab label=" Medical Equipment " />
+                <Tab
+                  label=" Flowers "
+                  icon={
+                    <LocalFloristIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Gifts "
+                  icon={
+                    <CardGiftcardIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Maintenance "
+                  icon={
+                    <BuildIcon className="mx-2" style={{ fontSize: "2rem" }} />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Medicine "
+                  icon={
+                    <VaccinesIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Medical Equipment "
+                  icon={
+                    <MonitorHeartIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
               </Tabs>
             </Box>
           </div>
