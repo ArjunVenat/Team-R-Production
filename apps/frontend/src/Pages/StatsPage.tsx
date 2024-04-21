@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { BarChart } from "@mui/x-charts/BarChart";
-import { LineChart } from "@mui/x-charts/LineChart";
 import axios from "axios";
 import { Box, Typography } from "@mui/material";
 import blueback from "../assets/blueback.png";
@@ -87,7 +86,7 @@ const St4t5Page = () => {
         <main className="flex content-center justify-center leading-none relative">
           <Box textAlign="center" color="#000000">
             <Typography variant="h1" component="h1" gutterBottom>
-              Service Requests Overview
+              Stats or something idk
             </Typography>
             <Box display="flex" justifyContent="center">
               <Box
@@ -104,45 +103,19 @@ const St4t5Page = () => {
                       color: "#FFC107", // Deep Yellow
                     },
                   ]}
-                  height={330} // Increased height to prevent top of bars from being cut off
+                  height={500} // Increased height
+                  width={800} // Increased width
                   xAxis={[
                     {
                       data: Object.keys(typeLengths),
                       scaleType: "band",
                     },
                   ]}
-                  margin={{ top: 30, bottom: 30, left: 40, right: 10 }} // Increased top margin
+                  margin={{ top: 30, bottom: 30, left: 40, right: 10 }}
                   grid={{ vertical: true, horizontal: true }}
                 />
                 <Typography variant="body1" gutterBottom>
-                  Bar Chart - Number of Requests by Type
-                </Typography>
-              </Box>
-              <Box
-                textAlign="center"
-                margin="0 20px"
-                bgcolor="#FFFFFF"
-                padding="20px"
-                borderRadius="10px"
-              >
-                <LineChart
-                  series={[
-                    {
-                      data: [2, 5.5, 2, 8.5, 1.5, 5],
-                      color: "#FFC107", // Deep Yellow
-                    },
-                  ]}
-                  xAxis={[
-                    {
-                      data: [1, 2, 3, 5, 8, 10],
-                    },
-                  ]}
-                  width={500}
-                  height={300}
-                  grid={{ vertical: true, horizontal: true }}
-                />
-                <Typography variant="body1" gutterBottom>
-                  Line Chart - Requests Over Time
+                  Number of Requests by Type
                 </Typography>
               </Box>
             </Box>
