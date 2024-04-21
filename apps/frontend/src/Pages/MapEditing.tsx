@@ -132,6 +132,7 @@ export default function MapEditing() {
                 <SVGCanvas
                   key={currentMap}
                   currentMap={currentMap}
+                  resetMapTransform={resetTransform}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
@@ -157,6 +158,7 @@ export default function MapEditing() {
                   setMap={setCurrentMap}
                   isDirectionsClicked={isDirectionsClicked}
                   path={path}
+                  resetMapTransform={resetTransform}
                 />{" "}
               </ThemeProvider>
             </section>

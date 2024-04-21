@@ -228,6 +228,7 @@ export default function MainPage() {
                   path={path}
                   currentMap={currentMap}
                   setCurrentMap={setCurrentMap}
+                  resetMapTransform={resetTransform}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
@@ -277,129 +278,138 @@ export default function MainPage() {
                   setMap={setCurrentMap}
                   isDirectionsClicked={isDirectionsClicked}
                   path={path}
+                  resetMapTransform={resetTransform}
                 />{" "}
               </ThemeProvider>
+
+              <aside className={rightSideBarStyle}>
+                <h1 className="text-xl bg-transparent text-center">
+                  Enter your start and end locations:
+                </h1>
+                <Autocomplete
+                  value={start}
+                  onChange={(
+                    event: ChangeEvent<unknown>,
+                    getStart: string | null,
+                  ) => {
+                    return setStart(getStart!);
+                  }}
+                  id="origin"
+                  options={Locations}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Start Location"
+                      sx={autocompleteStyle}
+                    />
+                  )}
+                />
+                <Autocomplete
+                  value={end}
+                  onChange={(
+                    event: ChangeEvent<unknown>,
+                    getEnd: string | null,
+                  ) => {
+                    setEnd(getEnd!);
+                  }}
+                  id="destination"
+                  options={Locations}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="End Location"
+                      sx={autocompleteStyle}
+                    />
+                  )}
+                />
+                <div className="flex justify-center gap-3">
+                  <Button
+                    className="content-center"
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      getDirections();
+                      setIsDirectionsClicked(true);
+                      resetTransform();
+                    }}
+                  >
+                    Get Directions
+                  </Button>
+                  <Button
+                    className="content-center"
+                    variant="outlined"
+                    sx={{
+                      color: "white",
+                      borderColor: "white",
+                      "&:hover": {
+                        borderColor: "#f6bd38",
+                        color: "#f6bd38",
+                      },
+                    }}
+                    onClick={() => {
+                      resetCanvas();
+                      setIsDirectionsClicked(false);
+                      resetTransform();
+                    }}
+                  >
+                    Reset Map
+                  </Button>
+                </div>
+
+                {path.length > 0 && (
+                  <Box maxWidth={330}>
+                    <Box mb={2} display="flex" gap={1} alignItems="center">
+                      <SyncIcon />
+                      {end} from {start}
+                    </Box>
+                    {Object.keys(groupPath).map((key) => (
+                      <Accordion
+                        key={key}
+                        onChange={() => {
+                          // if (expanded) {
+                          const matchedFloor = floors.find(
+                            (floor) => floor.level === key,
+                          );
+                          setCurrentMap(matchedFloor ? matchedFloor.map : "");
+                          // }
+                        }}
+                      >
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                          Floor {key}
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {groupPath[key].map((item, index) => {
+                            if (index === groupPath[key].length - 1) {
+                              return null;
+                            }
+                            return (
+                              <Box
+                                mb={2}
+                                display="flex"
+                                gap={1}
+                                alignItems="center"
+                                key={index}
+                              >
+                                {pathToText(
+                                  index !== 0
+                                    ? groupPath[key][index - 1]
+                                    : { Xcoord: -1, Ycoord: -1 },
+                                  item,
+                                  groupPath[key][index + 1],
+                                )}
+                              </Box>
+                            );
+                          })}
+                        </AccordionDetails>
+                      </Accordion>
+                    ))}
+                  </Box>
+                )}
+              </aside>
             </section>
           )}
         </TransformWrapper>
       </main>
-      <aside className={rightSideBarStyle}>
-        <h1 className="text-xl bg-transparent text-center">
-          Enter your start and end locations:
-        </h1>
-        <Autocomplete
-          value={start}
-          onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
-            return setStart(getStart!);
-          }}
-          id="origin"
-          options={Locations}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Start Location"
-              sx={autocompleteStyle}
-            />
-          )}
-        />
-        <Autocomplete
-          value={end}
-          onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
-            setEnd(getEnd!);
-          }}
-          id="destination"
-          options={Locations}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="End Location"
-              sx={autocompleteStyle}
-            />
-          )}
-        />
-
-        <div className="flex justify-center gap-3">
-          <Button
-            className="content-center"
-            variant="contained"
-            color="success"
-            onClick={() => {
-              getDirections();
-              setIsDirectionsClicked(true);
-            }}
-          >
-            Get Directions
-          </Button>
-          <Button
-            className="content-center"
-            variant="outlined"
-            sx={{
-              color: "white",
-              borderColor: "white",
-              "&:hover": {
-                borderColor: "#f6bd38",
-                color: "#f6bd38",
-              },
-            }}
-            onClick={() => {
-              resetCanvas();
-              setIsDirectionsClicked(false);
-            }}
-          >
-            Reset Map
-          </Button>
-        </div>
-
-        {path.length > 0 && (
-          <Box maxWidth={330}>
-            <Box mb={2} display="flex" gap={1} alignItems="center">
-              <SyncIcon />
-              {end} from {start}
-            </Box>
-            {Object.keys(groupPath).map((key) => (
-              <Accordion
-                key={key}
-                onChange={() => {
-                  // if (expanded) {
-                  const matchedFloor = floors.find(
-                    (floor) => floor.level === key,
-                  );
-                  setCurrentMap(matchedFloor ? matchedFloor.map : "");
-                  // }
-                }}
-              >
-                <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                  Floor {key}
-                </AccordionSummary>
-                <AccordionDetails>
-                  {groupPath[key].map((item, index) => {
-                    if (index === groupPath[key].length - 1) {
-                      return null;
-                    }
-                    return (
-                      <Box
-                        mb={2}
-                        display="flex"
-                        gap={1}
-                        alignItems="center"
-                        key={index}
-                      >
-                        {pathToText(
-                          index !== 0
-                            ? groupPath[key][index - 1]
-                            : { Xcoord: -1, Ycoord: -1 },
-                          item,
-                          groupPath[key][index + 1],
-                        )}
-                      </Box>
-                    );
-                  })}
-                </AccordionDetails>
-              </Accordion>
-            ))}
-          </Box>
-        )}
-      </aside>
     </div>
   );
 }
