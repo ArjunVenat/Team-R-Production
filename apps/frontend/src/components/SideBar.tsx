@@ -14,6 +14,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
+import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BarChartIcon from "@mui/icons-material/BarChart";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
@@ -84,11 +85,18 @@ export default function Sidebar() {
     displayLoggedIn: true,
   };
 
+  const creditsPage: Menu = {
+    title: "Credits Page",
+    icon: <ImportContactsIcon />,
+    displayLoggedIn: true,
+  };
+
   const login: Menu = {
     title: "Staff Login",
     icon: <Login />,
     displayLoggedIn: false,
   };
+
   // const Menus: Menu[] = [
   //   home,
   //   editmap,
@@ -107,6 +115,7 @@ export default function Sidebar() {
     serviceRequestTable,
     nodes_edges,
     downloadCSV,
+    creditsPage,
     logoutOption,
     login,
   ]);
@@ -121,6 +130,7 @@ export default function Sidebar() {
         nodes_edges,
         downloadCSV,
         stats,
+        creditsPage,
         logoutOption,
       ]);
     }
@@ -203,6 +213,9 @@ export default function Sidebar() {
     case "/stats":
       menuHighlight = "Stats";
       break;
+    case "/credits":
+      menuHighlight = "Credits Page";
+      break;
     case "/logout":
       menuHighlight = "Logout";
       break;
@@ -268,6 +281,8 @@ export default function Sidebar() {
     } else if (title === "Stats") {
       //redirect to stats page
       routeChange("stats");
+    } else if (title === "Credits Page") {
+      routeChange("credits");
     }
   };
 
