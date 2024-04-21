@@ -1,5 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import isAdmin from "../components/adminChecker.ts";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
 import {
@@ -45,6 +46,7 @@ function ServiceRequestTable() {
     isAuthenticated,
     isLoading,
     loginWithRedirect,
+    user,
   } = useAuth0();
   if (!isLoading && !isAuthenticated) {
     loginWithRedirect({
@@ -61,8 +63,16 @@ function ServiceRequestTable() {
 
   useEffect(() => {
     async function fetch() {
+      //First determine if the user is an admin
+      const adminStatus = await isAdmin(isAuthenticated, isLoading, user!);
+      let employeeFilter = "";
+      if (!adminStatus) {
+        employeeFilter = `?employeeFilter=${user!.sub}`;
+      }
+
+      //Get all service requests
       const token = await getAccessTokenSilently();
-      const res = await axios.get("/api/service/create", {
+      const res = await axios.get(`/api/service/create${employeeFilter}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -70,7 +80,7 @@ function ServiceRequestTable() {
       setrequestData(res.data);
     }
     fetch().then();
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, user, isAuthenticated, isLoading]);
 
   const deleteService = async (service: GeneralRequest) => {
     const token = await getAccessTokenSilently();
@@ -112,6 +122,7 @@ function ServiceRequestTable() {
       console.log("request status changed");
     }
   };
+
   const [selectedTable, setSelectedTable] = useState(0);
 
   return (
