@@ -35,7 +35,12 @@ export function FloorSelect(props: {
   setMap: (newMap: string) => void;
   isDirectionsClicked: boolean;
   path: Nodes[];
+  resetMapTransform: () => void;
 }) {
+  const handleFloorChange = (newMap: string) => {
+    props.setMap(newMap);
+    props.resetMapTransform();
+  };
   return (
     <ButtonGroup
       orientation="vertical"
@@ -52,7 +57,7 @@ export function FloorSelect(props: {
       {floors.map((floor, index) => (
         <Button
           key={index}
-          onClick={() => props.setMap(floor.map)}
+          onClick={() => handleFloorChange(floor.map)}
           sx={
             props.isDirectionsClicked &&
             props.path.some((node) => node.Floor === floor.level)

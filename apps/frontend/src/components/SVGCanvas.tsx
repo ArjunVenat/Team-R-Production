@@ -27,6 +27,7 @@ export default function SVGCanvas(props: {
   isHome: boolean; //Indicates whether the canvas is being used in the home page
   showPathOnly: boolean; //Indicates whether to show only the path or the entire map
   allnodes?: Nodes[]; //Array of all nodes in the map
+  resetMapTransform: () => void; //reset map zoom/pan
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
@@ -161,6 +162,9 @@ export default function SVGCanvas(props: {
       // If the elevator is going down, switch to the previous floor
       changedFloor = path[idx - 1].Floor;
     }
+
+    // Reset the map zoom and pan
+    props.resetMapTransform();
 
     // Update the current map based on the changed floor
     props.setCurrentMap!(
