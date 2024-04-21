@@ -1,10 +1,11 @@
 import axios from "axios";
-import { useAuth0 } from "@auth0/auth0-react";
+import { User } from "@auth0/auth0-react";
 
-export default async function IsAdmin(): Promise<boolean> {
-  //Use the Auth0 hook
-  const { isAuthenticated, isLoading, user } = useAuth0();
-
+export default async function IsAdmin(
+  isAuthenticated: boolean,
+  isLoading: boolean,
+  user: User,
+): Promise<boolean> {
   //Get all admin users from auth0
   const config = {
     method: "get",

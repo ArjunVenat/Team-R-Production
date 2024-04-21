@@ -22,8 +22,9 @@ addEmployeeRouter.put("/", async function (req: Request, res: Response) {
     }); //successfully added data, send 200 OK
   } catch (error) {
     //If there was an error with the HTTP request...
-    console.error(`Unable to enter employee from database`);
-    console.log(error);
+    console.error(
+      `Unable to enter employee from database, This employee likely already exists.`,
+    );
     res.sendStatus(400); // Send error
     return; // Don't try to send duplicate statuses
   }

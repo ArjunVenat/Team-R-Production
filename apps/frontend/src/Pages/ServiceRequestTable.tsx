@@ -1,5 +1,7 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
+import isAdmin from "../components/adminChecker.ts";
+import { Employee } from "../Interfaces/Employee.ts";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
 import {
@@ -45,6 +47,7 @@ function ServiceRequestTable() {
     isAuthenticated,
     isLoading,
     loginWithRedirect,
+    user,
   } = useAuth0();
   if (!isLoading && !isAuthenticated) {
     loginWithRedirect({
@@ -58,11 +61,42 @@ function ServiceRequestTable() {
 
   // const navigate = useNavigate();
   const [requestData, setrequestData] = useState<GeneralRequest[]>([]);
+  const [employees, setEmployees] = useState<Employee[]>([]);
 
   useEffect(() => {
     async function fetch() {
+      //First determine if the user is an admin\
+      const adminStatus: boolean = await isAdmin(
+        isAuthenticated,
+        isLoading,
+        user!,
+      );
+      let employeeFilter = "";
+      if (!adminStatus) {
+        employeeFilter = `?employeeFilter=${user!.sub}`;
+      }
+
+      //get token
       const token = await getAccessTokenSilently();
-      const res = await axios.get("/api/service/create", {
+
+      //Get all employees (if admin)
+      const empRes = await axios.get("/api/admin/allEmployees", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const updatedEmployees: Employee[] = [];
+      empRes.data.map((employee: Employee) => {
+        if (adminStatus) {
+          updatedEmployees.push(employee);
+        } else if (employee.userID == user!.sub) {
+          updatedEmployees.push(employee);
+        }
+      });
+      setEmployees(updatedEmployees);
+
+      //Get all service requests
+      const res = await axios.get(`/api/service/create${employeeFilter}`, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -70,7 +104,7 @@ function ServiceRequestTable() {
       setrequestData(res.data);
     }
     fetch().then();
-  }, [getAccessTokenSilently]);
+  }, [getAccessTokenSilently, user, isAuthenticated, isLoading, employees]);
 
   const deleteService = async (service: GeneralRequest) => {
     const token = await getAccessTokenSilently();
@@ -91,27 +125,47 @@ function ServiceRequestTable() {
     }
   };
 
-  const updateServiceStatus = async (
+  // function getSpecificEmployee(employeeID: string): string {
+  //     let employeeNickname = "";
+  //     employees!.map((employee: Employee) => {
+  //         if(employee.userID == employeeID) {
+  //             employeeNickname = employee.nickname;
+  //         }
+  //     });
+  //     return employeeNickname;
+  // };
+
+  const updateServiceRequests = async (
     service: GeneralRequest,
+    editVal: string,
     newStatus: string,
   ) => {
     const token = await getAccessTokenSilently();
     const res = await axios
-      .post(`/api/admin/service/edit/${service.RequestID}/${newStatus}`, "", {
-        headers: {
-          Authorization: `Bearer ${token}`,
+      .post(
+        `/api/admin/service/edit/${service.RequestID}/${editVal}/${newStatus}`,
+        "",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
         },
-      })
+      )
       .then();
     const index = requestData.indexOf(service);
     const requestData2: GeneralRequest[] = [...requestData];
-    requestData2[index].Status = newStatus;
+    if (editVal == "Status") {
+      requestData2[index].Status = newStatus;
+    } else {
+      requestData2[index].EmployeeID = newStatus;
+    }
     setrequestData(requestData2);
 
     if (res.status == 200) {
       console.log("request status changed");
     }
   };
+
   const [selectedTable, setSelectedTable] = useState(0);
 
   return (
@@ -152,10 +206,10 @@ function ServiceRequestTable() {
                       Service Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Sub Type
+                      Name
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Name
+                      Sub Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Delivery Date
@@ -171,6 +225,9 @@ function ServiceRequestTable() {
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Size of Bouquet
+                    </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
                     </th>
                     <th className="bg-primary border-black w-10 text-white">
                       Status
@@ -191,10 +248,10 @@ function ServiceRequestTable() {
                             {row.RequestType}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.Details1}
+                            {row.RequesterName}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.RequesterName}
+                            {row.Details1}
                           </td>
                           <td className="border-black text-center p-2">
                             {row.DeliveryDate.toString()}
@@ -215,10 +272,32 @@ function ServiceRequestTable() {
                             <FormControl fullWidth>
                               <Select
                                 sx={{ width: 200 }}
+                                value={row.EmployeeID}
+                                onChange={(e) => {
+                                  updateServiceRequests(
+                                    row,
+                                    "EmployeeID",
+                                    e.target.value,
+                                  ).then();
+                                }}
+                              >
+                                {employees.map((employee: Employee) => (
+                                  <MenuItem value={employee.userID}>
+                                    {employee.nickname}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <FormControl fullWidth>
+                              <Select
+                                sx={{ width: 200 }}
                                 value={row.Status}
                                 onChange={(e) => {
-                                  updateServiceStatus(
+                                  updateServiceRequests(
                                     row,
+                                    "Status",
                                     e.target.value as string,
                                   ).then();
                                 }}
@@ -261,10 +340,10 @@ function ServiceRequestTable() {
                       Service Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Sub Type
+                      Name
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
-                      Name
+                      Sub Type
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Delivery Date
@@ -280,6 +359,9 @@ function ServiceRequestTable() {
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Wrapped
+                    </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
                       Status
@@ -300,10 +382,10 @@ function ServiceRequestTable() {
                             {row.RequestType}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.Details1}
+                            {row.RequesterName}
                           </td>
                           <td className="border-black text-center p-2">
-                            {row.RequesterName}
+                            {row.Details1}
                           </td>
                           <td className="border-black text-center p-2">
                             {row.DeliveryDate.toString()}
@@ -324,10 +406,32 @@ function ServiceRequestTable() {
                             <FormControl fullWidth>
                               <Select
                                 sx={{ width: 200 }}
+                                value={row.EmployeeID}
+                                onChange={(e) => {
+                                  updateServiceRequests(
+                                    row,
+                                    "EmployeeID",
+                                    e.target.value,
+                                  ).then();
+                                }}
+                              >
+                                {employees.map((employee: Employee) => (
+                                  <MenuItem value={employee.userID}>
+                                    {employee.nickname}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <FormControl fullWidth>
+                              <Select
+                                sx={{ width: 200 }}
                                 value={row.Status}
                                 onChange={(e) => {
-                                  updateServiceStatus(
+                                  updateServiceRequests(
                                     row,
+                                    "Status",
                                     e.target.value as string,
                                   ).then();
                                 }}
@@ -391,6 +495,9 @@ function ServiceRequestTable() {
                       Hazardous Material
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
+                      Employee
+                    </th>
+                    <th className="bg-primary border-black p-2 text-white">
                       Status
                     </th>
                     <th className="bg-primary border-black p-2 text-white">
@@ -433,10 +540,32 @@ function ServiceRequestTable() {
                             <FormControl fullWidth>
                               <Select
                                 sx={{ width: 200 }}
+                                value={row.EmployeeID}
+                                onChange={(e) => {
+                                  updateServiceRequests(
+                                    row,
+                                    "EmployeeID",
+                                    e.target.value,
+                                  ).then();
+                                }}
+                              >
+                                {employees.map((employee: Employee) => (
+                                  <MenuItem value={employee.userID}>
+                                    {employee.nickname}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <FormControl fullWidth>
+                              <Select
+                                sx={{ width: 200 }}
                                 value={row.Status}
                                 onChange={(e) => {
-                                  updateServiceStatus(
+                                  updateServiceRequests(
                                     row,
+                                    "Status",
                                     e.target.value as string,
                                   ).then();
                                 }}
@@ -499,6 +628,9 @@ function ServiceRequestTable() {
                     <th className="bg-primary text-white border-black p-2">
                       Route
                     </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
+                    </th>
                     <th className="bg-primary text-white border-black p-2">
                       Status
                     </th>
@@ -542,10 +674,32 @@ function ServiceRequestTable() {
                             <FormControl fullWidth>
                               <Select
                                 sx={{ width: 200 }}
+                                value={row.EmployeeID}
+                                onChange={(e) => {
+                                  updateServiceRequests(
+                                    row,
+                                    "EmployeeID",
+                                    e.target.value,
+                                  ).then();
+                                }}
+                              >
+                                {employees.map((employee: Employee) => (
+                                  <MenuItem value={employee.userID}>
+                                    {employee.nickname}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <FormControl fullWidth>
+                              <Select
+                                sx={{ width: 200 }}
                                 value={row.Status}
                                 onChange={(e) => {
-                                  updateServiceStatus(
+                                  updateServiceRequests(
                                     row,
+                                    "Status",
                                     e.target.value as string,
                                   ).then();
                                 }}
@@ -608,6 +762,9 @@ function ServiceRequestTable() {
                     <th className="bg-primary text-white border-black p-2">
                       Requires Supervision
                     </th>
+                    <th className="bg-primary border-black p-2 text-white">
+                      Employee
+                    </th>
                     <th className="bg-primary text-white border-black p-2">
                       Status
                     </th>
@@ -651,10 +808,32 @@ function ServiceRequestTable() {
                             <FormControl fullWidth>
                               <Select
                                 sx={{ width: 200 }}
+                                value={row.EmployeeID}
+                                onChange={(e) => {
+                                  updateServiceRequests(
+                                    row,
+                                    "EmployeeID",
+                                    e.target.value,
+                                  ).then();
+                                }}
+                              >
+                                {employees.map((employee: Employee) => (
+                                  <MenuItem value={employee.userID}>
+                                    {employee.nickname}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <FormControl fullWidth>
+                              <Select
+                                sx={{ width: 200 }}
                                 value={row.Status}
                                 onChange={(e) => {
-                                  updateServiceStatus(
+                                  updateServiceRequests(
                                     row,
+                                    "Status",
                                     e.target.value as string,
                                   ).then();
                                 }}
