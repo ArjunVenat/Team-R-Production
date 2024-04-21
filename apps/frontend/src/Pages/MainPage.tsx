@@ -1,14 +1,20 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
 import SideBar from "../components/SideBar.tsx";
-import React, { ChangeEvent, useEffect, useState } from "react";
+import React, { ChangeEvent, useEffect, useMemo, useState } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
 import { Nodes } from "database";
 import Autocomplete from "@mui/material/Autocomplete";
 import TextField from "@mui/material/TextField";
-import { Button } from "@mui/material";
+import {
+  Button,
+  Box,
+  Accordion,
+  AccordionSummary,
+  AccordionDetails,
+} from "@mui/material";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import { ThemeProvider } from "@mui/material";
@@ -16,12 +22,17 @@ import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
 import { autocompleteStyle, buttonStyle } from "../styles/muiStyles.ts";
+import TurnLeftIcon from "@mui/icons-material/TurnLeft";
+import TurnRightIcon from "@mui/icons-material/TurnRight";
+import StraightIcon from "@mui/icons-material/Straight";
+import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
   pathfindingAlgorithms,
   defaultMap,
 } from "../components/mapElements.ts";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
+import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -132,6 +143,74 @@ export default function MainPage() {
     }
   }
 
+  const pathToText = (
+    prevNode: Nodes | { Ycoord: number; Xcoord: number },
+    startNode: Nodes,
+    endNode: Nodes,
+  ) => {
+    // Normalization
+    const px = Number(prevNode.Xcoord);
+    const py = Number(prevNode.Ycoord);
+    const sx = Number(startNode.Xcoord);
+    const sy = Number(startNode.Ycoord);
+    const ex = Number(endNode.Xcoord);
+    const ey = Number(endNode.Ycoord);
+    // straight
+    if (
+      (px === -1 && py === -1) ||
+      (px === sx && sx === ex) ||
+      (py === sy && sy === ey)
+    ) {
+      return (
+        <>
+          <StraightIcon />
+          Continue forward toward {endNode.ShortName}
+        </>
+      );
+    }
+
+    // turn left
+    if (
+      (py === sy && px < sx && sx === ex && sy > ey) ||
+      (px === sx && py > sy && sy === ey && sx > ex) ||
+      (py === sy && px > sx && sx === ex && sy < ey) ||
+      (px === sx && py < sy && sy === ey && sx < ex)
+    ) {
+      return (
+        <>
+          <TurnLeftIcon />
+          <div>Turn left and continue to {endNode.ShortName}</div>
+        </>
+      );
+    }
+
+    // turn right
+    if (
+      (py === sy && px < sx && sx === ex && sy < ey) ||
+      (px === sx && py > sy && sy === ey && sx < ex) ||
+      (py === sy && px > sx && sx === ex && sy > ey) ||
+      (px === sx && py < sy && sy === ey && sx > ex)
+    ) {
+      return (
+        <>
+          <TurnRightIcon />
+          <div>Turn right and continue to {endNode.ShortName}</div>
+        </>
+      );
+    }
+  };
+
+  const groupPath: { [key: string]: Nodes[] } = useMemo(() => {
+    const floorMap: {
+      [key: string]: Nodes[];
+    } = {};
+    path.forEach((item) => {
+      (floorMap[item.Floor] || (floorMap[item.Floor] = [])).push(item);
+    });
+    return floorMap;
+  }, [path]);
+  console.log(groupPath);
+
   return (
     <div
       id="MainPage"
@@ -149,6 +228,7 @@ export default function MainPage() {
                   path={path}
                   currentMap={currentMap}
                   setCurrentMap={setCurrentMap}
+                  resetMapTransform={resetTransform}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
@@ -198,79 +278,138 @@ export default function MainPage() {
                   setMap={setCurrentMap}
                   isDirectionsClicked={isDirectionsClicked}
                   path={path}
+                  resetMapTransform={resetTransform}
                 />{" "}
               </ThemeProvider>
+
+              <aside className={rightSideBarStyle}>
+                <h1 className="text-xl bg-transparent text-center">
+                  Enter your start and end locations:
+                </h1>
+                <Autocomplete
+                  value={start}
+                  onChange={(
+                    event: ChangeEvent<unknown>,
+                    getStart: string | null,
+                  ) => {
+                    return setStart(getStart!);
+                  }}
+                  id="origin"
+                  options={Locations}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="Start Location"
+                      sx={autocompleteStyle}
+                    />
+                  )}
+                />
+                <Autocomplete
+                  value={end}
+                  onChange={(
+                    event: ChangeEvent<unknown>,
+                    getEnd: string | null,
+                  ) => {
+                    setEnd(getEnd!);
+                  }}
+                  id="destination"
+                  options={Locations}
+                  renderInput={(params) => (
+                    <TextField
+                      {...params}
+                      label="End Location"
+                      sx={autocompleteStyle}
+                    />
+                  )}
+                />
+                <div className="flex justify-center gap-3">
+                  <Button
+                    className="content-center"
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      getDirections();
+                      setIsDirectionsClicked(true);
+                      resetTransform();
+                    }}
+                  >
+                    Get Directions
+                  </Button>
+                  <Button
+                    className="content-center"
+                    variant="outlined"
+                    sx={{
+                      color: "white",
+                      borderColor: "white",
+                      "&:hover": {
+                        borderColor: "#f6bd38",
+                        color: "#f6bd38",
+                      },
+                    }}
+                    onClick={() => {
+                      resetCanvas();
+                      setIsDirectionsClicked(false);
+                      resetTransform();
+                    }}
+                  >
+                    Reset Map
+                  </Button>
+                </div>
+
+                {path.length > 0 && (
+                  <Box maxWidth={330}>
+                    <Box mb={2} display="flex" gap={1} alignItems="center">
+                      <SyncIcon />
+                      {end} from {start}
+                    </Box>
+                    {Object.keys(groupPath).map((key) => (
+                      <Accordion
+                        key={key}
+                        onChange={() => {
+                          // if (expanded) {
+                          const matchedFloor = floors.find(
+                            (floor) => floor.level === key,
+                          );
+                          setCurrentMap(matchedFloor ? matchedFloor.map : "");
+                          // }
+                        }}
+                      >
+                        <AccordionSummary expandIcon={<ExpandMoreIcon />}>
+                          Floor {key}
+                        </AccordionSummary>
+                        <AccordionDetails>
+                          {groupPath[key].map((item, index) => {
+                            if (index === groupPath[key].length - 1) {
+                              return null;
+                            }
+                            return (
+                              <Box
+                                mb={2}
+                                display="flex"
+                                gap={1}
+                                alignItems="center"
+                                key={index}
+                              >
+                                {pathToText(
+                                  index !== 0
+                                    ? groupPath[key][index - 1]
+                                    : { Xcoord: -1, Ycoord: -1 },
+                                  item,
+                                  groupPath[key][index + 1],
+                                )}
+                              </Box>
+                            );
+                          })}
+                        </AccordionDetails>
+                      </Accordion>
+                    ))}
+                  </Box>
+                )}
+              </aside>
             </section>
           )}
         </TransformWrapper>
       </main>
-      <aside className={rightSideBarStyle}>
-        <h1 className="text-xl bg-transparent text-center">
-          Enter your start and end locations:
-        </h1>
-        <Autocomplete
-          value={start}
-          onChange={(event: ChangeEvent<unknown>, getStart: string | null) => {
-            return setStart(getStart!);
-          }}
-          id="origin"
-          options={Locations}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="Start Location"
-              sx={autocompleteStyle}
-            />
-          )}
-        />
-        <Autocomplete
-          value={end}
-          onChange={(event: ChangeEvent<unknown>, getEnd: string | null) => {
-            setEnd(getEnd!);
-          }}
-          id="destination"
-          options={Locations}
-          renderInput={(params) => (
-            <TextField
-              {...params}
-              label="End Location"
-              sx={autocompleteStyle}
-            />
-          )}
-        />
-
-        <div className="flex justify-center gap-3">
-          <Button
-            className="content-center"
-            variant="contained"
-            color="success"
-            onClick={() => {
-              getDirections();
-              setIsDirectionsClicked(true);
-            }}
-          >
-            Get Directions
-          </Button>
-          <Button
-            className="content-center"
-            variant="outlined"
-            sx={{
-              color: "white",
-              borderColor: "white",
-              "&:hover": {
-                borderColor: "#f6bd38",
-                color: "#f6bd38",
-              },
-            }}
-            onClick={() => {
-              resetCanvas();
-              setIsDirectionsClicked(false);
-            }}
-          >
-            Reset Map
-          </Button>
-        </div>
-      </aside>
     </div>
   );
 }
