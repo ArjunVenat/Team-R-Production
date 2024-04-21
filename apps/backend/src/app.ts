@@ -45,8 +45,6 @@ app.use("/healthcheck", (req, res) => {
 app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/map/pathfind", pathfindRouter);
-app.use("/api/service/create", serviceRequestRouter);
-app.use("/api/admin/csv", CSVRouter);
 
 app.use(
   auth({
@@ -57,6 +55,8 @@ app.use(
 );
 
 // app.use("/api/high-score", exampleRouter);
+app.use("/api/service/create", serviceRequestRouter);
+app.use("/api/admin/csv", CSVRouter);
 app.use("/api/admin/service/edit", editServiceRequestRouter);
 app.use("/api/admin/service/del", delServiceRequestRouter);
 app.use("/api/admin/edge/edit", editEdgeRouter);
