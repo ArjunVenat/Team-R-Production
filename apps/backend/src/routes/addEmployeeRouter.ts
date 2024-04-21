@@ -11,7 +11,6 @@ import { Employee } from "database";
  */
 addEmployeeRouter.put("/", async function (req: Request, res: Response) {
   try {
-    console.log(req.body);
     const receivedRequest: Employee = req.body;
     await PrismaClient.employee.create({
       data: receivedRequest,
