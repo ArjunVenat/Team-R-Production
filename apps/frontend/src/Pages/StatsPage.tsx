@@ -15,7 +15,12 @@ type TypeLengths = {
 };
 
 const St4t5Page = () => {
-  const { isAuthenticated, isLoading, loginWithRedirect } = useAuth0();
+  const {
+    isAuthenticated,
+    isLoading,
+    loginWithRedirect,
+    getAccessTokenSilently,
+  } = useAuth0();
   const [typeLengths, setTypeLengths] = useState<TypeLengths>({
     Flowers: 0,
     Gifts: 0,
@@ -45,9 +50,10 @@ const St4t5Page = () => {
       ];
 
       const newTypeLengths: Partial<TypeLengths> = {};
+      const token = await getAccessTokenSilently();
 
       for (const type of types) {
-        const length = await getTypeLength(type);
+        const length = await getTypeLength(type, token);
         newTypeLengths[type as keyof TypeLengths] = length;
       }
 
@@ -58,12 +64,17 @@ const St4t5Page = () => {
     };
 
     updateTypeLengths();
-  }, []);
+  }, [getAccessTokenSilently]);
 
-  async function getTypeLength(type: string) {
+  async function getTypeLength(type: string, token: string) {
     try {
       const res = await axios.get<{ length: number }>(
         "/api/service/create?typeFilter=" + type,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
       );
       return res.data.length;
     } catch (error) {
