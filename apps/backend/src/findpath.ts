@@ -4,6 +4,7 @@ import { DFS } from "./DFS.ts";
 import { Dijkstra } from "./Dijkstra.ts";
 import { Ipathfind } from "./Ipathfind.ts";
 import { Graph } from "./graph.ts";
+import { Directions } from "./findDirections.ts";
 export enum algoType {
   BFS,
   AStar,
@@ -41,6 +42,13 @@ export class findpath {
     } else {
       this.Algorithm = new AStar();
     }
-    return this.Algorithm.pathfind(graph, start, end);
+    const path = this.Algorithm.pathfind(graph, start, end);
+    const dir = new Directions(
+      path.map((nodeID) => Graph.nodeMap.get(nodeID)!),
+    );
+    const angles = dir.getAngles();
+    console.log("findpath", angles);
+
+    return path;
   }
 }

@@ -11,6 +11,10 @@ import CreditsPage from "./Pages/CreditsPage.tsx";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
 import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
+
+//Artem Page import
+import St4t5Page from "./Pages/5t4t5.tsx";
+
 // import DownloadCSV from "./backendreference/DownloadCSV.tsx";
 // import UploadCSV from "./Pages/UploadCSV.tsx";
 import UploadDownloadCSV from "./Pages/UploadDownloadPage.tsx";
@@ -89,6 +93,10 @@ function App() {
         {
           path: "credits",
           element: <CreditsPage />,
+        },
+        {
+          path: "stats",
+          element: <St4t5Page />,
         },
       ],
     },
