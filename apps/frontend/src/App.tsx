@@ -91,12 +91,12 @@ function App() {
           element: <UploadDownloadCSV />,
         },
         {
-          path: "credits",
-          element: <CreditsPage />,
-        },
-        {
           path: "stats",
           element: <St4t5Page />,
+        },
+        {
+          path: "credits",
+          element: <CreditsPage />,
         },
       ],
     },

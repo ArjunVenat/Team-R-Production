@@ -85,17 +85,18 @@ export default function Sidebar() {
     displayLoggedIn: true,
   };
 
+  const creditsPage: Menu = {
+    title: "Credits Page",
+    icon: <ImportContactsIcon />,
+    displayLoggedIn: true,
+  };
+
   const login: Menu = {
     title: "Staff Login",
     icon: <Login />,
     displayLoggedIn: false,
   };
 
-  const creditsPage: Menu = {
-    title: "Credits Page",
-    icon: <ImportContactsIcon />,
-    displayLoggedIn: false,
-  };
   // const Menus: Menu[] = [
   //   home,
   //   editmap,
@@ -206,14 +207,14 @@ export default function Sidebar() {
     case "/upload-download-csv":
       menuHighlight = "Upload/Download CSV";
       break;
-    case "/credits":
-      menuHighlight = "Credits Page";
-      break;
     // case "/download-csv":
     //   menuHighlight = "Download CSV";
     //   break;
     case "/stats":
       menuHighlight = "Stats";
+      break;
+    case "/credits":
+      menuHighlight = "Credits Page";
       break;
     case "/logout":
       menuHighlight = "Logout";
