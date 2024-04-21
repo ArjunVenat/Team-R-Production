@@ -13,7 +13,7 @@ import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
 import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
 
 //Artem Page import
-import St4t5Page from "./Pages/5t4t5.tsx";
+import St4t5Page from "./Pages/StatsPage.tsx";
 
 // import DownloadCSV from "./backendreference/DownloadCSV.tsx";
 // import UploadCSV from "./Pages/UploadCSV.tsx";
