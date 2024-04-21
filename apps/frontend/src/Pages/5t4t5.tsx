@@ -71,46 +71,58 @@ const St4t5Page = () => {
   }
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <div style={{ textAlign: "center", margin: "0 20px" }}>
-        <BarChart
-          series={[
-            {
-              data: Object.values(typeLengths),
-              color: "#000080",
-            },
-          ]}
-          height={290}
-          xAxis={[
-            {
-              data: Object.keys(typeLengths),
-              scaleType: "band",
-            },
-          ]}
-          margin={{ top: 1, bottom: 30, left: 40, right: 10 }}
-          grid={{ vertical: true, horizontal: true }}
-        />
-        <p>Bar Chart - Number of Requests by Type</p>
-      </div>
-      <div style={{ textAlign: "center", margin: "0 20px" }}>
-        <LineChart
-          series={[
-            {
-              data: [2, 5.5, 2, 8.5, 1.5, 5],
-              //placeholder data until we can put something cool in
-              color: "#008000",
-            },
-          ]}
-          xAxis={[
-            {
-              data: [1, 2, 3, 5, 8, 10],
-            },
-          ]}
-          width={500}
-          height={300}
-          grid={{ vertical: true, horizontal: true }}
-        />
-        <p>Line Chart - Requests Over Time</p>
+    <div
+      style={{
+        display: "flex",
+        justifyContent: "center",
+        backgroundColor: "#FFFFFF", // White background
+        minHeight: "100vh",
+        padding: "20px",
+      }}
+    >
+      <div style={{ textAlign: "center", color: "#000000" }}>
+        <h1>Service Requests Overview</h1>
+        <div style={{ display: "flex", justifyContent: "center" }}>
+          <div style={{ textAlign: "center", margin: "0 20px" }}>
+            <BarChart
+              series={[
+                {
+                  data: Object.values(typeLengths),
+                  color: "#FFC107", // Deep Yellow
+                },
+              ]}
+              height={330} // Increased height to prevent top of bars from being cut off
+              xAxis={[
+                {
+                  data: Object.keys(typeLengths),
+                  scaleType: "band",
+                },
+              ]}
+              margin={{ top: 30, bottom: 30, left: 40, right: 10 }} // Increased top margin
+              grid={{ vertical: true, horizontal: true }}
+            />
+            <p>Bar Chart - Number of Requests by Type</p>
+          </div>
+          <div style={{ textAlign: "center", margin: "0 20px" }}>
+            <LineChart
+              series={[
+                {
+                  data: [2, 5.5, 2, 8.5, 1.5, 5],
+                  color: "#FFC107", // Deep Yellow
+                },
+              ]}
+              xAxis={[
+                {
+                  data: [1, 2, 3, 5, 8, 10],
+                },
+              ]}
+              width={500}
+              height={300}
+              grid={{ vertical: true, horizontal: true }}
+            />
+            <p>Line Chart - Requests Over Time</p>
+          </div>
+        </div>
       </div>
     </div>
   );
