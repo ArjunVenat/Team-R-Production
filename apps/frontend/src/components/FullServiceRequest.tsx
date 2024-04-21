@@ -356,13 +356,16 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
     if (
       singleServiceRequest.requesterName &&
-      // !isNaN(singleServiceRequest.room) &&
-      singleServiceRequest.deliveryDate
+      singleServiceRequest.locationNodeID &&
+      singleServiceRequest.deliveryDate &&
+      singleServiceRequest.employeeID
     ) {
       setRequests([...requests, singleServiceRequest]);
       console.log(singleServiceRequest);
       submitRequestDB(singleServiceRequest, token).then();
       clearForm();
+    } else {
+      setOpenFail(true);
     }
   };
 
@@ -383,6 +386,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
   //ToDo: Comment here
   const [openSuccessMessage, setOpenSuccess] = useState(false);
+  const [openFailMessage, setOpenFail] = useState(false);
 
   return (
     // <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -397,7 +401,6 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
       <div className="inline-block flex-none">
         <SideBar />
       </div>
-
       <div className="flex-grow overflow-y-auto">
         <div className="bg-gray-400 bg-opacity-15 flex justify-center min-h-screen">
           <div className="bg-white rounded-lg p-5 w-2/4">
@@ -857,7 +860,6 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
           </div>
         </div>
       </div>
-
       {/* Modal for success message */}
       <Modal open={openSuccessMessage}>
         <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
@@ -868,6 +870,19 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
             Success! Request Submitted
           </h1>
           <Button onClick={() => clearRequests()}>Close</Button>
+        </Card>
+      </Modal>
+      //open fail message
+      <Modal open={openFailMessage}>
+        <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
+          <h1
+            id="failMessage"
+            className="text-center text-red-600 text-xl mb-4"
+          >
+            Error: Missing Information. Please fill out all fields before
+            submitting.
+          </h1>
+          <Button onClick={() => setOpenFail(false)}>Close</Button>
         </Card>
       </Modal>
     </div>
