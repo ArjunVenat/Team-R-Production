@@ -116,7 +116,6 @@ export default function Sidebar() {
     nodes_edges,
     downloadCSV,
     creditsPage,
-    logoutOption,
     login,
   ]);
 
