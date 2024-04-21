@@ -88,7 +88,7 @@ export default function Sidebar() {
   const creditsPage: Menu = {
     title: "Credits Page",
     icon: <ImportContactsIcon />,
-    displayLoggedIn: true,
+    displayLoggedIn: false,
   };
 
   const login: Menu = {
