@@ -1,6 +1,7 @@
 // import MapIcon from '@mui/icons-material/Map';
 // import LoginIcon from '@mui/icons-material/Login';
-import { Logout } from "@mui/icons-material";
+import { SubmitUserDB } from "../backendreference/addUserToDB.ts";
+import { Logout, Login } from "@mui/icons-material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -13,6 +14,7 @@ import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
+import BarChartIcon from "@mui/icons-material/BarChart";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -36,6 +38,7 @@ export default function Sidebar() {
     loginWithRedirect,
     getAccessTokenSilently,
     logout,
+    user,
   } = useAuth0();
 
   const home: Menu = {
@@ -75,16 +78,54 @@ export default function Sidebar() {
     icon: <CloudDownloadIcon />,
     displayLoggedIn: true,
   };
-  const Menus: Menu[] = [
+  const stats: Menu = {
+    title: "Stats",
+    icon: <BarChartIcon />,
+    displayLoggedIn: true,
+  };
+
+  const login: Menu = {
+    title: "Staff Login",
+    icon: <Login />,
+    displayLoggedIn: false,
+  };
+  // const Menus: Menu[] = [
+  //   home,
+  //   editmap,
+  //   serviceRequest,
+  //   serviceRequestTable,
+  //   nodes_edges,
+  //   // uploadCSV,
+  //   downloadCSV,
+  //   logoutOption,
+  //   login,
+  // ];
+  const [Menus, setMenus] = useState<Menu[]>([
     home,
     editmap,
     serviceRequest,
     serviceRequestTable,
     nodes_edges,
-    // uploadCSV,
     downloadCSV,
     logoutOption,
-  ];
+    login,
+  ]);
+
+  useEffect(() => {
+    if (isAuthenticated) {
+      setMenus([
+        home,
+        editmap,
+        serviceRequest,
+        serviceRequestTable,
+        nodes_edges,
+        downloadCSV,
+        stats,
+        logoutOption,
+      ]);
+    }
+    // eslint-disable-next-line
+  }, [isAuthenticated]);
 
   const location = useLocation();
   const currentURL = location.pathname;
@@ -95,7 +136,16 @@ export default function Sidebar() {
       // Define an asynchronous function to refresh the access token.
       const refreshToken = async () => {
         try {
-          await getAccessTokenSilently();
+          const token: string = await getAccessTokenSilently(); //If the user is logged in and we can get their user...
+          try {
+            //Try to add them to the database...
+            await SubmitUserDB(user!, token);
+          } catch (error) {
+            //If they already exist within the database...
+            console.log(
+              "could not add user to employee databse! This user likely already exists within the database",
+            );
+          }
         } catch (error) {
           // If an error occurs during token refresh, redirect the user to the login page.
           await loginWithRedirect({
@@ -118,6 +168,7 @@ export default function Sidebar() {
       location.pathname, // Pathname of the current location.
       isLoading, // Boolean indicating whether authentication is in progress.
       isAuthenticated, // Boolean indicating whether the user is authenticated.
+      user, // auth0 user
     ],
   );
 
@@ -149,6 +200,9 @@ export default function Sidebar() {
     // case "/download-csv":
     //   menuHighlight = "Download CSV";
     //   break;
+    case "/stats":
+      menuHighlight = "Stats";
+      break;
     case "/logout":
       menuHighlight = "Logout";
       break;
@@ -207,6 +261,13 @@ export default function Sidebar() {
     } else if (title === "Upload/Download CSV") {
       // Redirect to the upload/download CSV page.
       routeChange("upload-download-csv");
+    } else if (title === "Staff Login") {
+      loginWithRedirect({
+        appState: { returnTo: "/home" },
+      });
+    } else if (title === "Stats") {
+      //redirect to stats page
+      routeChange("stats");
     }
   };
 
