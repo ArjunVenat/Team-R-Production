@@ -17,7 +17,13 @@ import Sidebar from "../components/SideBar.tsx";
 import { GeneralRequest } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import blueback from "../assets/blueback.png";
+import swoosh from "../assets/swoosh.png";
+
+import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
+import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
+import BuildIcon from "@mui/icons-material/Build";
+import VaccinesIcon from "@mui/icons-material/Vaccines";
+import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -165,31 +171,124 @@ function ServiceRequestTable() {
       <div
         className="overflow-y-auto flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${blueback})`,
+          backgroundImage: `url(${swoosh})`,
           width: "100vw",
           height: "100vh",
         }}
       >
-        <div className="p-4">
-          <h1 className="mt-2 text-5xl text-primary font-bold p-2 text-center">
-            Service Request Tables
-          </h1>
-          <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
-            <Tabs
-              value={selectedTable}
-              onChange={(event, newValue) => setSelectedTable(newValue)}
-              aria-label="basic tabs example"
+        <div>
+          <div className=" bg-primary top-0 min-w-full pt-8 ">
+            <h1 className="text-5xl text-primary font-bold p-2 text-left bg-white w-full">
+              Service Request Tables
+            </h1>
+            <Box
+              sx={{
+                borderBottom: 1,
+                borderColor: "white",
+                display: "flex",
+                justifyContent: "center",
+              }}
             >
-              <Tab label=" Flowers " />
-              <Tab label=" Gifts " />
-              <Tab label=" Maintenance " />
-              <Tab label=" Medicine " />
-              <Tab label=" Medical Equipment " />
-            </Tabs>
-          </Box>
+              <Tabs
+                TabIndicatorProps={{ style: { backgroundColor: "#f6bd39" } }}
+                value={selectedTable}
+                onChange={(event, newValue) => setSelectedTable(newValue)}
+                aria-label="basic tabs example"
+              >
+                <Tab
+                  label=" Flowers "
+                  icon={
+                    <LocalFloristIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Gifts "
+                  icon={
+                    <CardGiftcardIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Maintenance "
+                  icon={
+                    <BuildIcon className="mx-2" style={{ fontSize: "2rem" }} />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Medicine "
+                  icon={
+                    <VaccinesIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Medical Equipment "
+                  icon={
+                    <MonitorHeartIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+              </Tabs>
+            </Box>
+          </div>
+
           <CustomTabPanel value={selectedTable} index={0}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className=" bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary border-black p-2 text-white">
@@ -323,7 +422,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={1}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary border-black p-2 text-white">
@@ -457,7 +556,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={2}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className=" bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary border-black p-2 text-white">
@@ -591,7 +690,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={3}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary text-white border-black p-2">
@@ -725,7 +824,7 @@ function ServiceRequestTable() {
           </CustomTabPanel>
           <CustomTabPanel value={selectedTable} index={4}>
             <div>
-              <table className="w-full bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+              <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
                   <tr className="text-xl">
                     <th className="bg-primary text-white border-black p-2">
