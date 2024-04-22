@@ -130,15 +130,30 @@ export default function AboutPage() {
                 </div>
               ))}
             </div>
+            <div className="flex flex-col items-center justify-center gap-8 mt-20">
+              <h4 className="text-2xl font-semibold text-primary mb-4">
+                Thank You Brigham and Women’s Hospital and their representative,
+                Andrew Shinn.
+              </h4>
+            </div>
+            <div className="flex flex-col items-center justify-center gap-8 mt-20"></div>
+          </div>
+
+          <div className="absolute bottom-0 left-0 w-full bg-gray-200 p-4 mt-20">
+            <p className="text-sm text-gray-600 text-center">
+              The Brigham & Women’s Hospital maps and data used in this
+              application are copyrighted and provided for the sole use of
+              educational purposes.
+            </p>
           </div>
         </main>
-        {/*<div className="absolute bottom-8 right-2 text-primary">
-              WPI Computer Science Department, CS3733-D24 Software Engineering,
-              Prof. Wilson Wong
-        </div>
-        <div className="absolute bottom-2 right-2 text-primary">
-          Team Coach: Katy Stuparu
-        </div>*/}
+
+        {/*<div className="absolute bottom-0 left-0 w-full bg-gray-200 p-4">
+                  <p className="text-sm text-gray-600 text-center">
+                      The Brigham & Women’s Hospital maps and data used in this application are copyrighted and
+                      provided for the sole use of educational purposes.
+                  </p>
+              </div>*/}
       </div>
     </Box>
   );
