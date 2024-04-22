@@ -38,7 +38,7 @@ export default function UploadCSV() {
       const response = await axios.post("/api/admin/csv", formData, {
         headers: {
           "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${token}`, // Include access token for authentication
+          Authorization: `Bearer ${token}`,
         },
       });
 
