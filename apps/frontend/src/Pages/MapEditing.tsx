@@ -30,6 +30,8 @@ import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 let customNodeCounter = 0;
 let customEdgeCounter = 0;
 let edgeFlag = false;
+let addEdgeStartID: string = "";
+let addEdgeEndID: string = "";
 
 export default function MapEditing() {
   //Use auth0 react hook
@@ -73,6 +75,7 @@ export default function MapEditing() {
   const [editableNode, setEditableNode] = useState<Nodes | undefined>();
   const [isDirectionsClicked] = useState(false);
   const [path] = useState<Nodes[]>([]);
+  const [addEdgeFormFlag, setAddEdgeFormFlag] = useState<boolean>();
 
   // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
@@ -180,8 +183,8 @@ export default function MapEditing() {
     //Add a new edge to database
     const newEdge = defaultEdge;
     newEdge.EdgeID = `customEdge${customEdgeCounter++}`;
-    newEdge.StartNodeID = "FDEPT00501";
-    newEdge.EndNodeID = "ESTAI00401";
+    newEdge.StartNodeID = addEdgeStartID;
+    newEdge.EndNodeID = addEdgeEndID;
     await CreateEdgeDB(newEdge, token);
 
     //Refresh edges data
@@ -292,14 +295,107 @@ export default function MapEditing() {
               variant="contained"
               color="success"
               onClick={() => {
-                addEdgeDB().then();
-                edgeFlag = false;
+                setNodeClicked(undefined);
+                setAddEdgeFormFlag(true);
               }}
             >
               Add Edge
             </Button>
           </Box>
         </Stack>
+        {addEdgeFormFlag &&
+          nodeClicked == undefined &&
+          edgeClicked == undefined && (
+            <div>
+              <TableContainer component={Paper}>
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
+                  <TableRow>
+                    <TableCell align="center">
+                      Please Enter Edge Info:
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Start Node:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={""}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getStartID: string | null,
+                        ) => {
+                          addEdgeStartID = getStartID!;
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={nodesData.map((node: Nodes) => node.NodeID)}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Start Node ID" />
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">End Node:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={""}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getEndID: string | null,
+                        ) => {
+                          addEdgeEndID = getEndID!;
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={nodesData.map((node: Nodes) => node.NodeID)}
+                        renderInput={(params) => (
+                          <TextField {...params} label="End Node ID" />
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </TableContainer>
+              <Stack direction="row" spacing={5} justifyContent="center">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      addEdgeDB().then();
+                      edgeFlag = false;
+                      setAddEdgeFormFlag(false);
+                    }}
+                  >
+                    Add Edge
+                  </Button>
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      setAddEdgeFormFlag(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Stack>
+            </div>
+          )}
         {nodeClicked != undefined && nodeClicked != defaultNode && (
           <div className={"items- "}>
             <TableContainer sx={{ maxWidth: 350 }} component={Paper}>
@@ -497,6 +593,7 @@ export default function MapEditing() {
                   nodeClicked.LongName = "";
                   nodeClicked.ShortName = "";
                   setEditableNode({ ...nodeClicked });
+                  setAddEdgeFormFlag(false);
                 }}
               >
                 Delete Node
@@ -593,6 +690,7 @@ export default function MapEditing() {
                   edgeClicked.EndNodeID = "";
                   edgeClicked.StartNodeID = "";
                   setEditableEdge({ ...edgeClicked });
+                  setAddEdgeFormFlag(false);
                 }}
               >
                 Delete Edge
