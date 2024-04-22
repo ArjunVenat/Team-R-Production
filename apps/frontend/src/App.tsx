@@ -76,7 +76,7 @@ function App() {
         },
         {
           path: "service-request-table",
-          element: <ServiceRequestTable />,
+          element: <ServiceRequestTable availableServices={guestOptions} />,
         },
         {
           path: "node-edge-table",
