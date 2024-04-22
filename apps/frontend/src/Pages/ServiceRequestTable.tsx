@@ -12,6 +12,9 @@ import {
   Select,
   Tab,
   Tabs,
+  Popover,
+  TextField,
+  InputLabel,
 } from "@mui/material";
 import Sidebar from "../components/SideBar.tsx";
 import { GeneralRequest } from "database";
@@ -24,6 +27,7 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import BuildIcon from "@mui/icons-material/Build";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import { ListOfServices } from "../components/FullServiceRequest";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -46,7 +50,15 @@ function CustomTabPanel(props: TabPanelProps) {
   );
 }
 
-function ServiceRequestTable() {
+interface FilterValue {
+  serviceType: string;
+  name: string;
+  priority: string;
+  employee: string;
+  status: string;
+}
+
+function ServiceRequestTable({ availableServices }: ListOfServices) {
   //Use auth0 react hook
   const {
     getAccessTokenSilently,
@@ -68,6 +80,47 @@ function ServiceRequestTable() {
   // const navigate = useNavigate();
   const [requestData, setrequestData] = useState<GeneralRequest[]>([]);
   const [employees, setEmployees] = useState<Employee[]>([]);
+  const [anchorEl, setAnchorEl] = React.useState<HTMLButtonElement | null>(
+    null,
+  );
+  const [filters, setFilters] = React.useState<FilterValue>({
+    serviceType: "",
+    name: "",
+    priority: "",
+    employee: "",
+    status: "",
+  });
+  const [confirmedFilters, setConfirmedFilters] = React.useState<FilterValue>({
+    serviceType: "",
+    name: "",
+    priority: "",
+    employee: "",
+    status: "",
+  });
+
+  const filteredRequestData = requestData.filter(
+    (item) =>
+      (!confirmedFilters.serviceType ||
+        confirmedFilters.serviceType === item.RequestType) &&
+      (!confirmedFilters.name ||
+        item.RequesterName.includes(confirmedFilters.name)) &&
+      (!confirmedFilters.priority ||
+        confirmedFilters.priority === item.Priority) &&
+      (!confirmedFilters.employee ||
+        confirmedFilters.employee === item.EmployeeID) &&
+      (!confirmedFilters.status || confirmedFilters.status === item.Status),
+  );
+
+  const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const open = Boolean(anchorEl);
+  const id = open ? "simple-popover" : undefined;
 
   useEffect(() => {
     async function fetch() {
@@ -131,16 +184,6 @@ function ServiceRequestTable() {
     }
   };
 
-  // function getSpecificEmployee(employeeID: string): string {
-  //     let employeeNickname = "";
-  //     employees!.map((employee: Employee) => {
-  //         if(employee.userID == employeeID) {
-  //             employeeNickname = employee.nickname;
-  //         }
-  //     });
-  //     return employeeNickname;
-  // };
-
   const updateServiceRequests = async (
     service: GeneralRequest,
     editVal: string,
@@ -187,12 +230,13 @@ function ServiceRequestTable() {
         }}
       >
         <div>
-          <div className=" bg-primary top-0 min-w-full pt-8 ">
-            <h1 className="text-5xl text-primary font-bold p-2 text-left bg-white w-full">
+          <div className=" bg-primary bg-opacity-75 backdrop-blur-md top-0 min-w-full pt-8 ">
+            <h1 className="text-5xl text-white font-bold p-2 text-left  w-full">
               Service Request Tables
             </h1>
             <Box
               sx={{
+                position: "relative",
                 borderBottom: 1,
                 borderColor: "white",
                 display: "flex",
@@ -293,6 +337,147 @@ function ServiceRequestTable() {
                   }}
                 />
               </Tabs>
+              <Box
+                sx={{
+                  position: "absolute",
+                  right: 10,
+                  top: 15,
+                }}
+              >
+                <Button
+                  variant="contained"
+                  color="warning"
+                  onClick={handleClick}
+                >
+                  Filter
+                </Button>
+                <Popover
+                  id={id}
+                  open={open}
+                  anchorEl={anchorEl}
+                  onClose={handleClose}
+                  anchorOrigin={{
+                    vertical: "bottom",
+                    horizontal: "left",
+                  }}
+                >
+                  <Box display="flex" flexDirection="column" sx={{ p: 2 }}>
+                    <FormControl size="small">
+                      <InputLabel id="select-service-type-label">
+                        Service Type
+                      </InputLabel>
+                      <Select
+                        labelId="select-service-type-label"
+                        label="Service Type"
+                        value={filters.serviceType}
+                        onChange={(e) =>
+                          setFilters({
+                            ...filters,
+                            serviceType: e.target.value,
+                          })
+                        }
+                      >
+                        {availableServices.map((serviceOption: string) => (
+                          <MenuItem key={serviceOption} value={serviceOption}>
+                            {serviceOption}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <Box mt={1}>
+                      <TextField
+                        size="small"
+                        label="Name"
+                        variant="outlined"
+                        value={filters.name}
+                        onChange={(e) =>
+                          setFilters({ ...filters, name: e.target.value })
+                        }
+                      />
+                    </Box>
+                    <FormControl size="small" sx={{ marginTop: 1 }}>
+                      <InputLabel id="select-priority-label">
+                        Priority
+                      </InputLabel>
+                      <Select
+                        labelId="select-priority-label"
+                        label="Priority"
+                        value={filters.priority}
+                        onChange={(e) =>
+                          setFilters({ ...filters, priority: e.target.value })
+                        }
+                      >
+                        <MenuItem value="Low">Low</MenuItem>
+                        <MenuItem value="Medium">Medium</MenuItem>
+                        <MenuItem value="High">High</MenuItem>
+                        <MenuItem value="Emergency">Emergency</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <FormControl size="small" sx={{ marginTop: 1 }}>
+                      <InputLabel id="select-priority-label">
+                        Employee ID
+                      </InputLabel>
+                      <Select
+                        labelId="select-employeeID-label"
+                        label="Employee ID"
+                        value={filters.employee}
+                        onChange={(e) => {
+                          setFilters({ ...filters, employee: e.target.value });
+                        }}
+                      >
+                        {employees.map((employee: Employee) => (
+                          <MenuItem value={employee.userID}>
+                            {employee.nickname}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl size="small" sx={{ marginTop: 1 }}>
+                      <InputLabel id="select-status-label">Status</InputLabel>
+                      <Select
+                        labelId="select-status-label"
+                        label="Status"
+                        value={filters.status}
+                        onChange={(e) =>
+                          setFilters({ ...filters, status: e.target.value })
+                        }
+                      >
+                        <MenuItem value="Unassigned">Unassigned</MenuItem>
+                        <MenuItem value="Assigned">Assigned</MenuItem>
+                        <MenuItem value="InProgress">InProgress</MenuItem>
+                        <MenuItem value="Closed">Closed</MenuItem>
+                      </Select>
+                    </FormControl>
+                    <Box display="flex" gap={1} mt={1}>
+                      <Button
+                        variant="outlined"
+                        size="small"
+                        onClick={() =>
+                          setFilters({
+                            serviceType: "",
+                            name: "",
+                            priority: "",
+                            employee: "",
+                            status: "",
+                          })
+                        }
+                      >
+                        Reset
+                      </Button>
+                      <Button
+                        variant="contained"
+                        size="small"
+                        onClick={() => {
+                          setConfirmedFilters({ ...filters });
+                          handleClose();
+                        }}
+                      >
+                        Confirm
+                      </Button>
+                    </Box>
+                  </Box>
+                </Popover>
+              </Box>
             </Box>
           </div>
 
@@ -338,8 +523,8 @@ function ServiceRequestTable() {
                   </tr>
                 </thead>
                 <tbody>
-                  {requestData.length > 0 &&
-                    requestData
+                  {filteredRequestData.length > 0 &&
+                    filteredRequestData
                       .filter((row) => row.RequestType === "Flowers")
                       .map((row, index) => (
                         <tr key={index}>
@@ -472,8 +657,8 @@ function ServiceRequestTable() {
                   </tr>
                 </thead>
                 <tbody>
-                  {requestData.length > 0 &&
-                    requestData
+                  {filteredRequestData.length > 0 &&
+                    filteredRequestData
                       .filter((row) => row.RequestType === "Gifts")
                       .map((row, index) => (
                         <tr key={index}>
@@ -606,8 +791,8 @@ function ServiceRequestTable() {
                   </tr>
                 </thead>
                 <tbody>
-                  {requestData.length > 0 &&
-                    requestData
+                  {filteredRequestData.length > 0 &&
+                    filteredRequestData
                       .filter((row) => row.RequestType === "Maintenance")
                       .map((row, index) => (
                         <tr key={index}>
@@ -740,8 +925,8 @@ function ServiceRequestTable() {
                   </tr>
                 </thead>
                 <tbody>
-                  {requestData.length > 0 &&
-                    requestData
+                  {filteredRequestData.length > 0 &&
+                    filteredRequestData
                       .filter((row) => row.RequestType === "Medicine")
                       .map((row, index) => (
                         <tr key={index}>
@@ -874,8 +1059,8 @@ function ServiceRequestTable() {
                   </tr>
                 </thead>
                 <tbody>
-                  {requestData.length > 0 &&
-                    requestData
+                  {filteredRequestData.length > 0 &&
+                    filteredRequestData
                       .filter((row) => row.RequestType === "Medical Equipment")
                       .map((row, index) => (
                         <tr key={index}>
