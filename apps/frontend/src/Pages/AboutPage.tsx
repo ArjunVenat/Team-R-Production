@@ -31,17 +31,65 @@ export default function AboutPage() {
             <h2 className="text-2xl font-bold mb-4 text-primary">Developers</h2>
             <div className="grid grid-cols-3 gap-4">
               {[
-                { name: "Javier DeLeon", image: JavierDeLeon },
-                { name: "John Diamond", image: JohnDiamond },
-                { name: "Artem Frenk", image: ArtemFrenk },
-                { name: "Nick Golparvar", image: NickGolparvar },
-                { name: "Lauren Harrison", image: LaurenHarrison },
-                { name: "Jessie Hart", image: JessieHart },
-                { name: "Brannon Henson", image: BrannonHenson },
-                { name: "Zihan Li", image: ZihanLi },
-                { name: "Hubert Liu", image: HubertLiu },
-                { name: "Alex Stoyanov", image: AlexanderStoyanov },
-                { name: "Arjun Venat", image: ArjunVenat },
+                {
+                  name: "Javier DeLeon",
+                  positions: ["Project Manager", "Front End Developer"],
+                  image: JavierDeLeon,
+                },
+                {
+                  name: "John Diamond",
+                  positions: ["Back End Developer"],
+                  image: JohnDiamond,
+                },
+                {
+                  name: "Artem Frenk",
+                  positions: ["Lead", "co-Product Owner", "Back End Developer"],
+                  image: ArtemFrenk,
+                },
+                {
+                  name: "Nick Golparvar",
+                  positions: ["Assistant Lead", "Back End Developer"],
+                  image: NickGolparvar,
+                },
+                {
+                  name: "Lauren Harrison",
+                  positions: ["Documentation Analyst", "Front End Developer"],
+                  image: LaurenHarrison,
+                },
+                {
+                  name: "Jessie Hart",
+                  positions: [
+                    "Scrum Master",
+                    "co-Product Owner",
+                    "Front End Developer",
+                  ],
+                  image: JessieHart,
+                },
+                {
+                  name: "Brannon Henson",
+                  positions: ["Algorithms Developer"],
+                  image: BrannonHenson,
+                },
+                {
+                  name: "Zihan Li",
+                  positions: ["Front End Developer"],
+                  image: ZihanLi,
+                },
+                {
+                  name: "Hubert Liu",
+                  positions: ["Assistant Lead", "Algorithms Developer"],
+                  image: HubertLiu,
+                },
+                {
+                  name: "Alex Stoyanov",
+                  positions: ["Front End Developer"],
+                  image: AlexanderStoyanov,
+                },
+                {
+                  name: "Arjun Venat",
+                  positions: ["Assistant Lead", "Front End Developer"],
+                  image: ArjunVenat,
+                },
               ].map((developer, index) => (
                 <div key={index} className="flex flex-col items-center gap-2">
                   <img
@@ -57,6 +105,14 @@ export default function AboutPage() {
                   <h3 className="text-center text-lg font-semibold text-primary">
                     {developer.name}
                   </h3>
+                  {developer.positions.map((position, positionIndex) => (
+                    <p
+                      key={positionIndex}
+                      className="text-center text-sm text-gray-500"
+                    >
+                      {position}
+                    </p>
+                  ))}
                 </div>
               ))}
             </div>
