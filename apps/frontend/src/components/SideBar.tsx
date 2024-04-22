@@ -16,6 +16,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
 import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BarChartIcon from "@mui/icons-material/BarChart";
+import InfoIcon from "@mui/icons-material/Info";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -90,7 +91,11 @@ export default function Sidebar() {
     icon: <ImportContactsIcon />,
     displayLoggedIn: false,
   };
-
+  const aboutPage: Menu = {
+    title: "About",
+    icon: <InfoIcon />,
+    displayLoggedIn: false,
+  };
   const login: Menu = {
     title: "Staff Login",
     icon: <Login />,
@@ -116,6 +121,8 @@ export default function Sidebar() {
     nodes_edges,
     downloadCSV,
     creditsPage,
+    aboutPage,
+    logoutOption,
     login,
   ]);
 
@@ -130,6 +137,7 @@ export default function Sidebar() {
         downloadCSV,
         stats,
         creditsPage,
+        aboutPage,
         logoutOption,
       ]);
     }
@@ -215,6 +223,9 @@ export default function Sidebar() {
     case "/credits":
       menuHighlight = "Credits Page";
       break;
+    case "/about":
+      menuHighlight = "About";
+      break;
     case "/logout":
       menuHighlight = "Logout";
       break;
@@ -282,6 +293,8 @@ export default function Sidebar() {
       routeChange("stats");
     } else if (title === "Credits Page") {
       routeChange("credits");
+    } else if (title === "About") {
+      routeChange("about");
     }
   };
 

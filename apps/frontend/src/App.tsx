@@ -14,7 +14,7 @@ import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
 
 //Artem Page import
 import St4t5Page from "./Pages/StatsPage.tsx";
-
+import AboutPage from "./Pages/AboutPage.tsx";
 // import DownloadCSV from "./backendreference/DownloadCSV.tsx";
 // import UploadCSV from "./Pages/UploadCSV.tsx";
 import UploadDownloadCSV from "./Pages/UploadDownloadPage.tsx";
@@ -97,6 +97,10 @@ function App() {
         {
           path: "credits",
           element: <CreditsPage />,
+        },
+        {
+          path: "about",
+          element: <AboutPage />,
         },
       ],
     },
