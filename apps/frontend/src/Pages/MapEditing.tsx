@@ -27,11 +27,7 @@ import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 
-let customNodeCounter = 0;
-let customEdgeCounter = 0;
 let edgeFlag = false;
-let addEdgeStartID: string = "";
-let addEdgeEndID: string = "";
 
 export default function MapEditing() {
   //Use auth0 react hook
@@ -75,7 +71,12 @@ export default function MapEditing() {
   const [editableNode, setEditableNode] = useState<Nodes | undefined>();
   const [isDirectionsClicked] = useState(false);
   const [path] = useState<Nodes[]>([]);
-  const [addEdgeFormFlag, setAddEdgeFormFlag] = useState<boolean>();
+  const [addEdgeFormFlag, setAddEdgeFormFlag] = useState<boolean>(false);
+  const [addEdgeID, setAddEdgeID] = useState<string>("");
+  const [addEdgeStartID, setAddEdgeStartID] = useState<string>("");
+  const [addEdgeEndID, setAddEdgeEndID] = useState<string>("");
+  const [addNodeFormFlag, setAddNodeFormFlag] = useState<boolean>(false);
+  const [addNodeID, setAddNodeID] = useState<string>("");
 
   // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
@@ -158,7 +159,7 @@ export default function MapEditing() {
     //Add a new node to databsae!
     const newNode = defaultNode;
     newNode.Floor = floors.find((floor) => floor.map === currentMap)!.level;
-    newNode.NodeID = `customNode${customNodeCounter++}`;
+    newNode.NodeID = addNodeID;
     newNode.ShortName = newNode.NodeID + "-ShortName";
     newNode.LongName = newNode.NodeID + "-LongName";
     newNode.Xcoord = "0";
@@ -182,7 +183,7 @@ export default function MapEditing() {
 
     //Add a new edge to database
     const newEdge = defaultEdge;
-    newEdge.EdgeID = `customEdge${customEdgeCounter++}`;
+    newEdge.EdgeID = addEdgeID;
     newEdge.StartNodeID = addEdgeStartID;
     newEdge.EndNodeID = addEdgeEndID;
     await CreateEdgeDB(newEdge, token);
@@ -278,7 +279,11 @@ export default function MapEditing() {
               variant="contained"
               color="success"
               onClick={() => {
-                addNodeDB().then();
+                setNodeClicked(undefined);
+                setEdgeClicked(undefined);
+                setAddEdgeFormFlag(false);
+                setAddNodeID("");
+                setAddNodeFormFlag(true);
               }}
             >
               Add Node
@@ -296,6 +301,11 @@ export default function MapEditing() {
               color="success"
               onClick={() => {
                 setNodeClicked(undefined);
+                setEdgeClicked(undefined);
+                setAddNodeFormFlag(false);
+                setAddEdgeID("");
+                setAddEdgeStartID("");
+                setAddEdgeEndID("");
                 setAddEdgeFormFlag(true);
               }}
             >
@@ -310,20 +320,30 @@ export default function MapEditing() {
               <TableContainer component={Paper}>
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
-                    <TableCell align="center">
-                      Please Enter Edge Info:
+                    <TableCell align="left">Enter Edge ID:</TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        id="outlined-controlled"
+                        label="Edge ID"
+                        value={addEdgeID}
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          setAddEdgeID(event.target.value);
+                        }}
+                      />
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="left">Start Node:</TableCell>
+                    <TableCell align="left">Enter Start Node:</TableCell>
                     <TableCell align="left">
                       <Autocomplete
-                        value={""}
+                        value={addEdgeStartID}
                         onChange={(
                           e: ChangeEvent<unknown>,
                           getStartID: string | null,
                         ) => {
-                          addEdgeStartID = getStartID!;
+                          setAddEdgeStartID(getStartID!);
                         }}
                         disablePortal
                         id="combo-box-end"
@@ -335,15 +355,15 @@ export default function MapEditing() {
                     </TableCell>
                   </TableRow>
                   <TableRow>
-                    <TableCell align="left">End Node:</TableCell>
+                    <TableCell align="left">Enter End Node:</TableCell>
                     <TableCell align="left">
                       <Autocomplete
-                        value={""}
+                        value={addEdgeEndID}
                         onChange={(
                           e: ChangeEvent<unknown>,
                           getEndID: string | null,
                         ) => {
-                          addEdgeEndID = getEndID!;
+                          setAddEdgeEndID(getEndID!);
                         }}
                         disablePortal
                         id="combo-box-end"
@@ -373,7 +393,7 @@ export default function MapEditing() {
                       setAddEdgeFormFlag(false);
                     }}
                   >
-                    Add Edge
+                    Add To Map
                   </Button>
                 </Box>
                 <Box
@@ -388,6 +408,69 @@ export default function MapEditing() {
                     color="error"
                     onClick={() => {
                       setAddEdgeFormFlag(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Stack>
+            </div>
+          )}
+        {addNodeFormFlag &&
+          nodeClicked == undefined &&
+          edgeClicked == undefined && (
+            <div>
+              <TableContainer component={Paper}>
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
+                  <TableRow>
+                    <TableCell align="left">Enter Node ID:</TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        id="outlined-controlled"
+                        label="Edge ID"
+                        value={addNodeID}
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          setAddNodeID(event.target.value);
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </TableContainer>
+              <Stack direction="row" spacing={5} justifyContent="center">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      addNodeDB().then();
+                      edgeFlag = false;
+                      setAddNodeFormFlag(false);
+                    }}
+                  >
+                    Add To Map
+                  </Button>
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      setAddNodeFormFlag(false);
                     }}
                   >
                     Cancel
@@ -698,11 +781,14 @@ export default function MapEditing() {
             </Box>
           </div>
         )}
-        {nodeClicked === undefined && edgeClicked === undefined && (
-          <div>
-            <p>Click on a Node or Edge to view its details</p>
-          </div>
-        )}
+        {nodeClicked === undefined &&
+          edgeClicked === undefined &&
+          !addNodeFormFlag &&
+          !addEdgeFormFlag && (
+            <div>
+              <p>Click on a Node or Edge to view its details</p>
+            </div>
+          )}
       </aside>
     </div>
   );
