@@ -6,10 +6,8 @@ export class Directions {
   }
 
   public getAngle(point1: GraphNode, center: GraphNode, point3: GraphNode) {
-    const p1c = point1.getDistance(center);
-    const p3c = point3.getDistance(center);
-    console.log("p1c", p1c);
-    console.log("p3c", p3c);
+    //const p1c = point1.getDistance(center);
+    //const p3c = point3.getDistance(center);
     const x1: number = point1.x - center.x;
     const y1: number = point1.y - center.y;
     const x2: number = point3.x - center.x;
@@ -42,7 +40,7 @@ export class Directions {
       }
     }
     for (let i = 0; i < angles.length; i++) {
-      if (angles[i] < 60) {
+      if (angles[i] >= 0 && angles[i] < 60) {
         directions.push("sharp left");
       } else if (angles[i] >= 60 && angles[i] <= 120) {
         directions.push("left");
