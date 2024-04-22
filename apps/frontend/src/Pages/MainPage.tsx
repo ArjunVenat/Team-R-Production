@@ -384,11 +384,10 @@ export default function MainPage() {
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
                           Floor {key}
                         </AccordionSummary>
-                        <AccordionDetails>
+                        <AccordionDetails
+                          style={{ overflow: "auto", maxHeight: "200px" }}
+                        >
                           {groupPath[key].map((item, index) => {
-                            if (index === groupPath[key].length - 1) {
-                              return null;
-                            }
                             return (
                               <Box
                                 mb={2}
@@ -397,12 +396,16 @@ export default function MainPage() {
                                 alignItems="center"
                                 key={index}
                               >
-                                {pathToText(
-                                  index !== 0
-                                    ? groupPath[key][index - 1]
-                                    : { Xcoord: -1, Ycoord: -1 },
-                                  item,
-                                  groupPath[key][index + 1],
+                                {index !== groupPath[key].length - 1 ? (
+                                  pathToText(
+                                    index !== 0
+                                      ? groupPath[key][index - 1]
+                                      : { Xcoord: -1, Ycoord: -1 },
+                                    item,
+                                    groupPath[key][index + 1],
+                                  )
+                                ) : (
+                                  <div />
                                 )}
                               </Box>
                             );
