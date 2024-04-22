@@ -211,6 +211,15 @@ export default function MainPage() {
   }, [path]);
   console.log(groupPath);
 
+  const sortedFloors = Object.keys(groupPath).sort((a, b) => {
+    const floorA = parseInt(a, 10);
+    const floorB = parseInt(b, 10);
+
+    if (path[0].Floor === a) return -1;
+    if (path[0].Floor === b) return 1;
+    return floorA - floorB;
+  });
+
   return (
     <div
       id="MainPage"
@@ -362,16 +371,14 @@ export default function MainPage() {
                       <SyncIcon />
                       {end} from {start}
                     </Box>
-                    {Object.keys(groupPath).map((key) => (
+                    {sortedFloors.map((key) => (
                       <Accordion
                         key={key}
                         onChange={() => {
-                          // if (expanded) {
                           const matchedFloor = floors.find(
                             (floor) => floor.level === key,
                           );
                           setCurrentMap(matchedFloor ? matchedFloor.map : "");
-                          // }
                         }}
                       >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
