@@ -10,7 +10,7 @@ import { TextField, Button, Box, Stack } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { CreateNodeDB } from "../backendreference/CreateNode.tsx";
 import { CreateEdgeDB } from "../backendreference/CreateEdge.tsx";
-// import { EditableEdgeContext } from "../App.tsx";
+import { EdgesCustomHook } from "../components/SVGCanvas.tsx";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
 import { defaultMap, floors } from "../components/mapElements.ts";
 
@@ -29,6 +29,7 @@ import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 
 let customNodeCounter = 0;
 let customEdgeCounter = 0;
+let edgeFlag = false;
 
 export default function MapEditing() {
   //Use auth0 react hook
@@ -64,6 +65,7 @@ export default function MapEditing() {
   };
 
   const [nodesData, setNodesData] = useState<Nodes[]>([]);
+  const { edgesData, setEdgesData } = EdgesCustomHook();
   const [currentMap, setCurrentMap] = useState(defaultMap);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
   const [edgeClicked, setEdgeClicked] = useState<Edges>();
@@ -175,17 +177,21 @@ export default function MapEditing() {
     //Get access token
     const token = await getAccessTokenSilently();
 
-    //Add a new edge to databsae!
+    //Add a new edge to database
     const newEdge = defaultEdge;
-    setEdgeClicked(newEdge);
-    edgeClicked!.EdgeID = `customEdge${customEdgeCounter++}`;
-    await CreateEdgeDB(edgeClicked!, token);
-    setEditableEdge({ ...edgeClicked! });
+    newEdge.EdgeID = `customEdge${customEdgeCounter++}`;
+    newEdge.StartNodeID = "FDEPT00501";
+    newEdge.EndNodeID = "ESTAI00401";
+    await CreateEdgeDB(newEdge, token);
 
-    //refresh DB
-    const res = await axios.get("/api/admin/allnodes/All");
-    const allNodes = res.data;
-    setNodesData(allNodes);
+    //Refresh edges data
+    const updatedEdges: Edges[] = edgesData;
+    updatedEdges.push(newEdge);
+    setEdgesData(updatedEdges);
+    edgeFlag = true;
+
+    //Set new edge
+    handleEdgeClicked(newEdge);
   };
 
   const delNodeDB = async (delType: string, nodeID: string) => {
@@ -223,6 +229,7 @@ export default function MapEditing() {
                   key={currentMap}
                   currentMap={currentMap}
                   resetMapTransform={resetTransform}
+                  newEdgeFlag={edgeFlag}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
@@ -286,6 +293,7 @@ export default function MapEditing() {
               color="success"
               onClick={() => {
                 addEdgeDB().then();
+                edgeFlag = false;
               }}
             >
               Add Edge
