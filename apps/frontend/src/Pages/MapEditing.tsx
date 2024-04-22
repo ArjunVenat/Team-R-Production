@@ -6,8 +6,10 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
 import { Edges, Nodes } from "database";
-import { TextField } from "@mui/material";
+import { TextField, Button, Box, Stack } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
+import { CreateNodeDB } from "../backendreference/CreateNode.tsx";
+import { CreateEdgeDB } from "../backendreference/CreateEdge.tsx";
 // import { EditableEdgeContext } from "../App.tsx";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
 import { defaultMap, floors } from "../components/mapElements.ts";
@@ -25,6 +27,9 @@ import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 
+let customNodeCounter = 0;
+let customEdgeCounter = 0;
+
 export default function MapEditing() {
   //Use auth0 react hook
   const {
@@ -41,6 +46,23 @@ export default function MapEditing() {
     }).then();
   }
 
+  const defaultNode: Nodes = {
+    NodeID: "",
+    Xcoord: "",
+    Ycoord: "",
+    Floor: "",
+    Building: "",
+    NodeType: "",
+    LongName: "",
+    ShortName: "",
+  };
+
+  const defaultEdge: Edges = {
+    EdgeID: "",
+    StartNodeID: "",
+    EndNodeID: "",
+  };
+
   const [nodesData, setNodesData] = useState<Nodes[]>([]);
   const [currentMap, setCurrentMap] = useState(defaultMap);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
@@ -49,6 +71,7 @@ export default function MapEditing() {
   const [editableNode, setEditableNode] = useState<Nodes | undefined>();
   const [isDirectionsClicked] = useState(false);
   const [path] = useState<Nodes[]>([]);
+
   // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
@@ -64,8 +87,6 @@ export default function MapEditing() {
       setEditableEdge({ ...edge });
     }
   };
-
-  //
 
   useEffect(() => {
     async function fetchData() {
@@ -116,6 +137,75 @@ export default function MapEditing() {
         },
       },
     );
+
+    //refresh DB
+    const res = await axios.get("/api/admin/allnodes/All");
+    const allNodes = res.data;
+    setNodesData(allNodes);
+  };
+
+  const addNodeDB = async () => {
+    setEdgeClicked(undefined);
+
+    //Get access token
+    const token = await getAccessTokenSilently();
+
+    //Add a new node to databsae!
+    const newNode = defaultNode;
+    newNode.Floor = floors.find((floor) => floor.map === currentMap)!.level;
+    newNode.NodeID = `customNode${customNodeCounter++}`;
+    newNode.ShortName = newNode.NodeID + "-ShortName";
+    newNode.LongName = newNode.NodeID + "-LongName";
+    newNode.Xcoord = "0";
+    newNode.Ycoord = "0";
+    await CreateNodeDB(newNode, token);
+
+    //Set new node
+    handleNodeClick(newNode);
+
+    //Refresh nodes data
+    const updatedNodes: Nodes[] = nodesData;
+    updatedNodes.push(newNode);
+    setNodesData(updatedNodes);
+  };
+
+  const addEdgeDB = async () => {
+    setNodeClicked(undefined);
+
+    //Get access token
+    const token = await getAccessTokenSilently();
+
+    //Add a new edge to databsae!
+    const newEdge = defaultEdge;
+    setEdgeClicked(newEdge);
+    edgeClicked!.EdgeID = `customEdge${customEdgeCounter++}`;
+    await CreateEdgeDB(edgeClicked!, token);
+    setEditableEdge({ ...edgeClicked! });
+
+    //refresh DB
+    const res = await axios.get("/api/admin/allnodes/All");
+    const allNodes = res.data;
+    setNodesData(allNodes);
+  };
+
+  const delNodeDB = async (delType: string, nodeID: string) => {
+    const token = await getAccessTokenSilently(); //Retrieve an access token asynchronously
+    //Send DELETE request to update the node's information
+    await axios.delete(`/api/admin/node/del/${delType}/${nodeID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const delEdgeDB = async (delType: string, edgeID: string) => {
+    const token = await getAccessTokenSilently(); //Retrieve an access token asynchronously
+    //Send DELETE request to update the node's information
+    await axios.delete(`/api/admin/edge/del/${delType}/${edgeID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
   return (
@@ -166,10 +256,43 @@ export default function MapEditing() {
         </TransformWrapper>
       </main>
       <aside className={rightSideBarStyle}>
-        <h1 className="text-xl bg-transparent p-2 text-center">
-          Clicked Node/Edge Information:
-        </h1>
-        {nodeClicked != undefined && (
+        <Stack direction="row" spacing={5} justifyContent="center">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="5vh"
+            pt="3"
+          >
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                addNodeDB().then();
+              }}
+            >
+              Add Node
+            </Button>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="5vh"
+            pt="3"
+          >
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                addEdgeDB().then();
+              }}
+            >
+              Add Edge
+            </Button>
+          </Box>
+        </Stack>
+        {nodeClicked != undefined && nodeClicked != defaultNode && (
           <div className={"items- "}>
             <TableContainer sx={{ maxWidth: 350 }} component={Paper}>
               <Table sx={{ maxWidth: 350 }} aria-label="simple table">
@@ -345,18 +468,35 @@ export default function MapEditing() {
                 </TableRow>
               </Table>
             </TableContainer>
-
-            {/*<p>NodeID: {nodeClicked.NodeID}</p>*/}
-            {/*<p>Xcoord: {nodeClicked.Xcoord}</p>*/}
-            {/*<p>Ycoord: {nodeClicked.Ycoord}</p>*/}
-            {/*<p>Floor: {nodeClicked.Floor}</p>*/}
-            {/*<p>Building: {nodeClicked.Building}</p>*/}
-            {/*<p>NodeType: {nodeClicked.NodeType}</p>*/}
-            {/*<p>LongName: {nodeClicked.LongName}</p>*/}
-            {/*<p>ShortName: {nodeClicked.ShortName}</p>*/}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="5vh"
+            >
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  delNodeDB("Single", nodeClicked.NodeID).then();
+                  setNodeClicked(undefined);
+                  nodeClicked.NodeID = "";
+                  nodeClicked.Xcoord = "";
+                  nodeClicked.Ycoord = "";
+                  nodeClicked.Floor = "";
+                  nodeClicked.Building = "";
+                  nodeClicked.NodeType = "";
+                  nodeClicked.LongName = "";
+                  nodeClicked.ShortName = "";
+                  setEditableNode({ ...nodeClicked });
+                }}
+              >
+                Delete Node
+              </Button>
+            </Box>
           </div>
         )}
-        {edgeClicked != undefined && (
+        {edgeClicked != undefined && edgeClicked != defaultEdge && (
           <div>
             <TableContainer component={Paper}>
               <Table sx={{ maxWidth: 350 }} aria-label="simple table">
@@ -376,7 +516,7 @@ export default function MapEditing() {
                         getStartID: string | null,
                       ) => {
                         editEdgeDB(
-                          edgeClicked.StartNodeID,
+                          edgeClicked.EdgeID,
                           "StartNodeID",
                           getStartID!,
                         ).then();
@@ -407,7 +547,7 @@ export default function MapEditing() {
                         getEndID: string | null,
                       ) => {
                         editEdgeDB(
-                          edgeClicked.EndNodeID,
+                          edgeClicked.EdgeID,
                           "EndNodeID",
                           getEndID!,
                         ).then();
@@ -429,10 +569,27 @@ export default function MapEditing() {
                 </TableRow>
               </Table>
             </TableContainer>
-
-            {/*<p>EdgeID: {edgeClicked.EdgeID}</p>*/}
-            {/*<p>StartNodeID: {edgeClicked.StartNodeID}</p>*/}
-            {/*<p>EndNodeID: {edgeClicked.EndNodeID}</p>*/}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="5vh"
+            >
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  delEdgeDB("Single", edgeClicked.EdgeID).then();
+                  setEdgeClicked(undefined);
+                  edgeClicked.EdgeID = "";
+                  edgeClicked.EndNodeID = "";
+                  edgeClicked.StartNodeID = "";
+                  setEditableEdge({ ...edgeClicked });
+                }}
+              >
+                Delete Edge
+              </Button>
+            </Box>
           </div>
         )}
         {nodeClicked === undefined && edgeClicked === undefined && (
