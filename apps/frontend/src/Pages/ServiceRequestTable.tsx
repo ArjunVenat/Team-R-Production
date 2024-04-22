@@ -179,16 +179,6 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
     }
   };
 
-  // function getSpecificEmployee(employeeID: string): string {
-  //     let employeeNickname = "";
-  //     employees!.map((employee: Employee) => {
-  //         if(employee.userID == employeeID) {
-  //             employeeNickname = employee.nickname;
-  //         }
-  //     });
-  //     return employeeNickname;
-  // };
-
   const updateServiceRequests = async (
     service: GeneralRequest,
     editVal: string,

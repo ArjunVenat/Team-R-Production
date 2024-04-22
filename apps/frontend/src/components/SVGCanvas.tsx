@@ -12,10 +12,16 @@ import { motion } from "framer-motion";
 import ElevatorIcon from "../assets/image/Elevator_Icon.svg";
 import { floors, defaultMap } from "./mapElements.ts";
 
+export const EdgesCustomHook = () => {
+  const [edgesData, setEdgesData] = useState<Edges[]>([]);
+  return { edgesData, setEdgesData };
+};
+
 export default function SVGCanvas(props: {
   path?: Nodes[]; //Array of nodes representing the path to be highlighted
   currentMap: string; //The current map being displayed
   setCurrentMap?: (map: string) => void; //Function to set the current map
+  newEdgeFlag?: boolean; //Flag for if a new edge has been made
   currentLevel: string; //The current level of the map
   nodeColor?: string; //color for rendering nodes
   edgeColor?: string; //color for rendering edges
@@ -30,7 +36,7 @@ export default function SVGCanvas(props: {
   resetMapTransform: () => void; //reset map zoom/pan
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
-  const [edgesData, setEdgesData] = React.useState<Edges[]>([]);
+  const { edgesData, setEdgesData } = EdgesCustomHook();
   const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
   const [hoverElevatorTooltip, setHoverElevatorTooltip] = useState("");
 
@@ -86,9 +92,9 @@ export default function SVGCanvas(props: {
 
     // If props.path is undefined (no path is provided), fetch the edge data
     if (props.path === undefined) {
-      fetchEdges();
+      fetchEdges().then();
     }
-  }, [props.path]);
+  }, [props.path, setEdgesData, props.newEdgeFlag]);
 
   //useEffect to set floor to current level
   useEffect(() => {

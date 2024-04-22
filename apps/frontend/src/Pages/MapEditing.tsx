@@ -6,9 +6,11 @@ import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
 import { Edges, Nodes } from "database";
-import { TextField } from "@mui/material";
+import { TextField, Button, Box, Stack } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
-// import { EditableEdgeContext } from "../App.tsx";
+import { CreateNodeDB } from "../backendreference/CreateNode.tsx";
+import { CreateEdgeDB } from "../backendreference/CreateEdge.tsx";
+import { EdgesCustomHook } from "../components/SVGCanvas.tsx";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
 import { defaultMap, floors } from "../components/mapElements.ts";
 
@@ -24,6 +26,8 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
+
+let edgeFlag = false;
 
 export default function MapEditing() {
   //Use auth0 react hook
@@ -41,7 +45,25 @@ export default function MapEditing() {
     }).then();
   }
 
+  const defaultNode: Nodes = {
+    NodeID: "",
+    Xcoord: "",
+    Ycoord: "",
+    Floor: "",
+    Building: "",
+    NodeType: "",
+    LongName: "",
+    ShortName: "",
+  };
+
+  const defaultEdge: Edges = {
+    EdgeID: "",
+    StartNodeID: "",
+    EndNodeID: "",
+  };
+
   const [nodesData, setNodesData] = useState<Nodes[]>([]);
+  const { edgesData, setEdgesData } = EdgesCustomHook();
   const [currentMap, setCurrentMap] = useState(defaultMap);
   const [nodeClicked, setNodeClicked] = useState<Nodes>();
   const [edgeClicked, setEdgeClicked] = useState<Edges>();
@@ -49,6 +71,13 @@ export default function MapEditing() {
   const [editableNode, setEditableNode] = useState<Nodes | undefined>();
   const [isDirectionsClicked] = useState(false);
   const [path] = useState<Nodes[]>([]);
+  const [addEdgeFormFlag, setAddEdgeFormFlag] = useState<boolean>(false);
+  const [addEdgeID, setAddEdgeID] = useState<string>("");
+  const [addEdgeStartID, setAddEdgeStartID] = useState<string>("");
+  const [addEdgeEndID, setAddEdgeEndID] = useState<string>("");
+  const [addNodeFormFlag, setAddNodeFormFlag] = useState<boolean>(false);
+  const [addNodeID, setAddNodeID] = useState<string>("");
+
   // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
     setNodeClicked(node);
@@ -64,8 +93,6 @@ export default function MapEditing() {
       setEditableEdge({ ...edge });
     }
   };
-
-  //
 
   useEffect(() => {
     async function fetchData() {
@@ -116,6 +143,79 @@ export default function MapEditing() {
         },
       },
     );
+
+    //refresh DB
+    const res = await axios.get("/api/admin/allnodes/All");
+    const allNodes = res.data;
+    setNodesData(allNodes);
+  };
+
+  const addNodeDB = async () => {
+    setEdgeClicked(undefined);
+
+    //Get access token
+    const token = await getAccessTokenSilently();
+
+    //Add a new node to databsae!
+    const newNode = defaultNode;
+    newNode.Floor = floors.find((floor) => floor.map === currentMap)!.level;
+    newNode.NodeID = addNodeID;
+    newNode.ShortName = newNode.NodeID + "-ShortName";
+    newNode.LongName = newNode.NodeID + "-LongName";
+    newNode.Xcoord = "0";
+    newNode.Ycoord = "0";
+    await CreateNodeDB(newNode, token);
+
+    //Set new node
+    handleNodeClick(newNode);
+
+    //Refresh nodes data
+    const updatedNodes: Nodes[] = nodesData;
+    updatedNodes.push(newNode);
+    setNodesData(updatedNodes);
+  };
+
+  const addEdgeDB = async () => {
+    setNodeClicked(undefined);
+
+    //Get access token
+    const token = await getAccessTokenSilently();
+
+    //Add a new edge to database
+    const newEdge = defaultEdge;
+    newEdge.EdgeID = addEdgeID;
+    newEdge.StartNodeID = addEdgeStartID;
+    newEdge.EndNodeID = addEdgeEndID;
+    await CreateEdgeDB(newEdge, token);
+
+    //Refresh edges data
+    const updatedEdges: Edges[] = edgesData;
+    updatedEdges.push(newEdge);
+    setEdgesData(updatedEdges);
+    edgeFlag = true;
+
+    //Set new edge
+    handleEdgeClicked(newEdge);
+  };
+
+  const delNodeDB = async (delType: string, nodeID: string) => {
+    const token = await getAccessTokenSilently(); //Retrieve an access token asynchronously
+    //Send DELETE request to update the node's information
+    await axios.delete(`/api/admin/node/del/${delType}/${nodeID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+  };
+
+  const delEdgeDB = async (delType: string, edgeID: string) => {
+    const token = await getAccessTokenSilently(); //Retrieve an access token asynchronously
+    //Send DELETE request to update the node's information
+    await axios.delete(`/api/admin/edge/del/${delType}/${edgeID}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
   };
 
   return (
@@ -133,6 +233,7 @@ export default function MapEditing() {
                   key={currentMap}
                   currentMap={currentMap}
                   resetMapTransform={resetTransform}
+                  newEdgeFlag={edgeFlag}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
@@ -166,10 +267,219 @@ export default function MapEditing() {
         </TransformWrapper>
       </main>
       <aside className={rightSideBarStyle}>
-        <h1 className="text-xl bg-transparent p-2 text-center">
-          Clicked Node/Edge Information:
-        </h1>
-        {nodeClicked != undefined && (
+        <Stack direction="row" spacing={5} justifyContent="center">
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="5vh"
+            pt="3"
+          >
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                setNodeClicked(undefined);
+                setEdgeClicked(undefined);
+                setAddEdgeFormFlag(false);
+                setAddNodeID("");
+                setAddNodeFormFlag(true);
+              }}
+            >
+              Add Node
+            </Button>
+          </Box>
+          <Box
+            display="flex"
+            justifyContent="center"
+            alignItems="center"
+            minHeight="5vh"
+            pt="3"
+          >
+            <Button
+              variant="contained"
+              color="success"
+              onClick={() => {
+                setNodeClicked(undefined);
+                setEdgeClicked(undefined);
+                setAddNodeFormFlag(false);
+                setAddEdgeID("");
+                setAddEdgeStartID("");
+                setAddEdgeEndID("");
+                setAddEdgeFormFlag(true);
+              }}
+            >
+              Add Edge
+            </Button>
+          </Box>
+        </Stack>
+        {addEdgeFormFlag &&
+          nodeClicked == undefined &&
+          edgeClicked == undefined && (
+            <div>
+              <TableContainer component={Paper}>
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
+                  <TableRow>
+                    <TableCell align="left">Enter Edge ID:</TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        id="outlined-controlled"
+                        label="Edge ID"
+                        value={addEdgeID}
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          setAddEdgeID(event.target.value);
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Enter Start Node:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={addEdgeStartID}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getStartID: string | null,
+                        ) => {
+                          setAddEdgeStartID(getStartID!);
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={nodesData.map((node: Nodes) => node.NodeID)}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Start Node ID" />
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Enter End Node:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={addEdgeEndID}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getEndID: string | null,
+                        ) => {
+                          setAddEdgeEndID(getEndID!);
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={nodesData.map((node: Nodes) => node.NodeID)}
+                        renderInput={(params) => (
+                          <TextField {...params} label="End Node ID" />
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </TableContainer>
+              <Stack direction="row" spacing={5} justifyContent="center">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      addEdgeDB().then();
+                      edgeFlag = false;
+                      setAddEdgeFormFlag(false);
+                    }}
+                  >
+                    Add To Map
+                  </Button>
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      setAddEdgeFormFlag(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Stack>
+            </div>
+          )}
+        {addNodeFormFlag &&
+          nodeClicked == undefined &&
+          edgeClicked == undefined && (
+            <div>
+              <TableContainer component={Paper}>
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
+                  <TableRow>
+                    <TableCell align="left">Enter Node ID:</TableCell>
+                    <TableCell align="left">
+                      <TextField
+                        id="outlined-controlled"
+                        label="Node ID"
+                        value={addNodeID}
+                        onChange={(
+                          event: React.ChangeEvent<HTMLInputElement>,
+                        ) => {
+                          setAddNodeID(event.target.value);
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </TableContainer>
+              <Stack direction="row" spacing={5} justifyContent="center">
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="success"
+                    onClick={() => {
+                      addNodeDB().then();
+                      edgeFlag = false;
+                      setAddNodeFormFlag(false);
+                    }}
+                  >
+                    Add To Map
+                  </Button>
+                </Box>
+                <Box
+                  display="flex"
+                  justifyContent="center"
+                  alignItems="center"
+                  minHeight="5vh"
+                  pt="3"
+                >
+                  <Button
+                    variant="contained"
+                    color="error"
+                    onClick={() => {
+                      setAddNodeFormFlag(false);
+                    }}
+                  >
+                    Cancel
+                  </Button>
+                </Box>
+              </Stack>
+            </div>
+          )}
+        {nodeClicked != undefined && nodeClicked != defaultNode && (
           <div className={"items- "}>
             <TableContainer sx={{ maxWidth: 350 }} component={Paper}>
               <Table sx={{ maxWidth: 350 }} aria-label="simple table">
@@ -345,18 +655,36 @@ export default function MapEditing() {
                 </TableRow>
               </Table>
             </TableContainer>
-
-            {/*<p>NodeID: {nodeClicked.NodeID}</p>*/}
-            {/*<p>Xcoord: {nodeClicked.Xcoord}</p>*/}
-            {/*<p>Ycoord: {nodeClicked.Ycoord}</p>*/}
-            {/*<p>Floor: {nodeClicked.Floor}</p>*/}
-            {/*<p>Building: {nodeClicked.Building}</p>*/}
-            {/*<p>NodeType: {nodeClicked.NodeType}</p>*/}
-            {/*<p>LongName: {nodeClicked.LongName}</p>*/}
-            {/*<p>ShortName: {nodeClicked.ShortName}</p>*/}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="5vh"
+            >
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  delNodeDB("Single", nodeClicked.NodeID).then();
+                  setNodeClicked(undefined);
+                  nodeClicked.NodeID = "";
+                  nodeClicked.Xcoord = "";
+                  nodeClicked.Ycoord = "";
+                  nodeClicked.Floor = "";
+                  nodeClicked.Building = "";
+                  nodeClicked.NodeType = "";
+                  nodeClicked.LongName = "";
+                  nodeClicked.ShortName = "";
+                  setEditableNode({ ...nodeClicked });
+                  setAddEdgeFormFlag(false);
+                }}
+              >
+                Delete Node
+              </Button>
+            </Box>
           </div>
         )}
-        {edgeClicked != undefined && (
+        {edgeClicked != undefined && edgeClicked != defaultEdge && (
           <div>
             <TableContainer component={Paper}>
               <Table sx={{ maxWidth: 350 }} aria-label="simple table">
@@ -376,7 +704,7 @@ export default function MapEditing() {
                         getStartID: string | null,
                       ) => {
                         editEdgeDB(
-                          edgeClicked.StartNodeID,
+                          edgeClicked.EdgeID,
                           "StartNodeID",
                           getStartID!,
                         ).then();
@@ -407,7 +735,7 @@ export default function MapEditing() {
                         getEndID: string | null,
                       ) => {
                         editEdgeDB(
-                          edgeClicked.EndNodeID,
+                          edgeClicked.EdgeID,
                           "EndNodeID",
                           getEndID!,
                         ).then();
@@ -429,17 +757,38 @@ export default function MapEditing() {
                 </TableRow>
               </Table>
             </TableContainer>
-
-            {/*<p>EdgeID: {edgeClicked.EdgeID}</p>*/}
-            {/*<p>StartNodeID: {edgeClicked.StartNodeID}</p>*/}
-            {/*<p>EndNodeID: {edgeClicked.EndNodeID}</p>*/}
+            <Box
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              minHeight="5vh"
+            >
+              <Button
+                variant="contained"
+                color="error"
+                onClick={() => {
+                  delEdgeDB("Single", edgeClicked.EdgeID).then();
+                  setEdgeClicked(undefined);
+                  edgeClicked.EdgeID = "";
+                  edgeClicked.EndNodeID = "";
+                  edgeClicked.StartNodeID = "";
+                  setEditableEdge({ ...edgeClicked });
+                  setAddEdgeFormFlag(false);
+                }}
+              >
+                Delete Edge
+              </Button>
+            </Box>
           </div>
         )}
-        {nodeClicked === undefined && edgeClicked === undefined && (
-          <div>
-            <p>Click on a Node or Edge to view its details</p>
-          </div>
-        )}
+        {nodeClicked === undefined &&
+          edgeClicked === undefined &&
+          !addNodeFormFlag &&
+          !addEdgeFormFlag && (
+            <div>
+              <p>Click on a Node or Edge to view its details</p>
+            </div>
+          )}
       </aside>
     </div>
   );
