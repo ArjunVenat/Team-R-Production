@@ -872,7 +872,6 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
           <Button onClick={() => clearRequests()}>Close</Button>
         </Card>
       </Modal>
-      //open fail message
       <Modal open={openFailMessage}>
         <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
           <h1
