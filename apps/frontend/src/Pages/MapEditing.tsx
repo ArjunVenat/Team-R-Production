@@ -1,13 +1,12 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
 import SideBar from "../components/SideBar.tsx";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, ChangeEvent } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
 import axios from "axios";
 import { Edges, Nodes } from "database";
-import { MenuItem } from "@mui/material";
-import Select from "@mui/material/Select";
+import { TextField } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 // import { EditableEdgeContext } from "../App.tsx";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
@@ -21,6 +20,7 @@ import TableContainer from "@mui/material/TableContainer";
 // import TableHead from '@mui/material/TableHead';
 import TableRow from "@mui/material/TableRow";
 import Paper from "@mui/material/Paper";
+import Autocomplete from "@mui/material/Autocomplete";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
@@ -132,6 +132,7 @@ export default function MapEditing() {
                 <SVGCanvas
                   key={currentMap}
                   currentMap={currentMap}
+                  resetMapTransform={resetTransform}
                   currentLevel={
                     floors.find((floor) => floor.map === currentMap)?.level ||
                     ""
@@ -157,6 +158,7 @@ export default function MapEditing() {
                   setMap={setCurrentMap}
                   isDirectionsClicked={isDirectionsClicked}
                   path={path}
+                  resetMapTransform={resetTransform}
                 />{" "}
               </ThemeProvider>
             </section>
@@ -212,83 +214,99 @@ export default function MapEditing() {
                 <TableRow>
                   <TableCell align="left">Floor:</TableCell>
                   <TableCell align="left">
-                    <Select
-                      label="Floor"
-                      sx={{ width: 100 }}
-                      value={editableNode?.Floor}
-                      onChange={(e) => {
+                    <Autocomplete
+                      value={nodeClicked?.Floor}
+                      onChange={(
+                        e: ChangeEvent<unknown>,
+                        getNodeFloor: string | null,
+                      ) => {
                         editNodeDB(
                           nodeClicked.NodeID,
                           "Floor",
-                          e.target.value,
+                          getNodeFloor!,
                         ).then();
-                        nodeClicked.Floor = e.target.value;
+                        nodeClicked.Floor = getNodeFloor!;
                         setEditableNode({ ...nodeClicked });
                       }}
-                    >
-                      <MenuItem value="L2">L2</MenuItem>
-                      <MenuItem value="L1">L1</MenuItem>
-                      <MenuItem value="1">1</MenuItem>
-                      <MenuItem value="2">2</MenuItem>
-                      <MenuItem value="3">3</MenuItem>
-                    </Select>
+                      disablePortal
+                      id="combo-box-end"
+                      options={["L1", "L2", "1", "2", "3"]}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Floor" />
+                      )}
+                    />
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="left">Building:</TableCell>
                   <TableCell align="left">
-                    <Select
-                      label="Building"
-                      sx={{ width: 130 }}
-                      value={editableNode?.Building}
-                      onChange={(e) => {
+                    <Autocomplete
+                      value={nodeClicked?.Building}
+                      onChange={(
+                        e: ChangeEvent<unknown>,
+                        getNodeBuilding: string | null,
+                      ) => {
                         editNodeDB(
                           nodeClicked.NodeID,
                           "Building",
-                          e.target.value,
+                          getNodeBuilding!,
                         ).then();
-                        nodeClicked.Building = e.target.value;
+                        nodeClicked.Building = getNodeBuilding!;
                         setEditableNode({ ...nodeClicked });
                       }}
-                    >
-                      <MenuItem value="15 Francis">15 Francis</MenuItem>
-                      <MenuItem value="45 Francis">45 Francis</MenuItem>
-                      <MenuItem value="BTM">BTM</MenuItem>
-                      <MenuItem value="Shapiro">Shapiro</MenuItem>
-                      <MenuItem value="Tower">Tower</MenuItem>
-                    </Select>
+                      disablePortal
+                      id="combo-box-end"
+                      options={[
+                        "15 Francis",
+                        "45 Francis",
+                        "BTM",
+                        "Shapiro",
+                        "Tower",
+                      ]}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Building" />
+                      )}
+                    />
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="left">Node Type:</TableCell>
                   <TableCell align="left">
-                    <Select
-                      label="NodeType"
-                      sx={{ width: 100 }}
-                      value={editableNode?.NodeType}
-                      onChange={(e) => {
+                    <Autocomplete
+                      value={nodeClicked?.NodeType}
+                      onChange={(
+                        e: ChangeEvent<unknown>,
+                        getNodeType: string | null,
+                      ) => {
                         editNodeDB(
                           nodeClicked.NodeID,
                           "NodeType",
-                          e.target.value,
+                          getNodeType!,
                         ).then();
-                        nodeClicked.NodeType = e.target.value;
+                        nodeClicked.NodeType = getNodeType!;
                         setEditableNode({ ...nodeClicked });
                       }}
-                    >
-                      <MenuItem value="BATH">BATH</MenuItem>
-                      <MenuItem value="CONF">CONF</MenuItem>
-                      <MenuItem value="DEPT">DEPT</MenuItem>
-                      <MenuItem value="ELEV">ELEV</MenuItem>
-                      <MenuItem value="EXIT">EXIT</MenuItem>
-                      <MenuItem value="HALL">HALL</MenuItem>
-                      <MenuItem value="INFO">INFO</MenuItem>
-                      <MenuItem value="LABS">LABS</MenuItem>
-                      <MenuItem value="REST">REST</MenuItem>
-                      <MenuItem value="RETL">RETL</MenuItem>
-                      <MenuItem value="SERV">SERV</MenuItem>
-                      <MenuItem value="STAI">STAI</MenuItem>
-                    </Select>
+                      disablePortal
+                      id="combo-box-end"
+                      options={[
+                        "BATH",
+                        "CONF",
+                        "DEPT",
+                        "ELEV",
+                        "EXIT",
+                        "HALL",
+                        "INFO",
+                        "LABS",
+                        "REST",
+                        "RETL",
+                        "SERV",
+                        "STAI",
+                        "STAI",
+                      ]}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Node Type" />
+                      )}
+                    />
                   </TableCell>
                 </TableRow>
                 <TableRow>
@@ -351,63 +369,62 @@ export default function MapEditing() {
                 <TableRow>
                   <TableCell align="left">Start Node:</TableCell>
                   <TableCell align="left">
-                    <Select
-                      label="StartNodeID"
-                      sx={{ width: 150 }}
+                    <Autocomplete
                       value={editableEdge?.StartNodeID}
-                      onChange={(e) => {
+                      onChange={(
+                        e: ChangeEvent<unknown>,
+                        getStartID: string | null,
+                      ) => {
                         editEdgeDB(
-                          edgeClicked.EdgeID,
+                          edgeClicked.StartNodeID,
                           "StartNodeID",
-                          e.target.value,
+                          getStartID!,
                         ).then();
-                        edgeClicked.StartNodeID = e.target.value;
+                        edgeClicked.StartNodeID = getStartID!;
                         setEditableEdge({ ...edgeClicked });
                       }}
-                    >
-                      {nodesData.length > 0 &&
-                        nodesData
-                          .filter(
-                            (node: Nodes) =>
-                              node.NodeID != edgeClicked.EndNodeID,
-                          )
-                          .map((node) => (
-                            <MenuItem value={node.NodeID}>
-                              {node.NodeID}
-                            </MenuItem>
-                          ))}
-                    </Select>
+                      disablePortal
+                      id="combo-box-end"
+                      options={nodesData
+                        .filter(
+                          (node: Nodes) =>
+                            node.NodeID != edgeClicked.StartNodeID,
+                        )
+                        .map((node: Nodes) => node.NodeID)}
+                      renderInput={(params) => (
+                        <TextField {...params} label="Start Node ID" />
+                      )}
+                    />
                   </TableCell>
                 </TableRow>
                 <TableRow>
                   <TableCell align="left">End Node:</TableCell>
                   <TableCell align="left">
-                    <Select
-                      label="EndNodeID"
-                      sx={{ width: 150 }}
+                    <Autocomplete
                       value={editableEdge?.EndNodeID}
-                      onChange={(e) => {
+                      onChange={(
+                        e: ChangeEvent<unknown>,
+                        getEndID: string | null,
+                      ) => {
                         editEdgeDB(
-                          edgeClicked.EdgeID,
+                          edgeClicked.EndNodeID,
                           "EndNodeID",
-                          e.target.value,
+                          getEndID!,
                         ).then();
-                        edgeClicked.EndNodeID = e.target.value;
+                        edgeClicked.EndNodeID = getEndID!;
                         setEditableEdge({ ...edgeClicked });
                       }}
-                    >
-                      {nodesData.length > 0 &&
-                        nodesData
-                          .filter(
-                            (node: Nodes) =>
-                              node.NodeID != edgeClicked.StartNodeID,
-                          )
-                          .map((node) => (
-                            <MenuItem value={node.NodeID}>
-                              {node.NodeID}
-                            </MenuItem>
-                          ))}
-                    </Select>
+                      disablePortal
+                      id="combo-box-end"
+                      options={nodesData
+                        .filter(
+                          (node: Nodes) => node.NodeID != edgeClicked.EndNodeID,
+                        )
+                        .map((node: Nodes) => node.NodeID)}
+                      renderInput={(params) => (
+                        <TextField {...params} label="End Node ID" />
+                      )}
+                    />
                   </TableCell>
                 </TableRow>
               </Table>

@@ -1,6 +1,7 @@
 import { ChangeEvent, useContext, useEffect, useState } from "react";
 import React from "react";
 import { ServiceRequest } from "../Interfaces/ServiceRequest.ts";
+import { Employee } from "../Interfaces/Employee.ts";
 import { submitRequestDB } from "../backendreference/SubmitRequest.tsx";
 import {
   Button,
@@ -83,6 +84,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
     requestType: "",
     priority: "",
     locationNodeID: "",
+    employeeID: "",
     details1: "",
     details2: "",
     details3: "",
@@ -91,9 +93,12 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   };
 
   const [nodes, setNodes] = useState<Nodes[]>();
+  const [employees, setEmployees] = useState<Employee[]>();
 
   // Create an array of location names from the nodes array if it exists, otherwise initialize an empty array.
   const Locations = nodes?.map((node: Nodes) => node.LongName) || [];
+  const Nicknames: string[] =
+    employees?.map((employee: Employee) => employee.nickname) || [];
 
   // Sort the location names alphabetically
   Locations.sort((longname1, longname2) => {
@@ -109,14 +114,25 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   useEffect(() => {
     async function fetchData() {
       // Get all node data not including hallways from backend
-      const res = await axios.get("/api/admin/allnodes/NoHall");
-      const allNodes = res.data;
+      const nodeRes = await axios.get("/api/admin/allnodes/NoHall");
+      const allNodes = nodeRes.data;
       setNodes(allNodes); //Populate nodes array with data from backend
+
+      //Get all employees
+      const token = await getAccessTokenSilently();
+      const empRes = await axios.get("/api/admin/allEmployees", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+      const allEmployees = empRes.data;
+      setEmployees(allEmployees);
+
       console.log("successfully got data from get request");
     }
 
     fetchData().then();
-  }, []);
+  }, [getAccessTokenSilently]);
 
   /*useState for a single service request, where any changes update the specific key-value pair*/
   const [singleServiceRequest, setSingleServiceRequest] =
@@ -127,6 +143,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   //sets the contents on the page based on what the service request is
   let contentComponent: JSX.Element | null = null;
   //Function to test if my request updates when submit an order
+
   //ToDo: Can delete once combine with actual submitRequest
   //ToDo: check for item having been selected
   const switchService = (service: string) => {
@@ -339,12 +356,16 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
     if (
       singleServiceRequest.requesterName &&
-      // !isNaN(singleServiceRequest.room) &&
-      singleServiceRequest.deliveryDate
+      singleServiceRequest.locationNodeID &&
+      singleServiceRequest.deliveryDate &&
+      singleServiceRequest.employeeID
     ) {
       setRequests([...requests, singleServiceRequest]);
+      console.log(singleServiceRequest);
       submitRequestDB(singleServiceRequest, token).then();
       clearForm();
+    } else {
+      setOpenFail(true);
     }
   };
 
@@ -365,6 +386,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
 
   //ToDo: Comment here
   const [openSuccessMessage, setOpenSuccess] = useState(false);
+  const [openFailMessage, setOpenFail] = useState(false);
 
   return (
     // <LocalizationProvider dateAdapter={AdapterDayjs}>
@@ -379,7 +401,6 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
       <div className="inline-block flex-none">
         <SideBar />
       </div>
-
       <div className="flex-grow overflow-y-auto">
         <div className="bg-gray-400 bg-opacity-15 flex justify-center min-h-screen">
           <div className="bg-white rounded-lg p-5 w-2/4">
@@ -527,6 +548,34 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                           options={Locations}
                           renderInput={(params) => (
                             <TextField {...params} label="Room Name" />
+                          )}
+                        />
+                      </div>
+                      <div className="flex-1 pt-3 pb-4">
+                        <Autocomplete
+                          value={
+                            employees?.filter(
+                              (employee) =>
+                                employee.userID ===
+                                singleServiceRequest.employeeID,
+                            )[0]?.nickname || null
+                          }
+                          onChange={(
+                            e: ChangeEvent<unknown>,
+                            getEmployee: string | null,
+                          ) =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              employeeID: employees!.filter(
+                                (employee) => employee.nickname === getEmployee,
+                              )[0].userID!,
+                            })
+                          }
+                          disablePortal
+                          id="combo-box-end"
+                          options={Nicknames}
+                          renderInput={(params) => (
+                            <TextField {...params} label="Employee" />
                           )}
                         />
                       </div>
@@ -811,7 +860,6 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
           </div>
         </div>
       </div>
-
       {/* Modal for success message */}
       <Modal open={openSuccessMessage}>
         <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
@@ -822,6 +870,18 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
             Success! Request Submitted
           </h1>
           <Button onClick={() => clearRequests()}>Close</Button>
+        </Card>
+      </Modal>
+      <Modal open={openFailMessage}>
+        <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
+          <h1
+            id="failMessage"
+            className="text-center text-red-600 text-xl mb-4"
+          >
+            Error: Missing Information. Please fill out all fields before
+            submitting.
+          </h1>
+          <Button onClick={() => setOpenFail(false)}>Close</Button>
         </Card>
       </Modal>
     </div>

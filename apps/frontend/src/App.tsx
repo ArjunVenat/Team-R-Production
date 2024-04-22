@@ -7,9 +7,14 @@ import MapEditing from "./Pages/MapEditing.tsx";
 import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeNodePage from "./Pages/EdgeNodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
+import CreditsPage from "./Pages/CreditsPage.tsx";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
 import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
+
+//Artem Page import
+import St4t5Page from "./Pages/StatsPage.tsx";
+import AboutPage from "./Pages/AboutPage.tsx";
 // import DownloadCSV from "./backendreference/DownloadCSV.tsx";
 // import UploadCSV from "./Pages/UploadCSV.tsx";
 import UploadDownloadCSV from "./Pages/UploadDownloadPage.tsx";
@@ -84,6 +89,18 @@ function App() {
         {
           path: "upload-download-csv",
           element: <UploadDownloadCSV />,
+        },
+        {
+          path: "stats",
+          element: <St4t5Page />,
+        },
+        {
+          path: "credits",
+          element: <CreditsPage />,
+        },
+        {
+          path: "about",
+          element: <AboutPage />,
         },
       ],
     },
