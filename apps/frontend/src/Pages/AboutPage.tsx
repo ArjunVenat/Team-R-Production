@@ -62,6 +62,17 @@ export default function AboutPage() {
             </div>
           </div>
         </main>
+        <div
+          style={{
+            position: "absolute",
+            right: "10px",
+            bottom: "10px",
+            color: "#fff",
+          }}
+        >
+          WPI Computer Science Department, CS3733-D24 Software Engineering,
+          Prof. Wilson Wong,
+        </div>
       </div>
     </Box>
   );
