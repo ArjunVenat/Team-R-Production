@@ -427,7 +427,7 @@ export default function MapEditing() {
                     <TableCell align="left">
                       <TextField
                         id="outlined-controlled"
-                        label="Edge ID"
+                        label="Node ID"
                         value={addNodeID}
                         onChange={(
                           event: React.ChangeEvent<HTMLInputElement>,
