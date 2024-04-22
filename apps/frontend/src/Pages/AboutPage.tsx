@@ -28,7 +28,21 @@ export default function AboutPage() {
       >
         <main className="flex content-center justify-center leading-none relative">
           <div className="flex flex-col items-center justify-center gap-8">
-            <h2 className="text-2xl font-bold mb-4 text-primary">Developers</h2>
+            <h1 className="text-5xl font-semibold text-primary mb-2 mt-8">
+              WPI Computer Science Department
+            </h1>
+            <h2 className="text-4xl font-semibold text-primary mb-2">
+              CS3733-D24 Software Engineering
+            </h2>
+            <h2 className="text-2xl font-semibold text-primary mb-2">
+              Prof. Wilson Wong
+            </h2>
+            <h2 className="text-2xl font-semibold text-primary mb-2">
+              Team Coach: Katy Stuparu
+            </h2>
+            <h3 className="text-2xl font-bold mb-4 text-primary mt-10">
+              Developers
+            </h3>
             <div className="grid grid-cols-3 gap-4">
               {[
                 {
@@ -118,13 +132,13 @@ export default function AboutPage() {
             </div>
           </div>
         </main>
-        <div className="absolute bottom-8 right-2 text-primary">
-          WPI Computer Science Department, CS3733-D24 Software Engineering,
-          Prof. Wilson Wong
+        {/*<div className="absolute bottom-8 right-2 text-primary">
+              WPI Computer Science Department, CS3733-D24 Software Engineering,
+              Prof. Wilson Wong
         </div>
         <div className="absolute bottom-2 right-2 text-primary">
           Team Coach: Katy Stuparu
-        </div>
+        </div>*/}
       </div>
     </Box>
   );
