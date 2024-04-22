@@ -54,6 +54,7 @@ interface FilterValue {
   serviceType: string;
   name: string;
   priority: string;
+  employee: string;
   status: string;
 }
 
@@ -86,12 +87,14 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
     serviceType: "",
     name: "",
     priority: "",
+    employee: "",
     status: "",
   });
   const [confirmedFilters, setConfirmedFilters] = React.useState<FilterValue>({
     serviceType: "",
     name: "",
     priority: "",
+    employee: "",
     status: "",
   });
 
@@ -103,6 +106,8 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
         item.RequesterName.includes(confirmedFilters.name)) &&
       (!confirmedFilters.priority ||
         confirmedFilters.priority === item.Priority) &&
+      (!confirmedFilters.employee ||
+        confirmedFilters.employee === item.EmployeeID) &&
       (!confirmedFilters.status || confirmedFilters.status === item.Status),
   );
 
@@ -225,8 +230,8 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
         }}
       >
         <div>
-          <div className=" bg-primary top-0 min-w-full pt-8 ">
-            <h1 className="text-5xl text-primary font-bold p-2 text-left bg-white w-full">
+          <div className=" bg-primary bg-opacity-75 backdrop-blur-md top-0 min-w-full pt-8 ">
+            <h1 className="text-5xl text-white font-bold p-2 text-left  w-full">
               Service Request Tables
             </h1>
             <Box
@@ -409,6 +414,25 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                       </Select>
                     </FormControl>
                     <FormControl size="small" sx={{ marginTop: 1 }}>
+                      <InputLabel id="select-priority-label">
+                        Employee ID
+                      </InputLabel>
+                      <Select
+                        labelId="select-employeeID-label"
+                        label="Employee ID"
+                        value={filters.employee}
+                        onChange={(e) => {
+                          setFilters({ ...filters, employee: e.target.value });
+                        }}
+                      >
+                        {employees.map((employee: Employee) => (
+                          <MenuItem value={employee.userID}>
+                            {employee.nickname}
+                          </MenuItem>
+                        ))}
+                      </Select>
+                    </FormControl>
+                    <FormControl size="small" sx={{ marginTop: 1 }}>
                       <InputLabel id="select-status-label">Status</InputLabel>
                       <Select
                         labelId="select-status-label"
@@ -433,6 +457,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                             serviceType: "",
                             name: "",
                             priority: "",
+                            employee: "",
                             status: "",
                           })
                         }
