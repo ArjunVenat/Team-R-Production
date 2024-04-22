@@ -62,6 +62,13 @@ export default function AboutPage() {
             </div>
           </div>
         </main>
+        <div className="absolute bottom-8 right-2 text-primary">
+          WPI Computer Science Department, CS3733-D24 Software Engineering,
+          Prof. Wilson Wong
+        </div>
+        <div className="absolute bottom-2 right-2 text-primary">
+          Team Coach: Katy Stuparu
+        </div>
       </div>
     </Box>
   );
