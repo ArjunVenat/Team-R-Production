@@ -28,7 +28,7 @@ export default function AboutPage() {
       >
         <main className="flex content-center justify-center leading-none relative">
           <div className="flex flex-col items-center justify-center gap-8">
-            <h2 className="text-2xl font-bold mb-4 text-white">Developers</h2>
+            <h2 className="text-2xl font-bold mb-4 text-primary">Developers</h2>
             <div className="grid grid-cols-3 gap-4">
               {[
                 { name: "Javier DeLeon", image: JavierDeLeon },
@@ -54,7 +54,7 @@ export default function AboutPage() {
                       borderRadius: "50%",
                     }}
                   />
-                  <h3 className="text-center text-lg font-semibold text-white">
+                  <h3 className="text-center text-lg font-semibold text-primary">
                     {developer.name}
                   </h3>
                 </div>
@@ -62,6 +62,13 @@ export default function AboutPage() {
             </div>
           </div>
         </main>
+        <div className="absolute bottom-8 right-2 text-primary">
+          WPI Computer Science Department, CS3733-D24 Software Engineering,
+          Prof. Wilson Wong
+        </div>
+        <div className="absolute bottom-2 right-2 text-primary">
+          Team Coach: Katy Stuparu
+        </div>
       </div>
     </Box>
   );
