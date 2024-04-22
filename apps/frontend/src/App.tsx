@@ -4,7 +4,7 @@ import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
 import MainPage from "./Pages/MainPage.tsx";
 import SignInPage from "./Pages/SignInPage.tsx";
 import MapEditing from "./Pages/MapEditing.tsx";
-import FullServiceRequest from "./components/FullServiceRequest.tsx";
+//import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeNodePage from "./Pages/EdgeNodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
 import CreditsPage from "./Pages/CreditsPage.tsx";
@@ -22,6 +22,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 // import {useAuth0} from "@auth0/auth0-react";
 //this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez idk
 import { useNavigate } from "react-router-dom";
+import { ServiceRequestMenu } from "./Pages/ServiceRequestMenu.tsx";
 //definition of context for service requests
 type appContextType = {
   requests: ServiceRequest[];
@@ -72,7 +73,7 @@ function App() {
         },
         {
           path: "servicerequest",
-          element: <FullServiceRequest availableServices={guestOptions} />,
+          element: <ServiceRequestMenu availableServices={guestOptions} />,
         },
         {
           path: "service-request-table",
