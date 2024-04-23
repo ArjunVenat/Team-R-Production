@@ -17,13 +17,17 @@ export function MapControls(props: {
         <Button
           onClick={() => props.zoomOut()}
           children={<ZoomOutIcon />}
-          className="p-1"
+          sx={{ padding: "20px", fontSize: "15px" }}
         />
-        <Button onClick={() => props.resetTransform()} children={"Reset"} />
+        <Button
+          onClick={() => props.resetTransform()}
+          children={"Reset"}
+          sx={{ padding: "20px", fontSize: "15px" }}
+        />
         <Button
           onClick={() => props.zoomIn()}
           children={<ZoomInIcon />}
-          className="p-1"
+          sx={{ padding: "20px", fontSize: "15px" }}
         />
       </ButtonGroup>
       {props.children}
