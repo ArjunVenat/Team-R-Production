@@ -35,6 +35,7 @@ export class Directions {
     const directions: string[][] = [];
     let j: number = 0;
     directions.push([]);
+    directions[j].push(floorName(this.path[0].z));
     //pushes that list of angles to a seperate array
     for (let i = 0; i < path.length; i++) {
       const point1 = path[i];
@@ -47,7 +48,7 @@ export class Directions {
         console.log("findDirections", angle);
       }
     }
-    //puts strings in array  based on angles aray
+    //puts strings in array  based on angles array
     // uses a 2d array to seperate floor by floor instructions
     for (let i = 0; i < angles.length; i++) {
       if (angles[i] > 0 && angles[i] < 60) {
@@ -56,48 +57,56 @@ export class Directions {
           // does it chnage floors?
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("sharp left at " + this.path[i + 1].id); //message to be put into 2d array
       } else if (angles[i] >= 60 && angles[i] <= 120) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("left at " + this.path[i + 1].id);
       } else if (angles[i] > 120 && angles[i] <= 165) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("slight left at " + this.path[i + 1].id);
       } else if (angles[i] > 165 && angles[i] <= 195) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("straight at " + this.path[i + 1].id);
       } else if (angles[i] > 195 && angles[i] <= 240) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("slight right at " + this.path[i + 1].id);
       } else if (angles[i] > 240 && angles[i] <= 300) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("right at " + this.path[i + 1].id);
       } else if (angles[i] >= 300 && angles[i] < 360) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("sharp right at " + this.path[i + 1].id);
       } else if (angles[i] == 0 || angles[i] == 360) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
+          directions[j].push(floorName(this.path[i].z));
         }
         directions[j].push("take elevator at  " + this.path[i + 1].id);
       }
@@ -105,3 +114,27 @@ export class Directions {
     return directions;
   }
 }
+
+//Helper function for inserting floor name
+const floorName = (zVal: number) => {
+  switch (zVal) {
+    case 300: {
+      return "Third Floor";
+    }
+    case 200: {
+      return "Second Floor";
+    }
+    case 100: {
+      return "First Floor";
+    }
+    case -100: {
+      return "Lower Level 1";
+    }
+    case -200: {
+      return "Lower Level 2";
+    }
+    default: {
+      return "";
+    }
+  }
+};
