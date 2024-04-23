@@ -162,18 +162,18 @@ function ServiceRequestLog(props: { typeOfService: string }) {
       case "Flowers":
         contentComponent = (
           <>
-            <div className="bg-white rounded-lg ">
-              <h2 className="py-1 font-bold text-lg">Select Type</h2>
-              <div className="bg-white rounded-lg">
+            <div className="bg-white">
+              <h2 className="text-lg">Select Type</h2>
+              <div style={{ width: "80%", height: "auto" }}>
                 <Swiper
                   pagination={true}
                   navigation={true}
                   modules={[Pagination, Navigation]}
-                  spaceBetween={20}
+                  spaceBetween={10}
                   slidesPerView={3}
                 >
                   <SwiperSlide>
-                    <div className="mr-2">
+                    <div className="">
                       <div
                         className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
@@ -193,12 +193,12 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className="mr-2">
+                    <div className="">
                       <div
                         className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
                         <img
-                          className="w-full h-full"
+                          className="w-full h-full "
                           src={Flower2}
                           onClick={() =>
                             setSingleServiceRequest({
@@ -212,12 +212,12 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className="mr-2">
+                    <div className="">
                       <div
                         className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
                         <img
-                          className="w-full h-full"
+                          className="w-full h-full "
                           src={Flower3}
                           onClick={() =>
                             setSingleServiceRequest({
@@ -231,12 +231,12 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                     </div>
                   </SwiperSlide>
                   <SwiperSlide>
-                    <div className="mr-2">
+                    <div className="">
                       <div
                         className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
                         <img
-                          className="w-full h-full"
+                          className="w-full h-full "
                           src={Flower4}
                           onClick={() =>
                             setSingleServiceRequest({
@@ -260,13 +260,13 @@ function ServiceRequestLog(props: { typeOfService: string }) {
           <>
             <div className="bg-white rounded-lg">
               <h2 className="py-1 font-bold text-lg">Select Type</h2>
-              <div className="bg-white gap-2 rounded-lg">
+              <div style={{ width: "80%", height: "auto" }}>
                 <Stack direction="row">
                   <Swiper
                     pagination={true}
                     navigation={true}
                     modules={[Pagination, Navigation]}
-                    spaceBetween={20}
+                    spaceBetween={10}
                     slidesPerView={3}
                   >
                     <SwiperSlide>
@@ -400,16 +400,14 @@ function ServiceRequestLog(props: { typeOfService: string }) {
   //return here :}
   return (
     // <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div className="flex overflow-y-auto h-[80vh]">
+    <div className="flex justify-center items-center-start overflow-y-auto h-[80vh] w-full">
       {/*<div className="inline-block flex-none">*/}
       {/*  <SideBar />*/}
       {/*</div>*/}
 
       <div className="overflow-y-auto">
         <div className=" justify-center ">
-          <div className="bg-white rounded-lg">
-            {switchService(singleServiceRequest.requestType)}
-
+          <div className="">
             <div className="my-2">
               <h2 className="font-bold text-lg">Priority</h2>
 
@@ -451,7 +449,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
             </div>
 
             <div className="content" id="content">
-              <div className="mt-2">
+              <div className="">
                 <div className="bg-white rounded-lg ">
                   <h2 className="mb-2 font-bold text-lg">
                     Service Request Form
@@ -500,63 +498,67 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                         </div>
                       </div>
 
-                      <div className="flex-1">
-                        <Autocomplete
-                          value={
-                            nodes?.filter(
-                              (node) =>
-                                node.LongName ===
-                                singleServiceRequest.locationNodeID,
-                            )[0]?.LongName
-                          }
-                          onChange={(
-                            e: ChangeEvent<unknown>,
-                            getRoom: string | null,
-                          ) =>
-                            setSingleServiceRequest({
-                              ...singleServiceRequest,
-                              locationNodeID: nodes!.filter(
-                                (node) => node.LongName === getRoom,
-                              )[0].NodeID,
-                            })
-                          }
-                          disablePortal
-                          id="combo-box-end"
-                          options={Locations}
-                          renderInput={(params) => (
-                            <TextField {...params} label="Room Name" />
-                          )}
-                        />
-                      </div>
-                      <div className="flex-1 pt-3 pb-4">
-                        <Autocomplete
-                          value={
-                            employees?.filter(
-                              (employee) =>
-                                employee.userID ===
-                                singleServiceRequest.employeeID,
-                            )[0]?.nickname || null
-                          }
-                          onChange={(
-                            e: ChangeEvent<unknown>,
-                            getEmployee: string | null,
-                          ) =>
-                            setSingleServiceRequest({
-                              ...singleServiceRequest,
-                              employeeID: employees!.filter(
-                                (employee) => employee.nickname === getEmployee,
-                              )[0].userID!,
-                            })
-                          }
-                          disablePortal
-                          id="combo-box-end"
-                          options={Nicknames}
-                          renderInput={(params) => (
-                            <TextField {...params} label="Employee" />
-                          )}
-                        />
+                      <div className="flex mb:flex-row">
+                        <div className="flex-1 mb-3 mr-2">
+                          <Autocomplete
+                            value={
+                              nodes?.filter(
+                                (node) =>
+                                  node.LongName ===
+                                  singleServiceRequest.locationNodeID,
+                              )[0]?.LongName
+                            }
+                            onChange={(
+                              e: ChangeEvent<unknown>,
+                              getRoom: string | null,
+                            ) =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                locationNodeID: nodes!.filter(
+                                  (node) => node.LongName === getRoom,
+                                )[0].NodeID,
+                              })
+                            }
+                            disablePortal
+                            id="combo-box-end"
+                            options={Locations}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Room Name" />
+                            )}
+                          />
+                        </div>
+                        <div className="flex-1 mb-3">
+                          <Autocomplete
+                            value={
+                              employees?.filter(
+                                (employee) =>
+                                  employee.userID ===
+                                  singleServiceRequest.employeeID,
+                              )[0]?.nickname || null
+                            }
+                            onChange={(
+                              e: ChangeEvent<unknown>,
+                              getEmployee: string | null,
+                            ) =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                employeeID: employees!.filter(
+                                  (employee) =>
+                                    employee.nickname === getEmployee,
+                                )[0].userID!,
+                              })
+                            }
+                            disablePortal
+                            id="combo-box-end"
+                            options={Nicknames}
+                            renderInput={(params) => (
+                              <TextField {...params} label="Employee" />
+                            )}
+                          />
+                        </div>
                       </div>
                     </div>
+
                     <div className="form-item">
                       <TextField
                         className="w-full "
@@ -573,46 +575,54 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                         }
                       />
                     </div>
-                    {singleServiceRequest.requestType === "Flowers" && (
-                      <div className="my-5">
-                        <h2 className=" text-lg">Size of Bouquet</h2>
 
-                        <RadioGroup
-                          row
-                          defaultValue="oral"
-                          name="route"
-                          value={singleServiceRequest.details2}
-                          onChange={(e) =>
-                            setSingleServiceRequest({
-                              ...singleServiceRequest,
-                              details2: e.target.value as string,
-                            })
-                          }
-                        >
-                          <FormControlLabel
-                            value="Small"
-                            control={<Radio />}
-                            label="Small"
-                          />
-                          <FormControlLabel
-                            value="Medium"
-                            control={<Radio />}
-                            label="Medium"
-                          />
-                          <FormControlLabel
-                            value="Large"
-                            control={<Radio />}
-                            label="Large"
-                          />
-                        </RadioGroup>
-                        <h4 className="flex justify-end text-xs text-gray-200">
-                          Made By Lauren Harrison & Zihan Li
-                        </h4>
+                    {singleServiceRequest.requestType === "Flowers" && (
+                      <div className="w-[45rem]">
+                        <div className="">
+                          {switchService(singleServiceRequest.requestType)}
+                        </div>
+                        <div className="">
+                          <h2 className="mt-2 text-lg">Size of Bouquet</h2>
+                          <RadioGroup
+                            row
+                            defaultValue="low"
+                            name="route"
+                            value={singleServiceRequest.details2}
+                            onChange={(e) =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                details2: e.target.value as string,
+                              })
+                            }
+                          >
+                            <FormControlLabel
+                              value="Small"
+                              control={<Radio />}
+                              label="Small"
+                            />
+                            <FormControlLabel
+                              value="Medium"
+                              control={<Radio />}
+                              label="Medium"
+                            />
+                            <FormControlLabel
+                              value="Large"
+                              control={<Radio />}
+                              label="Large"
+                            />
+                          </RadioGroup>
+                          <h4 className="flex justify-end text-xs text-gray-200">
+                            Made By Lauren Harrison & Zihan Li
+                          </h4>
+                        </div>
                       </div>
                     )}
                     {singleServiceRequest.requestType === "Gifts" && (
-                      <div className="flex flex-col mt-3">
-                        <div className="flex items-center">
+                      <div className="flex flex-col w-[45rem] ">
+                        <div className="">
+                          {switchService(singleServiceRequest.requestType)}
+                        </div>
+                        <div className="flex items-center pt-2">
                           <input
                             id="gifts-checkbox"
                             type="checkbox"
@@ -637,13 +647,13 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                     )}
 
                     {singleServiceRequest.requestType === "Maintenance" && (
-                      <div className="flex flex-col items-center justify-center">
+                      <div className="flex flex-col w-[45rem]">
                         <FormControl>
                           <InputLabel id="type-maintenance-label">
                             Type of maintenance
                           </InputLabel>
                           <Select
-                            className="w-[30vw]"
+                            className=""
                             labelId="type-maintenance-label"
                             label="Type of maintenance"
                             value={singleServiceRequest.details2}
@@ -664,7 +674,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                             <MenuItem value="bathroom">Bathroom</MenuItem>
                           </Select>
 
-                          <div className="flex items-center mt-3">
+                          <div className="flex items-center ">
                             <input
                               id="link-checkbox"
                               type="checkbox"
@@ -689,8 +699,8 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                       </div>
                     )}
                     {singleServiceRequest.requestType === "Medicine" && (
-                      <div className="w-[30vw]">
-                        <form className="w-2/3">
+                      <div className="w-[45rem]">
+                        <form className="">
                           <div className="flex mb:flex-row">
                             <input
                               type="number"
@@ -751,7 +761,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                     )}
                     {singleServiceRequest.requestType ===
                       "Medical Equipment" && (
-                      <div className="my-5">
+                      <div className="w-[45rem]">
                         <form className="max-w-sm w-1/2">
                           <label htmlFor="Quantity" className="mb-2 text-lg">
                             Quantity
