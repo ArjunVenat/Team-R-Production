@@ -353,11 +353,12 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                   variant="outlined"
                   onClick={handleClick}
                   sx={{
-                    color: "white",
-                    borderColor: "white",
+                    color: "#009CA6",
+                    backgroundColor: "white",
                     "&:hover": {
                       borderColor: "#f6bd38",
-                      color: "#f6bd38",
+                      backgroundColor: "#f6bd38",
+                      color: "white",
                     },
                   }}
                 >
