@@ -4,7 +4,10 @@ export class Directions {
   constructor(path: GraphNode[]) {
     this.path = path;
   }
-
+  /**
+   * function to get an angles given 3 points, where one acts as the pivot
+   * to find the angle at
+   */
   public getAngle(point1: GraphNode, center: GraphNode, point3: GraphNode) {
     //const p1c = point1.getDistance(center);
     //const p3c = point3.getDistance(center);
@@ -23,11 +26,16 @@ export class Directions {
     return angle;
   }
 
-  public getAngles() {
+  /**
+   * Function that uses getAngles on all nodes in a path
+   */
+  public getAngles(): string[][] {
     const path = this.path;
     const angles: number[] = [];
-    const directions: string[] = [];
-
+    const directions: string[][] = [];
+    let j: number = 0;
+    directions.push([]);
+    //pushes that list of angles to a seperate array
     for (let i = 0; i < path.length; i++) {
       const point1 = path[i];
       const center = path[i + 1];
@@ -39,21 +47,59 @@ export class Directions {
         console.log("findDirections", angle);
       }
     }
+    //puts strings in array  based on angles aray
+    // uses a 2d array to seperate floor by floor instructions
     for (let i = 0; i < angles.length; i++) {
-      if (angles[i] >= 0 && angles[i] < 60) {
-        directions.push("sharp left at " + this.path[i + 1].id);
+      if (angles[i] > 0 && angles[i] < 60) {
+        //angles detection
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          // does it chnage floors?
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("sharp left at " + this.path[i + 1].id); //message to be put into 2d array
       } else if (angles[i] >= 60 && angles[i] <= 120) {
-        directions.push("left at " + this.path[i + 1].id);
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("left at " + this.path[i + 1].id);
       } else if (angles[i] > 120 && angles[i] <= 165) {
-        directions.push("slight left at " + this.path[i + 1].id);
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("slight left at " + this.path[i + 1].id);
       } else if (angles[i] > 165 && angles[i] <= 195) {
-        directions.push("straight at " + this.path[i + 1].id);
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("straight at " + this.path[i + 1].id);
       } else if (angles[i] > 195 && angles[i] <= 240) {
-        directions.push("slight right at " + this.path[i + 1].id);
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("slight right at " + this.path[i + 1].id);
       } else if (angles[i] > 240 && angles[i] <= 300) {
-        directions.push("right at " + this.path[i + 1].id);
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("right at " + this.path[i + 1].id);
       } else if (angles[i] >= 300 && angles[i] < 360) {
-        directions.push("sharp right at " + this.path[i + 1].id);
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("sharp right at " + this.path[i + 1].id);
+      } else if (angles[i] == 0 || angles[i] == 360) {
+        if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
+          directions.push([]);
+          j++;
+        }
+        directions[j].push("take elevator at  " + this.path[i + 1].id);
       }
     }
     return directions;
