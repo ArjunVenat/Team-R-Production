@@ -270,6 +270,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                     color: "white",
                     "&.Mui-selected": {
                       color: "#f6bd39",
+                      fontWeight: "bold",
                     },
                   }}
                 />
@@ -288,6 +289,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                     color: "white",
                     "&.Mui-selected": {
                       color: "#f6bd39",
+                      fontWeight: "bold",
                     },
                   }}
                 />
@@ -303,6 +305,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                     color: "white",
                     "&.Mui-selected": {
                       color: "#f6bd39",
+                      fontWeight: "bold",
                     },
                   }}
                 />
@@ -321,6 +324,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                     color: "white",
                     "&.Mui-selected": {
                       color: "#f6bd39",
+                      fontWeight: "bold",
                     },
                   }}
                 />
@@ -339,6 +343,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                     color: "white",
                     "&.Mui-selected": {
                       color: "#f6bd39",
+                      fontWeight: "bold",
                     },
                   }}
                 />

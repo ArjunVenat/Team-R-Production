@@ -113,7 +113,7 @@ export default function AboutPage() {
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
-                backgroundColor: "rgb(103,124,143, 0.15)",
+                backgroundColor: "rgb(103,124,143, 0.6)",
               }}
             >
               <h2 className="text-2xl font-bold mb-4 text-primary">
@@ -158,7 +158,7 @@ export default function AboutPage() {
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
-                backgroundColor: "rgb(103,124,143, 0.15)",
+                backgroundColor: "rgb(103,124,143, 0.6)",
               }}
             >
               <h2 className="text-2xl font-bold mb-2">

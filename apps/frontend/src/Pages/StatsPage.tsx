@@ -86,26 +86,32 @@ const St4t5Page = () => {
   return (
     <Box display="flex">
       <SideBar />
-      <div className=" top-0 pt-8 bg-primary flex justify-center items-center w-full">
+      <div className="top-0 pt-8 bg-primary flex justify-center items-center w-full">
         <Box
-          className=" w-full h-full overflow-y-auto flex-grow justify-center items-center"
+          className="w-full h-full overflow-y-auto flex-grow justify-center items-center  bg-cover bg-center bg-no-repeat relative"
           style={{
             backgroundImage: `url(${swoosh})`,
           }}
         >
           <main className="flex content-center justify-center leading-none relative">
-            <Box textAlign="center" color="#000000">
-              <Typography variant="h1" component="h1" gutterBottom>
-                Stats or something idk
-              </Typography>
+            <Box
+              className="backdrop-blur-md rounded-lg p-10 text-center"
+              textAlign="center"
+              color="#000000"
+              bgcolor="rgb(103,124,143, 0.15)"
+              padding="10px"
+              borderRadius="10px"
+            >
               <Box display="flex" justifyContent="center">
                 <Box
                   textAlign="center"
                   margin="0 20px"
-                  bgcolor="#FFFFFF"
                   padding="20px"
                   borderRadius="10px"
                 >
+                  <Typography variant="h3" gutterBottom>
+                    Request Type Statistics
+                  </Typography>
                   <BarChart
                     series={[
                       {
