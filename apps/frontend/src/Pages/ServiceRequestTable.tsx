@@ -242,6 +242,8 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                 borderColor: "white",
                 display: "flex",
                 justifyContent: "center",
+                height: "10vh",
+                alignItems: "center",
               }}
             >
               <Tabs
