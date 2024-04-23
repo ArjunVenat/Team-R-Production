@@ -27,13 +27,13 @@ test("angle, vectors differnt length", () => {
 });
 
 test("tests a longer path", () => {
-  const s = new GraphNode("q", 2275, 785, 1);
-  const center1 = new GraphNode("q", 2275, 830, 1);
-  const center2 = new GraphNode("q", 2275, 910, 1);
-  const center3 = new GraphNode("q", 2290, 910, 1);
-  const center4 = new GraphNode("q", 2385, 910, 1);
-  const center5 = new GraphNode("q", 2385, 860, 1);
-  const e = new GraphNode("q", 2335, 860, 1);
+  const s = new GraphNode("1", 2275, 785, 1);
+  const center1 = new GraphNode("2", 2275, 830, 1);
+  const center2 = new GraphNode("3", 2275, 910, 1);
+  const center3 = new GraphNode("4", 2290, 910, 1);
+  const center4 = new GraphNode("5", 2385, 910, 1);
+  const center5 = new GraphNode("6", 2385, 860, 1);
+  const e = new GraphNode("7", 2335, 860, 1);
   d.path.push(s);
   d.path.push(center1);
   d.path.push(center2);

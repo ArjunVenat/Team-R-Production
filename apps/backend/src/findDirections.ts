@@ -41,19 +41,19 @@ export class Directions {
     }
     for (let i = 0; i < angles.length; i++) {
       if (angles[i] >= 0 && angles[i] < 60) {
-        directions.push("sharp left");
+        directions.push("sharp left at " + this.path[i + 1].id);
       } else if (angles[i] >= 60 && angles[i] <= 120) {
-        directions.push("left");
+        directions.push("left at " + this.path[i + 1].id);
       } else if (angles[i] > 120 && angles[i] <= 165) {
-        directions.push("slight left");
+        directions.push("slight left at " + this.path[i + 1].id);
       } else if (angles[i] > 165 && angles[i] <= 195) {
-        directions.push("straight");
+        directions.push("straight at " + this.path[i + 1].id);
       } else if (angles[i] > 195 && angles[i] <= 240) {
-        directions.push("slight right");
+        directions.push("slight right at " + this.path[i + 1].id);
       } else if (angles[i] > 240 && angles[i] <= 300) {
-        directions.push("right");
+        directions.push("right at " + this.path[i + 1].id);
       } else if (angles[i] >= 300 && angles[i] < 360) {
-        directions.push("sharp right");
+        directions.push("sharp right at " + this.path[i + 1].id);
       }
     }
     return directions;

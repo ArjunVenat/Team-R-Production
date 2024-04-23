@@ -162,10 +162,10 @@ export default function MainPage() {
       (py === sy && sy === ey)
     ) {
       return (
-        <>
+        <Box mb={2} display="flex" gap={1} alignItems="center">
           <StraightIcon />
           Continue forward toward {endNode.ShortName}
-        </>
+        </Box>
       );
     }
 
@@ -177,10 +177,10 @@ export default function MainPage() {
       (px === sx && py < sy && sy === ey && sx < ex)
     ) {
       return (
-        <>
+        <Box mb={2} display="flex" gap={1} alignItems="center">
           <TurnLeftIcon />
           <div>Turn left and continue to {endNode.ShortName}</div>
-        </>
+        </Box>
       );
     }
 
@@ -192,10 +192,10 @@ export default function MainPage() {
       (px === sx && py < sy && sy === ey && sx > ex)
     ) {
       return (
-        <>
+        <Box mb={2} display="flex" gap={1} alignItems="center">
           <TurnRightIcon />
           <div>Turn right and continue to {endNode.ShortName}</div>
-        </>
+        </Box>
       );
     }
   };
@@ -389,13 +389,7 @@ export default function MainPage() {
                         >
                           {groupPath[key].map((item, index) => {
                             return (
-                              <Box
-                                mb={2}
-                                display="flex"
-                                gap={1}
-                                alignItems="center"
-                                key={index}
-                              >
+                              <div>
                                 {index !== groupPath[key].length - 1 ? (
                                   pathToText(
                                     index !== 0
@@ -407,7 +401,7 @@ export default function MainPage() {
                                 ) : (
                                   <div />
                                 )}
-                              </Box>
+                              </div>
                             );
                           })}
                         </AccordionDetails>
