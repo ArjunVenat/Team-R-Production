@@ -262,7 +262,7 @@ export default function MainPage() {
                   resetTransform={resetTransform}
                   zoomOut={zoomOut}
                 ></MapControls>
-                <div className="absolute bottom-0 right-10">
+                <div className="absolute bottom-0 right-16">
                   <FloorSelect
                     setMap={setCurrentMap}
                     isDirectionsClicked={isDirectionsClicked}
