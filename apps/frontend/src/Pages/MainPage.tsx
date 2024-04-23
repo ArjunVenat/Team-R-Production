@@ -282,7 +282,10 @@ export default function MainPage() {
                   <Button
                     className="content-center"
                     variant="contained"
-                    color="success"
+                    sx={{
+                      backgroundColor: "#009CA6",
+                      "&:hover": { backgroundColor: "#007B8A" },
+                    }}
                     onClick={() => {
                       getDirections();
                       setIsDirectionsClicked(true);
