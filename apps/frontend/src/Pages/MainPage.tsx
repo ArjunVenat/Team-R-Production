@@ -230,14 +230,12 @@ export default function MainPage() {
                   resetTransform={resetTransform}
                   zoomOut={zoomOut}
                 ></MapControls>
-                <div className="absolute bottom-0 right-16">
-                  <FloorSelect
-                    setMap={setCurrentMap}
-                    isDirectionsClicked={isDirectionsClicked}
-                    path={path}
-                    resetMapTransform={resetTransform}
-                  />
-                </div>
+                <FloorSelect
+                  setMap={setCurrentMap}
+                  isDirectionsClicked={isDirectionsClicked}
+                  path={path}
+                  resetMapTransform={resetTransform}
+                />
               </ThemeProvider>
 
               <aside className={rightSideBarStyle}>
