@@ -20,7 +20,7 @@ export default function UploadDownloadCSV() {
     <>
       <Stack direction="row">
         <SideBar />
-        <div className=" top-0 pt-8 bg-primary flex justify-center items-center ">
+        <div className=" top-0 pt-8 bg-primary flex justify-center items-center max-h-vh">
           <div
             className="flex items-center h-full w-full bg-cover bg-center bg-no-repeat"
             style={{

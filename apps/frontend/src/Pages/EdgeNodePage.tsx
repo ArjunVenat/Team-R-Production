@@ -1,13 +1,17 @@
 import React from "react";
 import EdgeTable from "../backendreference/Edges.tsx";
 import SideBar from "../components/SideBar.tsx";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, Stack } from "@mui/material";
 import { useState } from "react";
 import NodeTable from "../backendreference/Nodes.tsx";
 import { useAuth0 } from "@auth0/auth0-react";
 // import blueback from "../assets/blueback.png";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
+// import swoosh from "../assets/swoosh.png";
+import UplaodCSV from "../components/UploadCSV.tsx";
+import DownloadCSV from "../backendreference/DownloadCSV.tsx";
+import DownloadIcon from "@mui/icons-material/Download";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -110,6 +114,25 @@ const EdgeTablePage = () => {
                     },
                   }}
                 />
+                <Tab
+                  label="Upload/Download"
+                  icon={
+                    <DownloadIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    fontSize: "1rem",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
               </Tabs>
             </Box>
           </div>
@@ -118,6 +141,27 @@ const EdgeTablePage = () => {
           </CustomTabPanel>
           <CustomTabPanel value={nodeTab} index={1}>
             <EdgeTable />
+          </CustomTabPanel>
+          <CustomTabPanel value={nodeTab} index={2}>
+            <div
+              className="flex items-center h-full w-full bg-cover bg-center bg-no-repeat"
+              // style={{
+              //     backgroundImage: `url(${swoosh})`,
+              //     // width: "100vw",
+              //     // height: "100vh",
+              // }}
+            >
+              <Stack spacing={4}>
+                <div className="text-center p-4">
+                  {/*<h1 className="font-semibold text-xl">Upload CSV File:</h1>*/}
+                  <UplaodCSV />
+                </div>
+                <div className="text-center text-lg">
+                  {/*<h1 className="font-semibold text-xl">Download CSV File:</h1>*/}
+                  <DownloadCSV />
+                </div>
+              </Stack>
+            </div>
           </CustomTabPanel>
         </div>
       </div>
