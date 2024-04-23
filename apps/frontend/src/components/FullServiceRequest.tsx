@@ -30,13 +30,12 @@ import Comfort from "../assets/image/Comfort.png";
 import FruitBasket from "../assets/image/FruitBasket.png";
 import GiftSet from "../assets/image/GiftSet.png";
 
-import SideBar from "./SideBar.tsx";
+// import SideBar from "./SideBar.tsx";
 import { RequestContext } from "../App.tsx";
 import Autocomplete from "@mui/material/Autocomplete";
 import { Nodes } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
-import blueback from "../assets/blueback.png";
 
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Pagination, Navigation } from "swiper/modules";
@@ -59,7 +58,7 @@ export interface ListOfServices {
 //Define functions for "My Request" log
 
 // This function logs service requests and requires a list of available services as input.
-function ServiceRequestLog({ availableServices }: ListOfServices) {
+function ServiceRequestLog(props: { typeOfService: string }) {
   // Use the Auth0 React hook to handle authentication.
   const {
     getAccessTokenSilently,
@@ -138,6 +137,16 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   const [singleServiceRequest, setSingleServiceRequest] =
     useState<ServiceRequest>(defaultServiceRequest);
 
+  //set service type
+  useEffect(() => {
+    if (props.typeOfService) {
+      setSingleServiceRequest((prevState) => ({
+        ...prevState,
+        requestType: props.typeOfService,
+      }));
+    }
+  }, [props.typeOfService]);
+
   /*requests handles the list of service requests, which is used for the list on the side of the page*/
   const { requests, setRequests } = useContext(RequestContext);
   //sets the contents on the page based on what the service request is
@@ -154,8 +163,8 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
         contentComponent = (
           <>
             <div className="bg-white rounded-lg ">
-              <h2 className="py-4 font-bold text-lg">Select Type</h2>
-              <div className="bg-white gap-2 rounded-lg">
+              <h2 className="py-1 font-bold text-lg">Select Type</h2>
+              <div className="bg-white rounded-lg">
                 <Swiper
                   pagination={true}
                   navigation={true}
@@ -166,7 +175,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -186,7 +195,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -205,7 +214,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -224,7 +233,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[4rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -250,7 +259,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
         contentComponent = (
           <>
             <div className="bg-white rounded-lg">
-              <h2 className="py-4 font-bold text-lg">Select Type</h2>
+              <h2 className="py-1 font-bold text-lg">Select Type</h2>
               <div className="bg-white gap-2 rounded-lg">
                 <Stack direction="row">
                   <Swiper
@@ -388,52 +397,20 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
   const [openSuccessMessage, setOpenSuccess] = useState(false);
   const [openFailMessage, setOpenFail] = useState(false);
 
+  //return here :}
   return (
     // <LocalizationProvider dateAdapter={AdapterDayjs}>
-    <div
-      className="flex h-screen bg-cover bg-center bg-no-repeat overflow-y-auto flex-grow  "
-      style={{
-        backgroundImage: `url(${blueback})`,
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
-      <div className="inline-block flex-none">
-        <SideBar />
-      </div>
-      <div className="flex-grow overflow-y-auto">
-        <div className="bg-gray-400 bg-opacity-15 flex justify-center min-h-screen">
-          <div className="bg-white rounded-lg p-5 w-2/4">
-            <h2 className="mb-4 font-bold text-lg">Select Service Type</h2>
+    <div className="flex overflow-y-auto h-[80vh]">
+      {/*<div className="inline-block flex-none">*/}
+      {/*  <SideBar />*/}
+      {/*</div>*/}
 
-            <div className="flex flex-col space-y-4">
-              <FormControl className="">
-                <InputLabel id="select-service-type-label">
-                  Service Type
-                </InputLabel>
-                <Select
-                  labelId="select-service-type-label"
-                  value={singleServiceRequest.requestType}
-                  label="Service Type"
-                  onChange={(e) => {
-                    setSingleServiceRequest({
-                      ...singleServiceRequest,
-                      requestType: e.target.value as string,
-                    });
-                  }}
-                >
-                  {availableServices.map((serviceOption: string) => (
-                    <MenuItem key={serviceOption} value={serviceOption}>
-                      {serviceOption}
-                    </MenuItem>
-                  ))}
-                </Select>
-              </FormControl>
-            </div>
-
+      <div className="overflow-y-auto">
+        <div className=" justify-center ">
+          <div className="bg-white rounded-lg">
             {switchService(singleServiceRequest.requestType)}
 
-            <div className="my-5">
+            <div className="my-2">
               <h2 className="font-bold text-lg">Priority</h2>
 
               <div className="">
@@ -476,10 +453,10 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
             <div className="content" id="content">
               <div className="mt-2">
                 <div className="bg-white rounded-lg ">
-                  <h2 className="mb-4 font-bold text-lg">
+                  <h2 className="mb-2 font-bold text-lg">
                     Service Request Form
                   </h2>
-                  <div className="space-y-4">
+                  <div className="space-y-2">
                     <div className="form-item flex flex-col">
                       <div className="flex mb:flex-row">
                         <div className="flex-1 mb-3 ">
@@ -660,13 +637,13 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     )}
 
                     {singleServiceRequest.requestType === "Maintenance" && (
-                      <div className="my-5">
-                        <h2 className="mb-2  text-lg">Type of maintenance</h2>
-                        <FormControl fullWidth>
+                      <div className="flex flex-col items-center justify-center">
+                        <FormControl>
                           <InputLabel id="type-maintenance-label">
                             Type of maintenance
                           </InputLabel>
                           <Select
+                            className="w-[30vw]"
                             labelId="type-maintenance-label"
                             label="Type of maintenance"
                             value={singleServiceRequest.details2}
@@ -712,11 +689,8 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                       </div>
                     )}
                     {singleServiceRequest.requestType === "Medicine" && (
-                      <div className="my-5">
+                      <div className="w-[30vw]">
                         <form className="w-2/3">
-                          <label htmlFor="dosage" className="mb-2 text-lg">
-                            Dosage
-                          </label>
                           <div className="flex mb:flex-row">
                             <input
                               type="number"
@@ -724,10 +698,6 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                               min="0"
                               className="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                               placeholder="Dosage"
-                              // value={dosage}
-                              // onChange={(e) =>
-                              //   setDosage(e.target.value.toString())
-                              // }
                               value={singleServiceRequest.details2}
                               onChange={(e) =>
                                 setSingleServiceRequest({
@@ -737,14 +707,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                               }
                               required
                             />
-
-                            <Select
-                              className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-r-lg bg-white focus:ring-blue-500"
-                              // value={unit}
-                              // onChange={(e) =>
-                              //   setUnit(e.target.value.toString())
-                              // }
-                            >
+                            <Select className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-r-lg bg-white focus:ring-blue-500">
                               <MenuItem value="grams">grams</MenuItem>
                               <MenuItem value="milligrams">milligrams</MenuItem>
                               <MenuItem value="micrograms">micrograms</MenuItem>
@@ -789,7 +752,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     {singleServiceRequest.requestType ===
                       "Medical Equipment" && (
                       <div className="my-5">
-                        <form className="max-w-sm w-1/4 ">
+                        <form className="max-w-sm w-1/2">
                           <label htmlFor="Quantity" className="mb-2 text-lg">
                             Quantity
                           </label>

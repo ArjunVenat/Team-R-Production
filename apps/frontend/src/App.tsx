@@ -73,7 +73,7 @@ function App() {
         },
         {
           path: "servicerequest",
-          element: <ServiceRequestMenu availableServices={guestOptions} />,
+          element: <ServiceRequestMenu />,
         },
         {
           path: "service-request-table",
