@@ -166,7 +166,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary" : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -186,7 +186,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary " : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -205,7 +205,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary " : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -224,7 +224,7 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                   <SwiperSlide>
                     <div className="mr-2">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[3.5rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary " : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -263,10 +263,10 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     <SwiperSlide>
                       <div className="mr-2">
                         <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                          className={`aspect-square ${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary " : ""}`}
                         >
                           <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            className="w-full h-full"
                             src={BalloonBasket}
                             onClick={() =>
                               setSingleServiceRequest({
@@ -282,10 +282,10 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     <SwiperSlide>
                       <div className="mr-2">
                         <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                          className={`aspect-square ${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary " : ""}`}
                         >
                           <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            className="w-full h-full "
                             src={Comfort}
                             onClick={() =>
                               setSingleServiceRequest({
@@ -301,10 +301,10 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     <SwiperSlide>
                       <div className="mr-2">
                         <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                          className={`aspect-square ${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary " : ""}`}
                         >
                           <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            className="w-full h-full "
                             src={FruitBasket}
                             onClick={() =>
                               setSingleServiceRequest({
@@ -320,10 +320,10 @@ function ServiceRequestLog({ availableServices }: ListOfServices) {
                     <SwiperSlide>
                       <div className="mr-2">
                         <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                          className={`aspect-square ${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary " : ""}`}
                         >
                           <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
+                            className="w-full h-full "
                             src={GiftSet}
                             onClick={() =>
                               setSingleServiceRequest({
