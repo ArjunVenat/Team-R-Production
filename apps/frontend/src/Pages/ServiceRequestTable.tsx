@@ -98,18 +98,21 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
     status: "",
   });
 
-  const filteredRequestData = requestData.filter(
-    (item) =>
-      (!confirmedFilters.serviceType ||
-        confirmedFilters.serviceType === item.RequestType) &&
-      (!confirmedFilters.name ||
-        item.RequesterName.includes(confirmedFilters.name)) &&
-      (!confirmedFilters.priority ||
-        confirmedFilters.priority === item.Priority) &&
-      (!confirmedFilters.employee ||
-        confirmedFilters.employee === item.EmployeeID) &&
-      (!confirmedFilters.status || confirmedFilters.status === item.Status),
-  );
+  let filteredRequestData: GeneralRequest[] = [];
+  if (requestData.length != 0) {
+    filteredRequestData = requestData.filter(
+      (item) =>
+        (!confirmedFilters.serviceType ||
+          confirmedFilters.serviceType === item.RequestType) &&
+        (!confirmedFilters.name ||
+          item.RequesterName.includes(confirmedFilters.name)) &&
+        (!confirmedFilters.priority ||
+          confirmedFilters.priority === item.Priority) &&
+        (!confirmedFilters.employee ||
+          confirmedFilters.employee === item.EmployeeID) &&
+        (!confirmedFilters.status || confirmedFilters.status === item.Status),
+    );
+  }
 
   const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorEl(event.currentTarget);
