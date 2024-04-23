@@ -269,7 +269,7 @@ export default function SVGCanvas(props: {
         return "red";
       } else if (isElevatorOrStairs && isRelevantElevatorOrStairs) {
         // If the node is a relevant elevator or stairs, color it purple
-        return "purple";
+        return "#009CA6";
       } else if (
         props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)
       ) {
