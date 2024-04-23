@@ -1,7 +1,8 @@
 import express, { Request, Response, Router } from "express";
 import { Graph } from "../graph.ts";
-import { PrismaClient } from "database";
+import { PrismaClient, Nodes } from "database";
 import { algoType, findpath } from "../findpath.ts";
+import { Directions } from "../findDirections.ts";
 
 const prisma = new PrismaClient();
 
@@ -44,25 +45,39 @@ router.get(
     const graph = await createGraph();
 
     //const path: string[] = graph.AStar(startNodeID, endNodeID);
-    const path: string[] = findpath.doAlgo(graph, algo, startNodeID, endNodeID);
-    console.log(path);
+    const pathDirections: string[] = findpath.doAlgo(
+      graph,
+      algo,
+      startNodeID,
+      endNodeID,
+    );
+    console.log(pathDirections);
 
     // Check if the path is empty
-    if (path.length === 0) {
+    if (pathDirections.length === 0) {
       res.sendStatus(204); // and send 204, no data
       return;
     }
-    res.send(
-      await Promise.all(
-        path.map(async (nodeID) => {
-          return prisma.nodes.findUniqueOrThrow({
-            where: {
-              NodeID: nodeID,
-            },
-          });
-        }),
-      ),
+
+    const dir = new Directions(
+      pathDirections.map((nodeID) => Graph.nodeMap.get(nodeID)!),
     );
+    const angles = dir.getAngles();
+
+    const pathNodes: Nodes[] = await Promise.all(
+      pathDirections.map(async (nodeID) => {
+        return prisma.nodes.findUniqueOrThrow({
+          where: {
+            NodeID: nodeID,
+          },
+        });
+      }),
+    );
+
+    res.send({
+      path: pathNodes,
+      directions: angles,
+    });
   },
 );
 
