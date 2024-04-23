@@ -10,11 +10,11 @@ import { ReactNode, useState, useEffect } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from "@mui/icons-material/TableView";
-import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
+// import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
-import ImportContactsIcon from "@mui/icons-material/ImportContacts";
+// import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import InfoIcon from "@mui/icons-material/Info";
 // import {IconType} from "react-icons";
@@ -75,24 +75,24 @@ export default function Sidebar() {
     displayLoggedIn: true,
   };
   // const uploadCSV: Menu = { title: "Upload CSV", icon: <UploadFile /> };
-  const downloadCSV: Menu = {
-    title: "Upload/Download CSV",
-    icon: <CloudDownloadIcon />,
-    displayLoggedIn: true,
-  };
+  // const downloadCSV: Menu = {
+  //   title: "Upload/Download CSV",
+  //   icon: <CloudDownloadIcon />,
+  //   displayLoggedIn: true,
+  // };
   const stats: Menu = {
     title: "Stats",
     icon: <BarChartIcon />,
     displayLoggedIn: true,
   };
 
-  const creditsPage: Menu = {
-    title: "Credits Page",
-    icon: <ImportContactsIcon />,
-    displayLoggedIn: false,
-  };
+  // const creditsPage: Menu = {
+  //   title: "Credits Page",
+  //   icon: <ImportContactsIcon />,
+  //   displayLoggedIn: false,
+  // };
   const aboutPage: Menu = {
-    title: "About",
+    title: "About and Credits",
     icon: <InfoIcon />,
     displayLoggedIn: false,
   };
@@ -119,8 +119,7 @@ export default function Sidebar() {
     serviceRequest,
     serviceRequestTable,
     nodes_edges,
-    downloadCSV,
-    creditsPage,
+    // downloadCSV,
     aboutPage,
     logoutOption,
     login,
@@ -134,9 +133,8 @@ export default function Sidebar() {
         serviceRequest,
         serviceRequestTable,
         nodes_edges,
-        downloadCSV,
+        // downloadCSV,
         stats,
-        creditsPage,
         aboutPage,
         logoutOption,
       ]);
@@ -211,20 +209,20 @@ export default function Sidebar() {
     case "/node-edge-table":
       menuHighlight = "Node/Edge Table";
       break;
-    case "/upload-download-csv":
-      menuHighlight = "Upload/Download CSV";
-      break;
+    // case "/upload-download-csv":
+    //   menuHighlight = "Upload/Download CSV";
+    //   break;
     // case "/download-csv":
     //   menuHighlight = "Download CSV";
     //   break;
     case "/stats":
       menuHighlight = "Stats";
       break;
-    case "/credits":
-      menuHighlight = "Credits Page";
-      break;
+    // case "/credits":
+    //   menuHighlight = "Credits Page";
+    //   break;
     case "/about":
-      menuHighlight = "About";
+      menuHighlight = "About and Credits";
       break;
     case "/logout":
       menuHighlight = "Logout";
@@ -281,9 +279,9 @@ export default function Sidebar() {
     } else if (title === "Home") {
       // Redirect to the home page.
       routeChange("home");
-    } else if (title === "Upload/Download CSV") {
-      // Redirect to the upload/download CSV page.
-      routeChange("upload-download-csv");
+      // } else if (title === "Upload/Download CSV") {
+      //   // Redirect to the upload/download CSV page.
+      //   routeChange("upload-download-csv");
     } else if (title === "Staff Login") {
       loginWithRedirect({
         appState: { returnTo: "/home" },
@@ -291,9 +289,9 @@ export default function Sidebar() {
     } else if (title === "Stats") {
       //redirect to stats page
       routeChange("stats");
-    } else if (title === "Credits Page") {
-      routeChange("credits");
-    } else if (title === "About") {
+      // } else if (title === "Credits Page") {
+      //   routeChange("credits");
+    } else if (title === "About and Credits") {
       routeChange("about");
     }
   };

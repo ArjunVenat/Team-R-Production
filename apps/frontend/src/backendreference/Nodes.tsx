@@ -37,7 +37,12 @@ export default function NodeTable() {
       <TableContainer>
         <Table aria-label="simple table">
           <TableHead>
-            <TableRow className="bg-primary">
+            <TableRow
+              style={{
+                backgroundColor: "#677c8f",
+                color: "white",
+              }}
+            >
               <TableCell
                 sx={{
                   color: "white",
@@ -112,7 +117,13 @@ export default function NodeTable() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody className="bg-white bg-opacity-60 backdrop-blur-md">
+          <TableBody
+            style={{
+              borderWidth: 2,
+              borderColor: "white",
+              backgroundColor: "rgb(103,124,143, 0.15)",
+            }}
+          >
             {arrayNode}
           </TableBody>
         </Table>

@@ -1,11 +1,17 @@
 import React from "react";
 import EdgeTable from "../backendreference/Edges.tsx";
 import SideBar from "../components/SideBar.tsx";
-import { Box, Tab, Tabs } from "@mui/material";
+import { Box, Tab, Tabs, Stack } from "@mui/material";
 import { useState } from "react";
 import NodeTable from "../backendreference/Nodes.tsx";
 import { useAuth0 } from "@auth0/auth0-react";
-import blueback from "../assets/blueback.png";
+// import blueback from "../assets/blueback.png";
+import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
+import LinearScaleIcon from "@mui/icons-material/LinearScale";
+// import swoosh from "../assets/swoosh.png";
+import UplaodCSV from "../components/UploadCSV.tsx";
+import DownloadCSV from "../backendreference/DownloadCSV.tsx";
+import DownloadIcon from "@mui/icons-material/Download";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -47,33 +53,116 @@ const EdgeTablePage = () => {
       <div
         className="overflow-y-auto h-screen flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
         style={{
-          backgroundImage: `url(${blueback})`,
+          backgroundColor: `white`,
           width: "100vw",
           height: "100vh",
         }}
       >
         <div className="">
-          <div className="p-4">
-            <h1 className=" text-5xl text-primary font-bold p-2 text-center">
-              View Node or Edge Tables
-            </h1>
-            <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
+          <div className=" top-0 min-w-full pt-8 bg-primary">
+            <Box
+              sx={{
+                backgroundColor: "#009CA6",
+                borderColor: "white",
+                display: "flex",
+                justifyContent: "center",
+                height: "10vh",
+                alignItems: "center",
+              }}
+            >
               <Tabs
+                TabIndicatorProps={{ style: { backgroundColor: "#f6bd39" } }}
                 value={nodeTab}
                 onChange={(event, newValue) => setNodeTab(newValue)}
                 aria-label="basic tabs example"
               >
-                <Tab label="Node Table" />
-                <Tab label="Edge Table" />
+                <Tab
+                  label="Node Table"
+                  icon={
+                    <ScatterPlotIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    fontSize: "1rem",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label="Edge Table"
+                  icon={
+                    <LinearScaleIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    fontSize: "1rem",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
+                <Tab
+                  label="Upload/Download"
+                  icon={
+                    <DownloadIcon
+                      className="mx-2"
+                      style={{ fontSize: "2rem" }}
+                    />
+                  }
+                  sx={{
+                    fontSize: "1rem",
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                    },
+                  }}
+                />
               </Tabs>
             </Box>
-            <CustomTabPanel value={nodeTab} index={0}>
-              <NodeTable />
-            </CustomTabPanel>
-            <CustomTabPanel value={nodeTab} index={1}>
-              <EdgeTable />
-            </CustomTabPanel>
           </div>
+          <CustomTabPanel value={nodeTab} index={0}>
+            <NodeTable />
+          </CustomTabPanel>
+          <CustomTabPanel value={nodeTab} index={1}>
+            <EdgeTable />
+          </CustomTabPanel>
+          <CustomTabPanel value={nodeTab} index={2}>
+            <div
+              className="flex items-center h-full w-full bg-cover bg-center bg-no-repeat"
+              // style={{
+              //     backgroundImage: `url(${swoosh})`,
+              //     // width: "100vw",
+              //     // height: "100vh",
+              // }}
+            >
+              <Stack spacing={4}>
+                <div className="text-center p-4">
+                  {/*<h1 className="font-semibold text-xl">Upload CSV File:</h1>*/}
+                  <UplaodCSV />
+                </div>
+                <div className="text-center text-lg">
+                  {/*<h1 className="font-semibold text-xl">Download CSV File:</h1>*/}
+                  <DownloadCSV />
+                </div>
+              </Stack>
+            </div>
+          </CustomTabPanel>
         </div>
       </div>
     </Box>
