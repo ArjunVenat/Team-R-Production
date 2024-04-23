@@ -49,6 +49,7 @@ export default function MainPage() {
   );
   const [showPathOnly, setShowPathOnly] = useState(false);
   const [isDirectionsClicked, setIsDirectionsClicked] = useState(false);
+  const [pathDirections, setPathDirections] = useState<string[][]>([]);
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
   //   const newPath = `/${path}`;
@@ -137,65 +138,41 @@ export default function MainPage() {
         console.error("Failed to fetch path");
       }
       console.log(res.data);
-      setPath(res.data); // Update state with retrieved path data
+      setPath(res.data.path); // Update state with retrieved path data
+      setPathDirections(res.data.directions); //Update state with retreived directions data
     } else {
       console.error("Start or end node not found");
     }
   }
 
-  const pathToText = (
-    prevNode: Nodes | { Ycoord: number; Xcoord: number },
-    startNode: Nodes,
-    endNode: Nodes,
-  ) => {
-    // Normalization
-    const px = Number(prevNode.Xcoord);
-    const py = Number(prevNode.Ycoord);
-    const sx = Number(startNode.Xcoord);
-    const sy = Number(startNode.Ycoord);
-    const ex = Number(endNode.Xcoord);
-    const ey = Number(endNode.Ycoord);
+  const pathToText = (direction: string) => {
     // straight
-    if (
-      (px === -1 && py === -1) ||
-      (px === sx && sx === ex) ||
-      (py === sy && sy === ey)
-    ) {
+    if (direction.includes("straight")) {
       return (
-        <>
+        <Box mb={2} display="flex" gap={1} alignItems="center">
           <StraightIcon />
-          Continue forward toward {endNode.ShortName}
-        </>
+          {direction}
+        </Box>
       );
     }
 
     // turn left
-    if (
-      (py === sy && px < sx && sx === ex && sy > ey) ||
-      (px === sx && py > sy && sy === ey && sx > ex) ||
-      (py === sy && px > sx && sx === ex && sy < ey) ||
-      (px === sx && py < sy && sy === ey && sx < ex)
-    ) {
+    if (direction.includes("left")) {
       return (
-        <>
+        <Box mb={2} display="flex" gap={1} alignItems="center">
           <TurnLeftIcon />
-          <div>Turn left and continue to {endNode.ShortName}</div>
-        </>
+          {direction}
+        </Box>
       );
     }
 
     // turn right
-    if (
-      (py === sy && px < sx && sx === ex && sy < ey) ||
-      (px === sx && py > sy && sy === ey && sx < ex) ||
-      (py === sy && px > sx && sx === ex && sy > ey) ||
-      (px === sx && py < sy && sy === ey && sx > ex)
-    ) {
+    if (direction.includes("right")) {
       return (
-        <>
+        <Box mb={2} display="flex" gap={1} alignItems="center">
           <TurnRightIcon />
-          <div>Turn right and continue to {endNode.ShortName}</div>
-        </>
+          {direction}
+        </Box>
       );
     }
   };
@@ -210,15 +187,6 @@ export default function MainPage() {
     return floorMap;
   }, [path]);
   console.log(groupPath);
-
-  const sortedFloors = Object.keys(groupPath).sort((a, b) => {
-    const floorA = parseInt(a, 10);
-    const floorB = parseInt(b, 10);
-
-    if (path[0].Floor === a) return -1;
-    if (path[0].Floor === b) return 1;
-    return floorA - floorB;
-  });
 
   return (
     <div
@@ -262,14 +230,12 @@ export default function MainPage() {
                   resetTransform={resetTransform}
                   zoomOut={zoomOut}
                 ></MapControls>
-                <div className="absolute bottom-0 right-16">
-                  <FloorSelect
-                    setMap={setCurrentMap}
-                    isDirectionsClicked={isDirectionsClicked}
-                    path={path}
-                    resetMapTransform={resetTransform}
-                  />
-                </div>
+                <FloorSelect
+                  setMap={setCurrentMap}
+                  isDirectionsClicked={isDirectionsClicked}
+                  path={path}
+                  resetMapTransform={resetTransform}
+                />
               </ThemeProvider>
 
               <aside className={rightSideBarStyle}>
@@ -369,43 +335,27 @@ export default function MainPage() {
                       <SyncIcon />
                       {end} from {start}
                     </Box>
-                    {sortedFloors.map((key) => (
+                    {pathDirections.map((floorDirections) => (
                       <Accordion
-                        key={key}
+                        key={floorDirections[0]}
                         onChange={() => {
                           const matchedFloor = floors.find(
-                            (floor) => floor.level === key,
+                            (floor) => floor.name === floorDirections[0],
                           );
                           setCurrentMap(matchedFloor ? matchedFloor.map : "");
                         }}
                       >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
-                          Floor {key}
+                          {floorDirections[0]}
                         </AccordionSummary>
                         <AccordionDetails
                           style={{ overflow: "auto", maxHeight: "200px" }}
                         >
-                          {groupPath[key].map((item, index) => {
+                          {floorDirections.map((direction, index) => {
                             return (
-                              <Box
-                                mb={2}
-                                display="flex"
-                                gap={1}
-                                alignItems="center"
-                                key={index}
-                              >
-                                {index !== groupPath[key].length - 1 ? (
-                                  pathToText(
-                                    index !== 0
-                                      ? groupPath[key][index - 1]
-                                      : { Xcoord: -1, Ycoord: -1 },
-                                    item,
-                                    groupPath[key][index + 1],
-                                  )
-                                ) : (
-                                  <div />
-                                )}
-                              </Box>
+                              <div>
+                                {index != 0 ? pathToText(direction) : <div />}
+                              </div>
                             );
                           })}
                         </AccordionDetails>
