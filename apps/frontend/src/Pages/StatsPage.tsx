@@ -3,7 +3,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import { BarChart } from "@mui/x-charts/BarChart";
 import axios from "axios";
 import { Box, Typography } from "@mui/material";
-import blueback from "../assets/blueback.png";
+import swoosh from "../assets/swoosh.png";
 import SideBar from "../components/SideBar";
 
 type TypeLengths = {
@@ -86,53 +86,53 @@ const St4t5Page = () => {
   return (
     <Box display="flex">
       <SideBar />
-      <Box
-        className="overflow-y-auto h-screen flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundImage: `url(${blueback})`,
-          width: "100vw",
-          height: "100vh",
-        }}
-      >
-        <main className="flex content-center justify-center leading-none relative">
-          <Box textAlign="center" color="#000000">
-            <Typography variant="h1" component="h1" gutterBottom>
-              Stats or something idk
-            </Typography>
-            <Box display="flex" justifyContent="center">
-              <Box
-                textAlign="center"
-                margin="0 20px"
-                bgcolor="#FFFFFF"
-                padding="20px"
-                borderRadius="10px"
-              >
-                <BarChart
-                  series={[
-                    {
-                      data: Object.values(typeLengths),
-                      color: "#FFC107", // Deep Yellow
-                    },
-                  ]}
-                  height={500} // Increased height
-                  width={800} // Increased width
-                  xAxis={[
-                    {
-                      data: Object.keys(typeLengths),
-                      scaleType: "band",
-                    },
-                  ]}
-                  margin={{ top: 30, bottom: 30, left: 40, right: 10 }}
-                  grid={{ vertical: true, horizontal: true }}
-                />
-                <Typography variant="body1" gutterBottom>
-                  Number of Requests by Type
-                </Typography>
+      <div className=" top-0 pt-8 bg-primary flex justify-center items-center w-full">
+        <Box
+          className=" w-full h-full overflow-y-auto flex-grow justify-center items-center"
+          style={{
+            backgroundImage: `url(${swoosh})`,
+          }}
+        >
+          <main className="flex content-center justify-center leading-none relative">
+            <Box textAlign="center" color="#000000">
+              <Typography variant="h1" component="h1" gutterBottom>
+                Stats or something idk
+              </Typography>
+              <Box display="flex" justifyContent="center">
+                <Box
+                  textAlign="center"
+                  margin="0 20px"
+                  bgcolor="#FFFFFF"
+                  padding="20px"
+                  borderRadius="10px"
+                >
+                  <BarChart
+                    series={[
+                      {
+                        data: Object.values(typeLengths),
+                        color: "#FFC107", // Deep Yellow
+                      },
+                    ]}
+                    height={500} // Increased height
+                    width={800} // Increased width
+                    xAxis={[
+                      {
+                        data: Object.keys(typeLengths),
+                        scaleType: "band",
+                      },
+                    ]}
+                    margin={{ top: 30, bottom: 30, left: 40, right: 10 }}
+                    grid={{ vertical: true, horizontal: true }}
+                  />
+                  <Typography variant="body1" gutterBottom>
+                    Number of Requests by Type
+                  </Typography>
+                </Box>
               </Box>
             </Box>
-          </Box>
-        </main>
-      </Box>
+          </main>
+        </Box>
+      </div>
     </Box>
   );
 };
