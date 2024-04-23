@@ -261,34 +261,15 @@ export default function MainPage() {
                   zoomIn={zoomIn}
                   resetTransform={resetTransform}
                   zoomOut={zoomOut}
-                >
-                  {/*Selecting pathfind algorithm*/}
-                  <Select
-                    value={pathfindingAlgorithm}
-                    onChange={
-                      (event) => setPathfindingAlgorithm(event.target.value) // select the proper API call for pathfinding
-                    }
-                    sx={[
-                      {
-                        boxShadow:
-                          "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
-                      },
-                      { ...buttonStyle },
-                    ]}
-                  >
-                    {pathfindingAlgorithms.map((algorithm) => (
-                      <MenuItem value={algorithm.path}>
-                        {algorithm.name}
-                      </MenuItem>
-                    ))}
-                  </Select>
-                </MapControls>
-                <FloorSelect
-                  setMap={setCurrentMap}
-                  isDirectionsClicked={isDirectionsClicked}
-                  path={path}
-                  resetMapTransform={resetTransform}
-                />{" "}
+                ></MapControls>
+                <div className="absolute bottom-0 right-10">
+                  <FloorSelect
+                    setMap={setCurrentMap}
+                    isDirectionsClicked={isDirectionsClicked}
+                    path={path}
+                    resetMapTransform={resetTransform}
+                  />
+                </div>
               </ThemeProvider>
 
               <aside className={rightSideBarStyle}>
@@ -364,7 +345,24 @@ export default function MainPage() {
                     Reset Map
                   </Button>
                 </div>
-
+                {/*Selecting pathfind algorithm*/}
+                <Select
+                  value={pathfindingAlgorithm}
+                  onChange={
+                    (event) => setPathfindingAlgorithm(event.target.value) // select the proper API call for pathfinding
+                  }
+                  sx={[
+                    {
+                      boxShadow:
+                        "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+                    },
+                    { ...buttonStyle },
+                  ]}
+                >
+                  {pathfindingAlgorithms.map((algorithm) => (
+                    <MenuItem value={algorithm.path}>{algorithm.name}</MenuItem>
+                  ))}
+                </Select>
                 {path.length > 0 && (
                   <Box maxWidth={330}>
                     <Box mb={2} display="flex" gap={1} alignItems="center">
