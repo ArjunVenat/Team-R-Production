@@ -5,7 +5,7 @@ import { Employee } from "../Interfaces/Employee.ts";
 import { submitRequestDB } from "../backendreference/SubmitRequest.tsx";
 import {
   Button,
-  Stack,
+  // Stack,
   TextField,
   // Typography,
   // Grid,
@@ -162,10 +162,11 @@ function ServiceRequestLog(props: { typeOfService: string }) {
       case "Flowers":
         contentComponent = (
           <>
-            <div className="bg-white">
-              <h2 className="text-lg">Select Type</h2>
-              <div style={{ width: "80%", height: "auto" }}>
+            <div className="">
+              <h2 className="text-lg">Select Bouquet</h2>
+              <div className="flex justify-center items-center w-full">
                 <Swiper
+                  style={{ width: "80%" }}
                   pagination={true}
                   navigation={true}
                   modules={[Pagination, Navigation]}
@@ -175,7 +176,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[4rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -195,7 +196,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[4rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full "
@@ -214,7 +215,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[4rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full "
@@ -233,7 +234,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[4rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
                       >
                         <img
                           className="w-full h-full "
@@ -258,95 +259,94 @@ function ServiceRequestLog(props: { typeOfService: string }) {
       case "Gifts":
         contentComponent = (
           <>
-            <div className="bg-white rounded-lg">
-              <h2 className="py-1 font-bold text-lg">Select Type</h2>
-              <div style={{ width: "80%", height: "auto" }}>
-                <Stack direction="row">
-                  <Swiper
-                    pagination={true}
-                    navigation={true}
-                    modules={[Pagination, Navigation]}
-                    spaceBetween={10}
-                    slidesPerView={3}
-                  >
-                    <SwiperSlide>
-                      <div className="mr-2">
-                        <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                        >
-                          <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                            src={BalloonBasket}
-                            onClick={() =>
-                              setSingleServiceRequest({
-                                ...singleServiceRequest,
-                                details1: "Balloons",
-                              })
-                            }
-                            alt="Gifts"
-                          />
-                        </div>
+            <div className="">
+              <h2 className="text-lg">Select Gift</h2>
+              <div className="flex justify-center items-center w-full">
+                <Swiper
+                  style={{ width: "80%" }}
+                  pagination={true}
+                  navigation={true}
+                  modules={[Pagination, Navigation]}
+                  spaceBetween={10}
+                  slidesPerView={3}
+                >
+                  <SwiperSlide>
+                    <div className="">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          src={BalloonBasket}
+                          onClick={() =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Balloons",
+                            })
+                          }
+                          alt="Gifts"
+                        />
                       </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className="mr-2">
-                        <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                        >
-                          <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                            src={Comfort}
-                            onClick={() =>
-                              setSingleServiceRequest({
-                                ...singleServiceRequest,
-                                details1: "Comfort Basket",
-                              })
-                            }
-                            alt="Gifts"
-                          />
-                        </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          src={Comfort}
+                          onClick={() =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Comfort Basket",
+                            })
+                          }
+                          alt="Gifts"
+                        />
                       </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className="mr-2">
-                        <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                        >
-                          <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                            src={FruitBasket}
-                            onClick={() =>
-                              setSingleServiceRequest({
-                                ...singleServiceRequest,
-                                details1: "Fruit Basket",
-                              })
-                            }
-                            alt="Gifts"
-                          />
-                        </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          src={FruitBasket}
+                          onClick={() =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Fruit Basket",
+                            })
+                          }
+                          alt="Gifts"
+                        />
                       </div>
-                    </SwiperSlide>
-                    <SwiperSlide>
-                      <div className="mr-2">
-                        <div
-                          className={`aspect-square ${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
-                        >
-                          <img
-                            className="w-full h-full rounded-[2.4rem] h-[152px] w-[157px] border border-black"
-                            src={GiftSet}
-                            onClick={() =>
-                              setSingleServiceRequest({
-                                ...singleServiceRequest,
-                                details1: "Gift Set",
-                              })
-                            }
-                            alt="Gifts "
-                          />
-                        </div>
+                    </div>
+                  </SwiperSlide>
+                  <SwiperSlide>
+                    <div className="">
+                      <div
+                        className={`aspect-square ${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                      >
+                        <img
+                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          src={GiftSet}
+                          onClick={() =>
+                            setSingleServiceRequest({
+                              ...singleServiceRequest,
+                              details1: "Gift Set",
+                            })
+                          }
+                          alt="Gifts "
+                        />
                       </div>
-                    </SwiperSlide>
-                  </Swiper>
-                </Stack>
+                    </div>
+                  </SwiperSlide>
+                </Swiper>
               </div>
             </div>
           </>
@@ -405,7 +405,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
       {/*  <SideBar />*/}
       {/*</div>*/}
 
-      <div className="overflow-y-auto">
+      <div className="overflow-y-auto bg-transparent">
         <div className=" justify-center ">
           <div className="">
             <div className="my-2">
@@ -450,16 +450,16 @@ function ServiceRequestLog(props: { typeOfService: string }) {
 
             <div className="content" id="content">
               <div className="">
-                <div className="bg-white rounded-lg ">
+                <div className="rounded-lg ">
                   <h2 className="mb-2 font-bold text-lg">
                     Service Request Form
                   </h2>
                   <div className="space-y-2">
                     <div className="form-item flex flex-col">
-                      <div className="flex mb:flex-row">
-                        <div className="flex-1 mb-3 ">
+                      <div className="flex mb:flex-row w-full">
+                        <div className="flex-1 mb-3 mr-2">
                           <TextField
-                            className="border rounded-md px-2 py-1 w-3/4"
+                            className="w-full"
                             type="text"
                             id="name"
                             label="Name"
@@ -471,13 +471,16 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                                 requesterName: e.target.value,
                               })
                             }
+                            style={{
+                              backgroundColor: "transparent",
+                            }}
                           />
                         </div>
 
-                        <div className="flex-1 mb-3">
+                        <div className="flex-1 mb-3 w-full">
                           <div className="flex flex-col">
                             <input
-                              className="border border-gray-390 rounded-md px-2 py-4 w-3/4"
+                              className=" rounded-sm px-2 py-4 border border-black border-opacity-25"
                               type="datetime-local"
                               id="deliveryDate"
                               value={singleServiceRequest.deliveryDate}
@@ -492,6 +495,16 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                                 height: "3.5rem",
                                 paddingBottom: "1rem",
                                 paddingTop: "1rem",
+                                backgroundColor: "transparent",
+                                outline: "none",
+                              }}
+                              onFocus={(e) => {
+                                e.currentTarget.style.border =
+                                  "2px solid rgb(25, 118, 210)";
+                              }}
+                              onBlur={(e) => {
+                                e.currentTarget.style.border =
+                                  "1px solid black";
                               }}
                             />
                           </div>
@@ -618,11 +631,11 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                       </div>
                     )}
                     {singleServiceRequest.requestType === "Gifts" && (
-                      <div className="flex flex-col w-[45rem] ">
+                      <div className=" w-[45rem] ">
                         <div className="">
                           {switchService(singleServiceRequest.requestType)}
                         </div>
-                        <div className="flex items-center pt-2">
+                        <div className="flex items-center pt-4">
                           <input
                             id="gifts-checkbox"
                             type="checkbox"
@@ -674,7 +687,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                             <MenuItem value="bathroom">Bathroom</MenuItem>
                           </Select>
 
-                          <div className="flex items-center ">
+                          <div className="flex items-center pt-4">
                             <input
                               id="link-checkbox"
                               type="checkbox"
@@ -687,7 +700,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               }
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                             />
-                            <label htmlFor="link-checkbox" className="ms-2 ">
+                            <label htmlFor="link-checkbox" className="ms-2  ">
                               Hazardous Material
                             </label>
                           </div>
@@ -706,7 +719,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               type="number"
                               id="dosage"
                               min="0"
-                              className="flex-1 bg-white border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                              className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                               placeholder="Dosage"
                               value={singleServiceRequest.details2}
                               onChange={(e) =>
@@ -717,7 +730,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               }
                               required
                             />
-                            <Select className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-r-lg bg-white focus:ring-blue-500">
+                            <Select className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500">
                               <MenuItem value="grams">grams</MenuItem>
                               <MenuItem value="milligrams">milligrams</MenuItem>
                               <MenuItem value="micrograms">micrograms</MenuItem>
@@ -769,7 +782,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                           <input
                             type="number"
                             id="dosage"
-                            className="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
                             placeholder="Quantity"
                             value={singleServiceRequest.details2}
                             onChange={(e) =>
@@ -819,7 +832,10 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                 <div className="form-item flex justify-end mt-4">
                   <Button
                     variant="contained"
-                    color="success"
+                    style={{
+                      backgroundColor: "#012D5A",
+                      color: "white",
+                    }}
                     // Calls submit request function which sends information to the backend
                     onClick={() => {
                       submitRequest();
@@ -835,7 +851,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
       </div>
       {/* Modal for success message */}
       <Modal open={openSuccessMessage}>
-        <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
+        <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2  shadow-md rounded-lg p-10">
           <h1
             id="successMessage"
             className="text-center text-green-600 text-xl mb-4"
@@ -846,7 +862,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
         </Card>
       </Modal>
       <Modal open={openFailMessage}>
-        <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white shadow-md rounded-lg p-10">
+        <Card className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 shadow-md rounded-lg p-10">
           <h1
             id="failMessage"
             className="text-center text-red-600 text-xl mb-4"

@@ -55,33 +55,33 @@ export function ServiceRequestMenu() {
             height: "100%",
           }}
         >
-          <h1
-            className="text-center text-white p-10 font-bold text-4xl w-full"
-            style={{
-              backgroundColor: "#009ca6",
-            }}
-          >
-            Service Request Menu
-          </h1>
+          {/*<h1*/}
+          {/*  className="text-center text-white p-10 font-bold text-4xl w-full"*/}
+          {/*  style={{*/}
+          {/*    backgroundColor: "#009ca6",*/}
+          {/*  }}*/}
+          {/*>*/}
+          {/*  Service Request Menu*/}
+          {/*</h1>*/}
           <div className="flex justify-center items-center flex-grow">
             <div
               className="w-fit grid grid-cols-1 lg:grid-cols-3 md:grid-cols-2
                         justify-items-center justify-center gap-y-20 gap-x-14"
             >
               <Button
-                className="h-32 w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-48 w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: "#009ca6",
                 }}
                 onClick={() => handleOpen("Flowers")}
               >
                 <Box display="flex" flexDirection="column" alignItems="center">
                   <LocalFloristIcon
-                    style={{ color: "#012D5A", fontSize: "3rem" }}
+                    style={{ color: "white", fontSize: "3rem" }}
                   />
                   <span
                     style={{
-                      color: "#012D5A",
+                      color: "white",
                       fontWeight: "bold",
                       fontSize: "1.2rem",
                     }}
@@ -91,19 +91,19 @@ export function ServiceRequestMenu() {
                 </Box>
               </Button>
               <Button
-                className="h-32  w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-48  w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: "#009ca6",
                 }}
                 onClick={() => handleOpen("Gifts")}
               >
                 <Box display="flex" flexDirection="column" alignItems="center">
                   <CardGiftcardIcon
-                    style={{ color: "#012D5A", fontSize: "3rem" }}
+                    style={{ color: "white", fontSize: "3rem" }}
                   />
                   <span
                     style={{
-                      color: "#012D5A",
+                      color: "white",
                       fontWeight: "bold",
                       fontSize: "1.2rem",
                     }}
@@ -113,17 +113,17 @@ export function ServiceRequestMenu() {
                 </Box>
               </Button>
               <Button
-                className="h-32 w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-48 w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: "#009ca6",
                 }}
                 onClick={() => handleOpen("Maintenance")}
               >
                 <Box display="flex" flexDirection="column" alignItems="center">
-                  <BuildIcon style={{ color: "#012D5A", fontSize: "3rem" }} />
+                  <BuildIcon style={{ color: "white", fontSize: "3rem" }} />
                   <span
                     style={{
-                      color: "#012D5A",
+                      color: "white",
                       fontWeight: "bold",
                       fontSize: "1.2rem",
                     }}
@@ -133,19 +133,17 @@ export function ServiceRequestMenu() {
                 </Box>
               </Button>
               <Button
-                className="h-32 w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-48 w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: "#009ca6",
                 }}
                 onClick={() => handleOpen("Medicine")}
               >
                 <Box display="flex" flexDirection="column" alignItems="center">
-                  <VaccinesIcon
-                    style={{ color: "#012D5A", fontSize: "3rem" }}
-                  />
+                  <VaccinesIcon style={{ color: "white", fontSize: "3rem" }} />
                   <span
                     style={{
-                      color: "#012D5A",
+                      color: "white",
                       fontWeight: "bold",
                       fontSize: "1.2rem",
                     }}
@@ -155,19 +153,19 @@ export function ServiceRequestMenu() {
                 </Box>
               </Button>
               <Button
-                className="h-32 w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-48 w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 style={{
-                  backgroundColor: "white",
+                  backgroundColor: "#009ca6",
                 }}
                 onClick={() => handleOpen("Medical Equipment")}
               >
                 <Box display="flex" flexDirection="column" alignItems="center">
                   <MonitorHeartIcon
-                    style={{ color: "#012D5A", fontSize: "3rem" }}
+                    style={{ color: "white", fontSize: "3rem" }}
                   />
                   <span
                     style={{
-                      color: "#012D5A",
+                      color: "white",
                       fontWeight: "bold",
                       fontSize: "1.2rem",
                     }}
@@ -179,8 +177,25 @@ export function ServiceRequestMenu() {
 
               <Modal open={open}>
                 <div className="flex justify-center items-center h-screen">
-                  <Card className=" w-1/2 bg-white shadow-md rounded-lg p-10 mx-auto mt-5 h-[90vh] ">
-                    <Button onClick={() => setOpen(false)}>Back</Button>
+                  <Card
+                    className=" w-1/2 shadow-md rounded-lg p-10 mx-auto mt-5 h-[90vh] "
+                    style={{
+                      backgroundColor: "white",
+                      border: "10px solid #012D5A",
+                    }}
+                  >
+                    <div className="flex justify-start ">
+                      <Button
+                        style={{
+                          backgroundColor: "#012D5A",
+                          color: "white",
+                          marginLeft: "auto",
+                        }}
+                        onClick={() => setOpen(false)}
+                      >
+                        Back
+                      </Button>
+                    </div>
                     <div className="flex items-center justify-center h-full">
                       <ServiceRequestLog typeOfService={typeOfService} />
                     </div>
