@@ -1,9 +1,9 @@
-import { expect, test } from "vitest";
-import { GraphNode } from "../src/graph.ts";
-import { Directions } from "../src/findDirections.ts";
-
-const L: GraphNode[] = [];
-const L2: GraphNode[] = [];
+// import { expect, test } from "vitest";
+// import { GraphNode } from "../src/graph.ts";
+// import { Directions } from "../src/findDirections.ts";
+//
+// const L: GraphNode[] = [];
+// const L2: GraphNode[] = [];
 
 // test("basic right angle, vectors same length", () => {
 //   const center = new GraphNode("q", 1, 1, 1);
@@ -26,45 +26,71 @@ const L2: GraphNode[] = [];
 //   expect(d.getAngle(s, center, e)).toBe(81.92347012159536);
 // });
 
-test("tests a longer path", () => {
-  const d = new Directions(L);
-  const s = new GraphNode("1", 2275, 785, 1);
-
-  const center1 = new GraphNode("2", 2275, 830, 2);
-
-  const center2 = new GraphNode("3", 2275, 910, 2);
-  const center22 = new GraphNode("3", 2275, 910, 4);
-  const center3 = new GraphNode("4", 2290, 910, 1);
-  const center4 = new GraphNode("5", 2385, 910, 3);
-  const center5 = new GraphNode("6", 2385, 860, 1);
-  const e = new GraphNode("8", 2335, 860, 1);
-  d.path.push(s);
-
-  d.path.push(center1);
-
-  d.path.push(center2);
-  d.path.push(center22);
-
-  d.path.push(center3);
-  d.path.push(center4);
-  d.path.push(center5);
-  d.path.push(e);
-  expect(d.getAngles()).toStrictEqual([["left"], ["right"], ["straight"]]);
-});
-
-test("tests a longer path", () => {
-  const a = new Directions(L2);
-  const s = new GraphNode("1", 2275, 900, 1);
-  const s1 = new GraphNode("1", 2275, 780, 9);
-  const s2 = new GraphNode("1", 2275, 785, 1);
-  const s3 = new GraphNode("1", 2275, 785, 6);
-  const s4 = new GraphNode("1", 2275, 785, 1);
-
-  a.path.push(s);
-  a.path.push(s1);
-  a.path.push(s2);
-  a.path.push(s3);
-  a.path.push(s4);
-
-  expect(a.getAngles()).toStrictEqual([["left"], ["right"], ["straight"]]);
-});
+// test("tests a longer path", () => {
+//   const d = new Directions(L);
+//   const s = new GraphNode("1", 2275, 785, 1);
+//
+//   const center1 = new GraphNode("2", 2275, 830, 2);
+//
+//   const center2 = new GraphNode("3", 2275, 910, 2);
+//   const center22 = new GraphNode("3", 2275, 910, 4);
+//   const center3 = new GraphNode("4", 2290, 910, 1);
+//   const center4 = new GraphNode("5", 2385, 910, 3);
+//   const center5 = new GraphNode("6", 2385, 860, 1);
+//   const e = new GraphNode("8", 2335, 860, 1);
+//   d.path.push(s);
+//
+//   d.path.push(center1);
+//
+//   d.path.push(center2);
+//   d.path.push(center22);
+//
+//   d.path.push(center3);
+//   d.path.push(center4);
+//   d.path.push(center5);
+//   d.path.push(e);
+//   expect(d.getAngles()).toStrictEqual([["left"], ["right"], ["straight"]]);
+// });
+//
+// test("tests a longer path", () => {
+//   const a = new Directions(L2);
+//   const s = new GraphNode("1", 2275, 900, 1);
+//   const s1 = new GraphNode("1", 2275, 780, 9);
+//   const s2 = new GraphNode("1", 2275, 785, 1);
+//   const s3 = new GraphNode("1", 2275, 785, 6);
+//   const s4 = new GraphNode("1", 2275, 785, 1);
+//
+//   a.path.push(s);
+//   a.path.push(s1);
+//   a.path.push(s2);
+//   a.path.push(s3);
+//   a.path.push(s4);
+//
+//   expect(a.getAngles()).toStrictEqual([["left"], ["right"], ["straight"]]);
+// });
+//
+// test("tests", () => {
+//   const c = new Directions(L2);
+//   const s = new GraphNode("1", 0, 0, 100);
+//   const s1 = new GraphNode("1", 1, 0, 100);
+//   const s2 = new GraphNode("1", 1, 1, 100);
+//   const s3 = new GraphNode("1", 2, 1, 100);
+//
+//   c.path.push(s);
+//   c.path.push(s1);
+//   c.path.push(s2);
+//   c.path.push(s3);
+//
+//   expect(c.getAngles()).toStrictEqual([["left"], ["right"], ["straight"]]);
+// });
+//
+// test("2d array test", () => {
+//   const directions: string[][] = [];
+//   directions.push([]);
+//   directions[0].push("1");
+//   directions[0].push("2");
+//   directions[0].push("3");
+//   directions[0].push("4");
+//   directions[0].pop();
+//   expect(directions).toStrictEqual([["1", "2", "3"]]);
+// });

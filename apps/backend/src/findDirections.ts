@@ -26,6 +26,10 @@ export class Directions {
     return angle;
   }
 
+  // public getCardDirection(start: GraphNode, end: GraphNode) {
+  //   const g1: GraphNode = new GraphNode("id", start.x, start.y - 50, 1);
+  // }
+
   /**
    * Function that uses getAngles on all nodes in a path
    */
@@ -36,7 +40,36 @@ export class Directions {
     let j: number = 0;
     directions.push([]);
     directions[j].push(floorName(this.path[0].z));
+    // for (let i = 0; i < this.path.length; i++) {
+    //   if (
+    //     this.path[i] &&
+    //     this.path[i + 1] &&
+    //     this.path[i].z === this.path[i + 1].z
+    //   ) {
+    //       const g1 = new GraphNode("herf", this.path[i].x, this.path[i].y - 50, this.path[i].z);
+    //       const dir = this.getAngle(g1, this.path[i], this.path[i+1]);
+    //       if(dir <= 22.5 && dir >= 337.5){
+    //         directions[i].push("head south towards " + this.path[1]);
+    //       }else if(dir > 22.5 && dir < 67.5){
+    //           directions[i].push("head southwest towards " + this.path[1]);
+    //       }else if(dir >= 67.5 && dir <= 112.5){
+    //           directions[i].push("head west towards " + this.path[1]);
+    //       }else if(dir > 112.5 && dir < 157.5){
+    //           directions[i].push("head northwest towards " + this.path[1]);
+    //       }else if(dir >= 157.5 && dir <= 202.5){
+    //           directions[i].push("head north towards " + this.path[1]);
+    //       }else if(dir > 202.5 && dir < 247.5){
+    //           directions[i].push("head northeast towards " + this.path[1]);
+    //       }else if(dir >= 247.5 && dir <= 292.5){
+    //           directions[i].push("head east towards " + this.path[1]);
+    //       }else if(dir > 292.5 && dir < 337.5){
+    //           directions[i].push("head southeast towards " + this.path[1]);
+    //       }
+    //
+    //   }
+    // }
     //pushes that list of angles to a seperate array
+
     for (let i = 0; i < path.length; i++) {
       const point1 = path[i];
       const center = path[i + 1];
@@ -59,21 +92,21 @@ export class Directions {
           j++;
           directions[j].push(floorName(this.path[i].z));
         }
-        directions[j].push("sharp left at " + this.path[i + 1].id); //message to be put into 2d array
+        directions[j].push("sharp right at " + this.path[i + 1].id); //message to be put into 2d array
       } else if (angles[i] >= 60 && angles[i] <= 120) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
           directions[j].push(floorName(this.path[i].z));
         }
-        directions[j].push("left at " + this.path[i + 1].id);
+        directions[j].push("right at " + this.path[i + 1].id);
       } else if (angles[i] > 120 && angles[i] <= 165) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
           directions[j].push(floorName(this.path[i].z));
         }
-        directions[j].push("slight left at " + this.path[i + 1].id);
+        directions[j].push("slight right at " + this.path[i + 1].id);
       } else if (angles[i] > 165 && angles[i] <= 195) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
@@ -87,21 +120,21 @@ export class Directions {
           j++;
           directions[j].push(floorName(this.path[i].z));
         }
-        directions[j].push("slight right at " + this.path[i + 1].id);
+        directions[j].push("slight left at " + this.path[i + 1].id);
       } else if (angles[i] > 240 && angles[i] <= 300) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
           directions[j].push(floorName(this.path[i].z));
         }
-        directions[j].push("right at " + this.path[i + 1].id);
+        directions[j].push("left at " + this.path[i + 1].id);
       } else if (angles[i] >= 300 && angles[i] < 360) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
           j++;
           directions[j].push(floorName(this.path[i].z));
         }
-        directions[j].push("sharp right at " + this.path[i + 1].id);
+        directions[j].push("sharp left at " + this.path[i + 1].id);
       } else if (angles[i] == 0 || angles[i] == 360) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           directions.push([]);
@@ -111,7 +144,21 @@ export class Directions {
         directions[j].push("take elevator at  " + this.path[i + 1].id);
       }
     }
+    this.cleanDirections(directions);
+
+    //directions[directions.length-1].push("Arrived at " + this.path[this.path.length - 1].id);
     return directions;
+  }
+
+  public cleanDirections(directions: string[][]) {
+    for (let i = 0; i < directions.length; i++) {
+      if (directions[i][directions[i].length - 1].indexOf("EVE") !== -1) {
+        directions[i].pop();
+      }
+      if (directions[i][directions[i].length - 2].indexOf("EVE") !== -1) {
+        directions[i].pop();
+      }
+    }
   }
 }
 
