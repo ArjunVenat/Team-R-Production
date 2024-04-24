@@ -247,6 +247,7 @@ export default function MapEditing() {
                   isHome={false}
                   showPathOnly={false}
                   allnodes={nodesData}
+                  editNodeDB={editNodeDB}
                 />
               </TransformComponent>
               <ThemeProvider theme={appTheme}>

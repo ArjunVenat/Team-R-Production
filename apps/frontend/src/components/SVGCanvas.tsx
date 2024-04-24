@@ -34,12 +34,19 @@ export default function SVGCanvas(props: {
   showPathOnly: boolean; //Indicates whether to show only the path or the entire map
   allnodes?: Nodes[]; //Array of all nodes in the map
   resetMapTransform: () => void; //reset map zoom/pan
+  editNodeDB?: (
+    nodeID: string,
+    changeField: string,
+    newVal: string,
+  ) => Promise<void>;
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const { edgesData, setEdgesData } = EdgesCustomHook();
   const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
   const [hoverElevatorTooltip, setHoverElevatorTooltip] = useState("");
-
+  const [isDragging, setIsDragging] = useState(false);
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [draggingNode, setDraggingNode] = useState<Nodes>();
   /**
    * This useEffect hook is responsible for updating the component's state with new node data.
    * If props.allnodes is provided, it updates the nodesData state with the new data.
@@ -78,15 +85,15 @@ export default function SVGCanvas(props: {
         const res = await axios.get("/api/admin/alledges");
         if (res.status === 200) {
           // If the request is successful, update the edgesData state with the fetched data
-          console.log("Successfully fetched edges");
+          // console.log("Successfully fetched edges");
           setEdgesData(res.data);
         } else {
           // If the request fails, log an error message
-          console.error("Failed to fetch edges");
+          // console.error("Failed to fetch edges");
         }
       } catch (error) {
         // If an error occurs during the request, log the error
-        console.error("An error occurred while fetching edges:", error);
+        // console.error("An error occurred while fetching edges:", error);
       }
     }
 
@@ -134,12 +141,12 @@ export default function SVGCanvas(props: {
     // Determine the type of popup to display based on the node's position in the path array
     // Set tool tip description use state
     if (getTypePopup(node, path) === -1) {
-      console.log("Click to go back to ", path[idx - 1].Floor);
+      // console.log("Click to go back to ", path[idx - 1].Floor);
       setHoverElevatorTooltip(
         `Click to return to Floor ${path[idx - 1].Floor}`,
       );
     } else if (getTypePopup(node, path) === 1) {
-      console.log("Click to go forwards to ", path[idx + 1].Floor);
+      // console.log("Click to go forwards to ", path[idx + 1].Floor);
       setHoverElevatorTooltip(
         `Click to proceed to Floor ${path[idx + 1].Floor}`,
       );
@@ -185,8 +192,8 @@ export default function SVGCanvas(props: {
    * @returns {number} Returns the type of popup: 0 for no floor change, 1 for next floor change, -1 for previous floor change.
    */
   function getTypePopup(node: Nodes, path: Nodes[]): number {
-    console.log(node);
-    console.log(path);
+    // console.log(node);
+    // console.log(path);
 
     // Initialize the popup type
     // 0 == no floor change, 1 == next floor change, -1 == previous floor change
@@ -194,7 +201,7 @@ export default function SVGCanvas(props: {
 
     // Find the index of the node in the path array
     const idx = path.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
-    console.log("idx:", idx);
+    // console.log("idx:", idx);
 
     // If the node is found in the path array, determine its popup type based on its position
     if (idx !== -1) {
@@ -202,7 +209,7 @@ export default function SVGCanvas(props: {
       if (idx !== 0 && idx !== path.length - 1) {
         const prevNode: Nodes = path[idx - 1];
         const nextNode: Nodes = path[idx + 1];
-        console.log(prevNode, nextNode);
+        // console.log(prevNode, nextNode);
 
         // If the node's floor differs from the previous node's floor, it indicates going down
         if (node.Floor !== prevNode.Floor) {
@@ -322,7 +329,17 @@ export default function SVGCanvas(props: {
     );
   });
 
-  console.log(filteredNodes);
+  // console.log(filteredNodes);
+
+  // function handleclickResetButton(node: Nodes){
+  //     const idx = changeNodes.findIndex((pathNode) => pathNode.NodeID === node.NodeID);
+  //     const filteredIdx = filteredNodes.findIndex((pathNode) => pathNode.NodeID === node.NodeID)
+  //     //idx and filteredIdx should be the same theoretically
+  //     setChangeNodes((changeNodes) => {
+  //         changeNodes[idx] = filteredNodes[filteredIdx];
+  //         return changeNodes;
+  //     });
+  // }
 
   /**
    * This function generates splices of the path based on floor changes.
@@ -357,7 +374,7 @@ export default function SVGCanvas(props: {
     return [[]];
   };
 
-  console.log(splices());
+  // console.log(splices());
 
   //This returns array of edges that have both start and end nodes available in filteredNodes array
   const filteredEdges: Edges[] = edgesData.filter((edge) => {
@@ -374,7 +391,91 @@ export default function SVGCanvas(props: {
     return startNode && endNode;
   });
 
-  console.log(filteredEdges);
+  // console.log(filteredEdges);
+
+  // function handleNodeDrag(event: React.DragEvent, node: Nodes){
+  //     // event.stopPropagation();
+  //     console.log(event.clientX, event.clientY, node.Xcoord, node.Ycoord);
+  //     setNodesData((nodesData) => {
+  //         const nodeToChange = nodesData[nodesData.findIndex((pathNode) => pathNode.NodeID === node.NodeID)];
+  //         nodeToChange.Xcoord = event.clientX.toString();
+  //         nodeToChange.Xcoord = event.clientX.toString();
+  //         console.log(nodeToChange);
+  //         return nodesData;
+  //     });
+  // }
+
+  const handleMouseDown = (event: React.MouseEvent, node: Nodes) => {
+    if (event.button == 0 && !props.isHome) {
+      event.stopPropagation();
+      // event.preventDefault();
+      setIsDragging(true);
+      setDraggingNode(node);
+      // console.log(draggingNode);
+      // console.log("started dragging");
+      const { clientX, clientY } = event;
+      setMousePosition({ x: clientX, y: clientY });
+    }
+  };
+
+  const handleMouseMove = (event: React.MouseEvent) => {
+    if (!isDragging || draggingNode === undefined) {
+      return;
+    }
+    const { clientX, clientY } = event;
+    const dx = clientX - mousePosition.x;
+    const dy = clientY - mousePosition.y;
+
+    setNodesData((prevState) => {
+      return prevState.map((prevNode) => {
+        if (prevNode.NodeID === draggingNode.NodeID) {
+          return {
+            ...prevNode,
+            Xcoord: (parseInt(prevNode.Xcoord) + dx).toString(),
+
+            Ycoord: (parseInt(prevNode.Ycoord) + dy).toString(),
+          };
+        }
+        return prevNode;
+      });
+    });
+    setDraggingNode((prevState) => {
+      if (prevState != undefined) {
+        return {
+          ...prevState,
+          Xcoord: (parseInt(prevState.Xcoord) + dx).toString(),
+          Ycoord: (parseInt(prevState.Ycoord) + dy).toString(),
+        };
+      }
+      return undefined;
+    });
+    setMousePosition({ x: clientX, y: clientY });
+    console.log(mousePosition);
+  };
+  const handleMouseUp = (event: React.MouseEvent) => {
+    if (event.button == 0) {
+      if (draggingNode) {
+        console.log(draggingNode, "here");
+        props.editNodeDB!(draggingNode.NodeID, "Xcoord", draggingNode.Xcoord);
+        props.editNodeDB!(draggingNode.NodeID, "Ycoord", draggingNode.Ycoord);
+      }
+      setIsDragging(false);
+      setDraggingNode(undefined);
+      // console.log("stopped dragging");
+    }
+  };
+
+  // useEffect(() => {
+  //   // Attach event listeners when the component mounts
+  //   window.addEventListener("mousemove", handleMouseDown);
+  //   window.addEventListener("mouseup", handleMouseUp);
+  //
+  //   // Detach event listeners when the component unmounts
+  //   return () => {
+  //     window.removeEventListener("mousemove", handleMouseDown);
+  //     window.removeEventListener("mouseup", handleMouseUp);
+  //   };
+  // }, []);
 
   return (
     <svg
@@ -383,13 +484,15 @@ export default function SVGCanvas(props: {
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
       overflow="visible"
+      onMouseMove={(e) => handleMouseMove(e)}
+      onMouseUp={(e) => handleMouseUp(e)}
     >
       <image href={props.currentMap} height="3400" width="5000" />
       {props.path && // Render the path only if props.path is defined
         splices()[0][0] && // Ensure the splices array is not empty
         splices().map((splice, index) => {
           if (splice.every((node) => node.Floor === currentFloor)) {
-            const totalLength = splice.length;
+            // const totalLength = splice.length;
             return splice.map((node, i) => {
               const nextNode = splice[i + 1];
               if (nextNode) {
@@ -403,14 +506,14 @@ export default function SVGCanvas(props: {
                     stroke={props.edgeColor ?? "blue"}
                     strokeWidth="5"
                     fill="none"
-                    initial={{ pathLength: 0 }}
-                    animate={{ pathLength: 2 }}
-                    transition={{
-                      duration: 0.5 * totalLength,
-                      ease: "linear",
-                      repeat: Infinity,
-                      repeatDelay: 0.01,
-                    }}
+                    // initial={{ pathLength: 0 }}
+                    // animate={{ pathLength: 2 }}
+                    // transition={{
+                    //   duration: 0.5 * totalLength,
+                    //   ease: "linear",
+                    //   repeat: Infinity,
+                    //   repeatDelay: 0.01,
+                    // }}
                   />
                 );
               }
@@ -448,7 +551,7 @@ export default function SVGCanvas(props: {
       {filteredNodes.map((node) => (
         <g>
           {props.path && // Check if props.path exists
-          props.path.length > 0 && // Check if props.path has at least one node
+          props.path.length > 1 && // Check if props.path has at least one node
           props.path.some((pathNode) => pathNode.NodeID === node.NodeID) && // Check if the current node is part of the path
           (getTypePopup(node, props.path!) == 1 || // Check if the current node goes up a floor OR
             getTypePopup(node, props.path!) == -1) ? ( // Check if the current node goes down a floor OR
@@ -488,11 +591,13 @@ export default function SVGCanvas(props: {
                 onMouseEnter={() =>
                   props.handleNodeHover && props.handleNodeHover(node)
                 }
-                onMouseLeave={() =>
-                  props.handleNodeHover && props.handleNodeHover(undefined)
-                }
-                cx={node.Xcoord}
-                cy={node.Ycoord}
+                onMouseLeave={() => {
+                  props.handleNodeHover && props.handleNodeHover(undefined);
+                  // setIsDragging(false);
+                }}
+                onMouseDown={(e) => handleMouseDown(e, node)}
+                cx={+node.Xcoord}
+                cy={+node.Ycoord}
                 r="10"
                 fill={props.nodeColor ?? getNodeColor(node)}
                 className={
