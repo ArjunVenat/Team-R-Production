@@ -98,7 +98,7 @@ const St4t5Page = () => {
               className="backdrop-blur-md rounded-lg p-10 text-center"
               textAlign="center"
               color="#000000"
-              bgcolor="rgb(103,124,143, 0.15)"
+              bgcolor="rgb(103,124,143, 0.6)"
               padding="10px"
               borderRadius="10px"
             >
@@ -109,7 +109,7 @@ const St4t5Page = () => {
                   padding="20px"
                   borderRadius="10px"
                 >
-                  <Typography variant="h3" gutterBottom>
+                  <Typography variant="h3" gutterBottom color="white">
                     Request Type Statistics
                   </Typography>
                   <BarChart

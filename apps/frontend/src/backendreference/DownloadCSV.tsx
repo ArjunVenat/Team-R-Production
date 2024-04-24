@@ -100,7 +100,7 @@ export default function DownloadCSV() {
         <div
           className="backdrop-blur-md rounded-lg p-10"
           style={{
-            backgroundColor: "rgb(103,124,143, 0.6)",
+            backgroundColor: "rgb(103,124,143, 0.15)",
           }}
         >
           <h1 className="font-semibold text-xl mb-10 text-primary">

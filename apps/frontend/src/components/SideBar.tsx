@@ -25,7 +25,7 @@ import InfoIcon from "@mui/icons-material/Info";
 //     handleOpenServiceRequestModal: () => void;
 //     handleOpenNavigationScreenModal: () => void;
 // }
-import BWHLogo from "../assets/Brigham_and_Womens_Hospital_logo.svg.png";
+import BWHLogo from "../assets/brigLogo.png";
 interface Menu {
   title: string;
   icon: ReactNode;
@@ -299,7 +299,7 @@ export default function Sidebar() {
   return (
     <div className="flex h-screen">
       <div
-        className={`bg-primary h-full p-5 pt-9 flex flex-col drop-shadow-2xl justify-between ${
+        className={`bg-primary h-full p-5 pt-5 flex flex-col drop-shadow-2xl justify-between ${
           open ? "w-72" : "w-20"
         } duration-300 relative`}
       >
@@ -316,7 +316,7 @@ export default function Sidebar() {
         {/*Rounded full makes the arrow be in a circle*/}
         {/*-right-4 and top-9 control the position relative to the container*/}
 
-        <div className="inline-flex">
+        <div className="inline-flex items-center">
           <img
             className="w-10 rounded cursor-pointer block float-left mr-2"
             src={BWHLogo}
