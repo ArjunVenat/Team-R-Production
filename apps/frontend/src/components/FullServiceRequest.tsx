@@ -176,7 +176,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Daffodil" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
                           className="w-full h-full"
@@ -196,7 +196,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Carnation" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
                           className="w-full h-full "
@@ -215,7 +215,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Rose" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
                           className="w-full h-full "
@@ -234,7 +234,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-[3.2rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Lily" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
                           className="w-full h-full "
@@ -273,10 +273,10 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Balloons" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
-                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          className="w-full h-full"
                           src={BalloonBasket}
                           onClick={() =>
                             setSingleServiceRequest({
@@ -292,10 +292,10 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Comfort Basket" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
-                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          className="w-full h-full"
                           src={Comfort}
                           onClick={() =>
                             setSingleServiceRequest({
@@ -311,10 +311,10 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Fruit Basket" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
-                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          className="w-full h-full"
                           src={FruitBasket}
                           onClick={() =>
                             setSingleServiceRequest({
@@ -330,10 +330,10 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <SwiperSlide>
                     <div className="">
                       <div
-                        className={`aspect-square ${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary rounded-[2.8rem]" : ""}`}
+                        className={`aspect-square ${singleServiceRequest.details1 === "Gift Set" ? "border-4 border-primary rounded-md" : ""}`}
                       >
                         <img
-                          className="w-full h-full rounded-[2.4rem] border border-black"
+                          className="w-full h-full"
                           src={GiftSet}
                           onClick={() =>
                             setSingleServiceRequest({
@@ -656,6 +656,58 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                         <h4 className="flex justify-end text-xs text-gray-200">
                           Made by Artem Frenk and Arjun Venat
                         </h4>
+                      </div>
+                    )}
+
+                    {singleServiceRequest.requestType === "Entertainment" && (
+                      <div className="flex flex-col w-[45rem]">
+                        <FormControl>
+                          <InputLabel id="type-Entertainment-label">
+                            Type of Entertainment
+                          </InputLabel>
+                          <Select
+                            className=""
+                            labelId="type-Entertainment-label"
+                            label="Type of Entertainment"
+                            value={singleServiceRequest.details2}
+                            onChange={(e) =>
+                              setSingleServiceRequest({
+                                ...singleServiceRequest,
+                                details2: e.target.value as string,
+                              })
+                            }
+                          >
+                            <MenuItem value="Movies">Movies</MenuItem>
+                            <MenuItem value="Gaming">Gaming</MenuItem>
+                            <MenuItem value="Board Games">Board Games</MenuItem>
+                            <MenuItem value="books">Books</MenuItem>
+                            <MenuItem value="arts and crafts">
+                              Arts and Crafts
+                            </MenuItem>
+                          </Select>
+
+                          <div className="flex items-center pt-4">
+                            <input
+                              id="link-checkbox"
+                              type="checkbox"
+                              value={singleServiceRequest.details3}
+                              onChange={(e) =>
+                                setSingleServiceRequest({
+                                  ...singleServiceRequest,
+                                  details3: "" + e.target.checked,
+                                })
+                              }
+                              className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+                            />
+                            <label htmlFor="link-checkbox" className="ms-2  ">
+                              13+
+                            </label>
+                          </div>
+
+                          <h4 className="flex justify-end text-xs text-gray-200">
+                            Made By Jessie Hart & Hubert Liu
+                          </h4>
+                        </FormControl>
                       </div>
                     )}
 

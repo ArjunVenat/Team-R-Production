@@ -40,6 +40,7 @@ function App() {
   const guestOptions: string[] = [
     "Flowers",
     "Gifts",
+    "Entertainment",
     "Medicine",
     "Maintenance",
     "Medical Equipment",

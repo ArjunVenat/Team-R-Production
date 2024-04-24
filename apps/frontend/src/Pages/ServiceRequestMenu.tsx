@@ -10,6 +10,7 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import BuildIcon from "@mui/icons-material/Build";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import CasinoIcon from "@mui/icons-material/Casino";
 import swoosh from "../assets/swoosh.png";
 
 export function ServiceRequestMenu() {
@@ -112,6 +113,27 @@ export function ServiceRequestMenu() {
                   </span>
                 </Box>
               </Button>
+              <Button
+                className="h-48 w-72 bg-white shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                style={{
+                  backgroundColor: "#009ca6",
+                }}
+                onClick={() => handleOpen("Entertainment")}
+              >
+                <Box display="flex" flexDirection="column" alignItems="center">
+                  <CasinoIcon style={{ color: "white", fontSize: "3rem" }} />
+                  <span
+                    style={{
+                      color: "white",
+                      fontWeight: "bold",
+                      fontSize: "1.2rem",
+                    }}
+                  >
+                    Entertainment
+                  </span>
+                </Box>
+              </Button>
+
               <Button
                 className="h-48 w-72 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
                 style={{
