@@ -458,6 +458,7 @@ export default function SVGCanvas(props: {
         console.log(draggingNode, "here");
         props.editNodeDB!(draggingNode.NodeID, "Xcoord", draggingNode.Xcoord);
         props.editNodeDB!(draggingNode.NodeID, "Ycoord", draggingNode.Ycoord);
+        handleNodeClick(draggingNode);
       }
       setIsDragging(false);
       setDraggingNode(undefined);

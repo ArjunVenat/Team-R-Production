@@ -12,6 +12,7 @@ type TypeLengths = {
   Maintenance: number;
   Medicine: number;
   "Medical Equipment": number;
+  Entertainment: number;
 };
 
 const St4t5Page = () => {
@@ -27,6 +28,7 @@ const St4t5Page = () => {
     Maintenance: 0,
     Medicine: 0,
     "Medical Equipment": 0,
+    Entertainment: 0,
   });
 
   useEffect(() => {
@@ -47,6 +49,7 @@ const St4t5Page = () => {
         "Maintenance",
         "Medicine",
         "Medical Equipment",
+        "Entertainment",
       ];
 
       const newTypeLengths: Partial<TypeLengths> = {};
