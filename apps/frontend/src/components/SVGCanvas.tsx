@@ -28,7 +28,10 @@ export default function SVGCanvas(props: {
   nodeClicked?: Nodes | undefined; //The currently clicked node
   handleNodeClicked?: (node: Nodes | undefined) => void; //Function to handle node clicks
   edgeClicked?: Edges | undefined; //The currently clicked edge
-  handleEdgeClicked?: (edge: Edges | undefined) => void; //Function to handle edge clicks
+  handleEdgeClicked?: (
+    edge: Edges | undefined,
+    isMouseClicked: boolean,
+  ) => void; //Function to handle edge clicks
   handleNodeHover?: (node: Nodes | undefined) => void; //Function to handle node hover events
   isHome: boolean; //Indicates whether the canvas is being used in the home page
   showPathOnly: boolean; //Indicates whether to show only the path or the entire map
@@ -123,7 +126,7 @@ export default function SVGCanvas(props: {
     }
     // If handleEdgeClicked callback is provided, reset the edge clicked state by invoking it with undefined
     if (props.handleEdgeClicked) {
-      props.handleEdgeClicked(undefined);
+      props.handleEdgeClicked(undefined, false);
     }
   }
 
@@ -290,7 +293,7 @@ export default function SVGCanvas(props: {
 
   function handleEdgeClick(edge: Edges) {
     if (props.handleEdgeClicked) {
-      props.handleEdgeClicked(edge);
+      props.handleEdgeClicked(edge, true);
     }
     if (props.handleNodeClicked) {
       props.handleNodeClicked(undefined);
@@ -552,7 +555,11 @@ export default function SVGCanvas(props: {
         )[0];
         return (
           //Create line that follow edges
-          <g onClick={() => handleEdgeClick(edge)}>
+          <g
+            onClick={() => {
+              handleEdgeClick(edge);
+            }}
+          >
             <line
               x1={startNode.Xcoord}
               y1={startNode.Ycoord}
