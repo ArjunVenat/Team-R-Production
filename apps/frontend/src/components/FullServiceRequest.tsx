@@ -705,7 +705,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                           </div>
 
                           <h4 className="flex justify-end text-xs text-gray-200">
-                            Made By Jessie Hart & Hubert Liu
+                            Made By Lauren Harrison & Zihan Li
                           </h4>
                         </FormControl>
                       </div>
