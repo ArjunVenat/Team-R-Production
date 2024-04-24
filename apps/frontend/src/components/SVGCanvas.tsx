@@ -493,29 +493,45 @@ export default function SVGCanvas(props: {
         splices()[0][0] && // Ensure the splices array is not empty
         splices().map((splice, index) => {
           if (splice.every((node) => node.Floor === currentFloor)) {
-            // const totalLength = splice.length;
+            const totalLength = splice.length;
             return splice.map((node, i) => {
               const nextNode = splice[i + 1];
               if (nextNode) {
                 return (
-                  <motion.path
-                    key={`${index}`}
-                    d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
-                      .slice(1)
-                      .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
-                      .join(" ")}`}
-                    stroke={props.edgeColor ?? "blue"}
-                    strokeWidth="5"
-                    fill="none"
-                    // initial={{ pathLength: 0 }}
-                    // animate={{ pathLength: 2 }}
-                    // transition={{
-                    //   duration: 0.5 * totalLength,
-                    //   ease: "linear",
-                    //   repeat: Infinity,
-                    //   repeatDelay: 0.01,
-                    // }}
-                  />
+                  <>
+                    <path
+                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
+                        .slice(1)
+                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
+                        .join(" ")}`}
+                      stroke="#012d5a"
+                      strokeWidth="13"
+                      fill="none"
+                    />
+
+                    <motion.path
+                      key={`${index}`}
+                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
+                        .slice(1)
+                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
+                        .join(" ")}`}
+                      stroke="#009CA6"
+                      strokeWidth="4"
+                      fill="none"
+                      initial={{
+                        pathLength: 0,
+                        strokeDasharray: "100 50",
+                        strokeDashoffset: "100",
+                      }}
+                      animate={{ pathLength: 2, strokeDashoffset: 0 }}
+                      transition={{
+                        duration: 0.5 * totalLength,
+                        ease: "linear",
+                        repeat: Infinity,
+                        repeatDelay: 0.01,
+                      }}
+                    />
+                  </>
                 );
               }
               return null; // Return null if the conditions are not met (no line to render)
