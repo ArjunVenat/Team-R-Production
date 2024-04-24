@@ -122,6 +122,7 @@ serviceRequestRouter.get("/", async function (req: Request, res: Response) {
     if (
       typeFilter != "Flowers" &&
       typeFilter != "Gifts" &&
+      typeFilter != "Entertainment" &&
       typeFilter != "Medicine" &&
       typeFilter != "Maintenance" &&
       typeFilter != "Medical Equipment" &&

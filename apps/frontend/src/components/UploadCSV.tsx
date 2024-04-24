@@ -79,17 +79,35 @@ export default function UploadCSV() {
           display: "grid",
         }}
       >
-        <div className="bg-white bg-opacity-60 backdrop-blur-md rounded-lg p-10">
+        <div
+          className="backdrop-blur-md rounded-lg p-10"
+          style={{
+            backgroundColor: "rgb(103,124,143, 0.6)",
+          }}
+        >
           <form
             onSubmit={(event) => {
               handleSubmit(event).then();
             }}
           >
-            <h1 className="font-semibold text-xl mb-10">Upload CSV File:</h1>
+            <h1 className="font-semibold text-xl mb-10 text-primary">
+              Upload CSV File:
+            </h1>
             <input type="file" onChange={handleFileSelect} />
             <br />
             <Box mt={5}>
-              <Button variant="contained" color="success" type="submit">
+              <Button
+                variant="outlined"
+                sx={{
+                  color: "#012d5a",
+                  borderColor: "#012d5a",
+                  "&:hover": {
+                    borderColor: "#f6bd38",
+                    color: "#f6bd38",
+                  },
+                }}
+                type="submit"
+              >
                 Upload File
               </Button>
             </Box>

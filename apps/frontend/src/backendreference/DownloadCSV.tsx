@@ -97,14 +97,28 @@ export default function DownloadCSV() {
           display: "grid",
         }}
       >
-        <div className="bg-white bg-opacity-60 backdrop-blur-md rounded-lg p-10">
-          <h1 className="font-semibold text-xl mb-10">Download CSV File:</h1>
+        <div
+          className="backdrop-blur-md rounded-lg p-10"
+          style={{
+            backgroundColor: "rgb(103,124,143, 0.6)",
+          }}
+        >
+          <h1 className="font-semibold text-xl mb-10 text-primary">
+            Download CSV File:
+          </h1>
           <Stack direction="row" spacing={5}>
             <Box mt={5}>
               <Button
                 onClick={fetchNodes}
-                variant="contained"
-                color="success"
+                variant="outlined"
+                sx={{
+                  color: "#012d5a",
+                  borderColor: "#012d5a",
+                  "&:hover": {
+                    borderColor: "#f6bd38",
+                    color: "#f6bd38",
+                  },
+                }}
                 type="submit"
               >
                 Download Nodes File
@@ -114,8 +128,15 @@ export default function DownloadCSV() {
             <Box mt={5}>
               <Button
                 onClick={fetchEdges}
-                variant="contained"
-                color="success"
+                variant="outlined"
+                sx={{
+                  color: "#012d5a",
+                  borderColor: "#012d5a",
+                  "&:hover": {
+                    borderColor: "#f6bd38",
+                    color: "#f6bd38",
+                  },
+                }}
                 type="submit"
               >
                 Download Edges File
@@ -125,8 +146,15 @@ export default function DownloadCSV() {
             <Box mt={5}>
               <Button
                 onClick={fetchEmployees}
-                variant="contained"
-                color="success"
+                variant="outlined"
+                sx={{
+                  color: "#012d5a",
+                  borderColor: "#012d5a",
+                  "&:hover": {
+                    borderColor: "#f6bd38",
+                    color: "#f6bd38",
+                  },
+                }}
                 type="submit"
               >
                 Download Employees File

@@ -276,8 +276,15 @@ export default function MapEditing() {
             pt="3"
           >
             <Button
-              variant="contained"
-              color="success"
+              variant="outlined"
+              sx={{
+                color: "white",
+                borderColor: "white",
+                "&:hover": {
+                  borderColor: "#f6bd38",
+                  color: "#f6bd38",
+                },
+              }}
               onClick={() => {
                 setNodeClicked(undefined);
                 setEdgeClicked(undefined);
@@ -297,8 +304,15 @@ export default function MapEditing() {
             pt="3"
           >
             <Button
-              variant="contained"
-              color="success"
+              variant="outlined"
+              sx={{
+                color: "white",
+                borderColor: "white",
+                "&:hover": {
+                  borderColor: "#f6bd38",
+                  color: "#f6bd38",
+                },
+              }}
               onClick={() => {
                 setNodeClicked(undefined);
                 setEdgeClicked(undefined);
@@ -385,8 +399,15 @@ export default function MapEditing() {
                   pt="3"
                 >
                   <Button
-                    variant="contained"
-                    color="success"
+                    variant="outlined"
+                    sx={{
+                      color: "white",
+                      borderColor: "white",
+                      "&:hover": {
+                        borderColor: "#f6bd38",
+                        color: "#f6bd38",
+                      },
+                    }}
                     onClick={() => {
                       addEdgeDB().then();
                       edgeFlag = false;
@@ -448,8 +469,15 @@ export default function MapEditing() {
                   pt="3"
                 >
                   <Button
-                    variant="contained"
-                    color="success"
+                    variant="outlined"
+                    sx={{
+                      color: "white",
+                      borderColor: "white",
+                      "&:hover": {
+                        borderColor: "#f6bd38",
+                        color: "#f6bd38",
+                      },
+                    }}
                     onClick={() => {
                       addNodeDB().then();
                       edgeFlag = false;
