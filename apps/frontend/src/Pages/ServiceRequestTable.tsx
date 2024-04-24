@@ -27,6 +27,7 @@ import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import BuildIcon from "@mui/icons-material/Build";
 import VaccinesIcon from "@mui/icons-material/Vaccines";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
+import CasinoIcon from "@mui/icons-material/Casino";
 import { ListOfServices } from "../components/FullServiceRequest";
 
 interface TabPanelProps {
@@ -281,6 +282,22 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                       className="mx-2"
                       style={{ fontSize: "2rem" }}
                     />
+                  }
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    color: "white",
+                    "&.Mui-selected": {
+                      color: "#f6bd39",
+                      fontWeight: "bold",
+                    },
+                  }}
+                />
+                <Tab
+                  label=" Entertainment "
+                  icon={
+                    <CasinoIcon className="mx-2" style={{ fontSize: "2rem" }} />
                   }
                   sx={{
                     display: "flex",
@@ -760,6 +777,133 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                     <th className=" border-black p-2 ">Room</th>
                     <th className=" border-black p-2 ">Priority</th>
                     <th className=" border-black p-2 ">Details</th>
+                    <th className=" border-black p-2 ">
+                      Type of Entertainment
+                    </th>
+                    <th className=" border-black p-2 ">13+</th>
+                    <th className=" border-black p-2 ">Employee</th>
+                    <th className=" border-black p-2 ">Status</th>
+                    <th className=" border-black p-2 ">Actions</th>
+                    {/*<th className="border border-black">Details</th>*/}
+                  </tr>
+                </thead>
+                <tbody>
+                  {filteredRequestData.length > 0 &&
+                    filteredRequestData
+                      .filter((row) => row.RequestType === "Entertainment")
+                      .map((row, index) => (
+                        <tr
+                          key={index}
+                          style={{
+                            borderWidth: 2,
+                            borderColor: "white",
+                            backgroundColor: "rgb(103,124,143, 0.15)",
+                          }}
+                        >
+                          <td className="border-black text-center p-2">
+                            {row.RequestType}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.RequesterName}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.DeliveryDate.toString()}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.LocationNodeID}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.Priority}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.Details1}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.Details2}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            {row.Details3}
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <FormControl fullWidth>
+                              <Select
+                                sx={{ width: 150 }}
+                                value={row.EmployeeID}
+                                onChange={(e) => {
+                                  updateServiceRequests(
+                                    row,
+                                    "EmployeeID",
+                                    e.target.value,
+                                  ).then();
+                                }}
+                              >
+                                {employees.map((employee: Employee) => (
+                                  <MenuItem value={employee.userID}>
+                                    {employee.nickname}
+                                  </MenuItem>
+                                ))}
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <FormControl fullWidth>
+                              <Select
+                                sx={{ width: 150 }}
+                                value={row.Status}
+                                onChange={(e) => {
+                                  updateServiceRequests(
+                                    row,
+                                    "Status",
+                                    e.target.value as string,
+                                  ).then();
+                                }}
+                              >
+                                <MenuItem value="Unassigned">
+                                  Unassigned
+                                </MenuItem>
+                                <MenuItem value="Assigned">Assigned</MenuItem>
+                                <MenuItem value="InProgress">
+                                  InProgress
+                                </MenuItem>
+                                <MenuItem value="Closed">Closed</MenuItem>
+                              </Select>
+                            </FormControl>
+                          </td>
+                          <td className="border-black text-center p-2">
+                            <Button
+                              variant="contained"
+                              color="error"
+                              onClick={() => deleteService(row)}
+                            >
+                              Delete
+                            </Button>
+                          </td>
+                          {/*<td className="border border-black text-center">*/}
+                          {/*  {row. }//flowers doesnt store details */}
+                          {/*</td>*/}
+                        </tr>
+                      ))}
+                </tbody>
+              </table>
+            </div>
+          </CustomTabPanel>
+          <CustomTabPanel value={selectedTable} index={3}>
+            <div>
+              <table className=" bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
+                <thead>
+                  <tr
+                    className="text-xl"
+                    style={{
+                      backgroundColor: "#677c8f",
+                      color: "white",
+                    }}
+                  >
+                    <th className=" border-black p-2 ">Service Type</th>
+                    <th className=" border-black p-2 ">Name</th>
+                    <th className=" border-black p-2 ">Delivery Date</th>
+                    <th className=" border-black p-2 ">Room</th>
+                    <th className=" border-black p-2 ">Priority</th>
+                    <th className=" border-black p-2 ">Details</th>
                     <th className=" border-black p-2 ">Type of maintenance</th>
                     <th className=" border-black p-2 ">Hazardous Material</th>
                     <th className=" border-black p-2 ">Employee</th>
@@ -868,7 +1012,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
               </table>
             </div>
           </CustomTabPanel>
-          <CustomTabPanel value={selectedTable} index={3}>
+          <CustomTabPanel value={selectedTable} index={4}>
             <div>
               <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
@@ -993,7 +1137,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
               </table>
             </div>
           </CustomTabPanel>
-          <CustomTabPanel value={selectedTable} index={4}>
+          <CustomTabPanel value={selectedTable} index={5}>
             <div>
               <table className="bg-white bg-opacity-60 backdrop-blur-md w-4/5 mx-auto">
                 <thead>
