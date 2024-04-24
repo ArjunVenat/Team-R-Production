@@ -116,11 +116,10 @@ BHALL04302,2782,1067,2,45 Francis,HALL,Hallway Intersection 43 level 2,Hallway B
 BHALL04402,3063,963,2,45 Francis,HALL,Hallway Intersection 44 Level 2,Hallway B4402
 CCONF001L1,2255,849,L1,45 Francis,CONF,Anesthesia Conf Floor L1,Conf C001L1
 CCONF002L1,2665,1043,L1,45 Francis,CONF,Medical Records Conference Room Floor L1,Conf C002L1
-CCONF003L1,2445,1245,L1,45 Francis,CONF,Abrams Conference Room,Conf C003L1
 CDEPT002L1,1980,844,L1,Tower,DEPT,Day Surgery Family Waiting Floor L1,Department C002L1
 CDEPT003L1,1845,844,L1,Tower,DEPT,Day Surgery Family Waiting Exit Floor L1,Department C003L1
 CDEPT004L1,2310,1043,L1,45 Francis,DEPT,Medical Records Film Library Floor L1,Department C004L1
-CHALL001L1,1732,924,L1,Tower,HALL,Hallway 1 Floor L1,Hallway C001L1
+ESTAI00401,2605,1340,1,45 Francis,REST,Staircase H2 Floor 1,Stair H2
 CHALL001L2,2360,854,L2,45 Francis,HALL,Hallway K Elevator Floor L2,Hallway C001L2
 CHALL002L1,2445,1043,L1,45 Francis,HALL,Hallway 2 Floor L1,Hallway C002L1
 CHALL002L2,2270,904,L2,45 Francis,HALL,Hallway 2 Floor L2,Hallway C002L2
@@ -152,9 +151,9 @@ CLABS002L2,2215,1280,L2,45 Francis,LABS,Radiation Oncology Floor L2,Lab C002L2
 CLABS003L1,2290,1284,L1,45 Francis,LABS,Nuclear Medicine Floor L1,Lab C003L1
 CLABS004L1,2320,1284,L1,45 Francis,LABS,Ultrasound Floor L1,Lab C004L1
 CLABS005L1,2770,1284,L1,45 Francis,LABS,CSIR MRI Floor L1,Lab C005L1
-CREST001L1,1732,1019,L1,Tower,REST,Restroom L Elevator Floor L1,Restroom C001L1
 CREST001L2,2300,884,L2,45 Francis,REST,Restroom K Elevator Floor L2,Restroom C001L2
 CREST002L1,2065,1284,L1,Tower,REST,Restroom M Elevator Floor L1,Restroom C002L1
+CCONF003L1,1234,1245,L2,45 Francis,CONF,Abrams Conference Room,Conf C003L1
 CREST002L2,1930,1280,L2,45 Francis,REST,Restroom L Elevator Floor L2,Restroom C002L2
 CREST003L1,2300,879,L1,45 Francis,REST,Restroom K Elevator Floor L1,Restroom C003L1
 CREST004L1,2770,1160,L1,45 Francis,REST,Restroom H Elevator Floor L1,Restroom C004L1
@@ -292,7 +291,6 @@ EDEPT00401,2790,1380,1,45 Francis,DEPT,Rehabilitation Services Floor 1,Rehab 1
 EHALL03101,2790,1460,1,45 Francis,HALL,Hallway Node 29 Floor 1,HallE29
 EHALL03201,2670,1380,1,45 Francis,HALL,Hallway Node 30 Floor 1,HallE30
 EHALL03301,2605,1380,1,45 Francis,HALL,Hallway Node 31 Floor 1,HallE31
-ESTAI00401,2605,1340,1,45 Francis,STAI,Staircase H2 Floor 1,Stair H2
 EHALL03401,2835,1460,1,45 Francis,HALL,Hallway Node 32 Floor 1,HallE32
 EHALL03501,2760,1460,1,45 Francis,HALL,Hallway Node 33 Floor 1,HallE33
 EHALL03601,2760,1405,1,45 Francis,HALL,Hallway Node 34 Floor 1,HallE34
@@ -303,6 +301,7 @@ FHALL00301,2017,910,1,Tower,HALL,Shattuck Street Lobby 1,Hallway F00301
 FEXIT00101,2017,799,1,Tower,EXIT,Shattuck Street Lobby Exit,Shattuck St. Exit
 FHALL00401,1973,910,1,Tower,HALL,Shattuck Street Lobby 2,Hallway F00401
 FRETL00101,1973,844,1,Tower,RETL,Lobby Vending Machine,VM Lobby
+FHALL00501,1950,910,1,Tower,HALL,Shattuck Street Lobby 3,Hallway F00501
 FSERV00101,1950,871,1,Tower,SERV,Shattuck Street Lobby ATM,Lobby ATM
 FHALL00601,1869,930,1,Tower,HALL,Tower Lobby Entrance 1,Tower Entrance
 FHALL00701,1758,930,1,Tower,HALL,Tower Elevator Entrance,Hallway F00701
@@ -324,6 +323,7 @@ FDEPT00301,1721,931,1,Tower,DEPT,Multifaith Chapel,Chapel
 FHALL01801,1758,956,1,Tower,HALL,Tower Hallway 10,Hallway F01801
 FHALL01901,1758,1120,1,Tower,HALL,Tower Hallway 11,Hallway F01901
 FHALL02001,1700,1120,1,Tower,HALL,Tower Hallway 12,Hallway F02001
+FDEPT00201,1610,1120,1,Tower,DEPT,Bretholtz Center for Patients and Families,Bretholtz WR
 FSERV00301,1700,1158,1,Tower,SERV,Kessler Library,Kessler Library
 FHALL02101,1769,1146,1,Tower,HALL,Tower Hallway Entrance,Tower Entrance 2
 FDEPT00401,1794,1146,1,Tower,DEPT,Sharf Admitting Center,Sharf Center
@@ -335,12 +335,14 @@ FHALL02501,1965,1239,1,Tower,HALL,Lobby Hallway 3,Hallway F02501
 FSTAI00301,1947,1239,1,Tower,STAI,Lobby Escalator,Lobby Escalator
 FHALL02601,2026,1239,1,Tower,HALL,Lobby Hallway 4,Hallway F02601
 FHALL02701,2066,1239,1,Tower,HALL,Lobby Hallway 7,Hallway F02701
+FDEPT00501,2128,1300,1,Tower,DEPT,Emergency Department,Emergency
 FHALL02801,1748,1280,1,Tower,HALL,Lobby Entrance Hallway,HallwayF02801
 FEXIT00201,1748,1321,1,Tower,EXIT,75 Francis Valet Drop-off,75 Francis Exit
 FHALL02901,1700,1280,1,Tower,HALL,75 Lobby,75 Lobby
 FINFO00101,1700,1226,1,Tower,INFO,75 Lobby Information Desk,Lobby Info Desk
 FSERV00501,1645,1280,1,Tower,SERV,75 Lobby Valet Cashier,Valet Cashier
 FHALL03001,1645,1246,1,Tower,HALL,Lobby Hallway 5,Hallway F02701
+FRETL00201,1609,1246,1,Tower,RETL,Au Bon Pain,ABP
 FHALL03101,2026,976,1,Tower,HALL,Lobby Hallway 6,Hallway F02801
 FREST00101,2091,976,1,Tower,REST,Bathroom 75 Lobby,Bathroom Lobby
 FEXIT00301,2099,1357,1,Tower,EXIT,Emergency Department Entrance,Emergency Entrance
@@ -348,7 +350,7 @@ FHALL03201,1758,1029,1,Tower,HALL,Tower Hallway 13,Hallway F03201
 FDEPT00601,1780,1029,1,Tower,DEPT,International Patient Center,IPC
 FHALL03301,2066,1282,1,Tower,HALL,Emergency Hallway,Hallway F03301
 GCONF02001,1493,2117,1,Shapiro,CONF,Shapiro Board Room MapNode 20 Floor 1,Shapiro Board Room
-FDEPT00201,1579,1094,1,Tower,DEPT,Bretholtz Center for Patients and Families,Bretholtz WR
+GDEPT01901,1566,2139,1,Shapiro,DEPT,Zinner Breakout Room MapNode 19 Floor 1,Zinner Breakout Room
 GELEV00N01,1647,1930,1,Shapiro,ELEV,Elevator N MapNode 26 Floor 1,Hall
 GELEV00Q01,1648,2161,1,Shapiro,ELEV,Elevator Q MapNode 18 Floor 1,Elevator Q Floor 1
 GEXIT00101,1751,1825,1,Shapiro,EXIT,Francis Street Exit MapNode 1 Floor 1,Francis Street Exit Floor 1
@@ -390,7 +392,6 @@ GHALL00502,1283,1781,2,Shapiro,HALL,Hall Node 5 Floor 2,Hall
 GHALL01002,1340,1820,2,Shapiro,HALL,Hall Node 10 Floor 2,Hall
 GHALL01102,1396,1781,2,Shapiro,HALL,Hall Node 11 Floor 2,Hall
 GHALL01202,1395,1820,2,Shapiro,HALL,Hall Node 12 Floor 2,Hall
-FHALL00501,1918,920,1,Tower,HALL,Shattuck Street Lobby 3,Hallway F00501
 GHALL01302,1450,1781,2,Shapiro,HALL,Hall Node 13 Floor 2,Hall
 GHALL01402,1450,1820,2,Shapiro,HALL,Hall Node 14 Floor 2,Hall
 GHALL01502,1502,1781,2,Shapiro,HALL,Hall Node 15 Floor 2,Hall
@@ -576,6 +577,5 @@ WHALL00702,1740,1500,2,Tower,HALL,Hallway Connector 7 Floor 2,Hallway W0702
 WHALL00802,1720,1745,2,Shapiro,HALL,Hallway Connector 8 Floor 2,Hallway W0802
 WHALL00902,1690,2240,2,Shapiro,HALL,Hallway Connector 9 Floor 2,Hallway W0902
 WHALL01002,1690,2455,2,BTM,HALL,Hallway Connector 10 Floor 2,Hallway W1002
-GDEPT01901,1566,2139,1,Shapiro,DEPT,Zinner Breakout Room MapNode 19 Floor 1,Zinner Breakout Room
-FDEPT00501,2148,1175,1,Tower,DEPT,Emergency Department,Emergency
-FRETL00201,1567,1193,1,Tower,RETL,Au Bon Pain,ABP
+CREST001L1,1750,1019,L1,Tower,REST,Restroom L Elevator Floor L1,Restroom C001L1
+CHALL001L1,1732,2000,L1,Tower,HALL,Hallway 1 Floor L1,Hallway C001L1

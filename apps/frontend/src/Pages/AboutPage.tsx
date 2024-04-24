@@ -121,17 +121,70 @@ export default function AboutPage() {
               </h2>
               <div className="grid grid-cols-3 gap-4">
                 {[
-                  { name: "Javier DeLeon", image: JavierDeLeon },
-                  { name: "John Diamond", image: JohnDiamond },
-                  { name: "Artem Frenk", image: ArtemFrenk },
-                  { name: "Nick Golparvar", image: NickGolparvar },
-                  { name: "Lauren Harrison", image: LaurenHarrison },
-                  { name: "Jessie Hart", image: JessieHart },
-                  { name: "Brannon Henson", image: BrannonHenson },
-                  { name: "Zihan Li", image: ZihanLi },
-                  { name: "Hubert Liu", image: HubertLiu },
-                  { name: "Alex Stoyanov", image: AlexanderStoyanov },
-                  { name: "Arjun Venat", image: ArjunVenat },
+                  {
+                    name: "Artem Frenk",
+                    image: ArtemFrenk,
+                    position1: "Lead Software Engineer",
+                    position2: "Full Stack Engineer",
+                    position3: "Co-Product Owner",
+                  },
+                  {
+                    name: "Nick Golparvar",
+                    image: NickGolparvar,
+                    position1: "Assistant Lead Software Engineer",
+                    position2: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Hubert Liu",
+                    image: HubertLiu,
+                    position1: "Assistant Lead Software Engineer",
+                    position2: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Arjun Venat",
+                    image: ArjunVenat,
+                    position1: "Assistant Lead Software Engineer",
+                    position2: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Javier DeLeon",
+                    image: JavierDeLeon,
+                    position1: "Project Manager",
+                    position2: "Full Stack Engineer",
+                  },
+                  {
+                    name: "John Diamond",
+                    image: JohnDiamond,
+                    position1: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Lauren Harrison",
+                    image: LaurenHarrison,
+                    position1: "Documentation Analyst",
+                    position2: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Jessie Hart",
+                    image: JessieHart,
+                    position1: "Scrum Master",
+                    position2: "Co-Product Owner",
+                    position3: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Brannon Henson",
+                    image: BrannonHenson,
+                    position1: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Zihan Li",
+                    image: ZihanLi,
+                    position1: "Full Stack Engineer",
+                  },
+                  {
+                    name: "Alex Stoyanov",
+                    image: AlexanderStoyanov,
+                    position1: "Full Stack Engineer",
+                  },
                 ].map((developer, index) => (
                   <div key={index} className="flex flex-col items-center gap-2">
                     <img
@@ -147,6 +200,15 @@ export default function AboutPage() {
                     <h3 className="text-center text-lg font-semibold text-primary">
                       {developer.name}
                     </h3>
+                    <p className="text-center text-sm font-semibold text-primary">
+                      {developer.position1}
+                    </p>
+                    <p className="text-center text-sm font-semibold text-primary">
+                      {developer.position2}
+                    </p>
+                    <p className="text-center text-sm  font-semibold text-primary">
+                      {developer.position3}
+                    </p>
                   </div>
                 ))}
               </div>
