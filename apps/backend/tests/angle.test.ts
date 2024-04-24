@@ -1,4 +1,7 @@
 // import { expect, test } from "vitest";
+// import { Directions } from "../src/findDirections.ts";
+// import * as path from "path";
+// import { GraphNode } from "../src/graph.ts";
 // import { GraphNode } from "../src/graph.ts";
 // import { Directions } from "../src/findDirections.ts";
 //
@@ -86,11 +89,27 @@
 //
 // test("2d array test", () => {
 //   const directions: string[][] = [];
-//   directions.push([]);
-//   directions[0].push("1");
-//   directions[0].push("2");
-//   directions[0].push("3");
-//   directions[0].push("4");
-//   directions[0].pop();
+//   const p: GraphNode[] = [];
+//   const s = new GraphNode("1", 0, 0, 100);
+//   const s1 = new GraphNode("2", 1, 0, 100);
+//   const s2 = new GraphNode("3", 1, 1, 100);
+//   const s3 = new GraphNode("4", 2, 1, 100);
+//   p.push(s);
+//   p.push(s1);
+//   p.push(s2);
+//   p.push(s3);
+//   const d = new Directions(p);
+//   // d.directions.push([]);
+//   d.directions.push([]);
+//   d.directions[0].push("1");
+//   d.directions.push([]);
+//   d.directions[1].push("2");
+//   d.directions.push([]);
+//   d.directions[2].push("3");
+//   d.directions.push([]);
+//   d.directions[3].push("aliwufEVEawkf");
+//   d.directions.push([]);
+//   d.directions[4].push("alisufhEVE");
+//   d.cleanDirections();
 //   expect(directions).toStrictEqual([["1", "2", "3"]]);
 // });
