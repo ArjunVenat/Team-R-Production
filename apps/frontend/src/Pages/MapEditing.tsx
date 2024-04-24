@@ -730,6 +730,9 @@ export default function MapEditing() {
                   <TableCell align="left">Start Node:</TableCell>
                   <TableCell align="left">
                     <Autocomplete
+                      sx={{
+                        width: 200,
+                      }}
                       value={editableEdge?.StartNodeID}
                       onChange={(
                         e: ChangeEvent<unknown>,

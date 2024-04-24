@@ -351,6 +351,7 @@ export default function MainPage() {
                           const matchedFloor = floors.find(
                             (floor) => floor.name === floorDirections[0],
                           );
+                          resetTransform();
                           setCurrentMap(matchedFloor ? matchedFloor.map : "");
                         }}
                       >

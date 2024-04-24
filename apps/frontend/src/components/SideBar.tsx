@@ -70,7 +70,7 @@ export default function Sidebar() {
     displayLoggedIn: false,
   };
   const nodes_edges: Menu = {
-    title: "Node/Edge Table",
+    title: "CSV Data",
     icon: <AccessibleForwardIcon />,
     displayLoggedIn: true,
   };
@@ -207,7 +207,7 @@ export default function Sidebar() {
       menuHighlight = "Service Request Table";
       break;
     case "/node-edge-table":
-      menuHighlight = "Node/Edge Table";
+      menuHighlight = "CSV Data";
       break;
     // case "/upload-download-csv":
     //   menuHighlight = "Upload/Download CSV";
@@ -273,7 +273,7 @@ export default function Sidebar() {
     } else if (title === "Edit Map") {
       // Redirect to the edit map page.
       routeChange("editmap");
-    } else if (title === "Node/Edge Table") {
+    } else if (title === "CSV Data") {
       // Redirect to the node/edge table page.
       routeChange("node-edge-table");
     } else if (title === "Home") {
