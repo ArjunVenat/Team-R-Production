@@ -332,7 +332,7 @@ export default function MapEditing() {
           nodeClicked == undefined &&
           edgeClicked == undefined && (
             <div>
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper} sx={{ marginBottom: 2 }}>
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Enter Edge ID:</TableCell>
@@ -442,7 +442,7 @@ export default function MapEditing() {
           nodeClicked == undefined &&
           edgeClicked == undefined && (
             <div>
-              <TableContainer component={Paper}>
+              <TableContainer component={Paper} sx={{ marginBottom: 2 }}>
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
                     <TableCell align="left">Enter Node ID:</TableCell>
@@ -510,7 +510,10 @@ export default function MapEditing() {
           )}
         {nodeClicked != undefined && nodeClicked != defaultNode && (
           <div className={"items- "}>
-            <TableContainer sx={{ maxWidth: 350 }} component={Paper}>
+            <TableContainer
+              sx={{ maxWidth: 350, marginBottom: 2 }}
+              component={Paper}
+            >
               <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                 <TableRow>
                   <TableCell align="left">Node ID:</TableCell>
@@ -715,7 +718,7 @@ export default function MapEditing() {
         )}
         {edgeClicked != undefined && edgeClicked != defaultEdge && (
           <div>
-            <TableContainer component={Paper}>
+            <TableContainer component={Paper} sx={{ marginBottom: 2 }}>
               <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                 <TableRow>
                   <TableCell align="left">Edge ID:</TableCell>

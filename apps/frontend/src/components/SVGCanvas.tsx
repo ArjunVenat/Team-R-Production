@@ -270,7 +270,7 @@ export default function SVGCanvas(props: {
       // Determine the color based on node properties and relevance to the path
       if (props.path?.[0].NodeID === node.NodeID) {
         // If the node is the start of the path, color it chartreuse
-        return "chartreuse";
+        return "#3ECF04";
       } else if (props.path?.[props.path?.length - 1].NodeID === node.NodeID) {
         // If the node is the end of the path, color it red
         return "red";

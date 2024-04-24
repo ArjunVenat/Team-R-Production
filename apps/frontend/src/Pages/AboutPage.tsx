@@ -43,7 +43,7 @@ export default function AboutPage() {
   const [aboutTab, setAboutTab] = useState<number>(0);
 
   return (
-    <Box display="flex">
+    <Box display="flex" minHeight="100vh">
       <SideBar />
 
       <div
@@ -109,7 +109,7 @@ export default function AboutPage() {
         </div>
 
         <CustomTabPanel value={aboutTab} index={0}>
-          <main className="flex flex-col justify-center items-center leading-none mb-20">
+          <main className="flex flex-col justify-center items-center leading-none">
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
@@ -154,7 +154,7 @@ export default function AboutPage() {
           </main>
         </CustomTabPanel>
         <CustomTabPanel value={aboutTab} index={1}>
-          <div className="flex flex-col items-center justify-center gap-2">
+          <div className="flex flex-col items-center gap-2 min-h-screen overflow-y-auto">
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
@@ -240,7 +240,7 @@ export default function AboutPage() {
           </div>
         </CustomTabPanel>
 
-        <div className="fixed w-full bottom-0 bg-gray-200 py-4 px-2 mt-4">
+        <div className="flex flex-col items-center justify-center w-full overflow-clip bottom-0 bg-gray-200 py-4 mt-4 text-center">
           <div className="text-primary">
             WPI Computer Science Department, CS3733-D24 Software Engineering,
             Prof. Wilson Wong

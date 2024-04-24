@@ -303,7 +303,6 @@ FHALL00301,2017,910,1,Tower,HALL,Shattuck Street Lobby 1,Hallway F00301
 FEXIT00101,2017,799,1,Tower,EXIT,Shattuck Street Lobby Exit,Shattuck St. Exit
 FHALL00401,1973,910,1,Tower,HALL,Shattuck Street Lobby 2,Hallway F00401
 FRETL00101,1973,844,1,Tower,RETL,Lobby Vending Machine,VM Lobby
-FHALL00501,1950,910,1,Tower,HALL,Shattuck Street Lobby 3,Hallway F00501
 FSERV00101,1950,871,1,Tower,SERV,Shattuck Street Lobby ATM,Lobby ATM
 FHALL00601,1869,930,1,Tower,HALL,Tower Lobby Entrance 1,Tower Entrance
 FHALL00701,1758,930,1,Tower,HALL,Tower Elevator Entrance,Hallway F00701
@@ -336,7 +335,6 @@ FHALL02501,1965,1239,1,Tower,HALL,Lobby Hallway 3,Hallway F02501
 FSTAI00301,1947,1239,1,Tower,STAI,Lobby Escalator,Lobby Escalator
 FHALL02601,2026,1239,1,Tower,HALL,Lobby Hallway 4,Hallway F02601
 FHALL02701,2066,1239,1,Tower,HALL,Lobby Hallway 7,Hallway F02701
-FDEPT00501,2128,1300,1,Tower,DEPT,Emergency Department,Emergency
 FHALL02801,1748,1280,1,Tower,HALL,Lobby Entrance Hallway,HallwayF02801
 FEXIT00201,1748,1321,1,Tower,EXIT,75 Francis Valet Drop-off,75 Francis Exit
 FHALL02901,1700,1280,1,Tower,HALL,75 Lobby,75 Lobby
@@ -392,6 +390,7 @@ GHALL00502,1283,1781,2,Shapiro,HALL,Hall Node 5 Floor 2,Hall
 GHALL01002,1340,1820,2,Shapiro,HALL,Hall Node 10 Floor 2,Hall
 GHALL01102,1396,1781,2,Shapiro,HALL,Hall Node 11 Floor 2,Hall
 GHALL01202,1395,1820,2,Shapiro,HALL,Hall Node 12 Floor 2,Hall
+FHALL00501,1918,920,1,Tower,HALL,Shattuck Street Lobby 3,Hallway F00501
 GHALL01302,1450,1781,2,Shapiro,HALL,Hall Node 13 Floor 2,Hall
 GHALL01402,1450,1820,2,Shapiro,HALL,Hall Node 14 Floor 2,Hall
 GHALL01502,1502,1781,2,Shapiro,HALL,Hall Node 15 Floor 2,Hall
@@ -578,4 +577,5 @@ WHALL00802,1720,1745,2,Shapiro,HALL,Hallway Connector 8 Floor 2,Hallway W0802
 WHALL00902,1690,2240,2,Shapiro,HALL,Hallway Connector 9 Floor 2,Hallway W0902
 WHALL01002,1690,2455,2,BTM,HALL,Hallway Connector 10 Floor 2,Hallway W1002
 GDEPT01901,1566,2139,1,Shapiro,DEPT,Zinner Breakout Room MapNode 19 Floor 1,Zinner Breakout Room
+FDEPT00501,2148,1175,1,Tower,DEPT,Emergency Department,Emergency
 FRETL00201,1567,1193,1,Tower,RETL,Au Bon Pain,ABP
