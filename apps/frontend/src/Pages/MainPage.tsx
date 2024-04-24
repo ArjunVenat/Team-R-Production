@@ -299,7 +299,7 @@ export default function MainPage() {
                     Get Directions
                   </Button>
                   <Button
-                    className="content-center"
+                    className="content-center "
                     variant="outlined"
                     sx={{
                       color: "white",
@@ -314,6 +314,7 @@ export default function MainPage() {
                       setIsDirectionsClicked(false);
                       resetTransform();
                     }}
+                    style={{ marginLeft: "auto" }}
                   >
                     Reset Map
                   </Button>
