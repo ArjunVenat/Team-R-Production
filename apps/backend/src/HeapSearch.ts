@@ -3,12 +3,6 @@ import { Graph, GraphNode } from "./graph.ts";
 import minHeap from "./heap.ts";
 
 export abstract class HeapSearch implements Ipathfind {
-  static BASICALLY_INFINITY = 99999999999;
-  heap: minHeap = new minHeap();
-  nodeSet = new Set<GraphNode>();
-  arrivedFrom = new Map<GraphNode, GraphNode>();
-  shortestPath = new Map<GraphNode, number>();
-
   pathfind(graph: Graph, start: string, end: string) {
     const startNode = Graph.nodeMap.get(start);
     const endNode = Graph.nodeMap.get(end);
@@ -18,13 +12,23 @@ export abstract class HeapSearch implements Ipathfind {
       return [];
     }
 
+    // Initialize datastructures
+    const BASICALLY_INFINITY = 99999999999;
+    const heap: minHeap = new minHeap();
+    const nodeSet = new Set<GraphNode>();
+    const arrivedFrom = new Map<GraphNode, GraphNode>();
+    const shortestPath = new Map<GraphNode, number>();
+
     // Fill various datastructures with initial values
-    this.init_search(startNode, endNode);
+    arrivedFrom.set(startNode, startNode);
+    shortestPath.set(startNode, 0);
+    heap.insert(startNode, startNode.getDistance(endNode));
+    nodeSet.add(startNode);
 
     // Iterate through the heap
-    while (!this.heap.isEmpty()) {
-      const currNode = this.heap.pop();
-      this.nodeSet.delete(currNode);
+    while (!heap.isEmpty()) {
+      const currNode = heap.pop();
+      nodeSet.delete(currNode);
 
       // Terminate search if we find the target
       if (currNode == endNode) {
@@ -34,33 +38,26 @@ export abstract class HeapSearch implements Ipathfind {
       for (const tempNode of currNode.neighbors) {
         // We will know how far a node is before we explore its neighbors
         const dist =
-          this.shortestPath.get(currNode)! + currNode.getDistance(tempNode);
+          shortestPath.get(currNode)! + currNode.getDistance(tempNode);
 
         // Compare to best known path
         if (
           dist <
-          (this.shortestPath.has(tempNode)
-            ? this.shortestPath.get(tempNode)!
-            : HeapSearch.BASICALLY_INFINITY)
+          (shortestPath.has(tempNode)
+            ? shortestPath.get(tempNode)!
+            : BASICALLY_INFINITY)
         ) {
-          this.arrivedFrom.set(tempNode, currNode);
-          this.shortestPath.set(tempNode, dist);
+          arrivedFrom.set(tempNode, currNode);
+          shortestPath.set(tempNode, dist);
 
           // TODO: Add a hashset to check if the node exists instead of performing expensive delete operation
-          this.heap.delete(tempNode);
-          this.heap.insert(tempNode, dist + this.heuristic(tempNode, endNode));
+          heap.delete(tempNode);
+          heap.insert(tempNode, dist + this.heuristic(tempNode, endNode));
         }
       }
     }
 
-    return Graph.backtrack(this.arrivedFrom, startNode, endNode);
-  }
-
-  init_search(startNode: GraphNode, endNode: GraphNode) {
-    this.arrivedFrom.set(startNode, startNode);
-    this.shortestPath.set(startNode, 0);
-    this.heap.insert(startNode, startNode.getDistance(endNode));
-    this.nodeSet.add(startNode);
+    return Graph.backtrack(arrivedFrom, startNode, endNode);
   }
 
   abstract heuristic(tempNode: GraphNode, endNode: GraphNode): number;
