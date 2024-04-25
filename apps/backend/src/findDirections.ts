@@ -155,15 +155,19 @@ export class Directions {
 
   public cleanDirections() {
     for (let i = 0; i < this.directions.length; i++) {
-      if (
-        this.directions[i][this.directions[i].length - 2].indexOf("ELE") != -1
-      ) {
-        this.directions[i].pop();
+      if (this.directions[i].length >= 2) {
+        if (
+          this.directions[i][this.directions[i].length - 2].indexOf("ELE") != -1
+        ) {
+          this.directions[i].pop();
+        }
       }
-      if (
-        this.directions[i][this.directions[i].length - 3].indexOf("ELE") != -1
-      ) {
-        this.directions[i].pop();
+      if (this.directions[i].length >= 3) {
+        if (
+          this.directions[i][this.directions[i].length - 3].indexOf("ELE") != -1
+        ) {
+          this.directions[i].pop();
+        }
       }
       if (
         this.directions[i][this.directions[i].length - 1].indexOf("ELE") != -1
@@ -171,6 +175,15 @@ export class Directions {
         this.directions[i].pop();
       }
     }
+    //this.directions[0].push("test");
+    // if (
+    //   this.directions[0].length == 2 &&
+    //   (this.directions[0][1].indexOf("ELE") != -1 ||
+    //     this.directions[0][1].indexOf("STAI") != -1)
+    // ) {
+    //   this.directions[0].pop();
+    //   this.directions[0].push("test");
+    // }
   }
 }
 
