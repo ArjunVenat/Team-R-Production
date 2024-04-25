@@ -47,9 +47,9 @@ export function ServiceRequestMenu() {
   return (
     <Box display="flex" className="max-w-screen h-screen">
       <Sidebar />
-      <div className="flex flex-col flex-grow pt-8 bg-primary h-screen">
+      <div className=" top-0 pt-8 bg-primary flex justify-center items-center w-full">
         <main
-          className="flex flex-col flex-grow bg-cover bg-no-repeat overflow-y-hidden"
+          className="flex w-full h-full overflow-y-auto flex-grow justify-center items-center  bg-cover bg-center bg-no-repeat relative"
           style={{
             backgroundImage: `url(${swoosh})`,
             width: "100%",

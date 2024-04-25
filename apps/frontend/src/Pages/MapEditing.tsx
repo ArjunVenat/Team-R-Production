@@ -77,9 +77,11 @@ export default function MapEditing() {
   const [addEdgeEndID, setAddEdgeEndID] = useState<string>("");
   const [addNodeFormFlag, setAddNodeFormFlag] = useState<boolean>(false);
   const [addNodeID, setAddNodeID] = useState<string>("");
+  const [edgeLock, setEdgeLock] = useState<boolean>();
 
   // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
+    setEdgeLock(false);
     setNodeClicked(node);
     if (node) {
       setEditableNode({ ...node }); // Handles clicked node and sets it as editable
@@ -87,7 +89,14 @@ export default function MapEditing() {
   };
 
   // handles edgeClicked and editableEdge useState whenever edge is clicked
-  const handleEdgeClicked = (edge: Edges | undefined) => {
+  const handleEdgeClicked = (
+    edge: Edges | undefined,
+    isMouseClick: boolean,
+  ) => {
+    if (isMouseClick) {
+      setEdgeLock(false);
+    }
+
     setEdgeClicked(edge);
     if (edge) {
       setEditableEdge({ ...edge });
@@ -195,7 +204,7 @@ export default function MapEditing() {
     edgeFlag = true;
 
     //Set new edge
-    handleEdgeClicked(newEdge);
+    handleEdgeClicked(newEdge, false);
   };
 
   const delNodeDB = async (delType: string, nodeID: string) => {
@@ -413,6 +422,7 @@ export default function MapEditing() {
                       addEdgeDB().then();
                       edgeFlag = false;
                       setAddEdgeFormFlag(false);
+                      setEdgeLock(true);
                     }}
                   >
                     Add To Map
@@ -716,111 +726,118 @@ export default function MapEditing() {
             </Box>
           </div>
         )}
-        {edgeClicked != undefined && edgeClicked != defaultEdge && (
-          <div>
-            <TableContainer component={Paper} sx={{ marginBottom: 2 }}>
-              <Table sx={{ maxWidth: 350 }} aria-label="simple table">
-                <TableRow>
-                  <TableCell align="left">Edge ID:</TableCell>
-                  <TableCell align="left">
-                    {edgeClicked?.EdgeID || ""}
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Start Node:</TableCell>
-                  <TableCell align="left">
-                    <Autocomplete
-                      value={editableEdge?.StartNodeID}
-                      onChange={(
-                        e: ChangeEvent<unknown>,
-                        getStartID: string | null,
-                      ) => {
-                        editEdgeDB(
-                          edgeClicked.EdgeID,
-                          "StartNodeID",
-                          getStartID!,
-                        ).then();
-                        edgeClicked.StartNodeID = getStartID!;
-                        setEditableEdge({ ...edgeClicked });
-                      }}
-                      disablePortal
-                      id="combo-box-end"
-                      options={nodesData
-                        .filter(
-                          (node: Nodes) =>
-                            node.NodeID != edgeClicked.StartNodeID,
-                        )
-                        .map((node: Nodes) => node.NodeID)}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Start Node ID" />
-                      )}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">End Node:</TableCell>
-                  <TableCell align="left">
-                    <Autocomplete
-                      value={editableEdge?.EndNodeID}
-                      onChange={(
-                        e: ChangeEvent<unknown>,
-                        getEndID: string | null,
-                      ) => {
-                        editEdgeDB(
-                          edgeClicked.EdgeID,
-                          "EndNodeID",
-                          getEndID!,
-                        ).then();
-                        edgeClicked.EndNodeID = getEndID!;
-                        setEditableEdge({ ...edgeClicked });
-                      }}
-                      disablePortal
-                      id="combo-box-end"
-                      options={nodesData
-                        .filter(
-                          (node: Nodes) => node.NodeID != edgeClicked.EndNodeID,
-                        )
-                        .map((node: Nodes) => node.NodeID)}
-                      renderInput={(params) => (
-                        <TextField {...params} label="End Node ID" />
-                      )}
-                    />
-                  </TableCell>
-                </TableRow>
-              </Table>
-            </TableContainer>
-            <Box
-              display="flex"
-              justifyContent="center"
-              alignItems="center"
-              minHeight="5vh"
-            >
-              <Button
-                variant="contained"
-                color="error"
-                onClick={() => {
-                  delEdgeDB("Single", edgeClicked.EdgeID).then();
-                  setEdgeClicked(undefined);
-                  edgeClicked.EdgeID = "";
-                  edgeClicked.EndNodeID = "";
-                  edgeClicked.StartNodeID = "";
-                  setEditableEdge({ ...edgeClicked });
-                  setAddEdgeFormFlag(false);
-                }}
-              >
-                Delete Edge
-              </Button>
-            </Box>
-          </div>
-        )}
-        {nodeClicked === undefined &&
-          edgeClicked === undefined &&
-          !addNodeFormFlag &&
-          !addEdgeFormFlag && (
+        {edgeClicked != undefined &&
+          edgeClicked != defaultEdge &&
+          !edgeLock && (
             <div>
-              <p>Click on a Node or Edge to view its details</p>
+              <TableContainer component={Paper} sx={{ marginBottom: 2 }}>
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
+                  <TableRow>
+                    <TableCell align="left">Edge ID:</TableCell>
+                    <TableCell align="left">
+                      {edgeClicked?.EdgeID || ""}
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Start Node:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        sx={{
+                          width: 200,
+                        }}
+                        value={editableEdge?.StartNodeID}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getStartID: string | null,
+                        ) => {
+                          editEdgeDB(
+                            edgeClicked.EdgeID,
+                            "StartNodeID",
+                            getStartID!,
+                          ).then();
+                          edgeClicked.StartNodeID = getStartID!;
+                          setEditableEdge({ ...edgeClicked });
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={nodesData
+                          .filter(
+                            (node: Nodes) =>
+                              node.NodeID != edgeClicked.StartNodeID,
+                          )
+                          .map((node: Nodes) => node.NodeID)}
+                        renderInput={(params) => (
+                          <TextField {...params} label="Start Node ID" />
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">End Node:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={editableEdge?.EndNodeID}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getEndID: string | null,
+                        ) => {
+                          editEdgeDB(
+                            edgeClicked.EdgeID,
+                            "EndNodeID",
+                            getEndID!,
+                          ).then();
+                          edgeClicked.EndNodeID = getEndID!;
+                          setEditableEdge({ ...edgeClicked });
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={nodesData
+                          .filter(
+                            (node: Nodes) =>
+                              node.NodeID != edgeClicked.EndNodeID,
+                          )
+                          .map((node: Nodes) => node.NodeID)}
+                        renderInput={(params) => (
+                          <TextField {...params} label="End Node ID" />
+                        )}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </TableContainer>
+              <Box
+                display="flex"
+                justifyContent="center"
+                alignItems="center"
+                minHeight="5vh"
+              >
+                <Button
+                  variant="contained"
+                  color="error"
+                  onClick={() => {
+                    delEdgeDB("Single", edgeClicked.EdgeID).then();
+                    setEdgeClicked(undefined);
+                    edgeClicked.EdgeID = "";
+                    edgeClicked.EndNodeID = "";
+                    edgeClicked.StartNodeID = "";
+                    setEditableEdge({ ...edgeClicked });
+                    setAddEdgeFormFlag(false);
+                  }}
+                >
+                  Delete Edge
+                </Button>
+              </Box>
             </div>
           )}
+        {((nodeClicked === undefined &&
+          edgeClicked === undefined &&
+          !addNodeFormFlag &&
+          !addEdgeFormFlag) ||
+          edgeLock) && (
+          <div>
+            <p>Click on a Node or Edge to view its details</p>
+          </div>
+        )}
       </aside>
     </div>
   );
