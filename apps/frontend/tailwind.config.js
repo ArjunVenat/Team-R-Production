@@ -7,6 +7,7 @@ export default {
         primary: "#012d5a",
         secondary: "#e4e4e4",
         tertiary: "#f6bd39",
+        teal: "#009CA6",
       },
       fontFamily: {
         sans: ["Open Sans", "sans-serif"],
@@ -14,11 +15,11 @@ export default {
         Garamond: ["Garamond"],
       },
       animation: {
-        "dash-path": "dash 1s infinite reverse linear",
+        "dash-path": "dash infinite reverse linear " + "1s", // 1s duration. This controls speed of animation. Higher is slower.
       },
       keyframes: {
         dash: {
-          to: { strokeDashoffset: 40 },
+          to: { strokeDashoffset: 40 }, //needs to be double of strokeDasharray
         },
       },
     },

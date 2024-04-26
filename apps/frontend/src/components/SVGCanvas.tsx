@@ -505,81 +505,27 @@ export default function SVGCanvas(props: {
 
               if (nextNode) {
                 // const pathLength = totalLength; // Assuming totalLength is the length of the path
+                const poly = (props: {
+                  style: string;
+                  strokeWidth: string;
+                }) => (
+                  <polyline
+                    className={`animate-dash-path ${props.style}`}
+                    fill="none"
+                    strokeDasharray="20" //this must be half of the value of strokeDashoffset in tailwind.config.js
+                    strokeWidth={props.strokeWidth}
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    points={splice
+                      .map((node) => `${node.Xcoord},${node.Ycoord}`)
+                      .join(" ")}
+                  />
+                );
 
                 return (
                   <>
-                    <path
-                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
-                        .slice(1)
-                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
-                        .join(" ")}`}
-                      stroke="black"
-                      strokeWidth="10"
-                      fill="none"
-                    />
-                    <path
-                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
-                        .slice(1)
-                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
-                        .join(" ")}`}
-                      stroke="white"
-                      strokeWidth="9"
-                      fill="none"
-                    />
-                    {/*<motion.image*/}
-                    {/*    href={OIP}*/}
-                    {/*    width={100}*/}
-                    {/*    height={100}*/}
-                    {/*    initial={{*/}
-                    {/*        x: Number(splice[0].Xcoord) - 50,*/}
-                    {/*        y: Number(splice[0].Ycoord) - 50,*/}
-                    {/*    }}*/}
-                    {/*    animate={{*/}
-                    {/*        x: Number(splice[splice.length - 1].Xcoord) - 50,*/}
-                    {/*        y: Number(splice[splice.length - 1].Ycoord) - 50,*/}
-                    {/*    }}*/}
-                    {/*    transition={{*/}
-                    {/*        duration: 0.5 * totalLength, // Adjust animation duration as needed*/}
-                    {/*        ease: "linear",*/}
-                    {/*        repeat: Infinity,*/}
-                    {/*        repeatType: "loop",*/}
-                    {/*    }}*/}
-                    {/*/>*/}
-                    {/*<motion.path*/}
-                    {/*    key={`${index}`}*/}
-                    {/*    d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice*/}
-                    {/*        .slice(1)*/}
-                    {/*        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)*/}
-                    {/*        .join(" ")}`}*/}
-                    {/*    stroke="#009CA6"*/}
-                    {/*    strokeWidth="4"*/}
-                    {/*    fill="none"*/}
-                    {/*    initial={{*/}
-                    {/*        pathLength: 0,*/}
-                    {/*        strokeDasharray: "100 50",*/}
-                    {/*        strokeDashoffset: "100",*/}
-                    {/*    }}*/}
-                    {/*    animate={{ pathLength: 2, strokeDashoffset: 0 }}*/}
-                    {/*    transition={{*/}
-                    {/*        duration: 0.5 * totalLength,*/}
-                    {/*        ease: "linear",*/}
-                    {/*        repeat: Infinity,*/}
-                    {/*        repeatDelay: 0.01,*/}
-                    {/*    }}*/}
-                    {/*/>*/}
-                    <path
-                      className="animate-dash-path"
-                      fill="none"
-                      stroke="#009CA6"
-                      strokeDasharray="20"
-                      strokeWidth="6"
-                      strokeLinejoin="round"
-                      strokeLinecap="round"
-                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
-                        .slice(1)
-                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
-                        .join(" ")}`}
-                    ></path>
+                    {poly({ style: "stroke-primary", strokeWidth: "10" })}
+                    {poly({ style: "stroke-teal", strokeWidth: "6" })}
                   </>
                 );
               }
