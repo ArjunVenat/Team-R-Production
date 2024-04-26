@@ -98,12 +98,21 @@ async function createGraph(): Promise<Graph> {
 
   // Add nodes to graph
   for (const node of nodes) {
-    graph.addNode(
-      node.NodeID,
-      +node.Xcoord,
-      +node.Ycoord,
-      floorToZMap.get(node.Floor)!,
-    );
+    if (node.NodeType == "STAI") {
+      graph.addStairNode(
+        node.NodeID,
+        +node.Xcoord,
+        +node.Ycoord,
+        floorToZMap.get(node.Floor)!,
+      );
+    } else {
+      graph.addNode(
+        node.NodeID,
+        +node.Xcoord,
+        +node.Ycoord,
+        floorToZMap.get(node.Floor)!,
+      );
+    }
   }
 
   // Add edges to graph
