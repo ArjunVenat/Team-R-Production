@@ -83,11 +83,11 @@ router.get(
 
 async function createGraph(): Promise<Graph> {
   const floorToZMap = new Map<string, number>();
-  floorToZMap.set("L1", -100);
   floorToZMap.set("L2", -200);
-  floorToZMap.set("1", 100);
-  floorToZMap.set("2", 200);
-  floorToZMap.set("3", 300);
+  floorToZMap.set("L1", 0);
+  floorToZMap.set("1", 200);
+  floorToZMap.set("2", 400);
+  floorToZMap.set("3", 600);
 
   // Initialize the graph
   const graph = new Graph();
