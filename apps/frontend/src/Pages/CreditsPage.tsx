@@ -1,11 +1,9 @@
-import SideBar from "../components/SideBar.tsx";
 import swoosh from "../assets/swoosh.png";
 import { Box, Link } from "@mui/material";
 
 export default function CreditsPage() {
   return (
     <Box display="flex">
-      <SideBar />
       <div className=" top-0 pt-8 bg-primary flex justify-center items-center w-full h-full ">
         <div
           className="flex items-center justify-center min-h-dvh w-full bg-cover bg-center bg-no-repeat"
