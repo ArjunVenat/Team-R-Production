@@ -144,12 +144,13 @@ export class Directions {
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
-        this.directions[j].push("take elevator at  " + this.path[i + 1].id);
+        this.directions[j].push("take the elevator at  " + this.path[i + 1].id);
       }
     }
     this.cleanDirections();
-
-    //directions[directions.length-1].push("Arrived at " + this.path[this.path.length - 1].id);
+    this.directions[this.directions.length - 1].push(
+      "arrived at " + this.path[path.length - 1].id,
+    );
     return this.directions;
   }
 
@@ -157,34 +158,49 @@ export class Directions {
     for (let i = 0; i < this.directions.length; i++) {
       if (this.directions[i].length >= 2) {
         if (
-          this.directions[i][this.directions[i].length - 2].indexOf("ELE") != -1
+          this.directions[i][this.directions[i].length - 2].indexOf("ELE") !=
+            -1 ||
+          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
+            -1
         ) {
           this.directions[i].pop();
         }
       }
       if (this.directions[i].length >= 3) {
         if (
-          this.directions[i][this.directions[i].length - 3].indexOf("ELE") != -1
+          this.directions[i][this.directions[i].length - 3].indexOf("ELE") !=
+            -1 ||
+          this.directions[i][this.directions[i].length - 3].indexOf("STAI") !=
+            -1
         ) {
           this.directions[i].pop();
         }
       }
       if (
-        this.directions[i][this.directions[i].length - 1].indexOf("ELE") != -1
+        this.directions[i][this.directions[i].length - 1].indexOf("ELE") !=
+          -1 ||
+        this.directions[i][this.directions[i].length - 1].indexOf("STAI") != -1
       ) {
         this.directions[i].pop();
       }
     }
-    //this.directions[0].push("test");
-    // if (
-    //   this.directions[0].length == 2 &&
-    //   (this.directions[0][1].indexOf("ELE") != -1 ||
-    //     this.directions[0][1].indexOf("STAI") != -1)
-    // ) {
-    //   this.directions[0].pop();
-    //   this.directions[0].push("test");
-    // }
+    //if(this.directions[0][1]) {
+    if (
+      this.directions[0].length == 1 //&&
+      //(this.directions[0][1].indexOf("ELE") != -1 ||
+      //this.directions[0][1].indexOf("STAI") != -1)
+    ) {
+      //this.directions[0].pop();
+      if (this.path[0].id.indexOf("ELEV")) {
+        this.directions[0].push("take the elevator at " + this.path[0].id);
+      } else if (this.path[0].id.indexOf("STAI")) {
+        this.directions[0].push(
+          "take the stairs/escalator at " + this.path[0].id,
+        );
+      }
+    }
   }
+  //}
 }
 
 //Helper function for inserting floor name
