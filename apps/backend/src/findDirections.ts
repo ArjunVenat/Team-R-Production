@@ -144,7 +144,7 @@ export class Directions {
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
-        this.directions[j].push("take the elevator at  " + this.path[i + 1].id);
+        this.directions[j].push("take elevator at  " + this.path[i + 1].id);
       }
     }
     this.cleanDirections();
@@ -156,41 +156,20 @@ export class Directions {
 
   public cleanDirections() {
     for (let i = 0; i < this.directions.length; i++) {
-      if (this.directions[i].length >= 2) {
+      const temp = this.directions[i].length;
+      for (let j = temp - 1; j > temp - 3; j--) {
         if (
-          this.directions[i][this.directions[i].length - 2].indexOf("ELE") !=
-            -1 ||
-          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
-            -1
+          this.directions[i][j].indexOf("ELEV") ||
+          this.directions[i][j].indexOf("ELEV")
         ) {
           this.directions[i].pop();
         }
-      }
-      if (this.directions[i].length >= 3) {
-        if (
-          this.directions[i][this.directions[i].length - 3].indexOf("ELE") !=
-            -1 ||
-          this.directions[i][this.directions[i].length - 3].indexOf("STAI") !=
-            -1
-        ) {
-          this.directions[i].pop();
-        }
-      }
-      if (
-        this.directions[i][this.directions[i].length - 1].indexOf("ELE") !=
-          -1 ||
-        this.directions[i][this.directions[i].length - 1].indexOf("STAI") != -1
-      ) {
-        this.directions[i].pop();
       }
     }
-    //if(this.directions[0][1]) {
+
     if (
       this.directions[0].length == 1 //&&
-      //(this.directions[0][1].indexOf("ELE") != -1 ||
-      //this.directions[0][1].indexOf("STAI") != -1)
     ) {
-      //this.directions[0].pop();
       if (this.path[0].id.indexOf("ELEV")) {
         this.directions[0].push("take the elevator at " + this.path[0].id);
       } else if (this.path[0].id.indexOf("STAI")) {
