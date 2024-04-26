@@ -4,7 +4,6 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import axios from "axios";
 import { Box, Typography } from "@mui/material";
 import swoosh from "../assets/swoosh.png";
-import SideBar from "../components/SideBar";
 
 type TypeLengths = {
   Flowers: number;
@@ -88,7 +87,6 @@ const St4t5Page = () => {
 
   return (
     <Box display="flex">
-      <SideBar />
       <div className="top-0 pt-8 bg-primary flex justify-center items-center w-full">
         <Box
           className="w-full h-full overflow-y-auto flex-grow justify-center items-center  bg-cover bg-center bg-no-repeat relative"

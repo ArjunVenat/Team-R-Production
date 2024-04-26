@@ -331,7 +331,6 @@ FHALL02101,1769,1146,1,Tower,HALL,Tower Hallway Entrance,Tower Entrance 2
 FDEPT00401,1794,1146,1,Tower,DEPT,Sharf Admitting Center,Sharf Center
 FHALL02201,1769,1280,1,Tower,HALL,Hallway Lobby Entrance,Entrance Hallway
 FLABS00101,1845,1250,1,Tower,LABS,Obstetrics Admitting,Obs Admitting
-FHALL02301,1845,1280,1,Tower,HALL,Lobby Hallway 1,Hallway F02301
 FHALL02401,1965,1280,1,Tower,HALL,Lobby Hallway 2,Hallway F02401
 FHALL02501,1965,1239,1,Tower,HALL,Lobby Hallway 3,Hallway F02501
 FSTAI00301,1947,1239,1,Tower,STAI,Lobby Escalator,Lobby Escalator
@@ -560,7 +559,6 @@ WELEV00L02,1805,925,2,Tower,ELEV,Elevator L Floor 2,Elevator L2
 WELEV00L03,1790,925,3,Tower,ELEV,Elevator L Floor 3,Elevator L3
 WELEV00ML2,1820,1280,L2,Tower,ELEV,Elevator M Floor L2,Elevator ML2
 WELEV00ML1,1820,1284,L1,Tower,ELEV,Elevator M Floor L1,Elevator ML1
-WELEV00M01,1810,1280,1,Tower,ELEV,Elevator M Floor 1,Elevator M1
 WELEV00M02,1825,1280,2,Tower,ELEV,Elevator M Floor 2,Elevator M2
 WELEV00M03,1815,1290,3,Tower,ELEV,Elevator M Floor 3,Elevator M3
 WHALL001L2,1745,1524,L2,Tower,HALL,Hallway Connector 1 Floor L2,Hallway W01L2
@@ -579,3 +577,5 @@ WHALL00702,1740,1500,2,Tower,HALL,Hallway Connector 7 Floor 2,Hallway W0702
 WHALL00802,1720,1745,2,Shapiro,HALL,Hallway Connector 8 Floor 2,Hallway W0802
 WHALL00902,1690,2240,2,Shapiro,HALL,Hallway Connector 9 Floor 2,Hallway W0902
 WHALL01002,1690,2455,2,BTM,HALL,Hallway Connector 10 Floor 2,Hallway W1002
+FHALL02301,1845,1280,1,Tower,HALL,Lobby Hallway 1,Hallway F02301
+WELEV00M01,1810,1281,1,Tower,ELEV,Elevator M Floor 1,Elevator M1

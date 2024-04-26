@@ -1,6 +1,5 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
-import SideBar from "../components/SideBar.tsx";
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
@@ -78,7 +77,6 @@ export default function MapEditing() {
   const [addNodeFormFlag, setAddNodeFormFlag] = useState<boolean>(false);
   const [addNodeID, setAddNodeID] = useState<string>("");
   const [edgeLock, setEdgeLock] = useState<boolean>();
-
   // handles nodeClicked and editableNode useState whenever node is clicked
   const handleNodeClick = (node: Nodes | undefined) => {
     setEdgeLock(false);
@@ -232,7 +230,6 @@ export default function MapEditing() {
       id="MainPage"
       className="flex h-screen overflow-hidden flex-row bg-[#d6d8d5]"
     >
-      <SideBar />
       <main className="flex content-center justify-center leading-none relative">
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
           {({ zoomIn, zoomOut, resetTransform }) => (

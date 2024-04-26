@@ -3,6 +3,7 @@ import axios from "axios";
 import { Edges, Nodes } from "database";
 import { Tooltip } from "@mui/material";
 import { motion } from "framer-motion";
+import { useControls } from "react-zoom-pan-pinch";
 
 // import ElevatorIcon from '@mui/icons-material/Elevator';
 // import {SvgIcon} from "@mui/material";
@@ -50,6 +51,8 @@ export default function SVGCanvas(props: {
   const [isDragging, setIsDragging] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
   const [draggingNode, setDraggingNode] = useState<Nodes>();
+  const controls = useControls();
+  const { scale, positionX, positionY } = controls.instance.getContext().state;
   /**
    * This useEffect hook is responsible for updating the component's state with new node data.
    * If props.allnodes is provided, it updates the nodesData state with the new data.
@@ -428,6 +431,10 @@ export default function SVGCanvas(props: {
     const { clientX, clientY } = event;
     const dx = clientX - mousePosition.x;
     const dy = clientY - mousePosition.y;
+
+    const mouseXOnMap = (clientX - positionX) / scale;
+    const mouseYOnMap = (clientY - positionY) / scale;
+    console.log(mouseXOnMap, mouseYOnMap);
 
     setNodesData((prevState) => {
       return prevState.map((prevNode) => {
