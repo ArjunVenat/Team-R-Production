@@ -21,7 +21,7 @@ import { ThemeProvider } from "@mui/material";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { useAuth0 } from "@auth0/auth0-react";
 import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
-import { autocompleteStyle, buttonStyle } from "../styles/muiStyles.ts";
+import { autocompleteStyle } from "../styles/muiStyles.ts";
 import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 import TurnRightIcon from "@mui/icons-material/TurnRight";
 import StraightIcon from "@mui/icons-material/Straight";
@@ -281,8 +281,15 @@ export default function MainPage() {
                 <div className="flex justify-center gap-3">
                   <Button
                     className="content-center"
-                    variant="contained"
-                    color="success"
+                    variant="outlined"
+                    sx={{
+                      color: "white",
+                      borderColor: "white",
+                      "&:hover": {
+                        borderColor: "#f6bd38",
+                        color: "#f6bd38",
+                      },
+                    }}
                     onClick={() => {
                       getDirections();
                       setIsDirectionsClicked(true);
@@ -292,7 +299,7 @@ export default function MainPage() {
                     Get Directions
                   </Button>
                   <Button
-                    className="content-center"
+                    className="content-center "
                     variant="outlined"
                     sx={{
                       color: "white",
@@ -307,6 +314,7 @@ export default function MainPage() {
                       setIsDirectionsClicked(false);
                       resetTransform();
                     }}
+                    style={{ marginLeft: "auto" }}
                   >
                     Reset Map
                   </Button>
@@ -321,8 +329,9 @@ export default function MainPage() {
                     {
                       boxShadow:
                         "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
+                      backgroundColor: "#009CA6",
+                      color: "white",
                     },
-                    { ...buttonStyle },
                   ]}
                 >
                   {pathfindingAlgorithms.map((algorithm) => (
@@ -342,6 +351,7 @@ export default function MainPage() {
                           const matchedFloor = floors.find(
                             (floor) => floor.name === floorDirections[0],
                           );
+                          resetTransform();
                           setCurrentMap(matchedFloor ? matchedFloor.map : "");
                         }}
                       >

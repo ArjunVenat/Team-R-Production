@@ -17,17 +17,38 @@ export function MapControls(props: {
         <Button
           onClick={() => props.zoomOut()}
           children={<ZoomOutIcon />}
-          sx={{ padding: "20px", fontSize: "15px" }}
+          sx={{
+            padding: "20px",
+            fontSize: "15px",
+            backgroundColor: "#009CA6",
+            ":hover": {
+              backgroundColor: "#012d5a",
+            },
+          }}
         />
         <Button
           onClick={() => props.resetTransform()}
           children={"Reset"}
-          sx={{ padding: "20px", fontSize: "15px" }}
+          sx={{
+            padding: "20px",
+            fontSize: "15px",
+            backgroundColor: "#009CA6",
+            ":hover": {
+              backgroundColor: "#012d5a",
+            },
+          }}
         />
         <Button
           onClick={() => props.zoomIn()}
           children={<ZoomInIcon />}
-          sx={{ padding: "20px", fontSize: "15px" }}
+          sx={{
+            padding: "20px",
+            fontSize: "15px",
+            backgroundColor: "#009CA6",
+            ":hover": {
+              backgroundColor: "#012d5a",
+            },
+          }}
         />
       </ButtonGroup>
       {props.children}
@@ -68,12 +89,18 @@ export function FloorSelect(props: {
               ? {
                   animation: "breathing 2s infinite",
                   "@keyframes breathing": {
-                    "0%": { backgroundColor: "#003da6" },
+                    "0%": { backgroundColor: "#009CA6" },
                     "50%": { backgroundColor: "#f6bd39" },
-                    "100%": { backgroundColor: "#003da6" },
+                    "100%": { backgroundColor: "#009CA6" },
                   },
                 }
-              : {}
+              : {
+                  backgroundColor: "#009CA6",
+
+                  ":hover": {
+                    backgroundColor: "#012d5a",
+                  },
+                }
           }
         >
           {floor.level}
