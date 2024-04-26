@@ -148,6 +148,8 @@ export class Directions {
       }
     }
     this.cleanDirections();
+    this.directions.push([]);
+    //this.directions[this.directions.length - 1].push(floorName(this.path[this.path.length - 1].z));
     this.directions[this.directions.length - 1].push(
       "arrived at " + this.path[path.length - 1].id,
     );

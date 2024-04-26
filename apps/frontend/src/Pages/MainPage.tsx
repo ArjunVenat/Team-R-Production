@@ -26,6 +26,7 @@ import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 import TurnRightIcon from "@mui/icons-material/TurnRight";
 import StraightIcon from "@mui/icons-material/Straight";
 import ElevatorIcon from "@mui/icons-material/Elevator";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -181,6 +182,15 @@ export default function MainPage() {
       return (
         <Box mb={2} display="flex" gap={1} alignItems="center">
           <ElevatorIcon />
+          {direction}
+        </Box>
+      );
+    }
+
+    if (direction.includes("arrived")) {
+      return (
+        <Box mb={2} display="flex" gap={1} alignItems="center">
+          <MyLocationIcon />
           {direction}
         </Box>
       );
