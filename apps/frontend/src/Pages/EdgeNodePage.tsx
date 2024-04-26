@@ -9,7 +9,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
 // import swoosh from "../assets/swoosh.png";
-import UplaodCSV from "../components/UploadCSV.tsx";
+import UploadCSV from "../backendreference/UploadCSV.tsx";
 import DownloadCSV from "../backendreference/DownloadCSV.tsx";
 import DownloadIcon from "@mui/icons-material/Download";
 
@@ -51,12 +51,9 @@ const EdgeTablePage = () => {
       <SideBar />
 
       <div
-        className="overflow-y-auto h-screen flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundColor: `white`,
-          width: "100vw",
-          height: "100vh",
-        }}
+        className="overflow-y-auto h-screen w-screen
+                    flex-grow justify-center items-center
+                    bg-cover bg-center bg-no-repeat bg-white"
       >
         <div className="">
           <div className=" top-0 min-w-full pt-8 bg-primary">
@@ -71,7 +68,7 @@ const EdgeTablePage = () => {
               }}
             >
               <Tabs
-                TabIndicatorProps={{ style: { backgroundColor: "#f6bd39" } }}
+                TabIndicatorProps={{ sx: { backgroundColor: "#f6bd39" } }}
                 value={nodeTab}
                 onChange={(event, newValue) => setNodeTab(newValue)}
                 aria-label="basic tabs example"
@@ -81,7 +78,7 @@ const EdgeTablePage = () => {
                   icon={
                     <ScatterPlotIcon
                       className="mx-2"
-                      style={{ fontSize: "2rem" }}
+                      sx={{ fontSize: "2rem" }}
                     />
                   }
                   sx={{
@@ -100,7 +97,7 @@ const EdgeTablePage = () => {
                   icon={
                     <LinearScaleIcon
                       className="mx-2"
-                      style={{ fontSize: "2rem" }}
+                      sx={{ fontSize: "2rem" }}
                     />
                   }
                   sx={{
@@ -117,10 +114,7 @@ const EdgeTablePage = () => {
                 <Tab
                   label="Upload/Download"
                   icon={
-                    <DownloadIcon
-                      className="mx-2"
-                      style={{ fontSize: "2rem" }}
-                    />
+                    <DownloadIcon className="mx-2" sx={{ fontSize: "2rem" }} />
                   }
                   sx={{
                     fontSize: "1rem",
@@ -154,7 +148,7 @@ const EdgeTablePage = () => {
               <Stack spacing={4}>
                 <div className="text-center p-4">
                   {/*<h1 className="font-semibold text-xl">Upload CSV File:</h1>*/}
-                  <UplaodCSV />
+                  <UploadCSV />
                 </div>
                 <div className="text-center text-lg">
                   {/*<h1 className="font-semibold text-xl">Download CSV File:</h1>*/}

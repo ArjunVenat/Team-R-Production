@@ -1,7 +1,11 @@
 import axios from "axios";
 // import SideBar from "../components/SideBar.tsx";
-import { Stack, Button, Box } from "@mui/material";
+import { Stack } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
+import {
+  UpDownBox,
+  DownloadCSVItem,
+} from "../components/UploadDownloadComponents.tsx";
 
 //received help from Dan from team o. He fixed some errors.
 export default function DownloadCSV() {
@@ -80,90 +84,25 @@ export default function DownloadCSV() {
   return (
     // <Stack direction="row" spacing={2}>
     //   <SideBar />
-    <div
-      className="grid"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minWidth: "80vw",
-      }}
-    >
-      <div
-        className="grid"
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "grid",
-        }}
-      >
-        <div
-          className="backdrop-blur-md rounded-lg p-10"
-          style={{
-            backgroundColor: "rgb(103,124,143, 0.6)",
-          }}
-        >
-          <h1 className="font-semibold text-xl mb-10 text-primary">
-            Download CSV File:
-          </h1>
-          <Stack direction="row" spacing={5}>
-            <Box mt={5}>
-              <Button
-                onClick={fetchNodes}
-                variant="outlined"
-                sx={{
-                  color: "#012d5a",
-                  borderColor: "#012d5a",
-                  "&:hover": {
-                    borderColor: "#f6bd38",
-                    color: "#f6bd38",
-                  },
-                }}
-                type="submit"
-              >
-                Download Nodes File
-              </Button>
-            </Box>
-
-            <Box mt={5}>
-              <Button
-                onClick={fetchEdges}
-                variant="outlined"
-                sx={{
-                  color: "#012d5a",
-                  borderColor: "#012d5a",
-                  "&:hover": {
-                    borderColor: "#f6bd38",
-                    color: "#f6bd38",
-                  },
-                }}
-                type="submit"
-              >
-                Download Edges File
-              </Button>
-            </Box>
-
-            <Box mt={5}>
-              <Button
-                onClick={fetchEmployees}
-                variant="outlined"
-                sx={{
-                  color: "#012d5a",
-                  borderColor: "#012d5a",
-                  "&:hover": {
-                    borderColor: "#f6bd38",
-                    color: "#f6bd38",
-                  },
-                }}
-                type="submit"
-              >
-                Download Employees File
-              </Button>
-            </Box>
-          </Stack>
-        </div>
-      </div>
-    </div>
+    <UpDownBox>
+      <h1 className="font-semibold text-xl mb-10 text-primary">
+        Download CSV File:
+      </h1>
+      <Stack direction="row" spacing={5}>
+        <DownloadCSVItem
+          clickHandler={fetchNodes}
+          children="Download Nodes File"
+        />
+        <DownloadCSVItem
+          clickHandler={fetchEdges}
+          children="Download Edges File"
+        />
+        <DownloadCSVItem
+          clickHandler={fetchEmployees}
+          children="Download Employees File"
+        />
+      </Stack>
+    </UpDownBox>
     // </Stack>
   );
 }

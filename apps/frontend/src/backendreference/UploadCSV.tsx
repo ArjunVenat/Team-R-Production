@@ -5,6 +5,8 @@ import { Button, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 // import SuccessAlert from "./SuccessAlert.tsx";
+import { primaryButtonStyle } from "../styles/muiStyles.ts";
+import { UpDownBox } from "../components/UploadDownloadComponents.tsx";
 
 // received help from Dan from team o. He fixed some errors.
 export default function UploadCSV() {
@@ -62,59 +64,24 @@ export default function UploadCSV() {
   return (
     // <Stack direction="row" spacing={2}>
     //   <SideBar />
-    <div
-      className="grid"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minWidth: "80vw",
-      }}
-    >
-      <div
-        className="grid"
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "grid",
+    <UpDownBox>
+      <form
+        onSubmit={(event) => {
+          handleSubmit(event).then();
         }}
       >
-        <div
-          className="backdrop-blur-md rounded-lg p-10"
-          style={{
-            backgroundColor: "rgb(103,124,143, 0.6)",
-          }}
-        >
-          <form
-            onSubmit={(event) => {
-              handleSubmit(event).then();
-            }}
-          >
-            <h1 className="font-semibold text-xl mb-10 text-primary">
-              Upload CSV File:
-            </h1>
-            <input type="file" onChange={handleFileSelect} />
-            <br />
-            <Box mt={5}>
-              <Button
-                variant="outlined"
-                sx={{
-                  color: "#012d5a",
-                  borderColor: "#012d5a",
-                  "&:hover": {
-                    borderColor: "#f6bd38",
-                    color: "#f6bd38",
-                  },
-                }}
-                type="submit"
-              >
-                Upload File
-              </Button>
-            </Box>
-          </form>
-        </div>
-      </div>
-    </div>
+        <h1 className="font-semibold text-xl mb-10 text-primary">
+          Upload CSV File:
+        </h1>
+        <input type="file" onChange={handleFileSelect} />
+        <br />
+        <Box mt={5}>
+          <Button variant="outlined" sx={primaryButtonStyle} type="submit">
+            Upload File
+          </Button>
+        </Box>
+      </form>
+    </UpDownBox>
     // </Stack>
   );
 }
