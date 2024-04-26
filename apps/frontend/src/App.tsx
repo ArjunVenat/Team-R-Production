@@ -17,7 +17,6 @@ import St4t5Page from "./Pages/StatsPage.tsx";
 import AboutPage from "./Pages/AboutPage.tsx";
 // import DownloadCSV from "./backendreference/DownloadCSV.tsx";
 // import UploadCSV from "./Pages/UploadCSV.tsx";
-import UploadDownloadCSV from "./Pages/UploadDownloadPage.tsx";
 import { Auth0Provider } from "@auth0/auth0-react";
 // import {useAuth0} from "@auth0/auth0-react";
 //this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez idk
@@ -83,14 +82,6 @@ function App() {
         {
           path: "node-edge-table",
           element: <EdgeNodePage />,
-        },
-        // {
-        //   path: "upload-csv",
-        //   element: <UploadCSV />,
-        // },
-        {
-          path: "upload-download-csv",
-          element: <UploadDownloadCSV />,
         },
         {
           path: "stats",

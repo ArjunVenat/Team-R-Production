@@ -1,10 +1,7 @@
 import React, { FormEvent, useState } from "react";
 import axios from "axios";
-// import SideBar from "../components/SideBar.tsx";
 import { Button, Box } from "@mui/material";
-import { useNavigate } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
-// import SuccessAlert from "./SuccessAlert.tsx";
 import { primaryButtonStyle } from "../styles/muiStyles.ts";
 import { UpDownBox } from "../components/UploadDownloadComponents.tsx";
 
@@ -15,14 +12,6 @@ export default function UploadCSV() {
 
   // a local state to store the currently selected file.
   const [selectedFile, setSelectedFile] = useState<File | null>(null); // State to store selected file
-
-  const navigate = useNavigate(); // Hook for navigating to different pages
-
-  // Function to navigate to a specific path
-  const routeChange = (path: string) => {
-    const newPath = `/${path}`;
-    navigate(newPath);
-  };
 
   // Function to handle form submission
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -46,10 +35,6 @@ export default function UploadCSV() {
 
       if (response.status == 200) {
         console.log("submitted csv successfully");
-
-        //ToDo: Test this!!!
-        // SuccessAlert();
-        routeChange("home");
       }
     }
   };
