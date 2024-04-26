@@ -25,6 +25,7 @@ import { autocompleteStyle } from "../styles/muiStyles.ts";
 import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 import TurnRightIcon from "@mui/icons-material/TurnRight";
 import StraightIcon from "@mui/icons-material/Straight";
+import ElevatorIcon from "@mui/icons-material/Elevator";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -171,6 +172,15 @@ export default function MainPage() {
       return (
         <Box mb={2} display="flex" gap={1} alignItems="center">
           <TurnRightIcon />
+          {direction}
+        </Box>
+      );
+    }
+
+    if (direction.includes("elevator")) {
+      return (
+        <Box mb={2} display="flex" gap={1} alignItems="center">
+          <ElevatorIcon />
           {direction}
         </Box>
       );
@@ -339,7 +349,7 @@ export default function MainPage() {
                   ))}
                 </Select>
                 {path.length > 0 && (
-                  <Box maxWidth={330}>
+                  <Box maxWidth={330} className="overflow-y-scroll">
                     <Box mb={2} display="flex" gap={1} alignItems="center">
                       <SyncIcon />
                       {end} from {start}
