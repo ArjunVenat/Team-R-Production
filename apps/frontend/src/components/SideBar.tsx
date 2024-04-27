@@ -10,6 +10,8 @@ import { ReactNode, useState, useEffect } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from "@mui/icons-material/TableView";
+import TextsmsIcon from "@mui/icons-material/Textsms";
+
 // import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
@@ -96,6 +98,11 @@ export default function Sidebar() {
     icon: <InfoIcon />,
     displayLoggedIn: false,
   };
+  const chat: Menu = {
+    title: "Chatbot",
+    icon: <TextsmsIcon />,
+    displayLoggedIn: false,
+  };
   const login: Menu = {
     title: "Staff Login",
     icon: <Login />,
@@ -120,6 +127,7 @@ export default function Sidebar() {
     serviceRequestTable,
     nodes_edges,
     aboutPage,
+    chat,
     logoutOption,
     login,
   ]);
@@ -134,6 +142,7 @@ export default function Sidebar() {
         nodes_edges,
         stats,
         aboutPage,
+        chat,
         logoutOption,
       ]);
     }
@@ -216,6 +225,9 @@ export default function Sidebar() {
     case "/stats":
       menuHighlight = "Stats";
       break;
+    case "chat":
+      menuHighlight = "Chat";
+      break;
     // case "/credits":
     //   menuHighlight = "Credits Page";
     //   break;
@@ -291,6 +303,8 @@ export default function Sidebar() {
       //   routeChange("credits");
     } else if (title === "About and Credits") {
       routeChange("about");
+    } else if (title === "Chatbot") {
+      routeChange("chat");
     }
   };
 
