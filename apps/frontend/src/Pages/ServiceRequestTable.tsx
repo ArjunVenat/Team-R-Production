@@ -19,7 +19,6 @@ import {
   TextField,
   InputLabel,
 } from "@mui/material";
-import Sidebar from "../components/SideBar.tsx";
 import { GeneralRequest } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
@@ -226,8 +225,6 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
 
   return (
     <Box display="flex">
-      <Sidebar />
-
       <div
         className="overflow-y-auto flex-grow justify-center items-center bg-cover bg-center backdrop-blur-sm bg-no-repeat"
         style={{
