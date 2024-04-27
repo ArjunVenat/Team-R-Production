@@ -64,3 +64,8 @@ button {
   border: none;
   cursor: pointer;
 }
+
+body,
+html {
+  overflow: hidden !important;
+}

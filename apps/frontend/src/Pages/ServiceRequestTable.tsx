@@ -229,8 +229,6 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
         className="overflow-y-auto flex-grow justify-center items-center bg-cover bg-center backdrop-blur-sm bg-no-repeat"
         style={{
           // backgroundImage: `url(${swoosh})`,
-          width: "100vw",
-          height: "100vh",
           backgroundColor: "white",
         }}
       >
