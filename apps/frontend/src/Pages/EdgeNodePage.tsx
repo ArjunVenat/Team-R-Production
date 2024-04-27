@@ -1,6 +1,5 @@
 import React from "react";
 import EdgeTable from "../backendreference/Edges.tsx";
-import SideBar from "../components/SideBar.tsx";
 import { Box, Tab, Tabs, Stack } from "@mui/material";
 import { useState } from "react";
 import NodeTable from "../backendreference/Nodes.tsx";
@@ -48,14 +47,10 @@ const EdgeTablePage = () => {
   const [nodeTab, setNodeTab] = useState<number>(0);
   return (
     <Box display="flex">
-      <SideBar />
-
       <div
         className="overflow-y-auto h-screen flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
         style={{
           backgroundColor: `white`,
-          width: "100vw",
-          height: "100vh",
         }}
       >
         <div className="">

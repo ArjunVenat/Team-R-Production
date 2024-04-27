@@ -32,6 +32,19 @@ export class GraphNode {
   }
 }
 
+class StairNode extends GraphNode {
+  getDistance(other: GraphNode): number {
+    let out = Math.sqrt(
+      (this.x - other.x) ** 2 +
+        (this.y - other.y) ** 2 +
+        (this.z - other.z) ** 2,
+    );
+    if (other instanceof StairNode) {
+      out *= 3;
+    }
+    return out;
+  }
+}
 /**
  * Represents a graph structure. Nodes are assumed to have unique names.
  */
@@ -51,6 +64,11 @@ export class Graph {
    */
   addNode(id: string, x: number, y: number, z: number): void {
     const tempNode = new GraphNode(id, x, y, z);
+    Graph.nodeMap.set(id, tempNode);
+  }
+
+  addStairNode(id: string, x: number, y: number, z: number): void {
+    const tempNode = new StairNode(id, x, y, z);
     Graph.nodeMap.set(id, tempNode);
   }
 

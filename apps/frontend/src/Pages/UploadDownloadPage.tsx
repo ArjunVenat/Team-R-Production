@@ -1,5 +1,4 @@
 import React from "react";
-import SideBar from "../components/SideBar.tsx";
 import { Stack } from "@mui/material";
 import UplaodCSV from "../components/UploadCSV.tsx";
 import DownloadCSV from "../backendreference/DownloadCSV.tsx";
@@ -19,7 +18,6 @@ export default function UploadDownloadCSV() {
   return (
     <>
       <Stack direction="row">
-        <SideBar />
         <div className=" top-0 pt-8 bg-primary flex justify-center items-center max-h-vh">
           <div
             className="flex items-center h-full w-full bg-cover bg-center bg-no-repeat"
