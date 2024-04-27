@@ -336,9 +336,9 @@ FHALL02601,2026,1239,1,Tower,HALL,Lobby Hallway 4,Hallway F02601
 FHALL02701,2066,1239,1,Tower,HALL,Lobby Hallway 7,Hallway F02701
 FDEPT00501,2128,1300,1,Tower,DEPT,Emergency Department,Emergency
 FHALL02801,1748,1280,1,Tower,HALL,Lobby Entrance Hallway,HallwayF02801
-FEXIT00201,1748,1321,1,Tower,EXIT,75 Francis Valet Drop-off,75 Francis Exit
 FHALL02901,1700,1280,1,Tower,HALL,75 Lobby,75 Lobby
 FINFO00101,1700,1226,1,Tower,INFO,75 Lobby Information Desk,Lobby Info Desk
+FEXIT00201,1640,1427,1,Tower,EXIT,75 Francis Valet Drop-off,75 Francis Exit
 FHALL03001,1645,1246,1,Tower,HALL,Lobby Hallway 5,Hallway F02701
 FRETL00201,1609,1246,1,Tower,RETL,Au Bon Pain,ABP
 FHALL03101,2026,976,1,Tower,HALL,Lobby Hallway 6,Hallway F02801

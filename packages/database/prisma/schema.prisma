@@ -60,7 +60,7 @@ model Nodes {
 // languages is a list of strings for the languages that the doctor is proficient/fluent in
 
 model Doctor {
-  userID             Int      @id @default(autoincrement())
+  userID             Int      @id
   name               String
   department         String
   yearsWorked        Int
