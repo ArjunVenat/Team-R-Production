@@ -204,7 +204,7 @@ export class Directions {
 
   public cleanDirections() {
     for (let i = 0; i < this.directions.length; i++) {
-      if (this.directions[i].length >= 3) {
+      if (this.directions[i].length > 2) {
         if (
           this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
             -1 ||
@@ -216,7 +216,7 @@ export class Directions {
           this.directions[i].pop();
         }
       }
-      if (this.directions[i].length >= 2) {
+      if (this.directions[i].length > 2) {
         if (
           this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
             -1 ||
@@ -228,7 +228,7 @@ export class Directions {
           this.directions[i].pop();
         }
       }
-      if (this.directions[i].length >= 2) {
+      if (this.directions[i].length > 2) {
         if (
           this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
             -1 ||
