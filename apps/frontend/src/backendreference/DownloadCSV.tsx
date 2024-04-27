@@ -56,6 +56,19 @@ export default function DownloadCSV() {
     downloadBlob(receiveEmployees, "employees.csv");
   }
 
+  async function fetchDoctors() {
+    const token = await getAccessTokenSilently();
+    const res = await axios.get("/api/admin/csv/Doctor", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const receiveDoctors = new Blob([res.data], {
+      type: "text/csv;encoding:utf-8",
+    });
+    downloadBlob(receiveDoctors, "doctors.csv");
+  }
+
   function downloadBlob(blob: Blob, filePath: string) {
     const blobURL = URL.createObjectURL(blob);
 
@@ -158,6 +171,24 @@ export default function DownloadCSV() {
                 type="submit"
               >
                 Download Employees File
+              </Button>
+            </Box>
+
+            <Box mt={5}>
+              <Button
+                onClick={fetchDoctors}
+                variant="outlined"
+                sx={{
+                  color: "#012d5a",
+                  borderColor: "#012d5a",
+                  "&:hover": {
+                    borderColor: "#f6bd38",
+                    color: "#f6bd38",
+                  },
+                }}
+                type="submit"
+              >
+                Download Doctors File
               </Button>
             </Box>
           </Stack>

@@ -60,7 +60,9 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
         "userID,Name,Department,Years Worked,Rating,Specialty Training,Board Certification,Languages\n".concat(
           doctors
             .map((doctor) => {
-              const languages = doctor.languages.join(","); // Assuming languages are separated by ';'
+              const languages = doctor.languages
+                ? doctor.languages.join(",")
+                : "";
               return `${doctor.userID},${doctor.name},${doctor.department},${doctor.yearsWorked},${doctor.rating},${doctor.specialtyTraining},${doctor.boardCertification},${languages}`;
             })
             .join("\n"),
@@ -135,27 +137,27 @@ CSVRouter.post(
       switch (csvFormat) {
         case "edges":
           await PrismaClient.edges.deleteMany({});
-          for (const row of rows.slice(1)) {
+          for (const row of rows.slice(0)) {
             await insertEdgeIntoDB(row);
           }
           break;
         case "nodes":
           await PrismaClient.generalRequest.deleteMany({});
           await PrismaClient.nodes.deleteMany({});
-          for (const row of rows.slice(1)) {
+          for (const row of rows.slice(0)) {
             await insertNodeIntoDB(row);
           }
           break;
         case "employee":
           await PrismaClient.generalRequest.deleteMany({});
           await PrismaClient.employee.deleteMany({});
-          for (const row of rows.slice(1)) {
+          for (const row of rows.slice(0)) {
             await insertEmployeeIntoDB(row);
           }
           break;
         case "doctor":
           await PrismaClient.doctor.deleteMany({});
-          for (const row of rows.slice(1)) {
+          for (const row of rows.slice(0)) {
             await insertDoctorIntoDB(row);
           }
           break;

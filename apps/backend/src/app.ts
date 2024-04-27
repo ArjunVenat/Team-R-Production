@@ -71,7 +71,6 @@ app.use("/api/admin/node/del", delNodesRouter);
 app.use("/api/admin/reset", resetRouter);
 app.use("/api/admin/allEmployees", allEmployeesRouter);
 app.use("/api/admin/employee/add", addEmployeeRouter);
-
 /**
  * Catch all 404 errors, and forward them to the error handler
  */
