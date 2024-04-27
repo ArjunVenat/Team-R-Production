@@ -23,7 +23,7 @@ import TableRow from "@mui/material/TableRow";
 import Autocomplete from "@mui/material/Autocomplete";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
-import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
+import { editMapRightSideBar } from "../styles/editMapRightSideBar.ts";
 import SpeedDial from "@mui/material/SpeedDial";
 import SpeedDialAction from "@mui/material/SpeedDialAction";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
@@ -324,7 +324,7 @@ export default function MapEditing() {
           )}
         </TransformWrapper>
       </main>
-      <aside className={rightSideBarStyle}>
+      <aside className={editMapRightSideBar}>
         <SpeedDial
           ariaLabel="SpeedDial openIcon example"
           open={open}
