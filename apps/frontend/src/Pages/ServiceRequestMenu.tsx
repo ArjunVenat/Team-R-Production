@@ -2,7 +2,6 @@ import React from "react";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
 import { Button, Box, Modal, Card } from "@mui/material";
-import Sidebar from "../components/SideBar.tsx";
 import ServiceRequestLog from "../components/FullServiceRequest.tsx";
 
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
@@ -46,7 +45,6 @@ export function ServiceRequestMenu() {
 
   return (
     <Box display="flex" className="max-w-screen h-screen">
-      <Sidebar />
       <div className=" top-0 pt-8 bg-primary flex justify-center items-center w-full">
         <main
           className="flex w-full h-full overflow-y-auto flex-grow justify-center items-center  bg-cover bg-center bg-no-repeat relative"

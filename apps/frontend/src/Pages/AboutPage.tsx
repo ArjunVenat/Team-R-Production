@@ -1,4 +1,3 @@
-import SideBar from "../components/SideBar.tsx";
 import swoosh from "../assets/swoosh.png";
 import { Box, Tabs, Tab, Link } from "@mui/material";
 
@@ -44,8 +43,6 @@ export default function AboutPage() {
 
   return (
     <Box display="flex" minHeight="100vh">
-      <SideBar />
-
       <div
         className="overflow-y-auto h-screen w-full bg-cover bg-center bg-no-repeat relative"
         style={{
