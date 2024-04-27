@@ -24,6 +24,8 @@ import { autocompleteStyle } from "../styles/muiStyles.ts";
 import TurnLeftIcon from "@mui/icons-material/TurnLeft";
 import TurnRightIcon from "@mui/icons-material/TurnRight";
 import StraightIcon from "@mui/icons-material/Straight";
+import ElevatorIcon from "@mui/icons-material/Elevator";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -49,6 +51,10 @@ export default function MainPage() {
   const [showPathOnly, setShowPathOnly] = useState(false);
   const [isDirectionsClicked, setIsDirectionsClicked] = useState(false);
   const [pathDirections, setPathDirections] = useState<string[][]>([]);
+  const [expandedAccordion, setExpandedAccordion] = useState<string | null>(
+    null,
+  );
+
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
   //   const newPath = `/${path}`;
@@ -170,6 +176,24 @@ export default function MainPage() {
       return (
         <Box mb={2} display="flex" gap={1} alignItems="center">
           <TurnRightIcon />
+          {direction}
+        </Box>
+      );
+    }
+
+    if (direction.includes("elevator")) {
+      return (
+        <Box mb={2} display="flex" gap={1} alignItems="center">
+          <ElevatorIcon />
+          {direction}
+        </Box>
+      );
+    }
+
+    if (direction.includes("arrived")) {
+      return (
+        <Box mb={2} display="flex" gap={1} alignItems="center">
+          <MyLocationIcon />
           {direction}
         </Box>
       );
@@ -337,17 +361,21 @@ export default function MainPage() {
                   ))}
                 </Select>
                 {path.length > 0 && (
-                  <Box maxWidth={330}>
+                  <Box maxWidth={330} className="overflow-y-scroll">
                     <Box mb={2} display="flex" gap={1} alignItems="center">
                       <SyncIcon />
                       {end} from {start}
                     </Box>
-                    {pathDirections.map((floorDirections) => (
+                    {pathDirections.map((floorDirections, index) => (
                       <Accordion
                         key={floorDirections[0]}
-                        onChange={() => {
+                        expanded={expandedAccordion === `panel${index}`}
+                        onChange={(event, isExpanded) => {
                           const matchedFloor = floors.find(
                             (floor) => floor.name === floorDirections[0],
+                          );
+                          setExpandedAccordion(
+                            isExpanded ? `panel${index}` : null,
                           );
                           resetTransform();
                           setCurrentMap(matchedFloor ? matchedFloor.map : "");

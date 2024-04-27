@@ -13,7 +13,6 @@ import MapEditing from "./Pages/MapEditing.tsx";
 //import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeNodePage from "./Pages/EdgeNodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
-import CreditsPage from "./Pages/CreditsPage.tsx";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
 import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
@@ -101,10 +100,6 @@ function App() {
         {
           path: "stats",
           element: <St4t5Page />,
-        },
-        {
-          path: "credits",
-          element: <CreditsPage />,
         },
         {
           path: "about",
