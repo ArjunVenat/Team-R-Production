@@ -2,7 +2,9 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
 import { Tooltip } from "@mui/material";
-import { motion } from "framer-motion";
+// import { motion } from "framer-motion";
+
+// import OIP from "../assets/OIP.jpeg";
 
 // import ElevatorIcon from '@mui/icons-material/Elevator';
 // import {SvgIcon} from "@mui/material";
@@ -491,12 +493,16 @@ export default function SVGCanvas(props: {
       <image href={props.currentMap} height="3400" width="5000" />
       {props.path && // Render the path only if props.path is defined
         splices()[0][0] && // Ensure the splices array is not empty
-        splices().map((splice, index) => {
+        splices().map((splice) => {
+          //index goes here
           if (splice.every((node) => node.Floor === currentFloor)) {
-            const totalLength = splice.length;
+            // const totalLength = splice.length;
             return splice.map((node, i) => {
               const nextNode = splice[i + 1];
+
               if (nextNode) {
+                // const pathLength = totalLength; // Assuming totalLength is the length of the path
+
                 return (
                   <>
                     <path
@@ -504,33 +510,73 @@ export default function SVGCanvas(props: {
                         .slice(1)
                         .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
                         .join(" ")}`}
-                      stroke="#012d5a"
-                      strokeWidth="13"
+                      stroke="black"
+                      strokeWidth="10"
                       fill="none"
                     />
-
-                    <motion.path
-                      key={`${index}`}
+                    <path
                       d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
                         .slice(1)
                         .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
                         .join(" ")}`}
-                      stroke="#009CA6"
-                      strokeWidth="4"
+                      stroke="white"
+                      strokeWidth="9"
                       fill="none"
-                      initial={{
-                        pathLength: 0,
-                        strokeDasharray: "100 50",
-                        strokeDashoffset: "100",
-                      }}
-                      animate={{ pathLength: 2, strokeDashoffset: 0 }}
-                      transition={{
-                        duration: 0.5 * totalLength,
-                        ease: "linear",
-                        repeat: Infinity,
-                        repeatDelay: 0.01,
-                      }}
                     />
+                    {/*<motion.image*/}
+                    {/*    href={OIP}*/}
+                    {/*    width={100}*/}
+                    {/*    height={100}*/}
+                    {/*    initial={{*/}
+                    {/*        x: Number(splice[0].Xcoord) - 50,*/}
+                    {/*        y: Number(splice[0].Ycoord) - 50,*/}
+                    {/*    }}*/}
+                    {/*    animate={{*/}
+                    {/*        x: Number(splice[splice.length - 1].Xcoord) - 50,*/}
+                    {/*        y: Number(splice[splice.length - 1].Ycoord) - 50,*/}
+                    {/*    }}*/}
+                    {/*    transition={{*/}
+                    {/*        duration: 0.5 * totalLength, // Adjust animation duration as needed*/}
+                    {/*        ease: "linear",*/}
+                    {/*        repeat: Infinity,*/}
+                    {/*        repeatType: "loop",*/}
+                    {/*    }}*/}
+                    {/*/>*/}
+                    {/*<motion.path*/}
+                    {/*    key={`${index}`}*/}
+                    {/*    d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice*/}
+                    {/*        .slice(1)*/}
+                    {/*        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)*/}
+                    {/*        .join(" ")}`}*/}
+                    {/*    stroke="#009CA6"*/}
+                    {/*    strokeWidth="4"*/}
+                    {/*    fill="none"*/}
+                    {/*    initial={{*/}
+                    {/*        pathLength: 0,*/}
+                    {/*        strokeDasharray: "100 50",*/}
+                    {/*        strokeDashoffset: "100",*/}
+                    {/*    }}*/}
+                    {/*    animate={{ pathLength: 2, strokeDashoffset: 0 }}*/}
+                    {/*    transition={{*/}
+                    {/*        duration: 0.5 * totalLength,*/}
+                    {/*        ease: "linear",*/}
+                    {/*        repeat: Infinity,*/}
+                    {/*        repeatDelay: 0.01,*/}
+                    {/*    }}*/}
+                    {/*/>*/}
+                    <path
+                      className="animate-dash-path"
+                      fill="none"
+                      stroke="#009CA6"
+                      strokeDasharray="20"
+                      strokeWidth="6"
+                      strokeLinejoin="round"
+                      strokeLinecap="round"
+                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
+                        .slice(1)
+                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
+                        .join(" ")}`}
+                    ></path>
                   </>
                 );
               }

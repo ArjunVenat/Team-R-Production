@@ -13,6 +13,14 @@ export default {
         helvetica: ["helvetica"],
         Garamond: ["Garamond"],
       },
+      animation: {
+        "dash-path": "dash 1s infinite reverse linear",
+      },
+      keyframes: {
+        dash: {
+          to: { strokeDashoffset: 40 },
+        },
+      },
     },
   },
   plugins: [],
