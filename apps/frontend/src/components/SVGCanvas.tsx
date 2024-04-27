@@ -27,7 +27,7 @@ export default function SVGCanvas(props: {
   nodeColor?: string; //color for rendering nodes
   edgeColor?: string; //color for rendering edges
   nodeClicked?: Nodes | undefined; //The currently clicked node
-  handleNodeClicked?: (node: Nodes | undefined, isMouseClick: boolean) => void; //Function to handle node clicks
+  handleNodeClicked?: (node: Nodes | undefined) => void; //Function to handle node clicks
   edgeClicked?: Edges | undefined; //The currently clicked edge
   handleEdgeClicked?: (
     edge: Edges | undefined,
@@ -121,12 +121,11 @@ export default function SVGCanvas(props: {
    * It invokes the handleNodeClicked callback with the clicked node as an argument,
    * and resets the edge clicked state by invoking the handleEdgeClicked callback with undefined.
    * @param {Nodes} node - The clicked node.
-   * @param isMouseClick boolean to distinguish whether it's a mouse click
    */
-  function handleNodeClick(node: Nodes, isMouseClick: boolean) {
+  function handleNodeClick(node: Nodes) {
     // If handleNodeClicked callback is provided, invoke it with the clicked node
     if (props.handleNodeClicked) {
-      props.handleNodeClicked(node, isMouseClick);
+      props.handleNodeClicked(node);
     }
     // If handleEdgeClicked callback is provided, reset the edge clicked state by invoking it with undefined
     if (props.handleEdgeClicked) {
@@ -300,7 +299,7 @@ export default function SVGCanvas(props: {
       props.handleEdgeClicked(edge, true);
     }
     if (props.handleNodeClicked) {
-      props.handleNodeClicked(undefined, false);
+      props.handleNodeClicked(undefined);
     }
   }
 
@@ -469,7 +468,7 @@ export default function SVGCanvas(props: {
         console.log(draggingNode, "here");
         props.editNodeDB!(draggingNode.NodeID, "Xcoord", draggingNode.Xcoord);
         props.editNodeDB!(draggingNode.NodeID, "Ycoord", draggingNode.Ycoord);
-        handleNodeClick(draggingNode, false);
+        handleNodeClick(draggingNode);
       }
       setIsDragging(false);
       setDraggingNode(undefined);
@@ -578,6 +577,7 @@ export default function SVGCanvas(props: {
             />
           </g>
         );
+        return null;
       })}
       {filteredNodes.map((node) => (
         <g>
@@ -618,7 +618,7 @@ export default function SVGCanvas(props: {
           ) : (
             <Tooltip title={node.LongName} arrow>
               <circle
-                onClick={() => handleNodeClick(node, true)}
+                onClick={() => handleNodeClick(node)}
                 onMouseEnter={() =>
                   props.handleNodeHover && props.handleNodeHover(node)
                 }
