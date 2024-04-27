@@ -92,6 +92,12 @@ export class Directions {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           // does it chnage floors?
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -99,6 +105,12 @@ export class Directions {
       } else if (angles[i] >= 60 && angles[i] <= 120) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -106,6 +118,12 @@ export class Directions {
       } else if (angles[i] > 120 && angles[i] <= 165) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -113,6 +131,12 @@ export class Directions {
       } else if (angles[i] > 165 && angles[i] <= 195) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -120,6 +144,12 @@ export class Directions {
       } else if (angles[i] > 195 && angles[i] <= 240) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -127,6 +157,12 @@ export class Directions {
       } else if (angles[i] > 240 && angles[i] <= 300) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -134,6 +170,12 @@ export class Directions {
       } else if (angles[i] >= 300 && angles[i] < 360) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -141,6 +183,12 @@ export class Directions {
       } else if (angles[i] == 0 || angles[i] == 360) {
         if (path[i] && path[i - 1] && path[i].z != path[i - 1].z) {
           this.directions.push([]);
+          this.directions[j].push(
+            this.floorChange(this.path[i - 1].id) +
+              this.path[i - 1].id +
+              " to " +
+              this.path[i].id,
+          );
           j++;
           this.directions[j].push(floorName(this.path[i].z));
         }
@@ -156,28 +204,71 @@ export class Directions {
 
   public cleanDirections() {
     for (let i = 0; i < this.directions.length; i++) {
-      const temp = this.directions[i].length;
-      for (let j = temp - 1; j > temp - 3; j--) {
+      if (this.directions[i].length >= 3) {
         if (
-          this.directions[i][j].indexOf("ELEV") ||
-          this.directions[i][j].indexOf("ELEV")
+          this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
+            -1 ||
+          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
+            -1
         ) {
+          this.directions[i][this.directions[i].length - 2] =
+            this.directions[i][this.directions[i].length - 1];
           this.directions[i].pop();
         }
       }
+      if (this.directions[i].length >= 2) {
+        if (
+          this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
+            -1 ||
+          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
+            -1
+        ) {
+          this.directions[i][this.directions[i].length - 2] =
+            this.directions[i][this.directions[i].length - 1];
+          this.directions[i].pop();
+        }
+      }
+      if (this.directions[i].length >= 2) {
+        if (
+          this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
+            -1 ||
+          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
+            -1
+        ) {
+          this.directions[i][this.directions[i].length - 2] =
+            this.directions[i][this.directions[i].length - 1];
+          this.directions[i].pop();
+        }
+      }
+
+      // if (temp === 0 && i !== this.directions.length - 1) {
+      //     this.directions[i].push("(1)take the elevator at " + end);
+      // } else if (temp === 1 && i !== this.directions.length - 1) {
+      //     this.directions[i].push(
+      //         "(1)take the stairs/escalator at " + end,
+      //     );
+      // }
     }
 
-    if (
-      this.directions[0].length == 1 //&&
-    ) {
-      if (this.path[0].id.indexOf("ELEV")) {
-        this.directions[0].push("take the elevator at " + this.path[0].id);
-      } else if (this.path[0].id.indexOf("STAI")) {
-        this.directions[0].push(
-          "take the stairs/escalator at " + this.path[0].id,
-        );
-      }
-    }
+    // if (
+    //   this.directions[0].length == 2 //&&
+    // ) {
+    //   if (this.path[0].id.indexOf("ELEV")) {
+    //     this.directions[0].push("take the elevator at " + this.path[0].id);
+    //   } else if (this.path[0].id.indexOf("STAI")) {
+    //     this.directions[0].push(
+    //       "take the stairs/escalator at " + this.path[0].id,
+    //     );
+    //   }
+    // }
+  }
+
+  public floorChange(type: string): string {
+    if (type.includes("STAI")) {
+      return "take the stairs/escalator at ";
+    } else if (type.includes("ELEV")) {
+      return "take the elevator at ";
+    } else return "";
   }
   //}
 }
