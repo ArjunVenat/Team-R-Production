@@ -206,16 +206,16 @@ export class Directions {
 //Helper function for inserting floor name
 const floorName = (zVal: number) => {
   switch (zVal) {
-    case 300: {
+    case 600: {
       return "Third Floor";
     }
-    case 200: {
+    case 400: {
       return "Second Floor";
     }
-    case 100: {
+    case 200: {
       return "First Floor";
     }
-    case -100: {
+    case 0: {
       return "Lower Level 1";
     }
     case -200: {
