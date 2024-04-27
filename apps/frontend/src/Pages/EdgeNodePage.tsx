@@ -51,8 +51,6 @@ const EdgeTablePage = () => {
         className="overflow-y-auto h-screen flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
         style={{
           backgroundColor: `white`,
-          width: "100vw",
-          height: "100vh",
         }}
       >
         <div className="">
