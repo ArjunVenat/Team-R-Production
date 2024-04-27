@@ -44,7 +44,7 @@ export default function AboutPage() {
   return (
     <Box display="flex" minHeight="100vh">
       <div
-        className="overflow-y-auto h-screen w-full bg-cover bg-center bg-no-repeat relative"
+        className="overflow-y-auto h-screen w-full bg-cover bg-center bg-no-repeat relative flex flex-col justify-between"
         style={{
           backgroundImage: `url(${swoosh})`,
         }}
@@ -218,7 +218,7 @@ export default function AboutPage() {
           </main>
         </CustomTabPanel>
         <CustomTabPanel value={aboutTab} index={1}>
-          <div className="flex flex-col items-center gap-2 min-h-screen overflow-y-auto">
+          <div className="flex flex-col items-center gap-2">
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
@@ -304,7 +304,7 @@ export default function AboutPage() {
           </div>
         </CustomTabPanel>
 
-        <div className="flex flex-col items-center justify-center w-full overflow-clip bottom-0 bg-gray-200 py-4 mt-4 text-center">
+        <div className="flex flex-col items-center justify-center w-full overflow-clip bg-gray-200 py-4 text-center">
           <div className="text-primary">
             WPI Computer Science Department, CS3733-D24 Software Engineering,
             Prof. Wilson Wong
