@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import { Edges, Nodes } from "database";
 import { Tooltip } from "@mui/material";
-import { motion } from "framer-motion";
 
 // import ElevatorIcon from '@mui/icons-material/Elevator';
 // import {SvgIcon} from "@mui/material";
@@ -248,7 +247,7 @@ export default function SVGCanvas(props: {
    * @param {Nodes} node - The node for which to determine the color.
    * @returns {string} Returns the color code for the node.
    */
-  const getNodeColor = (node: Nodes) => {
+  const getNodeColor = (node: Nodes): string => {
     // Check if props.path is defined and contains nodes
     if (props.path && props.path?.length > 0) {
       // Check if the node is an elevator or stairs
@@ -349,7 +348,7 @@ export default function SVGCanvas(props: {
    * This function generates splices of the path based on floor changes.
    * @returns {Array<Array<Nodes>>} Returns an array containing arrays of nodes grouped by floor.
    */
-  const splices = () => {
+  const splices = (): Array<Array<Nodes>> => {
     // Check if props.path is defined
     if (props.path) {
       // Initialize an array to store splices of the path
@@ -482,78 +481,59 @@ export default function SVGCanvas(props: {
   //   };
   // }, []);
 
+  const draw_line = () => {
+    if (props.path && splices()[0][0]) {
+      const current_splice = splices().find(
+        (splice) => splice[0].Floor === currentFloor,
+      );
+      if (current_splice?.every((node) => node.Floor === currentFloor)) {
+        const poly = (props: { style: string; strokeWidth: string }) => (
+          <polyline
+            className={`animate-dash-path ${props.style}`}
+            fill="none"
+            strokeDasharray="20" //this must be half of the value of strokeDashoffset in tailwind.config.js
+            strokeWidth={props.strokeWidth}
+            strokeLinejoin="round"
+            strokeLinecap="round"
+            points={current_splice
+              ?.map((node) => `${node.Xcoord},${node.Ycoord}`)
+              .join(" ")}
+          />
+        );
+        return (
+          <>
+            {poly({ style: "stroke-primary", strokeWidth: "10" })}
+            {poly({ style: "stroke-teal", strokeWidth: "6" })}
+          </>
+        );
+      }
+      return undefined;
+    }
+  };
+
   return (
     <svg
       height="100vh"
       width="auto"
       preserveAspectRatio="xMidYMid meet"
       viewBox="0 0 5000 3400"
-      overflow="visible"
+      overflow="clip"
       onMouseMove={(e) => handleMouseMove(e)}
       onMouseUp={(e) => handleMouseUp(e)}
     >
       <image href={props.currentMap} height="3400" width="5000" />
-      {props.path && // Render the path only if props.path is defined
-        splices()[0][0] && // Ensure the splices array is not empty
-        splices().map((splice, index) => {
-          if (splice.every((node) => node.Floor === currentFloor)) {
-            const totalLength = splice.length;
-            return splice.map((node, i) => {
-              const nextNode = splice[i + 1];
-              if (nextNode) {
-                return (
-                  <>
-                    <path
-                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
-                        .slice(1)
-                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
-                        .join(" ")}`}
-                      stroke="#012d5a"
-                      strokeWidth="13"
-                      fill="none"
-                    />
-
-                    <motion.path
-                      key={`${index}`}
-                      d={`M ${splice[0].Xcoord},${splice[0].Ycoord} ${splice
-                        .slice(1)
-                        .map((node) => `L ${node.Xcoord},${node.Ycoord}`)
-                        .join(" ")}`}
-                      stroke="#009CA6"
-                      strokeWidth="4"
-                      fill="none"
-                      initial={{
-                        pathLength: 0,
-                        strokeDasharray: "100 50",
-                        strokeDashoffset: "100",
-                      }}
-                      animate={{ pathLength: 2, strokeDashoffset: 0 }}
-                      transition={{
-                        duration: 0.5 * totalLength,
-                        ease: "linear",
-                        repeat: Infinity,
-                        repeatDelay: 0.01,
-                      }}
-                    />
-                  </>
-                );
-              }
-              return null; // Return null if the conditions are not met (no line to render)
-            });
-          }
-          return null;
-        })}
+      {draw_line()}
 
       {/* Map over each edge in the filteredEdges array, defaulting to an empty array if filteredEdges is null or undefined */}
       {(filteredEdges ?? []).map((edge) => {
-        const startNode = filteredNodes.filter(
+        const startNode = filteredNodes.find(
           // Find the start node of the current edge in the filteredNodes array
           (node) => node.NodeID === edge.StartNodeID,
-        )[0];
-        const endNode = filteredNodes.filter(
+        );
+        const endNode = filteredNodes.find(
           // Find the end node of the current edge in the filteredNodes array
           (node) => node.NodeID === edge.EndNodeID,
-        )[0];
+        );
         return (
           //Create line that follow edges
           <g
@@ -562,10 +542,10 @@ export default function SVGCanvas(props: {
             }}
           >
             <line
-              x1={startNode.Xcoord}
-              y1={startNode.Ycoord}
-              x2={endNode.Xcoord}
-              y2={endNode.Ycoord}
+              x1={startNode?.Xcoord}
+              y1={startNode?.Ycoord}
+              x2={endNode?.Xcoord}
+              y2={endNode?.Ycoord}
               stroke={props.edgeColor ?? "blue"}
               strokeWidth="5"
             />
