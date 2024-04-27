@@ -1,5 +1,6 @@
 //This is the main page with the map, staff sign in, etc on the first slide in Figma.
 
+import SideBar from "../components/SideBar.tsx";
 import React, { useState, useEffect, ChangeEvent } from "react";
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 import SVGCanvas from "../components/SVGCanvas.tsx";
@@ -25,6 +26,7 @@ import Autocomplete from "@mui/material/Autocomplete";
 import { appTheme } from "../Interfaces/MuiTheme.ts";
 import { ThemeProvider } from "@mui/material";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
+//import {c} from "vitest/dist/reporters-5f784f42";
 
 let edgeFlag = false;
 
@@ -77,12 +79,29 @@ export default function MapEditing() {
   const [addNodeFormFlag, setAddNodeFormFlag] = useState<boolean>(false);
   const [addNodeID, setAddNodeID] = useState<string>("");
   const [edgeLock, setEdgeLock] = useState<boolean>();
+  const [clickTimes, setClickTimes] = useState<number>(1);
+
   // handles nodeClicked and editableNode useState whenever node is clicked
-  const handleNodeClick = (node: Nodes | undefined) => {
-    setEdgeLock(false);
-    setNodeClicked(node);
-    if (node) {
-      setEditableNode({ ...node }); // Handles clicked node and sets it as editable
+  const handleNodeClick = (node: Nodes | undefined, isMouseClick: boolean) => {
+    if (addEdgeFormFlag) {
+      if (clickTimes % 2 === 1) {
+        //setStart(node ? node.LongName : "");
+        setAddEdgeStartID(node ? node.NodeID : "");
+        console.log("Test1: " + clickTimes);
+      } else {
+        setAddEdgeEndID(node ? node.NodeID : "");
+        console.log("Test2: " + clickTimes);
+      }
+
+      if (isMouseClick) {
+        setClickTimes((prevClickTimes) => prevClickTimes + 1);
+      }
+    } else {
+      setEdgeLock(false);
+      setNodeClicked(node);
+      if (node) {
+        setEditableNode({ ...node }); // Handles clicked node and sets it as editable
+      }
     }
   };
 
@@ -174,7 +193,7 @@ export default function MapEditing() {
     await CreateNodeDB(newNode, token);
 
     //Set new node
-    handleNodeClick(newNode);
+    handleNodeClick(newNode, false);
 
     //Refresh nodes data
     const updatedNodes: Nodes[] = nodesData;
@@ -230,6 +249,7 @@ export default function MapEditing() {
       id="MainPage"
       className="flex h-screen overflow-hidden flex-row bg-[#d6d8d5]"
     >
+      <SideBar />
       <main className="flex content-center justify-center leading-none relative">
         <TransformWrapper alignmentAnimation={{ sizeX: 0, sizeY: 0 }}>
           {({ zoomIn, zoomOut, resetTransform }) => (
