@@ -1,14 +1,11 @@
 import React from "react";
 import EdgeTable from "../backendreference/Edges.tsx";
-import SideBar from "../components/SideBar.tsx";
 import { Box, Tab, Tabs, Stack } from "@mui/material";
 import { useState } from "react";
 import NodeTable from "../backendreference/Nodes.tsx";
 import { useAuth0 } from "@auth0/auth0-react";
-// import blueback from "../assets/blueback.png";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
-// import swoosh from "../assets/swoosh.png";
 import UploadCSV from "../backendreference/UploadCSV.tsx";
 import DownloadCSV from "../backendreference/DownloadCSV.tsx";
 import DownloadIcon from "@mui/icons-material/Download";
@@ -48,12 +45,10 @@ const EdgeTablePage = () => {
   const [nodeTab, setNodeTab] = useState<number>(0);
   return (
     <Box display="flex">
-      <SideBar />
-
       <div
-        className="overflow-y-auto h-screen w-screen
-                    flex-grow justify-center items-center
-                    bg-cover bg-center bg-no-repeat bg-white"
+        className="overflow-y-auto h-screen
+                    flex-grow justify-center
+                    bg-white"
       >
         <div className="">
           <div className=" top-0 min-w-full pt-8 bg-primary">

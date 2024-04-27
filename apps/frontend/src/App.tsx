@@ -1,5 +1,11 @@
 import React, { createContext, useState } from "react";
-import { createBrowserRouter, RouterProvider, Outlet } from "react-router-dom";
+import {
+  createBrowserRouter,
+  RouterProvider,
+  Outlet,
+  useLocation,
+} from "react-router-dom";
+import Sidebar from "./components/SideBar.tsx";
 // import ExampleRoute from "./routes/ExampleRoute.tsx";
 import MainPage from "./Pages/MainPage.tsx";
 import SignInPage from "./Pages/SignInPage.tsx";
@@ -7,7 +13,6 @@ import MapEditing from "./Pages/MapEditing.tsx";
 //import FullServiceRequest from "./components/FullServiceRequest.tsx";
 import EdgeNodePage from "./Pages/EdgeNodePage.tsx";
 import Snackbar from "@mui/material/Snackbar";
-import CreditsPage from "./Pages/CreditsPage.tsx";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
 import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
@@ -88,10 +93,6 @@ function App() {
           element: <St4t5Page />,
         },
         {
-          path: "credits",
-          element: <CreditsPage />,
-        },
-        {
           path: "about",
           element: <AboutPage />,
         },
@@ -127,20 +128,23 @@ function App() {
         }}
       >
         <RequestContext.Provider value={{ requests, setRequests }}>
-          <div className="w-full flex flex-col gap-5">
-            <Outlet />
-            <Snackbar
-              open={snackbar.open}
-              autoHideDuration={3000}
-              onClose={() =>
-                setSnackbar((prevState) => ({ ...prevState, open: false }))
-              }
-              anchorOrigin={{ vertical: "top", horizontal: "center" }}
-            >
-              <Alert variant="filled" sx={{ width: "100%" }}>
-                {snackbar.message}
-              </Alert>
-            </Snackbar>
+          <div className="flex flex-grow">
+            {useLocation().pathname !== "/" && <Sidebar />}
+            <div className="flex flex-col flex-grow gap-5">
+              <Outlet />
+              <Snackbar
+                open={snackbar.open}
+                autoHideDuration={3000}
+                onClose={() =>
+                  setSnackbar((prevState) => ({ ...prevState, open: false }))
+                }
+                anchorOrigin={{ vertical: "top", horizontal: "center" }}
+              >
+                <Alert variant="filled" sx={{ width: "100%" }}>
+                  {snackbar.message}
+                </Alert>
+              </Snackbar>
+            </div>
           </div>
         </RequestContext.Provider>
       </Auth0Provider>

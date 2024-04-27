@@ -328,7 +328,6 @@ FHALL02001,1700,1120,1,Tower,HALL,Tower Hallway 12,Hallway F02001
 FDEPT00201,1610,1120,1,Tower,DEPT,Bretholtz Center for Patients and Families,Bretholtz WR
 FSERV00301,1700,1158,1,Tower,SERV,Kessler Library,Kessler Library
 FHALL02101,1769,1146,1,Tower,HALL,Tower Hallway Entrance,Tower Entrance 2
-FDEPT00401,1794,1146,1,Tower,DEPT,Sharf Admitting Center,Sharf Center
 FHALL02201,1769,1280,1,Tower,HALL,Hallway Lobby Entrance,Entrance Hallway
 FLABS00101,1845,1250,1,Tower,LABS,Obstetrics Admitting,Obs Admitting
 FHALL02301,1845,1280,1,Tower,HALL,Lobby Hallway 1,Hallway F02301
@@ -579,3 +578,4 @@ WHALL00702,1740,1500,2,Tower,HALL,Hallway Connector 7 Floor 2,Hallway W0702
 WHALL00802,1720,1745,2,Shapiro,HALL,Hallway Connector 8 Floor 2,Hallway W0802
 WHALL00902,1690,2240,2,Shapiro,HALL,Hallway Connector 9 Floor 2,Hallway W0902
 WHALL01002,1690,2455,2,BTM,HALL,Hallway Connector 10 Floor 2,Hallway W1002
+FDEPT00401,1800,1141,1,Tower,DEPT,Sharf Admitting Center,Sharf Center

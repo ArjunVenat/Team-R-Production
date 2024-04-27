@@ -1,4 +1,3 @@
-import SideBar from "../components/SideBar.tsx";
 import swoosh from "../assets/swoosh.png";
 import { Box, Tabs, Tab, Link } from "@mui/material";
 
@@ -44,10 +43,8 @@ export default function AboutPage() {
 
   return (
     <Box display="flex" minHeight="100vh">
-      <SideBar />
-
       <div
-        className="overflow-y-auto h-screen w-full bg-cover bg-center bg-no-repeat relative"
+        className="overflow-y-auto h-screen w-full bg-cover bg-center bg-no-repeat relative flex flex-col justify-between"
         style={{
           backgroundImage: `url(${swoosh})`,
         }}
@@ -109,7 +106,7 @@ export default function AboutPage() {
         </div>
 
         <CustomTabPanel value={aboutTab} index={0}>
-          <main className="flex flex-col justify-center items-center leading-none">
+          <main className="flex-col justify-center items-center leading-none">
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
@@ -117,9 +114,9 @@ export default function AboutPage() {
               }}
             >
               <h2 className="text-2xl font-bold mb-4 text-primary">
-                Meet our Developers
+                Meet our Developers (Hover for role information)
               </h2>
-              <div className="grid grid-cols-3 gap-4">
+              <div className="flex justify-center flex-wrap gap-4">
                 {[
                   {
                     name: "Artem Frenk",
@@ -186,29 +183,34 @@ export default function AboutPage() {
                     position1: "Full Stack Engineer",
                   },
                 ].map((developer, index) => (
-                  <div key={index} className="flex flex-col items-center gap-2">
+                  <div
+                    key={index}
+                    className="relative flex flex-col items-center gap-2"
+                  >
+                    <div
+                      className="absolute bg-black bg-opacity-50 w-full h-full flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-500 ease-in-out z-10 rounded-full"
+                      style={{ width: "200px", height: "200px" }}
+                    >
+                      <p className="text-center text-sm font-semibold text-white">
+                        {developer.position1}
+                      </p>
+                      <p className="text-center text-sm font-semibold text-white">
+                        {developer.position2}
+                      </p>
+                    </div>
                     <img
                       src={developer.image}
                       alt={developer.name}
+                      className="transition-all duration-500 ease-in-out transform hover:scale-105 hover:blur-md rounded-full"
                       style={{
                         width: "200px",
                         height: "200px",
                         objectFit: "cover",
-                        borderRadius: "50%",
                       }}
                     />
                     <h3 className="text-center text-lg font-semibold text-primary">
                       {developer.name}
                     </h3>
-                    <p className="text-center text-sm font-semibold text-primary">
-                      {developer.position1}
-                    </p>
-                    <p className="text-center text-sm font-semibold text-primary">
-                      {developer.position2}
-                    </p>
-                    <p className="text-center text-sm  font-semibold text-primary">
-                      {developer.position3}
-                    </p>
                   </div>
                 ))}
               </div>
@@ -216,7 +218,7 @@ export default function AboutPage() {
           </main>
         </CustomTabPanel>
         <CustomTabPanel value={aboutTab} index={1}>
-          <div className="flex flex-col items-center gap-2 min-h-screen overflow-y-auto">
+          <div className="flex flex-col items-center gap-2">
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
@@ -302,7 +304,7 @@ export default function AboutPage() {
           </div>
         </CustomTabPanel>
 
-        <div className="flex flex-col items-center justify-center w-full overflow-clip bottom-0 bg-gray-200 py-4 mt-4 text-center">
+        <div className="flex flex-col items-center justify-center w-full overflow-clip bg-gray-200 py-4 text-center">
           <div className="text-primary">
             WPI Computer Science Department, CS3733-D24 Software Engineering,
             Prof. Wilson Wong
