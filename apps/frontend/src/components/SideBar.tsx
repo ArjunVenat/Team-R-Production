@@ -10,7 +10,7 @@ import { ReactNode, useState, useEffect } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from "@mui/icons-material/TableView";
-import TextsmsIcon from "@mui/icons-material/Textsms";
+import Herald from "../assets/image/Herald.jpg";
 
 // import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
@@ -106,8 +106,14 @@ export default function Sidebar() {
     onlyDisplayLoggedIn: false,
   };
   const chat: Menu = {
-    title: "Chatbot",
-    icon: <TextsmsIcon />,
+    title: "Chat with Herald AI",
+    icon: (
+      <img
+        src={Herald}
+        alt="Herald"
+        style={{ height: "28px", width: "28px" }}
+      />
+    ),
     onlyDisplayLoggedIn: false,
   };
   const login: Menu = {
@@ -317,7 +323,7 @@ export default function Sidebar() {
       routeChange("about");
     } else if (title === "Find a Doctor") {
       routeChange("doctor-match");
-    } else if (title === "Chatbot") {
+    } else if (title === "Chat with Herald AI") {
       routeChange("chat");
     }
   };
