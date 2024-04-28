@@ -1,4 +1,6 @@
 import { GraphNode } from "./graph.ts";
+// import { Nodes } from "database";
+// import PrismaClient from "../src/bin/database-connection.ts";
 export class Directions {
   directions: string[][] = [];
   path: GraphNode[];
@@ -28,14 +30,10 @@ export class Directions {
     return angle;
   }
 
-  // public getCardDirection(start: GraphNode, end: GraphNode) {
-  //   const g1: GraphNode = new GraphNode("id", start.x, start.y - 50, 1);
-  // }
-
   /**
    * Function that uses getAngles on all nodes in a path
    */
-  public getAngles(): string[][] {
+  public getAngles() {
     const path = this.path;
     const angles: number[] = [];
     //const directions: string[][] = [];
@@ -43,34 +41,7 @@ export class Directions {
     //const i = 0;
     this.directions.push([]);
     this.directions[j].push(floorName(this.path[0].z));
-    // for (let i = 0; i < 2; i++) {
-    //   if (
-    //     this.path[i] &&
-    //     this.path[i + 1] &&
-    //     this.path[i].z === this.path[i + 1].z
-    //   ) {
-    //       const g1 = new GraphNode(i.toString(), this.path[i].x, this.path[i].y - 50, this.path[i].z);
-    //       const dir = this.getAngle(g1, this.path[i], this.path[i+1]);
-    //       if(dir <= 22.5 && dir >= 337.5){
-    //         this.directions[i].push("head south towards " + this.path[1]);
-    //       }else if(dir > 22.5 && dir < 67.5){
-    //           this.directions[i].push("head southwest towards " + this.path[1]);
-    //       }else if(dir >= 67.5 && dir <= 112.5){
-    //           this.directions[i].push("head west towards " + this.path[1]);
-    //       }else if(dir > 112.5 && dir < 157.5){
-    //           this.directions[i].push("head northwest towards " + this.path[1]);
-    //       }else if(dir >= 157.5 && dir <= 202.5){
-    //           this.directions[i].push("head north towards " + this.path[1]);
-    //       }else if(dir > 202.5 && dir < 247.5){
-    //           this.directions[i].push("head northeast towards " + this.path[1]);
-    //       }else if(dir >= 247.5 && dir <= 292.5){
-    //           this.directions[i].push("head east towards " + this.path[1]);
-    //       }else if(dir > 292.5 && dir < 337.5){
-    //           this.directions[i].push("head southeast towards " + this.path[1]);
-    //       }
-    //
-    //   }
-    // }
+
     //pushes that list of angles to a seperate array
 
     for (let i = 0; i < path.length; i++) {
@@ -195,10 +166,20 @@ export class Directions {
         this.directions[j].push("take elevator at  " + this.path[i + 1].id);
       }
     }
+
     this.cleanDirections();
+    if (angles.length == 0) {
+      this.directions[this.directions.length - 1].push(
+        this.floorChange(this.path[path.length - 1].id) +
+          this.path[0].id +
+          " to " +
+          this.path[1].id,
+      );
+    }
     this.directions[this.directions.length - 1].push(
       "arrived at " + this.path[path.length - 1].id,
     );
+
     return this.directions;
   }
 
@@ -206,10 +187,13 @@ export class Directions {
     for (let i = 0; i < this.directions.length; i++) {
       if (this.directions[i].length > 2) {
         if (
-          this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
+          (this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
             -1 ||
-          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
-            -1
+            this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
+              -1) &&
+          this.directions[i][this.directions[i].length - 2].indexOf(
+            "take the",
+          ) == -1
         ) {
           this.directions[i][this.directions[i].length - 2] =
             this.directions[i][this.directions[i].length - 1];
@@ -218,10 +202,13 @@ export class Directions {
       }
       if (this.directions[i].length > 2) {
         if (
-          this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
+          (this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
             -1 ||
-          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
-            -1
+            this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
+              -1) &&
+          this.directions[i][this.directions[i].length - 2].indexOf(
+            "take the",
+          ) == -1
         ) {
           this.directions[i][this.directions[i].length - 2] =
             this.directions[i][this.directions[i].length - 1];
@@ -230,37 +217,20 @@ export class Directions {
       }
       if (this.directions[i].length > 2) {
         if (
-          this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
+          (this.directions[i][this.directions[i].length - 2].indexOf("ELEV") !=
             -1 ||
-          this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
-            -1
+            this.directions[i][this.directions[i].length - 2].indexOf("STAI") !=
+              -1) &&
+          this.directions[i][this.directions[i].length - 2].indexOf(
+            "take the",
+          ) == -1
         ) {
           this.directions[i][this.directions[i].length - 2] =
             this.directions[i][this.directions[i].length - 1];
           this.directions[i].pop();
         }
       }
-
-      // if (temp === 0 && i !== this.directions.length - 1) {
-      //     this.directions[i].push("(1)take the elevator at " + end);
-      // } else if (temp === 1 && i !== this.directions.length - 1) {
-      //     this.directions[i].push(
-      //         "(1)take the stairs/escalator at " + end,
-      //     );
-      // }
     }
-
-    // if (
-    //   this.directions[0].length == 2 //&&
-    // ) {
-    //   if (this.path[0].id.indexOf("ELEV")) {
-    //     this.directions[0].push("take the elevator at " + this.path[0].id);
-    //   } else if (this.path[0].id.indexOf("STAI")) {
-    //     this.directions[0].push(
-    //       "take the stairs/escalator at " + this.path[0].id,
-    //     );
-    //   }
-    // }
   }
 
   public floorChange(type: string): string {
@@ -270,7 +240,19 @@ export class Directions {
       return "take the elevator at ";
     } else return "";
   }
-  //}
+
+  // async getNodeLongName(id: string): Promise<string> {
+  //   const node: Nodes | null = await PrismaClient.nodes.findUnique({
+  //     where: {
+  //       NodeID: id,
+  //     },
+  //   });
+  //   if (node) {
+  //     return node.LongName;
+  //   } else {
+  //     return "";
+  //   }
+  // }
 }
 
 //Helper function for inserting floor name
