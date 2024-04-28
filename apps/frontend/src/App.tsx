@@ -16,8 +16,7 @@ import Snackbar from "@mui/material/Snackbar";
 import { Alert } from "@mui/material";
 import { ServiceRequest } from "./Interfaces/ServiceRequest.ts";
 import ServiceRequestTable from "./Pages/ServiceRequestTable.tsx";
-
-//Artem Page import
+import ChatPage from "./Pages/ChatPage.tsx";
 import St4t5Page from "./Pages/StatsPage.tsx";
 import AboutPage from "./Pages/AboutPage.tsx";
 // import DownloadCSV from "./backendreference/DownloadCSV.tsx";
@@ -104,6 +103,10 @@ function App() {
         {
           path: "about",
           element: <AboutPage />,
+        },
+        {
+          path: "chat",
+          element: <ChatPage />,
         },
       ],
     },
