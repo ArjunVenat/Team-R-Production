@@ -63,8 +63,10 @@ export const insertDoctorIntoDB = async (row: string[]) => {
     department,
     parseInt(yearsWorked),
     parseFloat(rating),
-    specialtyTraining === "Yes" || specialtyTraining === "TRUE",
-    boardCertification === "Yes" || boardCertification === "TRUE",
+    specialtyTraining.toUpperCase() === "YES" ||
+      specialtyTraining.toUpperCase() === "TRUE",
+    boardCertification.toUpperCase() === "YES" ||
+      boardCertification.toUpperCase() === "TRUE",
     languages,
   );
 };
