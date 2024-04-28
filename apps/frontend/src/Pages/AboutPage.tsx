@@ -129,7 +129,7 @@ export default function AboutPage() {
               }}
             >
               <h2 className="text-2xl font-bold mb-4 text-primary">
-                Meet our Developers (Hover for role information)
+                Meet our Developers (Hover for favorite quote)
               </h2>
               <div className="flex justify-center flex-wrap gap-4">
                 {[
@@ -139,41 +139,48 @@ export default function AboutPage() {
                     position1: "Lead Software Engineer",
                     position2: "Full Stack Engineer",
                     position3: "Co-Product Owner",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Nick Golparvar",
                     image: NickGolparvar,
                     position1: "Assistant Lead Software Engineer",
                     position2: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Hubert Liu",
                     image: HubertLiu,
                     position1: "Assistant Lead Software Engineer",
                     position2: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Arjun Venat",
                     image: ArjunVenat,
                     position1: "Assistant Lead Software Engineer",
                     position2: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Javier DeLeon",
                     image: JavierDeLeon,
                     position1: "Project Manager",
                     position2: "Full Stack Engineer",
+                    quote: "Don't follow in my footsteps, I walk into walls",
                   },
                   {
                     name: "John Diamond",
                     image: JohnDiamond,
                     position1: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Lauren Harrison",
                     image: LaurenHarrison,
                     position1: "Documentation Analyst",
                     position2: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Jessie Hart",
@@ -181,21 +188,25 @@ export default function AboutPage() {
                     position1: "Scrum Master",
                     position2: "Co-Product Owner",
                     position3: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Brannon Henson",
                     image: BrannonHenson,
                     position1: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Zihan Li",
                     image: ZihanLi,
                     position1: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                   {
                     name: "Alex Stoyanov",
                     image: AlexanderStoyanov,
                     position1: "Full Stack Engineer",
+                    quote: "Placeholder quote",
                   },
                 ].map((developer, index) => (
                   <div
@@ -207,10 +218,7 @@ export default function AboutPage() {
                       style={{ width: "200px", height: "200px" }}
                     >
                       <p className="text-center text-sm font-semibold text-white">
-                        {developer.position1}
-                      </p>
-                      <p className="text-center text-sm font-semibold text-white">
-                        {developer.position2}
+                        {developer.quote}
                       </p>
                     </div>
                     <img
@@ -226,6 +234,15 @@ export default function AboutPage() {
                     <h3 className="text-center text-lg font-semibold text-primary">
                       {developer.name}
                     </h3>
+                    <p className="text-center text-sm font-semibold text-primary">
+                      {developer.position1}
+                    </p>
+                    <p className="text-center text-sm font-semibold text-primary">
+                      {developer.position2}
+                    </p>
+                    <p className="text-center text-sm font-semibold text-primary">
+                      {developer.position3}
+                    </p>
                   </div>
                 ))}
               </div>
