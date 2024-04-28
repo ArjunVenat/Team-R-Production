@@ -9,6 +9,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { motion } from "framer-motion";
+import "../styles/ChatPage.css";
 
 const key = "sk-proj-OSW3y1qeycxUiOAwBxigT3BlbkFJoKyoP4loGhm83Fw7pVKv";
 const openai = new OpenAI({
@@ -19,12 +20,23 @@ const openai = new OpenAI({
 type Message = {
   role: string;
   content: string;
+  isTemporary?: boolean;
 };
 
 const ChatPage = () => {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
   const sendMessage = async () => {
+    // Add user's message to messages state array immediately
+    setMessages([
+      ...messages,
+      { role: "user", content: userInput },
+      { role: "bot", content: "", isTemporary: true }, // Add temporary message
+    ]);
+
+    // Clear the text box immediately after the user presses enter
+    setUserInput("");
+
     try {
       const response = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
@@ -41,12 +53,20 @@ const ChatPage = () => {
         presence_penalty: 0,
       });
 
-      setMessages([
-        ...messages,
-        { role: "user", content: userInput },
-        { role: "bot", content: response.choices[0].message.content ?? "" },
-      ]);
-      setUserInput("");
+      // Replace temporary message with chatbot's response when it is received
+      setMessages((prevMessages) => {
+        const newMessages = [...prevMessages];
+        const tempMessageIndex = newMessages.findIndex(
+          (message) => message.isTemporary,
+        );
+        if (tempMessageIndex !== -1) {
+          newMessages[tempMessageIndex] = {
+            role: "bot",
+            content: response.choices[0].message.content ?? "",
+          };
+        }
+        return newMessages;
+      });
     } catch (error) {
       console.error("Error:", error);
     }
@@ -87,6 +107,7 @@ const ChatPage = () => {
             >
               <ListItemText
                 primary={message.content}
+                className={message.isTemporary ? "loading" : ""}
                 style={{
                   background: message.role === "user" ? "#0b93f6" : "#f3f3f3",
                   color: message.role === "user" ? "#ffffff" : "#000000",
