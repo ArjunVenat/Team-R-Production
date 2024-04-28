@@ -10,6 +10,7 @@ import { Tooltip } from "@mui/material";
 // import StairsTwoToneIcon from '@mui/icons-material/StairsTwoTone';
 import ElevatorIcon from "../assets/image/Elevator_Icon.svg";
 import { floors, defaultMap } from "./mapElements.ts";
+import { GetColorblindColors } from "./colorblind.ts";
 
 export const EdgesCustomHook = () => {
   const [edgesData, setEdgesData] = useState<Edges[]>([]);
@@ -273,13 +274,13 @@ export default function SVGCanvas(props: {
       // Determine the color based on node properties and relevance to the path
       if (props.path?.[0].NodeID === node.NodeID) {
         // If the node is the start of the path, color it chartreuse
-        return "#3ECF04";
+        return GetColorblindColors().color5;
       } else if (props.path?.[props.path?.length - 1].NodeID === node.NodeID) {
         // If the node is the end of the path, color it red
-        return "red";
+        return GetColorblindColors().color8;
       } else if (isElevatorOrStairs && isRelevantElevatorOrStairs) {
         // If the node is a relevant elevator or stairs, color it purple
-        return "#009CA6";
+        return GetColorblindColors().color2;
       } else if (
         props.path?.some((pathNode) => pathNode.NodeID === node.NodeID)
       ) {
@@ -287,8 +288,8 @@ export default function SVGCanvas(props: {
         return "transparent";
       }
     }
-    // If none of the above conditions are met, return the default color "#003da6"
-    return "#003da6";
+    // If none of the above conditions are met, return the default color color1
+    return GetColorblindColors().color1;
   };
 
   function handleEdgeClick(edge: Edges) {
@@ -503,7 +504,7 @@ export default function SVGCanvas(props: {
         return (
           <>
             {poly({ style: "stroke-primary", strokeWidth: "10" })}
-            {poly({ style: "stroke-teal", strokeWidth: "6" })}
+            {poly({ style: GetColorblindColors().color6, strokeWidth: "6" })}
           </>
         );
       }
@@ -546,7 +547,7 @@ export default function SVGCanvas(props: {
               y1={startNode?.Ycoord}
               x2={endNode?.Xcoord}
               y2={endNode?.Ycoord}
-              stroke={props.edgeColor ?? "blue"}
+              stroke={props.edgeColor ?? GetColorblindColors().color7}
               strokeWidth="5"
             />
           </g>

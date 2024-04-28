@@ -12,6 +12,7 @@ import DownloadCSV from "../backendreference/DownloadCSV.tsx";
 // import DownloadIcon from "@mui/icons-material/Download";
 import BadgeIcon from "@mui/icons-material/Badge";
 import { primaryButtonStyle } from "../styles/muiStyles.ts";
+import { GetColorblindColors } from "../components/colorblind.ts";
 
 const tabStyle = {
   fontSize: "1rem",
@@ -69,7 +70,7 @@ const EdgeTablePage = () => {
           <div className=" top-0 min-w-full pt-8 bg-primary">
             <Box
               sx={{
-                backgroundColor: "#009CA6",
+                backgroundColor: GetColorblindColors().color2,
                 borderColor: "white",
                 display: "flex",
                 justifyContent: "center",

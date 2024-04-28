@@ -16,6 +16,7 @@ import { useState } from "react";
 
 import PeopleIcon from "@mui/icons-material/People";
 import AssignmentIcon from "@mui/icons-material/Assignment";
+import { GetColorblindColors } from "../components/colorblind.ts";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,7 +53,7 @@ export default function AboutPage() {
         <div className=" top-0 min-w-full pt-8 bg-primary">
           <Box
             sx={{
-              backgroundColor: "#009CA6",
+              backgroundColor: GetColorblindColors().color2,
               borderColor: "white",
               display: "flex",
               justifyContent: "center",
@@ -61,7 +62,9 @@ export default function AboutPage() {
             }}
           >
             <Tabs
-              TabIndicatorProps={{ style: { backgroundColor: "#f6bd39" } }}
+              TabIndicatorProps={{
+                style: { backgroundColor: GetColorblindColors().color3 },
+              }}
               value={aboutTab}
               onChange={(event, newValue) => setAboutTab(newValue)}
               aria-label="basic tabs example"
@@ -78,7 +81,7 @@ export default function AboutPage() {
                   alignItems: "center",
                   color: "white",
                   "&.Mui-selected": {
-                    color: "#f6bd39",
+                    color: GetColorblindColors().color3,
                   },
                 }}
               />
@@ -97,7 +100,7 @@ export default function AboutPage() {
                   alignItems: "center",
                   color: "white",
                   "&.Mui-selected": {
-                    color: "#f6bd39",
+                    color: GetColorblindColors().color3,
                   },
                 }}
               />

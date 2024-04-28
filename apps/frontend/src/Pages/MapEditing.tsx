@@ -29,6 +29,7 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
+import { GetColorblindColors } from "../components/colorblind.ts";
 //import {c} from "vitest/dist/reporters-5f784f42";
 
 let edgeFlag = false;
@@ -299,8 +300,8 @@ export default function MapEditing() {
                   nodeClicked={nodeClicked}
                   handleEdgeClicked={handleEdgeClicked}
                   edgeClicked={edgeClicked}
-                  nodeColor={"orange"}
-                  edgeColor={"green"}
+                  nodeColor={GetColorblindColors().color9}
+                  edgeColor={GetColorblindColors().color10}
                   isHome={false}
                   showPathOnly={false}
                   allnodes={nodesData}
@@ -322,9 +323,9 @@ export default function MapEditing() {
                   className="absolute top-20 left-1 flex gap-1"
                   sx={{
                     "& .MuiFab-root": {
-                      backgroundColor: "#009ca6",
+                      backgroundColor: GetColorblindColors().color2,
                       "&:hover": {
-                        backgroundColor: "#012D5A",
+                        backgroundColor: GetColorblindColors().color4,
                       },
                     },
                   }}
@@ -357,7 +358,7 @@ export default function MapEditing() {
             <div
               style={{
                 backgroundColor: "#e4e4e4",
-                border: "5px solid #012D5A",
+                border: `5px solid ${GetColorblindColors().color4}`,
                 color: "black",
                 borderRadius: "3%",
               }}
@@ -437,7 +438,7 @@ export default function MapEditing() {
                     <Button
                       variant="contained"
                       style={{
-                        backgroundColor: "#012D5A",
+                        backgroundColor: GetColorblindColors().color4,
                         color: "white",
                       }}
                       onClick={() => {
@@ -477,7 +478,7 @@ export default function MapEditing() {
             <div
               style={{
                 backgroundColor: "#e4e4e4",
-                border: "5px solid #012D5A",
+                border: `5px solid ${GetColorblindColors().color4}`,
                 color: "black",
                 borderRadius: "3%",
               }}
@@ -516,7 +517,7 @@ export default function MapEditing() {
                   <Button
                     variant="contained"
                     style={{
-                      backgroundColor: "#012D5A",
+                      backgroundColor: GetColorblindColors().color4,
                       color: "white",
                     }}
                     onClick={() => {
@@ -551,7 +552,7 @@ export default function MapEditing() {
           <div
             style={{
               backgroundColor: "#e4e4e4",
-              border: "5px solid #012D5A",
+              border: `5px solid ${GetColorblindColors().color4}`,
               color: "black",
               borderRadius: "3%",
             }}
@@ -765,7 +766,7 @@ export default function MapEditing() {
             <div
               style={{
                 backgroundColor: "#e4e4e4",
-                border: "5px solid #012D5A",
+                border: `5px solid ${GetColorblindColors().color4}`,
                 color: "black",
                 borderRadius: "3%",
               }}
