@@ -3,7 +3,6 @@ import axios from "axios";
 import { Button, Box, Alert } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
 import { primaryButtonStyle } from "../styles/muiStyles.ts";
-import { UpDownBox } from "../components/UploadDownloadComponents.tsx";
 import Slide from "@mui/material/Slide";
 import Snackbar from "@mui/material/Snackbar";
 
@@ -63,7 +62,7 @@ export default function UploadCSV() {
 
   return (
     <>
-      <UpDownBox>
+      <>
         <form
           onSubmit={(event) => {
             handleSubmit(event).then();
@@ -80,7 +79,7 @@ export default function UploadCSV() {
             </Button>
           </Box>
         </form>
-      </UpDownBox>
+      </>
       <Slide direction={"down"} in={showSnackbar} mountOnEnter unmountOnExit>
         <Snackbar
           open={showSnackbar}

@@ -1,14 +1,28 @@
 import React from "react";
 import EdgeTable from "../backendreference/Edges.tsx";
-import { Box, Tab, Tabs, Stack } from "@mui/material";
+import { Box, Button, Card, Modal, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import NodeTable from "../backendreference/Nodes.tsx";
+import EmployeeTable from "../backendreference/Employees.tsx";
 import { useAuth0 } from "@auth0/auth0-react";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
 import UploadCSV from "../backendreference/UploadCSV.tsx";
 import DownloadCSV from "../backendreference/DownloadCSV.tsx";
-import DownloadIcon from "@mui/icons-material/Download";
+// import DownloadIcon from "@mui/icons-material/Download";
+import BadgeIcon from "@mui/icons-material/Badge";
+import { primaryButtonStyle } from "../styles/muiStyles.ts";
+
+const tabStyle = {
+  fontSize: "1rem",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  color: "white",
+  "&.Mui-selected": {
+    color: "#f6bd39",
+  },
+};
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -42,6 +56,7 @@ const EdgeTablePage = () => {
     }).then();
   }
 
+  const [open, setOpenModal] = useState(false);
   const [nodeTab, setNodeTab] = useState<number>(0);
   return (
     <Box display="flex">
@@ -76,16 +91,7 @@ const EdgeTablePage = () => {
                       sx={{ fontSize: "2rem" }}
                     />
                   }
-                  sx={{
-                    fontSize: "1rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    color: "white",
-                    "&.Mui-selected": {
-                      color: "#f6bd39",
-                    },
-                  }}
+                  sx={tabStyle}
                 />
                 <Tab
                   label="Edge Table"
@@ -95,63 +101,94 @@ const EdgeTablePage = () => {
                       sx={{ fontSize: "2rem" }}
                     />
                   }
-                  sx={{
-                    fontSize: "1rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    color: "white",
-                    "&.Mui-selected": {
-                      color: "#f6bd39",
-                    },
-                  }}
+                  sx={tabStyle}
                 />
                 <Tab
-                  label="Upload/Download"
+                  label="Employee Table"
                   icon={
-                    <DownloadIcon className="mx-2" sx={{ fontSize: "2rem" }} />
+                    <BadgeIcon className="mx-2" style={{ fontSize: "2rem" }} />
                   }
-                  sx={{
-                    fontSize: "1rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    color: "white",
-                    "&.Mui-selected": {
-                      color: "#f6bd39",
-                    },
-                  }}
+                  sx={tabStyle}
                 />
               </Tabs>
             </Box>
           </div>
           <CustomTabPanel value={nodeTab} index={0}>
-            <NodeTable />
-          </CustomTabPanel>
-          <CustomTabPanel value={nodeTab} index={1}>
-            <EdgeTable />
-          </CustomTabPanel>
-          <CustomTabPanel value={nodeTab} index={2}>
-            <div
-              className="flex items-center justify-center h-full w-full bg-cover bg-center bg-no-repeat"
-              // style={{
-              //     backgroundImage: `url(${swoosh})`,
-              //     // width: "100vw",
-              //     // height: "100vh",
-              // }}
-            >
-              <Stack spacing={4}>
-                <div className="text-center p-4">
-                  {/*<h1 className="font-semibold text-xl">Upload CSV File:</h1>*/}
-                  <UploadCSV />
-                </div>
-                <div className="text-center text-lg">
-                  {/*<h1 className="font-semibold text-xl">Download CSV File:</h1>*/}
-                  <DownloadCSV />
-                </div>
-              </Stack>
+            <div className="flex  items-center flex-col">
+              <div className="mb-4 flex flex-row space-x-4">
+                <Button
+                  onClick={() => setOpenModal(true)}
+                  variant="outlined"
+                  sx={primaryButtonStyle}
+                >
+                  Upload Node CSV
+                </Button>
+                <DownloadCSV type="nodes" />
+              </div>
+              <NodeTable />
             </div>
           </CustomTabPanel>
+          <CustomTabPanel value={nodeTab} index={1}>
+            <div className="flex  items-center flex-col">
+              <div className="mb-4 flex flex-row space-x-4">
+                <Box>
+                  <Button
+                    onClick={() => setOpenModal(true)}
+                    variant="outlined"
+                    sx={primaryButtonStyle}
+                  >
+                    Upload Edge CSV
+                  </Button>
+                </Box>
+                <DownloadCSV type="edges" />
+              </div>
+              <EdgeTable />
+            </div>
+          </CustomTabPanel>
+          <CustomTabPanel index={2} value={nodeTab}>
+            <div className="flex  items-center flex-col">
+              <div className="mb-4 flex flex-row space-x-4">
+                <Box>
+                  <Button
+                    onClick={() => setOpenModal(true)}
+                    variant="outlined"
+                    sx={primaryButtonStyle}
+                  >
+                    Upload Employee CSV
+                  </Button>
+                </Box>
+                <DownloadCSV type="employees" />
+              </div>
+              <EmployeeTable />
+            </div>
+          </CustomTabPanel>
+          <Modal open={open}>
+            <div className="flex justify-center items-center h-screen">
+              <Card
+                className=" w-1/3 shadow-md rounded-lg p-10 mx-auto mt-5 h-[50vh]"
+                sx={{
+                  backgroundColor: "white",
+                  border: "10px solid #012D5A",
+                }}
+              >
+                <div className="flex justify-start ">
+                  <Button
+                    sx={{
+                      backgroundColor: "#012D5A",
+                      color: "white",
+                      marginLeft: "auto",
+                    }}
+                    onClick={() => setOpenModal(false)}
+                  >
+                    Back
+                  </Button>
+                </div>
+                <div className="flex items-center justify-center h-full mb-4">
+                  <UploadCSV />
+                </div>
+              </Card>
+            </div>
+          </Modal>
         </div>
       </div>
     </Box>

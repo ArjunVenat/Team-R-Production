@@ -1,14 +1,32 @@
 import axios from "axios";
 // import SideBar from "../components/SideBar.tsx";
-import { Stack } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
-import {
-  UpDownBox,
-  DownloadCSVItem,
-} from "../components/UploadDownloadComponents.tsx";
+import { primaryButtonStyle } from "../styles/muiStyles.ts";
+import { ReactNode } from "react";
+import { Button } from "@mui/material";
+
+interface Props {
+  type: string;
+}
+
+export function DownloadCSVItem(props: {
+  children: ReactNode | string;
+  clickHandler: () => void;
+}) {
+  return (
+    <Button
+      onClick={props.clickHandler}
+      variant="outlined"
+      sx={primaryButtonStyle}
+      type="submit"
+    >
+      {props.children}
+    </Button>
+  );
+}
 
 //received help from Dan from team o. He fixed some errors.
-export default function DownloadCSV() {
+export default function DownloadCSV(props: Props) {
   //Use auth0 react hook
   const { getAccessTokenSilently } = useAuth0();
 
@@ -82,27 +100,27 @@ export default function DownloadCSV() {
   }
 
   return (
-    // <Stack direction="row" spacing={2}>
-    //   <SideBar />
-    <UpDownBox>
-      <h1 className="font-semibold text-xl mb-10 text-primary">
-        Download CSV File:
-      </h1>
-      <Stack direction="row" spacing={5}>
+    <>
+      {props.type === "nodes" && (
         <DownloadCSVItem
           clickHandler={fetchNodes}
           children="Download Nodes File"
         />
+      )}
+
+      {props.type === "edges" && (
         <DownloadCSVItem
           clickHandler={fetchEdges}
           children="Download Edges File"
         />
+      )}
+
+      {props.type == "employees" && (
         <DownloadCSVItem
           clickHandler={fetchEmployees}
           children="Download Employees File"
         />
-      </Stack>
-    </UpDownBox>
-    // </Stack>
+      )}
+    </>
   );
 }
