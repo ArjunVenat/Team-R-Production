@@ -81,7 +81,6 @@ export function ServiceRequestMenu() {
                 className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
                   backgroundImage: `url(${flowers})`,
-                  backgroundColor: "blue",
                   border: 2,
                   borderColor: "#009ca6",
                   "&::after": {
@@ -134,7 +133,6 @@ export function ServiceRequestMenu() {
                 className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
                   backgroundImage: `url(${gift})`,
-                  backgroundColor: "blue",
                   border: 2,
                   borderColor: "#009ca6",
                   "&::after": {
@@ -187,7 +185,6 @@ export function ServiceRequestMenu() {
                 className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
                   backgroundImage: `url(${game})`,
-                  backgroundColor: "blue",
                   border: 2,
                   borderColor: "#009ca6",
                   "&::after": {
@@ -240,7 +237,6 @@ export function ServiceRequestMenu() {
                 className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
                   backgroundImage: `url(${maintenance})`,
-                  backgroundColor: "blue",
                   border: 2,
                   borderColor: "#009ca6",
                   "&::after": {
@@ -293,7 +289,6 @@ export function ServiceRequestMenu() {
                 className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
                   backgroundImage: `url(${medicine})`,
-                  backgroundColor: "blue",
                   border: 2,
                   borderColor: "#009ca6",
                   "&::after": {
@@ -346,7 +341,6 @@ export function ServiceRequestMenu() {
                 className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
                   backgroundImage: `url(${eqipment})`,
-                  backgroundColor: "blue",
                   border: 2,
                   borderColor: "#009ca6",
                   "&::after": {
