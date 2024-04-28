@@ -314,6 +314,32 @@ export default function MapEditing() {
                   zoomOut={zoomOut}
                   resetTransform={resetTransform}
                 />
+                <SpeedDial
+                  ariaLabel="SpeedDial openIcon example"
+                  open={open}
+                  icon={<SpeedDialIcon />}
+                  onClick={() => setOpen(!open)}
+                  direction="down"
+                  className="absolute top-20 left-1 flex gap-1"
+                  sx={{
+                    "& .MuiFab-root": {
+                      backgroundColor: GetColorblindColors().color2,
+                      "&:hover": {
+                        backgroundColor: GetColorblindColors().color4,
+                      },
+                    },
+                  }}
+                >
+                  {actions.map((action) => (
+                    <SpeedDialAction
+                      key={action.name}
+                      icon={action.icon}
+                      tooltipTitle={action.name}
+                      tooltipPlacement="right"
+                      onClick={action.onClick}
+                    />
+                  ))}
+                </SpeedDial>
                 <FloorSelect
                   setMap={setCurrentMap}
                   isDirectionsClicked={isDirectionsClicked}
@@ -326,51 +352,25 @@ export default function MapEditing() {
         </TransformWrapper>
       </main>
       <aside className={editMapRightSideBar}>
-        <SpeedDial
-          ariaLabel="SpeedDial openIcon example"
-          open={open}
-          icon={<SpeedDialIcon />}
-          onClick={() => setOpen(!open)}
-          direction="down"
-          style={{
-            marginLeft: "auto",
-          }}
-          sx={{
-            "& .MuiFab-root": {
-              backgroundColor: GetColorblindColors().color2,
-              "&:hover": {
-                backgroundColor: GetColorblindColors().color4,
-              },
-            },
-          }}
-        >
-          {actions.map((action) => (
-            <SpeedDialAction
-              key={action.name}
-              icon={action.icon}
-              tooltipTitle={action.name}
-              onClick={action.onClick}
-            />
-          ))}
-        </SpeedDial>
-
         {addEdgeFormFlag &&
           nodeClicked == undefined &&
           edgeClicked == undefined && (
             <div
               style={{
-                backgroundColor: "white",
-                border: `10px solid ${GetColorblindColors().color4}`,
+                backgroundColor: "#e4e4e4",
+                border: `5px solid ${GetColorblindColors().color4}`,
                 color: "black",
+                borderRadius: "3%",
               }}
+              className="backdrop-blur-sm"
             >
               <div>
                 <TableContainer sx={{ marginBottom: 2 }}>
                   <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                     <TableRow>
-                      <TableCell align="left">Enter Edge ID:</TableCell>
                       <TableCell align="left">
                         <TextField
+                          className="w-full"
                           id="outlined-controlled"
                           label="Edge ID"
                           value={addEdgeID}
@@ -383,7 +383,6 @@ export default function MapEditing() {
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell align="left">Enter Start Node:</TableCell>
                       <TableCell align="left">
                         <Autocomplete
                           value={addEdgeStartID}
@@ -403,7 +402,6 @@ export default function MapEditing() {
                       </TableCell>
                     </TableRow>
                     <TableRow>
-                      <TableCell align="left">Enter End Node:</TableCell>
                       <TableCell align="left">
                         <Autocomplete
                           value={addEdgeEndID}
@@ -424,7 +422,12 @@ export default function MapEditing() {
                     </TableRow>
                   </Table>
                 </TableContainer>
-                <Stack direction="row" spacing={5} justifyContent="center">
+                <Stack
+                  direction="row"
+                  spacing={5}
+                  justifyContent="center"
+                  className="pb-3"
+                >
                   <Box
                     display="flex"
                     justifyContent="center"
@@ -437,7 +440,6 @@ export default function MapEditing() {
                       style={{
                         backgroundColor: GetColorblindColors().color4,
                         color: "white",
-                        marginLeft: "auto",
                       }}
                       onClick={() => {
                         addEdgeDB().then();
@@ -446,7 +448,7 @@ export default function MapEditing() {
                         setEdgeLock(true);
                       }}
                     >
-                      Add To Map
+                      Add Edge
                     </Button>
                   </Box>
                   <Box
@@ -475,17 +477,18 @@ export default function MapEditing() {
           edgeClicked == undefined && (
             <div
               style={{
-                backgroundColor: "white",
-                border: `10px solid ${GetColorblindColors().color4}`,
+                backgroundColor: "#e4e4e4",
+                border: `5px solid ${GetColorblindColors().color4}`,
                 color: "black",
+                borderRadius: "3%",
               }}
             >
               <TableContainer sx={{ marginBottom: 2 }}>
                 <Table sx={{ maxWidth: 350 }} aria-label="simple table">
                   <TableRow>
-                    <TableCell align="left">Enter Node ID:</TableCell>
                     <TableCell align="left">
                       <TextField
+                        className="w-full"
                         id="outlined-controlled"
                         label="Node ID"
                         value={addNodeID}
@@ -499,20 +502,23 @@ export default function MapEditing() {
                   </TableRow>
                 </Table>
               </TableContainer>
-              <Stack direction="row" spacing={5} justifyContent="center">
+              <Stack
+                direction="row"
+                spacing={5}
+                justifyContent="center"
+                className="pb-3"
+              >
                 <Box
                   display="flex"
                   justifyContent="center"
                   alignItems="center"
                   minHeight="5vh"
-                  pt="3"
                 >
                   <Button
                     variant="contained"
                     style={{
                       backgroundColor: GetColorblindColors().color4,
                       color: "white",
-                      marginLeft: "auto",
                     }}
                     onClick={() => {
                       addNodeDB().then();
@@ -520,7 +526,7 @@ export default function MapEditing() {
                       setAddNodeFormFlag(false);
                     }}
                   >
-                    Add To Map
+                    Add Node
                   </Button>
                 </Box>
                 <Box
@@ -528,7 +534,6 @@ export default function MapEditing() {
                   justifyContent="center"
                   alignItems="center"
                   minHeight="5vh"
-                  pt="3"
                 >
                   <Button
                     variant="contained"
@@ -546,9 +551,10 @@ export default function MapEditing() {
         {nodeClicked != undefined && nodeClicked != defaultNode && (
           <div
             style={{
-              backgroundColor: "white",
-              border: `10px solid ${GetColorblindColors().color4}`,
+              backgroundColor: "#e4e4e4",
+              border: `5px solid ${GetColorblindColors().color4}`,
               color: "black",
+              borderRadius: "3%",
             }}
           >
             <TableContainer sx={{ maxWidth: 350, marginBottom: 2 }}>
@@ -561,6 +567,7 @@ export default function MapEditing() {
                   <TableCell align="left">X Coord:</TableCell>
                   <TableCell align="left">
                     <input
+                      className="bg-transparent"
                       value={editableNode?.Xcoord || ""}
                       onChange={(e) => {
                         editNodeDB(
@@ -578,6 +585,7 @@ export default function MapEditing() {
                   <TableCell align="left">Y Coord:</TableCell>
                   <TableCell align="left">
                     <input
+                      className="bg-transparent"
                       value={editableNode?.Ycoord || ""}
                       onChange={(e) => {
                         editNodeDB(
@@ -611,9 +619,7 @@ export default function MapEditing() {
                       disablePortal
                       id="combo-box-end"
                       options={["L1", "L2", "1", "2", "3"]}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Floor" />
-                      )}
+                      renderInput={(params) => <TextField {...params} />}
                     />
                   </TableCell>
                 </TableRow>
@@ -643,9 +649,7 @@ export default function MapEditing() {
                         "Shapiro",
                         "Tower",
                       ]}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Building" />
-                      )}
+                      renderInput={(params) => <TextField {...params} />}
                     />
                   </TableCell>
                 </TableRow>
@@ -683,9 +687,7 @@ export default function MapEditing() {
                         "STAI",
                         "STAI",
                       ]}
-                      renderInput={(params) => (
-                        <TextField {...params} label="Node Type" />
-                      )}
+                      renderInput={(params) => <TextField {...params} />}
                     />
                   </TableCell>
                 </TableRow>
@@ -693,6 +695,7 @@ export default function MapEditing() {
                   <TableCell align="left">Long Name:</TableCell>
                   <TableCell align="left">
                     <input
+                      className="bg-transparent"
                       value={editableNode?.LongName || ""}
                       onChange={(e) => {
                         editNodeDB(
@@ -710,6 +713,7 @@ export default function MapEditing() {
                   <TableCell align="left">Short Name:</TableCell>
                   <TableCell align="left">
                     <input
+                      className="bg-transparent"
                       value={editableNode?.ShortName || ""}
                       onChange={(e) => {
                         editNodeDB(
@@ -731,6 +735,7 @@ export default function MapEditing() {
               alignItems="center"
               minHeight="5vh"
               marginRight="5px"
+              className="pb-3"
             >
               <Button
                 variant="contained"
@@ -760,9 +765,10 @@ export default function MapEditing() {
           !edgeLock && (
             <div
               style={{
-                backgroundColor: "white",
-                border: `10px solid ${GetColorblindColors().color4}`,
+                backgroundColor: "#e4e4e4",
+                border: `5px solid ${GetColorblindColors().color4}`,
                 color: "black",
+                borderRadius: "3%",
               }}
             >
               <TableContainer sx={{ marginBottom: 2 }}>
@@ -801,9 +807,7 @@ export default function MapEditing() {
                               node.NodeID != edgeClicked.StartNodeID,
                           )
                           .map((node: Nodes) => node.NodeID)}
-                        renderInput={(params) => (
-                          <TextField {...params} label="Start Node ID" />
-                        )}
+                        renderInput={(params) => <TextField {...params} />}
                       />
                     </TableCell>
                   </TableRow>
@@ -832,9 +836,7 @@ export default function MapEditing() {
                               node.NodeID != edgeClicked.EndNodeID,
                           )
                           .map((node: Nodes) => node.NodeID)}
-                        renderInput={(params) => (
-                          <TextField {...params} label="End Node ID" />
-                        )}
+                        renderInput={(params) => <TextField {...params} />}
                       />
                     </TableCell>
                   </TableRow>
@@ -846,6 +848,7 @@ export default function MapEditing() {
                 alignItems="center"
                 minHeight="5vh"
                 marginRight="5px"
+                className="pb-3"
               >
                 <Button
                   variant="contained"
