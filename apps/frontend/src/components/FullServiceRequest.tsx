@@ -43,6 +43,8 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 
+import "../styles/SwiperStyle.css";
+
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 // import { DateTimePicker } from "@mui/x-date-pickers/DateTimePicker";
@@ -449,7 +451,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
             </div>
 
             <div className="content" id="content">
-              <div className="">
+              <div className="max-h-full mb-20">
                 <div className="rounded-lg ">
                   <h2 className="mb-2 font-bold text-lg">
                     Service Request Form
@@ -766,12 +768,12 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                     {singleServiceRequest.requestType === "Medicine" && (
                       <div className="w-[45rem]">
                         <form className="">
-                          <div className="flex mb:flex-row">
+                          <div className="flex mb:flex-row space-x-2">
                             <input
                               type="number"
                               id="dosage"
                               min="0"
-                              className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
+                              className="w-1/2 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
                               placeholder="Dosage"
                               value={singleServiceRequest.details2}
                               onChange={(e) =>
@@ -782,7 +784,15 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               }
                               required
                             />
-                            <Select className="flex-1 border border-gray-300 text-gray-900 text-sm rounded-r-lg focus:ring-blue-500">
+                            <Select
+                              className="w-32 text-sm rounded-r-lg focus:ring-blue-500"
+                              displayEmpty
+                              defaultValue=""
+                              inputProps={{ "aria-label": "units" }}
+                            >
+                              <MenuItem value="" disabled>
+                                <em>Units</em>
+                              </MenuItem>
                               <MenuItem value="grams">grams</MenuItem>
                               <MenuItem value="milligrams">milligrams</MenuItem>
                               <MenuItem value="micrograms">micrograms</MenuItem>

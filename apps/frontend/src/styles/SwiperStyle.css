@@ -1,0 +1,11 @@
+.swiper-button-prev,
+.swiper-button-next {
+  width: 80px;
+  height: 80px;
+  color: #012d5a; /* Change to your desired color */
+}
+
+.swiper-button-prev:hover,
+.swiper-button-next:hover {
+  color: #f6bd39; /* Change to your desired hover color */
+}

@@ -1,10 +1,10 @@
 import React from "react";
 import { useState } from "react";
 import { useAuth0 } from "@auth0/auth0-react";
-import { Button, Box, Modal, Card, Typography } from "@mui/material";
-import ServiceRequestLog from "../components/FullServiceRequest.tsx";
-
-import CancelIcon from "@mui/icons-material/Cancel";
+import { Button, Box, Typography } from "@mui/material";
+// import ServiceRequestLog from "../components/FullServiceRequest.tsx";
+import ServiceRequestModal from "../components/ServiceRequestModal";
+// import CancelIcon from "@mui/icons-material/Cancel";
 
 // import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 // import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
@@ -20,6 +20,7 @@ import game from "../assets/game.jpg";
 import maintenance from "../assets/maintenance.jpg";
 import medicine from "../assets/medicine.jpg";
 import eqipment from "../assets/med-device.jpg";
+import { AnimatePresence } from "framer-motion";
 
 export function ServiceRequestMenu() {
   // Use the Auth0 React hook to handle authentication.
@@ -390,51 +391,51 @@ export function ServiceRequestMenu() {
                 </Box>
               </Button>
 
-              <Modal open={open}>
-                <div className="flex justify-center items-center h-screen">
-                  <Card
-                    className=" w-1/2 shadow-md rounded-lg p-10 mx-auto mt-5 h-[90vh] "
-                    style={{
-                      backgroundColor: "white",
-                      border: "10px solid #012D5A",
-                    }}
-                  >
-                    <div className="flex flex-row justify-start mb-8 ">
-                      <Typography
-                        sx={{
-                          color: "#012d5a",
-                          fontSize: "2rem",
-                          fontWeight: "semi-bold",
-                        }}
-                      >
-                        {typeOfService} Request
-                      </Typography>
+              {/*<Modal open={open}>*/}
+              {/*  <div className="flex justify-center items-center h-screen">*/}
+              {/*    <Card*/}
+              {/*      className=" w-1/2 shadow-md rounded-lg p-10 mx-auto mt-5 h-[90vh] "*/}
+              {/*      style={{*/}
+              {/*        backgroundColor: "white",*/}
+              {/*        border: "10px solid #012D5A",*/}
+              {/*      }}*/}
+              {/*    >*/}
+              {/*      <div className="flex flex-row justify-start mb-8 ">*/}
+              {/*        <Typography*/}
+              {/*          sx={{*/}
+              {/*            color: "#012d5a",*/}
+              {/*            fontSize: "2rem",*/}
+              {/*            fontWeight: "semi-bold",*/}
+              {/*          }}*/}
+              {/*        >*/}
+              {/*          {typeOfService} Request*/}
+              {/*        </Typography>*/}
 
-                      <CancelIcon
-                        sx={{
-                          color: "#012D5A",
-                          fontSize: "3rem",
-                          marginLeft: "auto",
-                        }}
-                        onClick={() => setOpen(false)}
-                      />
-                      {/*<Button*/}
-                      {/*  style={{*/}
-                      {/*    backgroundColor: "#012D5A",*/}
-                      {/*    color: "white",*/}
-                      {/*    marginLeft: "auto",*/}
-                      {/*  }}*/}
-                      {/*  onClick={() => setOpen(false)}*/}
-                      {/*>*/}
-                      {/*  Back*/}
-                      {/*</Button>*/}
-                    </div>
-                    <div className="flex items-center justify-center h-full">
-                      <ServiceRequestLog typeOfService={typeOfService} />
-                    </div>
-                  </Card>
-                </div>
-              </Modal>
+              {/*        <CancelIcon*/}
+              {/*          sx={{*/}
+              {/*            color: "#012D5A",*/}
+              {/*            fontSize: "3rem",*/}
+              {/*            marginLeft: "auto",*/}
+              {/*          }}*/}
+              {/*          onClick={() => setOpen(false)}*/}
+              {/*        />*/}
+              {/*      </div>*/}
+              {/*      <div className="flex items-center justify-center h-full">*/}
+              {/*        <ServiceRequestLog typeOfService={typeOfService} />*/}
+              {/*      </div>*/}
+              {/*    </Card>*/}
+              {/*  </div>*/}
+              {/*</Modal>*/}
+
+              <AnimatePresence initial={false}>
+                {open && (
+                  <ServiceRequestModal
+                    open={open}
+                    onClose={() => setOpen(false)}
+                    typeOfService={typeOfService}
+                  />
+                )}
+              </AnimatePresence>
             </div>
           </div>
         </main>
