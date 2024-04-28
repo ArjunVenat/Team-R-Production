@@ -160,7 +160,7 @@ export default function AboutPage() {
                     image: ArjunVenat,
                     position1: "Assistant Lead Software Engineer",
                     position2: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: '"Yeah put some text over my face"',
                   },
                   {
                     name: "Javier DeLeon",
