@@ -354,12 +354,11 @@ export default function Sidebar() {
           ).map((menu, index) => (
             <li
               key={index}
-              className={`text-white text-2xl flex items-center gap-x-5 cursor-pointer p-2 rounded-md mt-2 hover:border-r-4 hover:border-secondary${
+              className={`text-white h-[3.5rem] text-2xl flex items-center gap-x-5 cursor-pointer p-2 rounded-md mt-2 hover:border-r-4 hover:border-secondary${
                 activeMenu === menu.title
                   ? "border-r-4 border-tertiary bg-tertiary/25"
                   : "hover:bg-blue-300 hover:bg-secondary/25"
               }`}
-              style={{ height: "3.5rem" }}
               onClick={() => handleMenuClick(menu.title)}
             >
               <span

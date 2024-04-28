@@ -1,11 +1,30 @@
 import axios from "axios";
 // import SideBar from "../components/SideBar.tsx";
-import { Button, Box } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
+import { primaryButtonStyle } from "../styles/muiStyles.ts";
+import { ReactNode } from "react";
+import { Button } from "@mui/material";
 
 interface Props {
   type: string;
 }
+
+export function DownloadCSVItem(props: {
+  children: ReactNode | string;
+  clickHandler: () => void;
+}) {
+  return (
+    <Button
+      onClick={props.clickHandler}
+      variant="outlined"
+      sx={primaryButtonStyle}
+      type="submit"
+    >
+      {props.children}
+    </Button>
+  );
+}
+
 //received help from Dan from team o. He fixed some errors.
 export default function DownloadCSV(props: Props) {
   //Use auth0 react hook
@@ -81,100 +100,27 @@ export default function DownloadCSV(props: Props) {
   }
 
   return (
-    // // <Stack direction="row" spacing={2}>
-    // //   <SideBar />
-    // <div
-    //   className="grid"
-    //   style={{
-    //     display: "flex",
-    //     justifyContent: "center",
-    //     alignItems: "center",
-    //     minWidth: "80vw",
-    //   }}
-    // >
-    //   <div
-    //     className="grid"
-    //     style={{
-    //       justifyContent: "center",
-    //       alignItems: "center",
-    //       display: "grid",
-    //     }}
-    //   >
-    //     <div
-    //       className="backdrop-blur-md rounded-lg p-10"
-    //       style={{
-    //         backgroundColor: "rgb(103,124,143, 0.15)",
-    //       }}
-    //     >
-    //       <h1 className="font-semibold text-xl mb-10 text-primary">
-    //         Download CSV File:
-    //       </h1>
-    //       <Stack direction="row" spacing={5}>
     <>
       {props.type === "nodes" && (
-        <Box>
-          <Button
-            onClick={fetchNodes}
-            variant="outlined"
-            sx={{
-              color: "#012d5a",
-              borderColor: "#012d5a",
-              "&:hover": {
-                borderColor: "#f6bd38",
-                color: "#f6bd38",
-              },
-            }}
-            type="submit"
-          >
-            Download Nodes File
-          </Button>
-        </Box>
+        <DownloadCSVItem
+          clickHandler={fetchNodes}
+          children="Download Nodes File"
+        />
       )}
 
       {props.type === "edges" && (
-        <Box>
-          <Button
-            onClick={fetchEdges}
-            variant="outlined"
-            sx={{
-              color: "#012d5a",
-              borderColor: "#012d5a",
-              "&:hover": {
-                borderColor: "#f6bd38",
-                color: "#f6bd38",
-              },
-            }}
-            type="submit"
-          >
-            Download Edges File
-          </Button>
-        </Box>
+        <DownloadCSVItem
+          clickHandler={fetchEdges}
+          children="Download Edges File"
+        />
       )}
+
       {props.type == "employees" && (
-        <Box>
-          <Button
-            onClick={fetchEmployees}
-            variant="outlined"
-            sx={{
-              color: "#012d5a",
-              borderColor: "#012d5a",
-              "&:hover": {
-                borderColor: "#f6bd38",
-                color: "#f6bd38",
-              },
-            }}
-            type="submit"
-          >
-            Download Employees File
-          </Button>
-        </Box>
+        <DownloadCSVItem
+          clickHandler={fetchEmployees}
+          children="Download Employees File"
+        />
       )}
     </>
-
-    //       </Stack>
-    //     </div>
-    //   </div>
-    // </div>
-    // </Stack>
   );
 }
