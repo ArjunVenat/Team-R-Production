@@ -52,6 +52,10 @@ export default function MainPage() {
   const [showPathOnly, setShowPathOnly] = useState(false);
   const [isDirectionsClicked, setIsDirectionsClicked] = useState(false);
   const [pathDirections, setPathDirections] = useState<string[][]>([]);
+  const [expandedAccordion, setExpandedAccordion] = useState<string | null>(
+    null,
+  );
+
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
   //   const newPath = `/${path}`;
@@ -372,12 +376,16 @@ export default function MainPage() {
                       <SyncIcon />
                       {end} from {start}
                     </Box>
-                    {pathDirections.map((floorDirections) => (
+                    {pathDirections.map((floorDirections, index) => (
                       <Accordion
                         key={floorDirections[0]}
-                        onChange={() => {
+                        expanded={expandedAccordion === `panel${index}`}
+                        onChange={(event, isExpanded) => {
                           const matchedFloor = floors.find(
                             (floor) => floor.name === floorDirections[0],
+                          );
+                          setExpandedAccordion(
+                            isExpanded ? `panel${index}` : null,
                           );
                           resetTransform();
                           setCurrentMap(matchedFloor ? matchedFloor.map : "");
