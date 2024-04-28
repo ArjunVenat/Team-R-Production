@@ -19,6 +19,7 @@ import { useAuth0 } from "@auth0/auth0-react";
 // import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BarChartIcon from "@mui/icons-material/BarChart";
 import InfoIcon from "@mui/icons-material/Info";
+import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 // import {IconType} from "react-icons";
 // import {SvgIconComponent} from "@mui/icons-material";
 // import {Collapse} from "@mui/material";
@@ -31,7 +32,7 @@ import BWHLogo from "../assets/brigLogo.png";
 interface Menu {
   title: string;
   icon: ReactNode;
-  displayLoggedIn: boolean;
+  onlyDisplayLoggedIn: boolean;
 }
 
 export default function Sidebar() {
@@ -48,55 +49,61 @@ export default function Sidebar() {
   const home: Menu = {
     title: "Home",
     icon: <RiHome3Fill />,
-    displayLoggedIn: false,
+    onlyDisplayLoggedIn: false,
   };
   const serviceRequest: Menu = {
     title: "Service Request",
     icon: <BsBellFill />,
-    displayLoggedIn: true,
+    onlyDisplayLoggedIn: true,
   };
   const serviceRequestTable: Menu = {
     title: "Service Request Table",
     icon: <TableViewIcon />,
-    displayLoggedIn: true,
+    onlyDisplayLoggedIn: true,
   };
   const editmap: Menu = {
     title: "Edit Map",
     icon: <EditIcon />,
-    displayLoggedIn: true,
+    onlyDisplayLoggedIn: true,
+  };
+
+  const pdmOption: Menu = {
+    title: "Find a Doctor",
+    icon: <MedicalServicesIcon />,
+    onlyDisplayLoggedIn: false,
   };
 
   const logoutOption: Menu = {
     title: "Logout",
     icon: <Logout />,
-    displayLoggedIn: false,
+    onlyDisplayLoggedIn: false,
   };
   const nodes_edges: Menu = {
     title: "CSV Data",
     icon: <AccessibleForwardIcon />,
-    displayLoggedIn: true,
+    onlyDisplayLoggedIn: true,
   };
   // const uploadCSV: Menu = { title: "Upload CSV", icon: <UploadFile /> };
   // const downloadCSV: Menu = {
   //   title: "Upload/Download CSV",
   //   icon: <CloudDownloadIcon />,
-  //   displayLoggedIn: true,
+  //   onlyDisplayLoggedIn: true,
   // };
   const stats: Menu = {
     title: "Stats",
     icon: <BarChartIcon />,
-    displayLoggedIn: true,
+    onlyDisplayLoggedIn: true,
   };
 
   // const creditsPage: Menu = {
   //   title: "Credits Page",
   //   icon: <ImportContactsIcon />,
-  //   displayLoggedIn: false,
+  //   onlyDisplayLoggedIn: false,
   // };
   const aboutPage: Menu = {
     title: "About and Credits",
     icon: <InfoIcon />,
-    displayLoggedIn: false,
+    onlyDisplayLoggedIn: false,
   };
   const chat: Menu = {
     title: "Chat with Herald AI",
@@ -107,12 +114,12 @@ export default function Sidebar() {
         style={{ height: "28px", width: "28px" }}
       />
     ),
-    displayLoggedIn: false,
+    onlyDisplayLoggedIn: false,
   };
   const login: Menu = {
     title: "Staff Login",
     icon: <Login />,
-    displayLoggedIn: false,
+    onlyDisplayLoggedIn: false,
   };
 
   // const Menus: Menu[] = [
@@ -129,6 +136,7 @@ export default function Sidebar() {
   const [Menus, setMenus] = useState<Menu[]>([
     home,
     editmap,
+    pdmOption,
     serviceRequest,
     serviceRequestTable,
     nodes_edges,
@@ -142,6 +150,7 @@ export default function Sidebar() {
     if (isAuthenticated) {
       setMenus([
         home,
+        pdmOption,
         editmap,
         serviceRequest,
         serviceRequestTable,
@@ -212,6 +221,9 @@ export default function Sidebar() {
       break;
     case "/home":
       menuHighlight = "Home";
+      break;
+    case "/doctor-match":
+      menuHighlight = "Find a Doctor";
       break;
     case "/editmap":
       menuHighlight = "Edit Map";
@@ -309,6 +321,8 @@ export default function Sidebar() {
       //   routeChange("credits");
     } else if (title === "About and Credits") {
       routeChange("about");
+    } else if (title === "Find a Doctor") {
+      routeChange("doctor-match");
     } else if (title === "Chat with Herald AI") {
       routeChange("chat");
     }
@@ -356,7 +370,7 @@ export default function Sidebar() {
             // or what menu items should be displayed even when the user is not logged in,
             // and ensure that the loading state is false.
             (menu: Menu) =>
-              (isAuthenticated || !menu.displayLoggedIn) && !isLoading,
+              (isAuthenticated || !menu.onlyDisplayLoggedIn) && !isLoading,
           ).map((menu, index) => (
             <li
               key={index}

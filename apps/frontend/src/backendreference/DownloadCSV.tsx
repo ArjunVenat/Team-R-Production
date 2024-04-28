@@ -78,6 +78,19 @@ export default function DownloadCSV(props: Props) {
     downloadBlob(receiveEmployees, "employees.csv");
   }
 
+  async function fetchDoctors() {
+    const token = await getAccessTokenSilently();
+    const res = await axios.get("/api/admin/csv/Doctor", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const receiveDoctors = new Blob([res.data], {
+      type: "text/csv;encoding:utf-8",
+    });
+    downloadBlob(receiveDoctors, "doctors.csv");
+  }
+
   function downloadBlob(blob: Blob, filePath: string) {
     const blobURL = URL.createObjectURL(blob);
 
@@ -119,6 +132,13 @@ export default function DownloadCSV(props: Props) {
         <DownloadCSVItem
           clickHandler={fetchEmployees}
           children="Download Employees File"
+        />
+      )}
+
+      {props.type == "doctor" && (
+        <DownloadCSVItem
+          clickHandler={fetchDoctors}
+          children="Download Doctors File"
         />
       )}
     </>
