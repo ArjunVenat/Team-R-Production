@@ -10,9 +10,11 @@ import { ReactNode, useState, useEffect } from "react";
 import { BsBellFill } from "react-icons/bs";
 import { RiHome3Fill } from "react-icons/ri";
 import TableViewIcon from "@mui/icons-material/TableView";
+import TextsmsIcon from "@mui/icons-material/Textsms";
+
 // import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
-// import EditIcon from "@mui/icons-material/Edit";
+import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
 // import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -59,11 +61,11 @@ export default function Sidebar() {
     icon: <TableViewIcon />,
     onlyDisplayLoggedIn: true,
   };
-  /*const editmap: Menu = {
+  const editmap: Menu = {
     title: "Edit Map",
     icon: <EditIcon />,
     onlyDisplayLoggedIn: true,
-  };*/
+  };
 
   const pdmOption: Menu = {
     title: "Find a Doctor",
@@ -103,6 +105,11 @@ export default function Sidebar() {
     icon: <InfoIcon />,
     onlyDisplayLoggedIn: false,
   };
+  const chat: Menu = {
+    title: "Chatbot",
+    icon: <TextsmsIcon />,
+    onlyDisplayLoggedIn: false,
+  };
   const login: Menu = {
     title: "Staff Login",
     icon: <Login />,
@@ -122,14 +129,15 @@ export default function Sidebar() {
   // ];
   const [Menus, setMenus] = useState<Menu[]>([
     home,
+    editmap,
     pdmOption,
-    //editmap,
     serviceRequest,
     serviceRequestTable,
     nodes_edges,
     aboutPage,
-    logoutOption,
+    chat,
     login,
+    logoutOption,
   ]);
 
   useEffect(() => {
@@ -137,11 +145,13 @@ export default function Sidebar() {
       setMenus([
         home,
         pdmOption,
+        editmap,
         serviceRequest,
         serviceRequestTable,
         nodes_edges,
         stats,
         aboutPage,
+        chat,
         logoutOption,
       ]);
     }
@@ -209,9 +219,9 @@ export default function Sidebar() {
     case "/doctor-match":
       menuHighlight = "Find a Doctor";
       break;
-    /*case "/editmap":
+    case "/editmap":
       menuHighlight = "Edit Map";
-      break;*/
+      break;
     case "/service-request-table":
       menuHighlight = "Service Request Table";
       break;
@@ -226,6 +236,9 @@ export default function Sidebar() {
     //   break;
     case "/stats":
       menuHighlight = "Stats";
+      break;
+    case "chat":
+      menuHighlight = "Chat";
       break;
     // case "/credits":
     //   menuHighlight = "Credits Page";
@@ -279,9 +292,9 @@ export default function Sidebar() {
     } else if (title === "Service Request Table") {
       // Redirect to the service request table page.
       routeChange("service-request-table");
-      /*} else if (title === "Edit Map") {
+    } else if (title === "Edit Map") {
       // Redirect to the edit map page.
-      routeChange("editmap"); */
+      routeChange("editmap");
     } else if (title === "CSV Data") {
       // Redirect to the node/edge table page.
       routeChange("node-edge-table");
@@ -304,6 +317,8 @@ export default function Sidebar() {
       routeChange("about");
     } else if (title === "Find a Doctor") {
       routeChange("doctor-match");
+    } else if (title === "Chatbot") {
+      routeChange("chat");
     }
   };
 
@@ -353,12 +368,11 @@ export default function Sidebar() {
           ).map((menu, index) => (
             <li
               key={index}
-              className={`text-white text-2xl flex items-center gap-x-5 cursor-pointer p-2 rounded-md mt-2 hover:border-r-4 hover:border-secondary${
+              className={`text-white h-[3.5rem] text-2xl flex items-center gap-x-5 cursor-pointer p-2 rounded-md mt-2 hover:border-r-4 hover:border-secondary${
                 activeMenu === menu.title
                   ? "border-r-4 border-tertiary bg-tertiary/25"
                   : "hover:bg-blue-300 hover:bg-secondary/25"
               }`}
-              style={{ height: "3.5rem" }}
               onClick={() => handleMenuClick(menu.title)}
             >
               <span

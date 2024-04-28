@@ -1,6 +1,6 @@
 import axios from "axios";
 import { User } from "@auth0/auth0-react";
-// import SuccessAlert from "./SuccessAlert.tsx";
+// import PopupAlert from "./PopupAlert.tsx";
 
 export async function SubmitUserDB(request: User, token: string) {
   const data = JSON.stringify({
@@ -10,7 +10,7 @@ export async function SubmitUserDB(request: User, token: string) {
     nickname: request.nickname,
     updatedAt: request.updated_at,
   });
-  // SuccessAlert();
+  // PopupAlert();
   console.log(data);
   //sends a post request
   const res = await axios.put("/api/admin/employee/add", data, {
@@ -22,6 +22,6 @@ export async function SubmitUserDB(request: User, token: string) {
   if (res.status == 200) {
     console.log("submitted request");
 
-    // SuccessAlert();
+    // PopupAlert();
   }
 }

@@ -4,9 +4,7 @@ import isAdmin from "../components/adminChecker.ts";
 import { Employee } from "../Interfaces/Employee.ts";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
-
 import DensitySmallIcon from "@mui/icons-material/DensitySmall";
-
 import {
   Box,
   Button,
@@ -23,7 +21,6 @@ import { GeneralRequest } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 // import swoosh from "../assets/swoosh.png";
-
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import BuildIcon from "@mui/icons-material/Build";
