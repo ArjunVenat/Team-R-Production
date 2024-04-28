@@ -19,7 +19,7 @@ export default function DoctorTable() {
       const token = await getAccessTokenSilently();
 
       //Get all employees (if admin)
-      const res = await axios.get("/api/admin/Doctor", {
+      const res = await axios.get("/api/admin/allDoctors", {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -38,8 +38,8 @@ export default function DoctorTable() {
       <TableCell>{doctor.department}</TableCell>
       <TableCell>{doctor.yearsWorked}</TableCell>
       <TableCell>{doctor.rating.valueOf()}</TableCell>
-      <TableCell>{doctor.specialtyTraining}</TableCell>
-      <TableCell>{doctor.boardCertification}</TableCell>
+      <TableCell>{doctor.specialtyTraining ? "Yes" : "No"}</TableCell>
+      <TableCell>{doctor.boardCertification ? "Yes" : "No"}</TableCell>
       <TableCell>{doctor.languages}</TableCell>
     </TableRow>
   ));

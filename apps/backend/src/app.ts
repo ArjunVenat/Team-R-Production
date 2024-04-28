@@ -21,6 +21,7 @@ import allEmployeesRouter from "./routes/allEmployeesRouter.ts";
 import addEmployeeRouter from "./routes/addEmployeeRouter.ts";
 // import filteringDoctors from "./routes/doctorRouter.ts";
 import { auth } from "express-oauth2-jwt-bearer";
+import allDoctorsRouter from "./routes/allDoctorsRouter.ts";
 
 const app: Express = express(); // Setup the backend
 
@@ -70,6 +71,8 @@ app.use("/api/admin/node/del", delNodesRouter);
 app.use("/api/admin/reset", resetRouter);
 app.use("/api/admin/allEmployees", allEmployeesRouter);
 app.use("/api/admin/employee/add", addEmployeeRouter);
+app.use("/api/admin/allDoctors", allDoctorsRouter);
+
 /**
  * Catch all 404 errors, and forward them to the error handler
  */
