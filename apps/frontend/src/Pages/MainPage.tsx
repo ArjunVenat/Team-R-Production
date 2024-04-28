@@ -26,6 +26,7 @@ import TurnRightIcon from "@mui/icons-material/TurnRight";
 import StraightIcon from "@mui/icons-material/Straight";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
+import EscalatorIcon from "@mui/icons-material/Escalator";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -186,6 +187,15 @@ export default function MainPage() {
       return (
         <Box mb={2} display="flex" gap={1} alignItems="center">
           <ElevatorIcon />
+          {direction}
+        </Box>
+      );
+    }
+
+    if (direction.includes("stairs")) {
+      return (
+        <Box mb={2} display="flex" gap={1} alignItems="center">
+          <EscalatorIcon />
           {direction}
         </Box>
       );
