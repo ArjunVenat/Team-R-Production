@@ -12,7 +12,7 @@ import CancelIcon from "@mui/icons-material/Cancel";
 // import VaccinesIcon from "@mui/icons-material/Vaccines";
 // import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 // import CasinoIcon from "@mui/icons-material/Casino";
-// import swoosh from "../assets/swoosh.png";
+import swoosh from "../assets/swoosh.png";
 
 import flowers from "../assets/flowers.jpg";
 import gift from "../assets/gifts.jpg";
@@ -58,7 +58,7 @@ export function ServiceRequestMenu() {
         <main
           className="flex w-full h-full overflow-y-auto flex-grow justify-center items-center  bg-cover bg-center bg-no-repeat relative"
           style={{
-            // backgroundImage: `url(${swoosh})`,
+            backgroundImage: `url(${swoosh})`,
             backgroundColor: "white",
             width: "100%",
             height: "100%",
@@ -78,10 +78,25 @@ export function ServiceRequestMenu() {
                         justify-items-center justify-center gap-y-10 gap-x-14"
             >
               <Button
-                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
-                  border: 8,
+                  backgroundImage: `url(${flowers})`,
+                  backgroundColor: "blue",
+                  border: 2,
                   borderColor: "#009ca6",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    backgroundColor: "rgba(1,45, 90, 0.5)", // Semi-transparent blue color
+                    zIndex: 0,
+                  },
+                  "&:hover::after": {
+                    backgroundColor: "transparent", // Remove blue tint on hover
+                  },
                 }}
                 onClick={() => handleOpen("Flowers")}
               >
@@ -89,29 +104,52 @@ export function ServiceRequestMenu() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  justifyContent="center"
                   margin={2}
                 >
-                  <span
-                    style={{
-                      color: "black",
+                  <Typography
+                    className="w-full h-full"
+                    sx={{
+                      position: "absolute",
+                      color: "white",
                       fontWeight: "bold",
-                      fontSize: "1.2rem",
+                      fontSize: "1.5rem",
+                      zIndex: 1,
+                      display: "flex", // Center vertically using Flexbox
+                      justifyContent: "center", // Center horizontally using Flexbox
+                      alignItems: "center", // Center vertically using Flexbox
+
+                      "&:hover": {
+                        fontWeight: "extra-bold",
+                        fontSize: "1.7rem",
+                        textShadow: "3px 3px 0 #012d5a",
+                      },
                     }}
                   >
                     Flowers
-                  </span>
-                  <img
-                    className="overflow-hidden w-52 h-52 border-black border-2 "
-                    src={flowers}
-                    alt={"flowers"}
-                  />
+                  </Typography>
                 </Box>
               </Button>
               <Button
-                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
-                  border: 8,
+                  backgroundImage: `url(${gift})`,
+                  backgroundColor: "blue",
+                  border: 2,
                   borderColor: "#009ca6",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    backgroundColor: "rgba(1,45, 90, 0.5)", // Semi-transparent blue color
+                    zIndex: 0,
+                  },
+                  "&:hover::after": {
+                    backgroundColor: "transparent", // Remove blue tint on hover
+                  },
                 }}
                 onClick={() => handleOpen("Gifts")}
               >
@@ -119,29 +157,52 @@ export function ServiceRequestMenu() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  justifyContent="center"
                   margin={2}
                 >
-                  <span
-                    style={{
-                      color: "black",
+                  <Typography
+                    className="w-full h-full"
+                    sx={{
+                      position: "absolute",
+                      color: "white",
                       fontWeight: "bold",
-                      fontSize: "1.2rem",
+                      fontSize: "1.5rem",
+                      zIndex: 1,
+                      display: "flex", // Center vertically using Flexbox
+                      justifyContent: "center", // Center horizontally using Flexbox
+                      alignItems: "center", // Center vertically using Flexbox
+
+                      "&:hover": {
+                        fontWeight: "extra-bold",
+                        fontSize: "1.7rem",
+                        textShadow: "3px 3px 0 #012d5a",
+                      },
                     }}
                   >
                     Gifts
-                  </span>
-                  <img
-                    className="overflow-hidden w-52 h-52 border-black border-2 "
-                    src={gift}
-                    alt={"gifts"}
-                  />
+                  </Typography>
                 </Box>
               </Button>
               <Button
-                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
-                  border: 8,
+                  backgroundImage: `url(${game})`,
+                  backgroundColor: "blue",
+                  border: 2,
                   borderColor: "#009ca6",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    backgroundColor: "rgba(1,45, 90, 0.5)", // Semi-transparent blue color
+                    zIndex: 0,
+                  },
+                  "&:hover::after": {
+                    backgroundColor: "transparent", // Remove blue tint on hover
+                  },
                 }}
                 onClick={() => handleOpen("Entertainment")}
               >
@@ -149,29 +210,52 @@ export function ServiceRequestMenu() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  justifyContent="center"
                   margin={2}
                 >
-                  <span
-                    style={{
-                      color: "black",
+                  <Typography
+                    className="w-full h-full"
+                    sx={{
+                      position: "absolute",
+                      color: "white",
                       fontWeight: "bold",
-                      fontSize: "1.2rem",
+                      fontSize: "1.5rem",
+                      zIndex: 1,
+                      display: "flex", // Center vertically using Flexbox
+                      justifyContent: "center", // Center horizontally using Flexbox
+                      alignItems: "center", // Center vertically using Flexbox
+
+                      "&:hover": {
+                        fontWeight: "extra-bold",
+                        fontSize: "1.7rem",
+                        textShadow: "3px 3px 0 #012d5a",
+                      },
                     }}
                   >
                     Entertainment
-                  </span>
-                  <img
-                    className="overflow-hidden w-52 h-52 border-black border-2 "
-                    src={game}
-                    alt={"chess"}
-                  />
+                  </Typography>
                 </Box>
               </Button>
               <Button
-                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
-                  border: 8,
+                  backgroundImage: `url(${maintenance})`,
+                  backgroundColor: "blue",
+                  border: 2,
                   borderColor: "#009ca6",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    backgroundColor: "rgba(1,45, 90, 0.5)", // Semi-transparent blue color
+                    zIndex: 0,
+                  },
+                  "&:hover::after": {
+                    backgroundColor: "transparent", // Remove blue tint on hover
+                  },
                 }}
                 onClick={() => handleOpen("Maintenance")}
               >
@@ -179,29 +263,52 @@ export function ServiceRequestMenu() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  justifyContent="center"
                   margin={2}
                 >
-                  <span
-                    style={{
-                      color: "black",
+                  <Typography
+                    className="w-full h-full"
+                    sx={{
+                      position: "absolute",
+                      color: "white",
                       fontWeight: "bold",
-                      fontSize: "1.2rem",
+                      fontSize: "1.5rem",
+                      zIndex: 1,
+                      display: "flex", // Center vertically using Flexbox
+                      justifyContent: "center", // Center horizontally using Flexbox
+                      alignItems: "center", // Center vertically using Flexbox
+
+                      "&:hover": {
+                        fontWeight: "extra-bold",
+                        fontSize: "1.7rem",
+                        textShadow: "3px 3px 0 #012d5a",
+                      },
                     }}
                   >
                     Maintenance
-                  </span>
-                  <img
-                    className="overflow-hidden w-52 h-52 border-black border-2 "
-                    src={maintenance}
-                    alt={"chess"}
-                  />
+                  </Typography>
                 </Box>
               </Button>
               <Button
-                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
-                  border: 8,
+                  backgroundImage: `url(${medicine})`,
+                  backgroundColor: "blue",
+                  border: 2,
                   borderColor: "#009ca6",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    backgroundColor: "rgba(1,45, 90, 0.5)", // Semi-transparent blue color
+                    zIndex: 0,
+                  },
+                  "&:hover::after": {
+                    backgroundColor: "transparent", // Remove blue tint on hover
+                  },
                 }}
                 onClick={() => handleOpen("Medicine")}
               >
@@ -209,29 +316,52 @@ export function ServiceRequestMenu() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  justifyContent="center"
                   margin={2}
                 >
-                  <span
-                    style={{
-                      color: "black",
+                  <Typography
+                    className="w-full h-full"
+                    sx={{
+                      position: "absolute",
+                      color: "white",
                       fontWeight: "bold",
-                      fontSize: "1.2rem",
+                      fontSize: "1.5rem",
+                      zIndex: 1,
+                      display: "flex", // Center vertically using Flexbox
+                      justifyContent: "center", // Center horizontally using Flexbox
+                      alignItems: "center", // Center vertically using Flexbox
+
+                      "&:hover": {
+                        fontWeight: "extra-bold",
+                        fontSize: "1.7rem",
+                        textShadow: "3px 3px 0 #012d5a",
+                      },
                     }}
                   >
                     Medicine
-                  </span>
-                  <img
-                    className="overflow-hidden w-52 h-52 border-black border-2 "
-                    src={medicine}
-                    alt={"chess"}
-                  />
+                  </Typography>
                 </Box>
               </Button>
               <Button
-                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl"
+                className="h-72 w-80 shadow-md rounded-xl duration-500 hover:scale-105 hover:shadow-xl bg-cover bg-center bg-no-repeat relative"
                 sx={{
-                  border: 8,
+                  backgroundImage: `url(${eqipment})`,
+                  backgroundColor: "blue",
+                  border: 2,
                   borderColor: "#009ca6",
+                  "&::after": {
+                    content: '""',
+                    position: "absolute",
+                    top: 0,
+                    right: 0,
+                    bottom: 0,
+                    left: 0,
+                    backgroundColor: "rgba(1,45, 90, 0.5)", // Semi-transparent blue color
+                    zIndex: 0,
+                  },
+                  "&:hover::after": {
+                    backgroundColor: "transparent", // Remove blue tint on hover
+                  },
                 }}
                 onClick={() => handleOpen("Medical Equipment")}
               >
@@ -239,22 +369,30 @@ export function ServiceRequestMenu() {
                   display="flex"
                   flexDirection="column"
                   alignItems="center"
+                  justifyContent="center"
                   margin={2}
                 >
-                  <span
-                    style={{
-                      color: "black",
+                  <Typography
+                    className="w-full h-full"
+                    sx={{
+                      position: "absolute",
+                      color: "white",
                       fontWeight: "bold",
-                      fontSize: "1.2rem",
+                      fontSize: "1.5rem",
+                      zIndex: 1,
+                      display: "flex", // Center vertically using Flexbox
+                      justifyContent: "center", // Center horizontally using Flexbox
+                      alignItems: "center", // Center vertically using Flexbox
+
+                      "&:hover": {
+                        fontWeight: "extra-bold",
+                        fontSize: "1.7rem",
+                        textShadow: "3px 3px 0 #012d5a",
+                      },
                     }}
                   >
                     Medical Equipment
-                  </span>
-                  <img
-                    className="overflow-hidden w-52 h-52 border-black border-2 "
-                    src={eqipment}
-                    alt={"chess"}
-                  />
+                  </Typography>
                 </Box>
               </Button>
 
