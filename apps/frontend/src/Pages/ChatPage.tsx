@@ -10,6 +10,7 @@ import {
 } from "@mui/material";
 import { motion } from "framer-motion";
 import "../styles/ChatPage.css";
+import SendIcon from "@mui/icons-material/Send";
 
 const key = "sk-proj-OSW3y1qeycxUiOAwBxigT3BlbkFJoKyoP4loGhm83Fw7pVKv";
 const openai = new OpenAI({
@@ -94,7 +95,7 @@ const ChatPage = () => {
         }}
       >
         Hello, I am Herald. I am an AI chatbot. Feel free to ask me anything in
-        the box below. Please be aware I may provide incorrect information
+        the box below. Please be aware I may provide incorrect information!
       </h2>
       <List style={{ overflow: "auto", flexGrow: 1, padding: "1rem" }}>
         {messages.map((message, index) => (
@@ -148,9 +149,15 @@ const ChatPage = () => {
           variant="contained"
           color="primary"
           onClick={sendMessage}
-          style={{ marginLeft: "1rem" }}
+          style={{
+            marginLeft: "1rem",
+            borderRadius: "10px",
+            minWidth: "48px",
+            height: "48px",
+            padding: 0,
+          }}
         >
-          Send
+          <SendIcon />
         </Button>
       </Box>
     </Box>
