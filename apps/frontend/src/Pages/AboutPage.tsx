@@ -14,6 +14,17 @@ import NickGolparvar from "../assets/image/NickGolparvar.jpeg";
 import ZihanLi from "../assets/image/ZihanLi.jpg";
 import { useState } from "react";
 
+import TypeScriptLogo from "../assets/image/tslogo.jpg";
+import ReactLogo from "../assets/image/reactlogo.png";
+import YarnLogo from "../assets/image/yarnlogo.png";
+import TailwindLogo from "../assets/image/tailwindlogo.png";
+import MuiLogo from "../assets/image/muilogo.svg";
+import PostgresqlLogo from "../assets/image/postgresqllogo.png";
+import PrismaLogo from "../assets/image/prismalogo.svg";
+import FramerMotionLogo from "../assets/image/framermotionlogo.svg";
+import Auth0Logo from "../assets/image/auth0logo.png";
+import AxiosLogo from "../assets/image/axioslogo.png";
+
 import PeopleIcon from "@mui/icons-material/People";
 import AssignmentIcon from "@mui/icons-material/Assignment";
 
@@ -234,6 +245,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={TypeScriptLogo}
+                    alt="TypeScript Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   TypeScript
                 </Link>
                 <Link
@@ -241,6 +257,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={ReactLogo}
+                    alt="React Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   React
                 </Link>
                 <Link
@@ -248,6 +269,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={YarnLogo}
+                    alt="Yarn Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   Yarn
                 </Link>
                 <Link
@@ -255,6 +281,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={TailwindLogo}
+                    alt="Tailwind CSS Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   Tailwind CSS
                 </Link>
                 <Link
@@ -262,6 +293,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={MuiLogo}
+                    alt="Material-UI Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   Material-UI
                 </Link>
                 <Link
@@ -269,6 +305,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={PostgresqlLogo}
+                    alt="PostgreSQL Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   PostgreSQL
                 </Link>
                 <Link
@@ -276,6 +317,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={PrismaLogo}
+                    alt="Prisma Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   Prisma
                 </Link>
                 <Link
@@ -283,6 +329,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={FramerMotionLogo}
+                    alt="Framer Motion Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   Framer Motion
                 </Link>
                 <Link
@@ -290,6 +341,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={Auth0Logo}
+                    alt="Auth0 Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   Auth0
                 </Link>
                 <Link
@@ -297,6 +353,11 @@ export default function AboutPage() {
                   target="_blank"
                   rel="noopener noreferrer"
                 >
+                  <img
+                    src={AxiosLogo}
+                    alt="Axios Logo"
+                    style={{ height: "50px", width: "50px" }}
+                  />
                   Axios
                 </Link>
               </div>
