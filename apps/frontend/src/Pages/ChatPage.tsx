@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import OpenAI from "openai";
 import {
   Box,
@@ -26,15 +26,21 @@ type Message = {
 const ChatPage = () => {
   const [userInput, setUserInput] = useState("");
   const [messages, setMessages] = useState<Message[]>([]);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    if (messagesEndRef.current) {
+      messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [messages]);
+
   const sendMessage = async () => {
-    // Add user's message to messages state array immediately
     setMessages([
       ...messages,
       { role: "user", content: userInput },
-      { role: "bot", content: "", isTemporary: true }, // Add temporary message
+      { role: "bot", content: "", isTemporary: true },
     ]);
 
-    // Clear the text box immediately after the user presses enter
     setUserInput("");
 
     try {
@@ -53,7 +59,6 @@ const ChatPage = () => {
         presence_penalty: 0,
       });
 
-      // Replace temporary message with chatbot's response when it is received
       setMessages((prevMessages) => {
         const newMessages = [...prevMessages];
         const tempMessageIndex = newMessages.findIndex(
@@ -71,6 +76,7 @@ const ChatPage = () => {
       console.error("Error:", error);
     }
   };
+
   return (
     <Box display="flex" flexDirection="column" height="100vh">
       <h2
@@ -128,6 +134,7 @@ const ChatPage = () => {
             </motion.div>
           </ListItem>
         ))}
+        <div ref={messagesEndRef} />
       </List>
       <Box display="flex" padding="1rem" borderTop="1px solid #ddd">
         <TextField
