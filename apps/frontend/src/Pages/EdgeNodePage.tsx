@@ -12,6 +12,7 @@ import UploadCSV from "../backendreference/UploadCSV.tsx";
 import DownloadCSV from "../backendreference/DownloadCSV.tsx";
 // import DownloadIcon from "@mui/icons-material/Download";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
+import DoctorTable from "../backendreference/Doctors.tsx";
 
 import BadgeIcon from "@mui/icons-material/Badge";
 import { primaryButtonStyle } from "../styles/muiStyles.ts";
@@ -175,7 +176,7 @@ const EdgeTablePage = () => {
               <EmployeeTable />
             </div>
           </CustomTabPanel>
-          <CustomTabPanel index={2} value={nodeTab}>
+          <CustomTabPanel index={3} value={nodeTab}>
             <div className="flex  items-center flex-col">
               <div className="mb-4 flex flex-row space-x-4">
                 <Box>
@@ -189,7 +190,7 @@ const EdgeTablePage = () => {
                 </Box>
                 <DownloadCSV type="doctor" />
               </div>
-              <EmployeeTable />
+              <DoctorTable />
             </div>
           </CustomTabPanel>
           <Modal open={open}>

@@ -9,7 +9,7 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { Box } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
-export default function EmployeeTable() {
+export default function DoctorTable() {
   const { getAccessTokenSilently } = useAuth0();
 
   const [doctorData, setDoctorData] = useState<Doctor[]>([]);
