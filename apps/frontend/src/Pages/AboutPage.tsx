@@ -180,7 +180,8 @@ export default function AboutPage() {
                     image: LaurenHarrison,
                     position1: "Documentation Analyst",
                     position2: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote:
+                      "Whenever I'm about to do something, I think, 'Would an idiot do that?' And if they would, I do not do that thing. -Dwight Schrute",
                   },
                   {
                     name: "Jessie Hart",
@@ -188,7 +189,8 @@ export default function AboutPage() {
                     position1: "Scrum Master",
                     position2: "Co-Product Owner",
                     position3: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote:
+                      "I've learned that I still have a lot to learn. - Maya Angelou",
                   },
                   {
                     name: "Brannon Henson",
