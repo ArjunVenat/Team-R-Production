@@ -120,8 +120,8 @@ export default function Sidebar() {
     serviceRequestTable,
     nodes_edges,
     aboutPage,
-    logoutOption,
     login,
+    logoutOption,
   ]);
 
   useEffect(() => {
