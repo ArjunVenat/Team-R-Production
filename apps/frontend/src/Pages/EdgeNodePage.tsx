@@ -133,7 +133,7 @@ const EdgeTablePage = () => {
           </CustomTabPanel>
           <CustomTabPanel value={nodeTab} index={2}>
             <div
-              className="flex items-center h-full w-full bg-cover bg-center bg-no-repeat"
+              className="flex items-center justify-center h-full w-full bg-cover bg-center bg-no-repeat"
               // style={{
               //     backgroundImage: `url(${swoosh})`,
               //     // width: "100vw",
