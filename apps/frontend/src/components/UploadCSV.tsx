@@ -79,12 +79,7 @@ export default function UploadCSV() {
           display: "grid",
         }}
       >
-        <div
-          className="backdrop-blur-md rounded-lg p-10"
-          style={{
-            backgroundColor: "rgb(103,124,143, 0.15)",
-          }}
-        >
+        <div>
           <form
             onSubmit={(event) => {
               handleSubmit(event).then();

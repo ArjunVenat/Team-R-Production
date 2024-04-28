@@ -128,8 +128,8 @@ export default function Sidebar() {
     nodes_edges,
     aboutPage,
     chat,
-    logoutOption,
     login,
+    logoutOption,
   ]);
 
   useEffect(() => {
