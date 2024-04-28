@@ -32,9 +32,19 @@ type appContextType = {
   setRequests: (state: ServiceRequest[]) => void;
 };
 
+type colorblindContextType = {
+  colorblind: string;
+  setColorblind: (state: string) => void;
+};
+
 export const RequestContext = createContext<appContextType>({
   requests: [],
   setRequests: (state) => state,
+});
+
+export const ColorblindContext = createContext<colorblindContextType>({
+  colorblind: "none",
+  setColorblind: (state) => state,
 });
 
 function App() {
@@ -55,6 +65,7 @@ function App() {
   });
   //state to manage Snackbar messages, sparsely implemented
   const [requests, setRequests] = useState<ServiceRequest[]>([]);
+  const [colorblind, setColorblind] = useState<string>("none");
   //state to manage service requests
   const router = createBrowserRouter([
     //router config
@@ -130,26 +141,28 @@ function App() {
           scope: "openid profile email offline_access",
         }}
       >
-        <RequestContext.Provider value={{ requests, setRequests }}>
-          <div className="flex flex-grow">
-            {useLocation().pathname !== "/" && <Sidebar />}
-            <div className="flex flex-col flex-grow gap-5">
-              <Outlet />
-              <Snackbar
-                open={snackbar.open}
-                autoHideDuration={3000}
-                onClose={() =>
-                  setSnackbar((prevState) => ({ ...prevState, open: false }))
-                }
-                anchorOrigin={{ vertical: "top", horizontal: "center" }}
-              >
-                <Alert variant="filled" sx={{ width: "100%" }}>
-                  {snackbar.message}
-                </Alert>
-              </Snackbar>
+        <ColorblindContext.Provider value={{ colorblind, setColorblind }}>
+          <RequestContext.Provider value={{ requests, setRequests }}>
+            <div className="flex flex-grow">
+              {useLocation().pathname !== "/" && <Sidebar />}
+              <div className="flex flex-col flex-grow gap-5">
+                <Outlet />
+                <Snackbar
+                  open={snackbar.open}
+                  autoHideDuration={3000}
+                  onClose={() =>
+                    setSnackbar((prevState) => ({ ...prevState, open: false }))
+                  }
+                  anchorOrigin={{ vertical: "top", horizontal: "center" }}
+                >
+                  <Alert variant="filled" sx={{ width: "100%" }}>
+                    {snackbar.message}
+                  </Alert>
+                </Snackbar>
+              </div>
             </div>
-          </div>
-        </RequestContext.Provider>
+          </RequestContext.Provider>
+        </ColorblindContext.Provider>
       </Auth0Provider>
     );
   }

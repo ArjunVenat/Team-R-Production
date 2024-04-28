@@ -34,6 +34,7 @@ import {
 } from "../components/mapElements.ts";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { GetColorblindColors } from "../components/colorblind.ts";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -308,8 +309,8 @@ export default function MainPage() {
                       color: "white",
                       borderColor: "white",
                       "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
+                        borderColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color3,
                       },
                     }}
                     onClick={() => {
@@ -327,8 +328,8 @@ export default function MainPage() {
                       color: "white",
                       borderColor: "white",
                       "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
+                        borderColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color3,
                       },
                     }}
                     onClick={() => {
