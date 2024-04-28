@@ -21,7 +21,7 @@ const tabStyle = {
   alignItems: "center",
   color: "white",
   "&.Mui-selected": {
-    color: GetColorblindColors().color3,
+    color: "#f6bd39",
   },
 };
 
@@ -79,9 +79,7 @@ const EdgeTablePage = () => {
               }}
             >
               <Tabs
-                TabIndicatorProps={{
-                  sx: { backgroundColor: GetColorblindColors().color3 },
-                }}
+                TabIndicatorProps={{ sx: { backgroundColor: "#f6bd39" } }}
                 value={nodeTab}
                 onChange={(event, newValue) => setNodeTab(newValue)}
                 aria-label="basic tabs example"
@@ -171,13 +169,13 @@ const EdgeTablePage = () => {
                 className=" w-1/3 shadow-md rounded-lg p-10 mx-auto mt-5 h-[50vh]"
                 sx={{
                   backgroundColor: "white",
-                  border: `10px solid ${GetColorblindColors().color4}`,
+                  border: "10px solid #012D5A",
                 }}
               >
                 <div className="flex justify-start ">
                   <Button
                     sx={{
-                      backgroundColor: GetColorblindColors().color4,
+                      backgroundColor: "#012D5A",
                       color: "white",
                       marginLeft: "auto",
                     }}

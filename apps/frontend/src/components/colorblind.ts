@@ -27,43 +27,43 @@ const none: colorblindType = {
   color10: "green",
 };
 const protanopia: colorblindType = {
-  //!!!
+  //can only see shades of blue, yellow, and brown
   color1: "#003da6",
   color2: "#009CA6",
   color3: "#f6bd39",
   color4: "#012D5A",
-  color5: "#3ECF04",
-  color6: "stroke-teal",
+  color5: "#1f3fa1",
+  color6: "stroke-brown",
   color7: "blue",
-  color8: "red",
+  color8: "orange",
   color9: "orange",
-  color10: "green",
+  color10: "cyan",
 };
 const deuteranopia: colorblindType = {
-  //!!!
+  //same as protanopia, but with lighter shades of brown
   color1: "#003da6",
   color2: "#009CA6",
-  color3: "#f6bd39",
+  color3: "#b0754c",
   color4: "#012D5A",
-  color5: "#3ECF04",
-  color6: "stroke-teal",
+  color5: "#1f3fa1",
+  color6: "stroke-lightbrown",
   color7: "blue",
-  color8: "red",
+  color8: "orange",
   color9: "orange",
-  color10: "green",
+  color10: "cyan",
 };
 const tritanopia: colorblindType = {
-  //!!!
-  color1: "#003da6",
-  color2: "#009CA6",
-  color3: "#f6bd39",
+  //Can only see shades of blue and light red/pink
+  color1: "#418791",
+  color2: "#9c3232",
+  color3: "#c25b5b",
   color4: "#012D5A",
-  color5: "#3ECF04",
-  color6: "stroke-teal",
+  color5: "#75d7e6",
+  color6: "stroke-lightred",
   color7: "blue",
   color8: "red",
-  color9: "orange",
-  color10: "green",
+  color9: "red",
+  color10: "cyan",
 };
 
 //Function for returning the colorblind type with corresponding colors
