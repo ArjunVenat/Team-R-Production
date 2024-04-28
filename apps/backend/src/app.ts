@@ -19,6 +19,7 @@ import addEdgeRouter from "./routes/addEdgeRouter.ts";
 import resetRouter from "./routes/resetRouter.ts";
 import allEmployeesRouter from "./routes/allEmployeesRouter.ts";
 import addEmployeeRouter from "./routes/addEmployeeRouter.ts";
+// import filteringDoctors from "./routes/doctorRouter.ts";
 import { auth } from "express-oauth2-jwt-bearer";
 
 const app: Express = express(); // Setup the backend
@@ -45,6 +46,7 @@ app.use("/healthcheck", (req, res) => {
 app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/map/pathfind", pathfindRouter);
+// app.use("/api/pdm/topdoctors", filteringDoctors);
 
 app.use(
   auth({
@@ -68,7 +70,6 @@ app.use("/api/admin/node/del", delNodesRouter);
 app.use("/api/admin/reset", resetRouter);
 app.use("/api/admin/allEmployees", allEmployeesRouter);
 app.use("/api/admin/employee/add", addEmployeeRouter);
-
 /**
  * Catch all 404 errors, and forward them to the error handler
  */

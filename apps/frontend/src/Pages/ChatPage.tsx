@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import OpenAI from "openai";
-import SideBar from "../components/SideBar.tsx";
 import swoosh from "../assets/swoosh.png";
 import { Box } from "@mui/material";
 
@@ -39,7 +38,6 @@ const ChatPage = () => {
 
   return (
     <Box display="flex">
-      <SideBar />
       <div
         className="overflow-y-auto h-screen flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
         style={{
