@@ -34,6 +34,7 @@ import {
 } from "../components/mapElements.ts";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -211,6 +212,13 @@ export default function MainPage() {
   }, [path]);
   console.log(groupPath);
 
+  const navigate = useNavigate();
+
+  const editMapRouteChange = () => {
+    const newPath = `/editmap`;
+    navigate(newPath); //  Navigate to new path within the application
+  };
+
   return (
     <div
       id="MainPage"
@@ -360,6 +368,32 @@ export default function MainPage() {
                     <MenuItem value={algorithm.path}>{algorithm.name}</MenuItem>
                   ))}
                 </Select>
+                <Button
+                  className="content-center "
+                  variant="outlined"
+                  sx={{
+                    color: "white",
+                    borderColor: "white",
+                    "&:hover": {
+                      borderColor: "#f6bd38",
+                      color: "#f6bd38",
+                    },
+
+                    display: "flex",
+                    justifyContent: "center",
+                    width: "95%", // Ensure the button takes up full width
+                  }}
+                  onClick={() => {
+                    editMapRouteChange();
+                  }}
+                  style={{
+                    marginBottom: "auto",
+                    position: "absolute",
+                    bottom: 15,
+                  }}
+                >
+                  Edit Map
+                </Button>
                 {path.length > 0 && (
                   <Box maxWidth={330} className="overflow-y-scroll">
                     <Box mb={2} display="flex" gap={1} alignItems="center">

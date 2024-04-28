@@ -29,6 +29,7 @@ import SpeedDialAction from "@mui/material/SpeedDialAction";
 import SpeedDialIcon from "@mui/material/SpeedDialIcon";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
+import { useNavigate } from "react-router-dom";
 //import {c} from "vitest/dist/reporters-5f784f42";
 
 let edgeFlag = false;
@@ -276,6 +277,12 @@ export default function MapEditing() {
     },
   ];
 
+  const navigate = useNavigate();
+  const homeRouteChange = () => {
+    const newPath = `/home`;
+    navigate(newPath); //  Navigate to new path within the application
+  };
+
   return (
     <div
       id="MainPage"
@@ -352,6 +359,34 @@ export default function MapEditing() {
             />
           ))}
         </SpeedDial>
+
+        <Button
+          className="content-center "
+          variant="outlined"
+          sx={{
+            color: "white",
+            //borderColor: "#009ca6",
+            backgroundColor: "#009ca6",
+            "&:hover": {
+              color: "white",
+              backgroundColor: "#012D5A",
+            },
+
+            display: "flex",
+            justifyContent: "center",
+            width: "95%", // Ensure the button takes up full width
+          }}
+          onClick={() => {
+            homeRouteChange();
+          }}
+          style={{
+            marginBottom: "auto",
+            position: "absolute",
+            bottom: 15,
+          }}
+        >
+          Find Directions
+        </Button>
 
         {addEdgeFormFlag &&
           nodeClicked == undefined &&
