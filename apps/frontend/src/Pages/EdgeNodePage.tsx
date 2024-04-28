@@ -5,15 +5,24 @@ import { useState } from "react";
 import NodeTable from "../backendreference/Nodes.tsx";
 import EmployeeTable from "../backendreference/Employees.tsx";
 import { useAuth0 } from "@auth0/auth0-react";
-// import blueback from "../assets/blueback.png";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
-// import swoosh from "../assets/swoosh.png";
-// import UplaodCSV from "../components/UploadCSV.tsx";
+import UploadCSV from "../backendreference/UploadCSV.tsx";
 import DownloadCSV from "../backendreference/DownloadCSV.tsx";
 // import DownloadIcon from "@mui/icons-material/Download";
 import BadgeIcon from "@mui/icons-material/Badge";
-import UploadCSV from "../components/UploadCSV.tsx";
+import { primaryButtonStyle } from "../styles/muiStyles.ts";
+
+const tabStyle = {
+  fontSize: "1rem",
+  display: "flex",
+  flexDirection: "row",
+  alignItems: "center",
+  color: "white",
+  "&.Mui-selected": {
+    color: "#f6bd39",
+  },
+};
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -52,10 +61,9 @@ const EdgeTablePage = () => {
   return (
     <Box display="flex">
       <div
-        className="overflow-y-auto h-screen flex-grow justify-center items-center bg-cover bg-center bg-no-repeat"
-        style={{
-          backgroundColor: `white`,
-        }}
+        className="overflow-y-auto h-screen
+                    flex-grow justify-center
+                    bg-white"
       >
         <div className="">
           <div className=" top-0 min-w-full pt-8 bg-primary">
@@ -70,7 +78,7 @@ const EdgeTablePage = () => {
               }}
             >
               <Tabs
-                TabIndicatorProps={{ style: { backgroundColor: "#f6bd39" } }}
+                TabIndicatorProps={{ sx: { backgroundColor: "#f6bd39" } }}
                 value={nodeTab}
                 onChange={(event, newValue) => setNodeTab(newValue)}
                 aria-label="basic tabs example"
@@ -80,54 +88,27 @@ const EdgeTablePage = () => {
                   icon={
                     <ScatterPlotIcon
                       className="mx-2"
-                      style={{ fontSize: "2rem" }}
+                      sx={{ fontSize: "2rem" }}
                     />
                   }
-                  sx={{
-                    fontSize: "1rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    color: "white",
-                    "&.Mui-selected": {
-                      color: "#f6bd39",
-                    },
-                  }}
+                  sx={tabStyle}
                 />
                 <Tab
                   label="Edge Table"
                   icon={
                     <LinearScaleIcon
                       className="mx-2"
-                      style={{ fontSize: "2rem" }}
+                      sx={{ fontSize: "2rem" }}
                     />
                   }
-                  sx={{
-                    fontSize: "1rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    color: "white",
-                    "&.Mui-selected": {
-                      color: "#f6bd39",
-                    },
-                  }}
+                  sx={tabStyle}
                 />
                 <Tab
                   label="Employee Table"
                   icon={
                     <BadgeIcon className="mx-2" style={{ fontSize: "2rem" }} />
                   }
-                  sx={{
-                    fontSize: "1rem",
-                    display: "flex",
-                    flexDirection: "row",
-                    alignItems: "center",
-                    color: "white",
-                    "&.Mui-selected": {
-                      color: "#f6bd39",
-                    },
-                  }}
+                  sx={tabStyle}
                 />
               </Tabs>
             </Box>
@@ -135,22 +116,13 @@ const EdgeTablePage = () => {
           <CustomTabPanel value={nodeTab} index={0}>
             <div className="flex  items-center flex-col">
               <div className="mb-4 flex flex-row space-x-4">
-                <Box>
-                  <Button
-                    onClick={() => setOpenModal(true)}
-                    variant="outlined"
-                    sx={{
-                      color: "#012d5a",
-                      borderColor: "#012d5a",
-                      "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
-                      },
-                    }}
-                  >
-                    Upload Node CSV
-                  </Button>
-                </Box>
+                <Button
+                  onClick={() => setOpenModal(true)}
+                  variant="outlined"
+                  sx={primaryButtonStyle}
+                >
+                  Upload Node CSV
+                </Button>
                 <DownloadCSV type="nodes" />
               </div>
               <NodeTable />
@@ -163,14 +135,7 @@ const EdgeTablePage = () => {
                   <Button
                     onClick={() => setOpenModal(true)}
                     variant="outlined"
-                    sx={{
-                      color: "#012d5a",
-                      borderColor: "#012d5a",
-                      "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
-                      },
-                    }}
+                    sx={primaryButtonStyle}
                   >
                     Upload Edge CSV
                   </Button>
@@ -187,14 +152,7 @@ const EdgeTablePage = () => {
                   <Button
                     onClick={() => setOpenModal(true)}
                     variant="outlined"
-                    sx={{
-                      color: "#012d5a",
-                      borderColor: "#012d5a",
-                      "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
-                      },
-                    }}
+                    sx={primaryButtonStyle}
                   >
                     Upload Employee CSV
                   </Button>
@@ -204,40 +162,18 @@ const EdgeTablePage = () => {
               <EmployeeTable />
             </div>
           </CustomTabPanel>
-          {/*<CustomTabPanel value={nodeTab} index={3}>*/}
-          {/*  <div*/}
-          {/*    className="flex items-center h-full w-full bg-cover bg-center bg-no-repeat"*/}
-          {/*    // style={{*/}
-          {/*    //     backgroundImage: `url(${swoosh})`,*/}
-          {/*    //     // width: "100vw",*/}
-          {/*    //     // height: "100vh",*/}
-          {/*    // }}*/}
-          {/*  >*/}
-          {/*    <Stack spacing={4}>*/}
-          {/*      <div className="text-center p-4">*/}
-          {/*        /!*<h1 className="font-semibold text-xl">Upload CSV File:</h1>*!/*/}
-          {/*        <UplaodCSV />*/}
-          {/*      </div>*/}
-          {/*      <div className="text-center text-lg">*/}
-          {/*        /!*<h1 className="font-semibold text-xl">Download CSV File:</h1>*!/*/}
-          {/*        <DownloadCSV />*/}
-          {/*      </div>*/}
-          {/*    </Stack>*/}
-          {/*  </div>*/}
-          {/*</CustomTabPanel>*/}
-
           <Modal open={open}>
             <div className="flex justify-center items-center h-screen">
               <Card
-                className=" w-1/3 shadow-md rounded-lg p-10 mx-auto mt-5 h-[50vh] "
-                style={{
+                className=" w-1/3 shadow-md rounded-lg p-10 mx-auto mt-5 h-[50vh]"
+                sx={{
                   backgroundColor: "white",
                   border: "10px solid #012D5A",
                 }}
               >
                 <div className="flex justify-start ">
                   <Button
-                    style={{
+                    sx={{
                       backgroundColor: "#012D5A",
                       color: "white",
                       marginLeft: "auto",

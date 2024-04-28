@@ -21,3 +21,12 @@ export const buttonStyle = {
     borderColor: "white",
   },
 };
+
+export const primaryButtonStyle = {
+  color: "#012d5a",
+  borderColor: "#012d5a",
+  "&:hover": {
+    borderColor: "#f6bd38",
+    color: "#f6bd38",
+  },
+};
