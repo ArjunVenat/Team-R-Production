@@ -14,7 +14,7 @@ import NickGolparvar from "../assets/image/NickGolparvar.jpeg";
 import ZihanLi from "../assets/image/ZihanLi.jpg";
 import { useState } from "react";
 
-import TypeScriptLogo from "../assets/image/tslogo.jpg";
+import TypeScriptLogo from "../assets/image/tslogo.png";
 import ReactLogo from "../assets/image/reactlogo.png";
 import YarnLogo from "../assets/image/yarnlogo.png";
 import TailwindLogo from "../assets/image/tailwindlogo.png";
@@ -33,6 +33,7 @@ interface TabPanelProps {
   index: number;
   value: number;
 }
+
 function CustomTabPanel(props: TabPanelProps) {
   const { children, value, index, ...other } = props;
 
@@ -229,140 +230,97 @@ export default function AboutPage() {
           </main>
         </CustomTabPanel>
         <CustomTabPanel value={aboutTab} index={1}>
-          <div className="flex flex-col items-center gap-2">
+          <main className="flex-col justify-center items-center leading-none">
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
               style={{
                 backgroundColor: "rgb(103,124,143, 0.6)",
               }}
             >
-              <h2 className="text-2xl font-bold mb-2">
+              <h2 className="text-2xl font-bold mb-4 text-primary">
                 Software Tools, Libraries, and Frameworks
               </h2>
-              <div className="flex flex-col items-center justify-center gap-1">
-                <Link
-                  href="https://www.typescriptlang.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={TypeScriptLogo}
-                    alt="TypeScript Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  TypeScript
-                </Link>
-                <Link
-                  href="https://reactjs.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={ReactLogo}
-                    alt="React Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  React
-                </Link>
-                <Link
-                  href="https://yarnpkg.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={YarnLogo}
-                    alt="Yarn Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  Yarn
-                </Link>
-                <Link
-                  href="https://tailwindcss.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={TailwindLogo}
-                    alt="Tailwind CSS Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  Tailwind CSS
-                </Link>
-                <Link
-                  href="https://mui.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={MuiLogo}
-                    alt="Material-UI Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  Material-UI
-                </Link>
-                <Link
-                  href="https://www.postgresql.org/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={PostgresqlLogo}
-                    alt="PostgreSQL Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  PostgreSQL
-                </Link>
-                <Link
-                  href="https://www.prisma.io/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={PrismaLogo}
-                    alt="Prisma Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  Prisma
-                </Link>
-                <Link
-                  href="https://www.framer.com/motion/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={FramerMotionLogo}
-                    alt="Framer Motion Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  Framer Motion
-                </Link>
-                <Link
-                  href="https://www.auth0.com/"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={Auth0Logo}
-                    alt="Auth0 Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  Auth0
-                </Link>
-                <Link
-                  href="https://github.com/axios/axios"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
-                  <img
-                    src={AxiosLogo}
-                    alt="Axios Logo"
-                    style={{ height: "50px", width: "50px" }}
-                  />
-                  Axios
-                </Link>
+              <div className="flex justify-center flex-wrap gap-4">
+                {[
+                  {
+                    name: "TypeScript",
+                    logo: TypeScriptLogo,
+                    link: "https://www.typescriptlang.org/",
+                  },
+                  {
+                    name: "React",
+                    logo: ReactLogo,
+                    link: "https://reactjs.org/",
+                  },
+                  {
+                    name: "Yarn",
+                    logo: YarnLogo,
+                    link: "https://yarnpkg.com/",
+                  },
+                  {
+                    name: "Tailwind CSS",
+                    logo: TailwindLogo,
+                    link: "https://tailwindcss.com/",
+                  },
+                  {
+                    name: "Material-UI",
+                    logo: MuiLogo,
+                    link: "https://mui.com/",
+                  },
+                  {
+                    name: "PostgreSQL",
+                    logo: PostgresqlLogo,
+                    link: "https://www.postgresql.org/",
+                  },
+                  {
+                    name: "Prisma",
+                    logo: PrismaLogo,
+                    link: "https://www.prisma.io/",
+                  },
+                  {
+                    name: "Framer Motion",
+                    logo: FramerMotionLogo,
+                    link: "https://www.framer.com/motion/",
+                  },
+                  {
+                    name: "Auth0",
+                    logo: Auth0Logo,
+                    link: "https://www.auth0.com/",
+                  },
+                  {
+                    name: "Axios",
+                    logo: AxiosLogo,
+                    link: "https://github.com/axios/axios",
+                  },
+                ].map((tool, index) => (
+                  <div
+                    key={index}
+                    className="relative flex flex-col items-center gap-2"
+                  >
+                    <Link
+                      href={tool.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <img
+                        src={tool.logo}
+                        alt={tool.name}
+                        className="transition-all duration-500 ease-in-out transform hover:scale-105 rounded-lg"
+                        style={{
+                          width: "200px",
+                          height: "200px",
+                          objectFit: "cover",
+                        }}
+                      />
+                    </Link>
+                    <h3 className="text-center text-lg font-semibold text-primary">
+                      {tool.name}
+                    </h3>
+                  </div>
+                ))}
               </div>
             </div>
-          </div>
+          </main>
         </CustomTabPanel>
 
         <div className="flex flex-col items-center justify-center w-full overflow-clip bg-gray-200 py-4 text-center">
