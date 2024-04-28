@@ -28,6 +28,7 @@ import { Auth0Provider } from "@auth0/auth0-react";
 //this is for the login and logout pages using auth0, too tired to figure out how to call them, prob super ez idk
 import { useNavigate } from "react-router-dom";
 import { ServiceRequestMenu } from "./Pages/ServiceRequestMenu.tsx";
+import PDMPage from "./Pages/PDMPage.tsx";
 //definition of context for service requests
 type appContextType = {
   requests: ServiceRequest[];
@@ -104,6 +105,10 @@ function App() {
         {
           path: "about",
           element: <AboutPage />,
+        },
+        {
+          path: "doctor-match",
+          element: <PDMPage />,
         },
       ],
     },

@@ -47,7 +47,6 @@ app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/map/pathfind", pathfindRouter);
 // app.use("/api/pdm/topdoctors", filteringDoctors);
-// app.use("/api/pdm/editdoctors", filteringDoctors);
 
 app.use(
   auth({
