@@ -139,7 +139,7 @@ export default function AboutPage() {
                     position1: "Lead Software Engineer",
                     position2: "Full Stack Engineer",
                     position3: "Co-Product Owner",
-                    quote: "Placeholder quote",
+                    quote: "That's why I charge the prices that I charge",
                   },
                   {
                     name: "Nick Golparvar",
