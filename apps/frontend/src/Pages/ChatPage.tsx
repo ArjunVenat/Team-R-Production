@@ -94,7 +94,7 @@ const ChatPage = () => {
           backgroundColor: "#f9f9f9",
         }}
       >
-        Hello, I am Herald. I am an AI chatbot. Feel free to ask me anything in
+        Hello, I am Herald. I am a AI chatbot. Feel free to ask me anything in
         the box below. Please be aware I may provide incorrect information!
       </h2>
       <List style={{ overflow: "auto", flexGrow: 1, padding: "1rem" }}>
