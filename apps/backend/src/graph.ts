@@ -3,15 +3,17 @@
  */
 export class GraphNode {
   id: string;
+  longName: string;
   x: number;
   y: number;
   z: number;
   neighbors: GraphNode[];
   weights: Map<GraphNode, number>;
-  constructor(id: string, x: number, y: number, z: number) {
+  constructor(id: string, longName: string, x: number, y: number, z: number) {
     this.id = id;
     this.neighbors = [];
     this.x = x;
+    this.longName = longName;
     this.y = y;
     this.z = z;
     this.weights = new Map<GraphNode, number>();
@@ -76,13 +78,19 @@ export class Graph {
    * @param y the y coordinate of the node.
    * @param z the z coordinate of the node.
    */
-  addNode(id: string, x: number, y: number, z: number): void {
-    const tempNode = new GraphNode(id, x, y, z);
+  addNode(id: string, longName: string, x: number, y: number, z: number): void {
+    const tempNode = new GraphNode(id, longName, x, y, z);
     Graph.nodeMap.set(id, tempNode);
   }
 
-  addStairNode(id: string, x: number, y: number, z: number): void {
-    const tempNode = new StairNode(id, x, y, z);
+  addStairNode(
+    id: string,
+    longName: string,
+    x: number,
+    y: number,
+    z: number,
+  ): void {
+    const tempNode = new StairNode(id, longName, x, y, z);
     Graph.nodeMap.set(id, tempNode);
   }
 

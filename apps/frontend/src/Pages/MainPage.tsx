@@ -27,6 +27,7 @@ import StraightIcon from "@mui/icons-material/Straight";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import EscalatorIcon from "@mui/icons-material/Escalator";
+import StairsIcon from "@mui/icons-material/Stairs";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -201,8 +202,9 @@ export default function MainPage() {
     { dir: "left", icon: <TurnLeftIcon /> },
     { dir: "right", icon: <TurnRightIcon /> },
     { dir: "elevator", icon: <ElevatorIcon /> },
-    { dir: "stairs", icon: <EscalatorIcon /> },
+    { dir: "stairs", icon: <StairsIcon /> },
     { dir: "arrived", icon: <MyLocationIcon /> },
+    { dir: "escalator", icon: <EscalatorIcon /> },
   ];
 
   const pathToText = (direction: string) => {

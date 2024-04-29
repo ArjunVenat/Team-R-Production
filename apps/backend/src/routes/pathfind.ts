@@ -120,6 +120,7 @@ export async function createGraph(): Promise<Graph> {
     if (node.NodeType == "STAI") {
       graph.addStairNode(
         node.NodeID,
+        node.LongName,
         +node.Xcoord,
         +node.Ycoord,
         floorToZMap.get(node.Floor)!,
@@ -127,6 +128,7 @@ export async function createGraph(): Promise<Graph> {
     } else {
       graph.addNode(
         node.NodeID,
+        node.LongName,
         +node.Xcoord,
         +node.Ycoord,
         floorToZMap.get(node.Floor)!,
