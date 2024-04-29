@@ -14,7 +14,7 @@ import Herald from "../assets/image/Herald.jpg";
 
 // import CloudDownloadIcon from "@mui/icons-material/CloudDownload";
 import { useNavigate, useLocation } from "react-router-dom";
-import EditIcon from "@mui/icons-material/Edit";
+// import EditIcon from "@mui/icons-material/Edit";
 import { useAuth0 } from "@auth0/auth0-react";
 // import ImportContactsIcon from "@mui/icons-material/ImportContacts";
 import BarChartIcon from "@mui/icons-material/BarChart";
@@ -61,11 +61,11 @@ export default function Sidebar() {
     icon: <TableViewIcon />,
     onlyDisplayLoggedIn: true,
   };
-  const editmap: Menu = {
-    title: "Edit Map",
-    icon: <EditIcon />,
-    onlyDisplayLoggedIn: true,
-  };
+  // const editmap: Menu = {
+  //   title: "Edit Map",
+  //   icon: <EditIcon />,
+  //   onlyDisplayLoggedIn: true,
+  // };
 
   const pdmOption: Menu = {
     title: "Find a Doctor",
@@ -135,13 +135,13 @@ export default function Sidebar() {
   // ];
   const [Menus, setMenus] = useState<Menu[]>([
     home,
-    editmap,
+    // editmap,
     pdmOption,
+    chat,
     serviceRequest,
     serviceRequestTable,
     nodes_edges,
     aboutPage,
-    chat,
     login,
     logoutOption,
   ]);
@@ -151,13 +151,13 @@ export default function Sidebar() {
       setMenus([
         home,
         pdmOption,
-        editmap,
+        chat,
+        // editmap,
         serviceRequest,
         serviceRequestTable,
-        nodes_edges,
         stats,
+        nodes_edges,
         aboutPage,
-        chat,
         logoutOption,
       ]);
     }
@@ -226,7 +226,7 @@ export default function Sidebar() {
       menuHighlight = "Find a Doctor";
       break;
     case "/editmap":
-      menuHighlight = "Edit Map";
+      menuHighlight = "Home";
       break;
     case "/service-request-table":
       menuHighlight = "Service Request Table";
@@ -298,9 +298,9 @@ export default function Sidebar() {
     } else if (title === "Service Request Table") {
       // Redirect to the service request table page.
       routeChange("service-request-table");
-    } else if (title === "Edit Map") {
-      // Redirect to the edit map page.
-      routeChange("editmap");
+      // } else if (title === "Edit Map") {
+      //   // Redirect to the edit map page.
+      //   routeChange("editmap");
     } else if (title === "CSV Data") {
       // Redirect to the node/edge table page.
       routeChange("node-edge-table");

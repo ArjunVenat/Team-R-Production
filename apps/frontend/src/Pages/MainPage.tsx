@@ -37,6 +37,8 @@ import {
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { GetColorblindColors } from "../components/colorblind.ts";
+import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -97,11 +99,13 @@ export default function MainPage() {
     console.log("snapShot: ", snapShot);
   }, [snapShot]); // Log snapShot whenever it changes
 
-  // const navigate = useNavigate();
-  // const routeChange = (path: string) => {
-  //   const newPath = `/${path}`;
-  //   navigate(newPath);
-  // };
+  const { isAuthenticated } = useAuth0();
+
+  const navigate = useNavigate();
+  const routeChange = (path: string) => {
+    const newPath = `/${path}`;
+    navigate(newPath);
+  };
 
   useEffect(() => {
     //async function to fetch data from the server
@@ -366,6 +370,8 @@ export default function MainPage() {
                     <MenuItem value={algorithm.path}>{algorithm.name}</MenuItem>
                   ))}
                 </Select>
+
+
                 <Button
                   className="content-center "
                   variant="outlined"
@@ -384,6 +390,27 @@ export default function MainPage() {
                 >
                   Update Traffic
                 </Button>
+                
+                {isAuthenticated && (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: GetColorblindColors().color4,
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color4,
+                      },
+                    }}
+                    onClick={() => {
+                      routeChange("editmap");
+                    }}
+                  >
+                    <EditIcon />
+                    EDIT MAP
+                  </Button>
+                )}
+                
 
                 {path.length > 0 && (
                   <Box maxWidth={330} className="overflow-y-scroll">
