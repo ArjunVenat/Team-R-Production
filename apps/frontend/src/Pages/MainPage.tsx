@@ -57,7 +57,7 @@ export default function MainPage() {
     null,
   );
   const [snapShot, setSnapShot] = useState({
-    edgeWeights: [{ edgeID: "FHALL02601_FHALL03101", weight: 100000 }],
+    edgeWeights: [{ edgeID: "FHALL02601_FHALL03101", weight: 1 }],
   });
 
   const getSnapShot = async () => {
