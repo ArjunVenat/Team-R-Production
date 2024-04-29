@@ -31,6 +31,25 @@ const useCurrentDateTime = () => {
   return currentDateTime;
 };
 
+const formatDateTime = (dateTime: Date) => {
+  const options: Intl.DateTimeFormatOptions = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
+  return new Intl.DateTimeFormat("en-US", options).format(dateTime);
+};
+
+const formatTime = (dateTime: Date) => {
+  const options: Intl.DateTimeFormatOptions = {
+    hour: "numeric",
+    minute: "numeric",
+    hour12: true,
+  };
+  return dateTime.toLocaleTimeString("en-US", options);
+};
+
 function SignInPage() {
   const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
@@ -58,9 +77,9 @@ function SignInPage() {
           </div>
         ))}
       </Carousel>
-      <div className="absolute bottom-0 left-0 p-4 text-white font-sans font-semibold text-2xl">
-        <p>{currentDateTime.toDateString()}</p>
-        <p>{currentDateTime.toLocaleTimeString()}</p>
+      <div className="absolute bottom-0 left-0 p-4 text-white font-sans font-semibold text-4xl">
+        <p>{formatDateTime(currentDateTime)}</p>
+        <p>{formatTime(currentDateTime)}</p>
       </div>
       {showWarning && (
         <div className="fixed top-0 bg-red-600 w-2/3 flex justify-between items-center">
