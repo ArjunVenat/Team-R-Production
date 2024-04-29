@@ -58,13 +58,17 @@ export function MapControls(props: {
 }
 
 export function FloorSelect(props: {
-  setMap: (newMap: string) => void;
+  setFloor: (newFloor: { name: string; map: string; level: string }) => void;
   isDirectionsClicked: boolean;
   path: Nodes[];
   resetMapTransform: () => void;
 }) {
-  const handleFloorChange = (newMap: string) => {
-    props.setMap(newMap);
+  const handleFloorChange = (newFloor: {
+    name: string;
+    map: string;
+    level: string;
+  }) => {
+    props.setFloor(newFloor);
     props.resetMapTransform();
   };
   return (
@@ -83,7 +87,7 @@ export function FloorSelect(props: {
       {floors.map((floor, index) => (
         <Button
           key={index}
-          onClick={() => handleFloorChange(floor.map)}
+          onClick={() => handleFloorChange(floor)}
           sx={
             props.isDirectionsClicked &&
             props.path.some((node) => node.Floor === floor.level)
