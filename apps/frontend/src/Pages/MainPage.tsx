@@ -56,18 +56,16 @@ export default function MainPage() {
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(
     null,
   );
-  const [snapShot, setSnapShot] = useState([
-    { edgeId: "FHALL02601_FHALL03101", weight: 100000 },
-  ]);
+  const [snapShot, setSnapShot] = useState({
+    edgeWeights: [{ edgeID: "FHALL02601_FHALL03101", weight: 100000 }],
+  });
 
   const getSnapShot = async () => {
     const res = await axios.get("http://localhost:5000/api/capture");
     // console.log(res.data);
-    const data = res.data["edgeWeights"];
     // console.log(data);
-    const numPpl = data[0]["0"];
     // console.log(numPpl);
-    setSnapShot([{ edgeId: "FHALL02601_FHALL03101", weight: Number(numPpl) }]);
+    setSnapShot(res.data);
     console.log("snapShot: ", snapShot);
   };
 
@@ -172,13 +170,15 @@ export default function MainPage() {
       const endNode: string = endNodeArray[0]["NodeID"];
 
       // Fetching path data from the backend using pathfinding algorithm
-      const res = await axios.get(pathfindingAlgorithm, {
-        params: {
-          startNodeID: startNode,
-          endNodeID: endNode,
-          edgeWeights: snapShot,
+      const res = await axios.post(
+        `${pathfindingAlgorithm}?startNodeID=${startNode}&endNodeID=${endNode}`,
+        snapShot,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
       setShowPathOnly(true);
       if (res.status === 200) {
         console.log("Successfully fetched path");

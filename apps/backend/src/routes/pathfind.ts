@@ -13,13 +13,12 @@ const prisma = new PrismaClient();
 const router: Router = express.Router();
 
 // Return the shortest path when called. Defaults to A*
-router.get(
+router.post(
   "/:algoType",
   async function (req: Request, res: Response): Promise<void> {
-    const { startNodeID, endNodeID, edgeWeights } = req.query as {
+    const { startNodeID, endNodeID } = req.query as {
       startNodeID: string;
       endNodeID: string;
-      edgeWeights?: string;
     };
 
     // Determine which algorithm to use for pathfinding
@@ -49,9 +48,9 @@ router.get(
 
     const graph = await createGraph();
     let parsedEdgeWeights: EdgeWeight[] | undefined;
-    if (edgeWeights) {
+    if (req.body.edgeWeights) {
       try {
-        parsedEdgeWeights = JSON.parse(edgeWeights);
+        parsedEdgeWeights = req.body.edgeWeights;
         console.log("here rn", parsedEdgeWeights);
         parsedEdgeWeights!.forEach((edgeWeight) => {
           graph.addEdgeWeight(edgeWeight.edgeID, edgeWeight.weight);
