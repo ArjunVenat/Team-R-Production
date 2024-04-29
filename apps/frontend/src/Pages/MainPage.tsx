@@ -56,6 +56,14 @@ export default function MainPage() {
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(
     null,
   );
+  const [snapShot, setSnapShot] = useState([{ edgeId: "0", weight: 1 }]);
+
+  const getSnapShot = async () => {
+    const res = await axios.get("http://localhost:5000/api/capture");
+    console.log(res.data);
+    setSnapShot(res.data);
+    console.log("snapShot: ", snapShot);
+  };
 
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
@@ -329,6 +337,25 @@ export default function MainPage() {
                     <MenuItem value={algorithm.path}>{algorithm.name}</MenuItem>
                   ))}
                 </Select>
+                <Button
+                  className="content-center "
+                  variant="outlined"
+                  sx={{
+                    color: "white",
+                    borderColor: "white",
+                    "&:hover": {
+                      borderColor: GetColorblindColors().color3,
+                      color: GetColorblindColors().color3,
+                    },
+                  }}
+                  onClick={() => {
+                    getSnapShot();
+                  }}
+                  style={{ marginLeft: "auto" }}
+                >
+                  Update Traffic
+                </Button>
+
                 {path.length > 0 && (
                   <Box maxWidth={330} className="overflow-y-scroll">
                     <Box mb={2} display="flex" gap={1} alignItems="center">
