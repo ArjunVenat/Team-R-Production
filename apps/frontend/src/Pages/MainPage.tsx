@@ -26,6 +26,7 @@ import TurnRightIcon from "@mui/icons-material/TurnRight";
 import StraightIcon from "@mui/icons-material/Straight";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
+import EscalatorIcon from "@mui/icons-material/Escalator";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -34,6 +35,7 @@ import {
 } from "../components/mapElements.ts";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { GetColorblindColors } from "../components/colorblind.ts";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -149,55 +151,22 @@ export default function MainPage() {
       console.error("Start or end node not found");
     }
   }
+  const directionsList = [
+    { dir: "straight", icon: <StraightIcon /> },
+    { dir: "left", icon: <TurnLeftIcon /> },
+    { dir: "right", icon: <TurnRightIcon /> },
+    { dir: "elevator", icon: <ElevatorIcon /> },
+    { dir: "stairs", icon: <EscalatorIcon /> },
+    { dir: "arrived", icon: <MyLocationIcon /> },
+  ];
 
   const pathToText = (direction: string) => {
-    // straight
-    if (direction.includes("straight")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <StraightIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    // turn left
-    if (direction.includes("left")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <TurnLeftIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    // turn right
-    if (direction.includes("right")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <TurnRightIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    if (direction.includes("elevator")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <ElevatorIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    if (direction.includes("arrived")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <MyLocationIcon />
-          {direction}
-        </Box>
-      );
-    }
+    return (
+      <Box mb={2} display="flex" gap={1} alignItems="center">
+        {directionsList.find((item) => direction.includes(item.dir))?.icon}
+        {direction}
+      </Box>
+    );
   };
 
   const groupPath: { [key: string]: Nodes[] } = useMemo(() => {
@@ -308,8 +277,8 @@ export default function MainPage() {
                       color: "white",
                       borderColor: "white",
                       "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
+                        borderColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color3,
                       },
                     }}
                     onClick={() => {
@@ -327,8 +296,8 @@ export default function MainPage() {
                       color: "white",
                       borderColor: "white",
                       "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
+                        borderColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color3,
                       },
                     }}
                     onClick={() => {
@@ -351,7 +320,7 @@ export default function MainPage() {
                     {
                       boxShadow:
                         "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
-                      backgroundColor: "#009CA6",
+                      backgroundColor: GetColorblindColors().color2,
                       color: "white",
                     },
                   ]}

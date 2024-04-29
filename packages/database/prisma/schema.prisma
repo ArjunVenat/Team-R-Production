@@ -48,6 +48,28 @@ model Nodes {
   Requests  GeneralRequest[]
 }
 
+//--------------- Iteration 5 -----------------------------
+
+// userID which is an autoincrement number and the primary key
+// name is the doctor's name
+// department is the primary department that the doctor works in
+// years worked is the number of years of experience as a doctor
+// rating is the doctor's rating, which we assumed to be the average across many sites
+// specialty training is a boolean for whether the doctor has specialty training in their field
+// boardCertification is a boolean for whether the doctor is board certified
+// languages is a list of strings for the languages that the doctor is proficient/fluent in
+
+model Doctor {
+  userID             Int      @id
+  name               String
+  department         String
+  yearsWorked        Int
+  rating             Decimal  @db.Decimal(3, 2)
+  specialtyTraining  Boolean
+  boardCertification Boolean
+  languages          String[]
+}
+
 //--------------- Iteration 4 -----------------------------
 
 // userID which is a String and the primary key

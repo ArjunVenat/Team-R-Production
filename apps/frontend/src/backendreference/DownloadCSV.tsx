@@ -1,10 +1,32 @@
 import axios from "axios";
 // import SideBar from "../components/SideBar.tsx";
-import { Stack, Button, Box } from "@mui/material";
 import { useAuth0 } from "@auth0/auth0-react";
+import { primaryButtonStyle } from "../styles/muiStyles.ts";
+import { ReactNode } from "react";
+import { Button } from "@mui/material";
+
+interface Props {
+  type: string;
+}
+
+export function DownloadCSVItem(props: {
+  children: ReactNode | string;
+  clickHandler: () => void;
+}) {
+  return (
+    <Button
+      onClick={props.clickHandler}
+      variant="outlined"
+      sx={primaryButtonStyle}
+      type="submit"
+    >
+      {props.children}
+    </Button>
+  );
+}
 
 //received help from Dan from team o. He fixed some errors.
-export default function DownloadCSV() {
+export default function DownloadCSV(props: Props) {
   //Use auth0 react hook
   const { getAccessTokenSilently } = useAuth0();
 
@@ -56,6 +78,19 @@ export default function DownloadCSV() {
     downloadBlob(receiveEmployees, "employees.csv");
   }
 
+  async function fetchDoctors() {
+    const token = await getAccessTokenSilently();
+    const res = await axios.get("/api/admin/csv/Doctor", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    });
+    const receiveDoctors = new Blob([res.data], {
+      type: "text/csv;encoding:utf-8",
+    });
+    downloadBlob(receiveDoctors, "doctors.csv");
+  }
+
   function downloadBlob(blob: Blob, filePath: string) {
     const blobURL = URL.createObjectURL(blob);
 
@@ -78,92 +113,34 @@ export default function DownloadCSV() {
   }
 
   return (
-    // <Stack direction="row" spacing={2}>
-    //   <SideBar />
-    <div
-      className="grid"
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        minWidth: "80vw",
-      }}
-    >
-      <div
-        className="grid"
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-          display: "grid",
-        }}
-      >
-        <div
-          className="backdrop-blur-md rounded-lg p-10"
-          style={{
-            backgroundColor: "rgb(103,124,143, 0.15)",
-          }}
-        >
-          <h1 className="font-semibold text-xl mb-10 text-primary">
-            Download CSV File:
-          </h1>
-          <Stack direction="row" spacing={5}>
-            <Box mt={5}>
-              <Button
-                onClick={fetchNodes}
-                variant="outlined"
-                sx={{
-                  color: "#012d5a",
-                  borderColor: "#012d5a",
-                  "&:hover": {
-                    borderColor: "#f6bd38",
-                    color: "#f6bd38",
-                  },
-                }}
-                type="submit"
-              >
-                Download Nodes File
-              </Button>
-            </Box>
+    <>
+      {props.type === "nodes" && (
+        <DownloadCSVItem
+          clickHandler={fetchNodes}
+          children="Download Nodes File"
+        />
+      )}
 
-            <Box mt={5}>
-              <Button
-                onClick={fetchEdges}
-                variant="outlined"
-                sx={{
-                  color: "#012d5a",
-                  borderColor: "#012d5a",
-                  "&:hover": {
-                    borderColor: "#f6bd38",
-                    color: "#f6bd38",
-                  },
-                }}
-                type="submit"
-              >
-                Download Edges File
-              </Button>
-            </Box>
+      {props.type === "edges" && (
+        <DownloadCSVItem
+          clickHandler={fetchEdges}
+          children="Download Edges File"
+        />
+      )}
 
-            <Box mt={5}>
-              <Button
-                onClick={fetchEmployees}
-                variant="outlined"
-                sx={{
-                  color: "#012d5a",
-                  borderColor: "#012d5a",
-                  "&:hover": {
-                    borderColor: "#f6bd38",
-                    color: "#f6bd38",
-                  },
-                }}
-                type="submit"
-              >
-                Download Employees File
-              </Button>
-            </Box>
-          </Stack>
-        </div>
-      </div>
-    </div>
-    // </Stack>
+      {props.type == "employees" && (
+        <DownloadCSVItem
+          clickHandler={fetchEmployees}
+          children="Download Employees File"
+        />
+      )}
+
+      {props.type == "doctor" && (
+        <DownloadCSVItem
+          clickHandler={fetchDoctors}
+          children="Download Doctors File"
+        />
+      )}
+    </>
   );
 }

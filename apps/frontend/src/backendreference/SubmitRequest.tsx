@@ -1,6 +1,6 @@
 import { ServiceRequest } from "../Interfaces/ServiceRequest.ts";
 import axios from "axios";
-// import SuccessAlert from "./SuccessAlert.tsx";
+// import PopupAlert from "./PopupAlert.tsx";
 
 export async function submitRequestDB(request: ServiceRequest, token: string) {
   const data = JSON.stringify({
@@ -15,7 +15,7 @@ export async function submitRequestDB(request: ServiceRequest, token: string) {
     DeliveryDate: request.deliveryDate + ":00.000Z",
     Status: request.status,
   });
-  // SuccessAlert();
+  // PopupAlert();
   console.log(data);
   //sends a post request
   const res = await axios.post("/api/service/create", data, {
@@ -27,6 +27,6 @@ export async function submitRequestDB(request: ServiceRequest, token: string) {
   if (res.status == 200) {
     console.log("submitted request");
 
-    // SuccessAlert();
+    // PopupAlert();
   }
 }

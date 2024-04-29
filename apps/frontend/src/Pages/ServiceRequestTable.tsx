@@ -4,9 +4,7 @@ import isAdmin from "../components/adminChecker.ts";
 import { Employee } from "../Interfaces/Employee.ts";
 // import { RequestContext } from "../App";
 // import {useNavigate} from "react-router-dom";
-
 import DensitySmallIcon from "@mui/icons-material/DensitySmall";
-
 import {
   Box,
   Button,
@@ -23,7 +21,6 @@ import { GeneralRequest } from "database";
 import axios from "axios";
 import { useAuth0 } from "@auth0/auth0-react";
 // import swoosh from "../assets/swoosh.png";
-
 import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import CardGiftcardIcon from "@mui/icons-material/CardGiftcard";
 import BuildIcon from "@mui/icons-material/Build";
@@ -31,6 +28,7 @@ import VaccinesIcon from "@mui/icons-material/Vaccines";
 import MonitorHeartIcon from "@mui/icons-material/MonitorHeart";
 import CasinoIcon from "@mui/icons-material/Casino";
 import { ListOfServices } from "../components/FullServiceRequest";
+import { GetColorblindColors } from "../components/colorblind.ts";
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -234,13 +232,9 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
       >
         <div>
           <div className=" top-0 min-w-full pt-8 bg-primary">
-            {/*// style={{*/}
-            {/*//     backgroundColor: "#009CA6",*/}
-            {/*//     // opacity: 0.5,*/}
-            {/*// }}>*/}
             <Box
               sx={{
-                backgroundColor: "#009CA6",
+                backgroundColor: GetColorblindColors().color2,
                 borderColor: "white",
                 display: "flex",
                 justifyContent: "center",
@@ -249,7 +243,9 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
               }}
             >
               <Tabs
-                TabIndicatorProps={{ style: { backgroundColor: "#f6bd39" } }}
+                TabIndicatorProps={{
+                  style: { backgroundColor: GetColorblindColors().color3 },
+                }}
                 value={selectedTable}
                 onChange={(event, newValue) => setSelectedTable(newValue)}
                 aria-label="basic tabs example"
@@ -387,7 +383,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
                   variant="outlined"
                   onClick={handleClick}
                   sx={{
-                    color: "#009CA6",
+                    color: GetColorblindColors().color2,
                     backgroundColor: "white",
                     "&:hover": {
                       borderColor: "#f6bd38",
