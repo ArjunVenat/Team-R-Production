@@ -56,14 +56,29 @@ export default function MainPage() {
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(
     null,
   );
-  const [snapShot, setSnapShot] = useState([{ edgeId: "0", weight: 1 }]);
+  const [snapShot, setSnapShot] = useState({ edgeId: "0", weight: 0 });
 
   const getSnapShot = async () => {
     const res = await axios.get("http://localhost:5000/api/capture");
-    console.log(res.data);
-    setSnapShot(res.data);
-    console.log("snapShot: ", snapShot);
+    // console.log(res.data);
+    const data = res.data["edgeWeights"];
+    // console.log(data);
+    const numPpl = data[0]["0"];
+    // console.log(numPpl);
+    setSnapShot({ edgeId: "FHALL02601_FHALL03101", weight: Number(numPpl) });
+    // console.log("snapShot: ", snapShot);
   };
+
+  // const sendToBE =
+
+  // const updateTraffic = () => {
+  //     getSnapShot().then();
+  //     // sendToBE();
+  // }
+
+  useEffect(() => {
+    console.log("snapShot: ", snapShot);
+  }, [snapShot]); // Log snapShot whenever it changes
 
   // const navigate = useNavigate();
   // const routeChange = (path: string) => {
