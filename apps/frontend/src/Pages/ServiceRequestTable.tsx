@@ -224,7 +224,7 @@ function ServiceRequestTable({ availableServices }: ListOfServices) {
   return (
     <Box display="flex">
       <div
-        className="overflow-y-auto flex-grow justify-center items-center bg-cover bg-center backdrop-blur-sm bg-no-repeat"
+        className=" flex-grow justify-center overflow-y-auto h-screen bg-cover bg-center backdrop-blur-sm bg-no-repeat"
         style={{
           // backgroundImage: `url(${swoosh})`,
           backgroundColor: "white",
