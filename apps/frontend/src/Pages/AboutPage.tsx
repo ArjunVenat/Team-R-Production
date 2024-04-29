@@ -223,6 +223,7 @@ export default function AboutPage() {
                         {developer.quote}
                       </p>
                     </div>
+
                     <img
                       src={developer.image}
                       alt={developer.name}
@@ -345,12 +346,16 @@ export default function AboutPage() {
           </main>
         </CustomTabPanel>
 
-        <div className="flex flex-col items-center justify-center w-full overflow-clip bg-gray-200 py-4 text-center">
+        <div className="flex whitespace-pre items-center justify-center w-full overflow-clip bg-gray-200 py-4 text-center">
           <div className="text-primary">
             WPI Computer Science Department, CS3733-D24 Software Engineering,
             Prof. Wilson Wong
+            <a href="http://wilsonwong.org/" target="_blank">
+              .
+            </a>
           </div>
-          <div className="text-primary">Team Coach: Katy Stuparu</div>
+
+          <div className="text-primary"> Team Coach: Katy Stuparu</div>
         </div>
       </div>
     </Box>
