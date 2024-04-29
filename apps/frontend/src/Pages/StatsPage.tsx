@@ -4,6 +4,7 @@ import { BarChart } from "@mui/x-charts/BarChart";
 import axios from "axios";
 import { Box, Typography } from "@mui/material";
 import swoosh from "../assets/swoosh.png";
+import { useTranslation } from "react-i18next";
 
 type TypeLengths = {
   Flowers: number;
@@ -21,6 +22,9 @@ const St4t5Page = () => {
     loginWithRedirect,
     getAccessTokenSilently,
   } = useAuth0();
+
+  const { t } = useTranslation();
+
   const [typeLengths, setTypeLengths] = useState<TypeLengths>({
     Flowers: 0,
     Gifts: 0,
@@ -111,7 +115,7 @@ const St4t5Page = () => {
                   borderRadius="10px"
                 >
                   <Typography variant="h3" gutterBottom color="white">
-                    Request Type Statistics
+                    {t("Request Type Statistics")}
                   </Typography>
                   <BarChart
                     series={[
@@ -132,7 +136,7 @@ const St4t5Page = () => {
                     grid={{ vertical: true, horizontal: true }}
                   />
                   <Typography variant="body1" gutterBottom>
-                    Number of Requests by Type
+                    {t("Number of Requests by Type")}
                   </Typography>
                 </Box>
               </Box>

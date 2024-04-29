@@ -27,8 +27,8 @@ import StraightIcon from "@mui/icons-material/Straight";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import EscalatorIcon from "@mui/icons-material/Escalator";
-import StairsIcon from "@mui/icons-material/Stairs";
 import SyncIcon from "@mui/icons-material/Sync";
+import StairsIcon from "@mui/icons-material/Stairs";
 import {
   floors,
   pathfindingAlgorithms,
@@ -37,8 +37,9 @@ import {
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { GetColorblindColors } from "../components/colorblind.ts";
-import { useNavigate } from "react-router-dom";
 import EditIcon from "@mui/icons-material/Edit";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -94,7 +95,7 @@ export default function MainPage() {
   //   getSnapShot().then();
   //   sendToBE();
   // };
-
+  const { t } = useTranslation();
   useEffect(() => {
     console.log("snapShot: ", snapShot);
   }, [snapShot]); // Log snapShot whenever it changes
@@ -211,7 +212,7 @@ export default function MainPage() {
     return (
       <Box mb={2} display="flex" gap={1} alignItems="center">
         {directionsList.find((item) => direction.includes(item.dir))?.icon}
-        {direction}
+        {t("direction")}
       </Box>
     );
   };
@@ -273,7 +274,7 @@ export default function MainPage() {
 
               <aside className={rightSideBarStyle}>
                 <h1 className="text-xl bg-transparent text-center">
-                  Enter your start and end locations:
+                  {t("Enter your start and end locations:")}
                 </h1>
                 <Autocomplete
                   value={start}
@@ -288,7 +289,7 @@ export default function MainPage() {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="Start Location"
+                      label={t("Start Location")}
                       sx={autocompleteStyle}
                     />
                   )}
@@ -306,7 +307,7 @@ export default function MainPage() {
                   renderInput={(params) => (
                     <TextField
                       {...params}
-                      label="End Location"
+                      label={t("End Location")}
                       sx={autocompleteStyle}
                     />
                   )}
@@ -329,7 +330,7 @@ export default function MainPage() {
                       resetTransform();
                     }}
                   >
-                    Get Directions
+                    {t("Get Directions")}
                   </Button>
                   <Button
                     className="content-center"
@@ -348,7 +349,7 @@ export default function MainPage() {
                       resetTransform();
                     }}
                   >
-                    Reset Map
+                    {t("Reset Map")}
                   </Button>
                 </div>
                 {/*Selecting pathfind algorithm*/}
@@ -371,7 +372,6 @@ export default function MainPage() {
                   ))}
                 </Select>
 
-
                 <Button
                   className="content-center "
                   variant="outlined"
@@ -390,7 +390,7 @@ export default function MainPage() {
                 >
                   Update Traffic
                 </Button>
-                
+
                 {isAuthenticated && (
                   <Button
                     variant="contained"
@@ -410,13 +410,12 @@ export default function MainPage() {
                     EDIT MAP
                   </Button>
                 )}
-                
 
                 {path.length > 0 && (
                   <Box maxWidth={330} className="overflow-y-scroll">
                     <Box mb={2} display="flex" gap={1} alignItems="center">
                       <SyncIcon />
-                      {end} from {start}
+                      {t("From To", { start, end })}
                     </Box>
                     {pathDirections.map((floorDirections, index) => (
                       <Accordion

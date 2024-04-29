@@ -21,6 +21,7 @@ import maintenance from "../assets/maintenance.jpg";
 import medicine from "../assets/medicine.jpg";
 import eqipment from "../assets/med-device.jpg";
 import { AnimatePresence } from "framer-motion";
+import { useTranslation } from "react-i18next";
 
 export function ServiceRequestMenu() {
   // Use the Auth0 React hook to handle authentication.
@@ -43,6 +44,7 @@ export function ServiceRequestMenu() {
 
   const [typeOfService, setTypeOfService] = useState("");
   const [open, setOpen] = useState(false);
+  const { t } = useTranslation();
 
   // const handleButtonClick = (serviceType: string) => {
   //     setTypeOfService(serviceType);
@@ -126,7 +128,7 @@ export function ServiceRequestMenu() {
                       },
                     }}
                   >
-                    Flowers
+                    {t("Flowers")}
                   </Typography>
                 </Box>
               </Button>
@@ -178,7 +180,7 @@ export function ServiceRequestMenu() {
                       },
                     }}
                   >
-                    Gifts
+                    {t("Gifts")}
                   </Typography>
                 </Box>
               </Button>
@@ -230,7 +232,7 @@ export function ServiceRequestMenu() {
                       },
                     }}
                   >
-                    Entertainment
+                    {t("Entertainment")}
                   </Typography>
                 </Box>
               </Button>
@@ -282,7 +284,7 @@ export function ServiceRequestMenu() {
                       },
                     }}
                   >
-                    Maintenance
+                    {t("Maintenance")}
                   </Typography>
                 </Box>
               </Button>
@@ -334,7 +336,7 @@ export function ServiceRequestMenu() {
                       },
                     }}
                   >
-                    Medicine
+                    {t("Medicine")}
                   </Typography>
                 </Box>
               </Button>
@@ -386,7 +388,7 @@ export function ServiceRequestMenu() {
                       },
                     }}
                   >
-                    Medical Equipment
+                    {t("Medical Equipment")}
                   </Typography>
                 </Box>
               </Button>
