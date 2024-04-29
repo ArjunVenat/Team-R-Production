@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 import {
   Autocomplete,
   Slider,
@@ -17,13 +18,32 @@ export default function PDMPage() {
   const [certificationPref, setCertificationPref] = useState<boolean>(false);
   const [boardCertification, setBoardCertification] = useState<boolean>(false);
 
-  const Departments: string[] = [
-    "Department A",
-    "Department B",
-    "Department C",
-    "Department D",
-  ]; // Example departments
-  const Languages: string[] = ["English", "Spanish", "French", "German"]; // Example languages
+  const [departments, setDepartments] = useState<string[]>([]);
+  const [languages, setLanguages] = useState<string[]>([]);
+
+  useEffect(() => {
+    async function fetchDepartments() {
+      try {
+        const response = await axios.get("/api/pdm/field/departments");
+        setDepartments(response.data);
+      } catch (error) {
+        console.error("Failed to fetch departments", error);
+      }
+    }
+    fetchDepartments();
+  }, []);
+
+  useEffect(() => {
+    async function fetchLanguages() {
+      try {
+        const response = await axios.get("/api/pdm/field/languages");
+        setLanguages(response.data);
+      } catch (error) {
+        console.error("Failed to fetch languages", error);
+      }
+    }
+    fetchLanguages();
+  }, []);
 
   const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -45,7 +65,7 @@ export default function PDMPage() {
           onChange={(event, newValue) => {
             setDepartment(newValue);
           }}
-          options={Departments}
+          options={departments}
           renderInput={(params) => <TextField {...params} label="Department" />}
         />
         <Slider
@@ -64,7 +84,7 @@ export default function PDMPage() {
           onChange={(event, newValue) => {
             setLanguage(newValue);
           }}
-          options={Languages}
+          options={languages}
           renderInput={(params) => <TextField {...params} label="Language" />}
         />
         <FormGroup>
