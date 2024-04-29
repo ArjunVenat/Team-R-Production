@@ -32,6 +32,8 @@ import BWHLogo from "../assets/brigLogo.png";
 import { useTranslation } from "react-i18next";
 import { Box, Button, IconButton, Popover } from "@mui/material";
 import LanguageIcon from "@mui/icons-material/Language";
+import { useContext } from "react";
+import { ColorblindContext } from "../App.tsx";
 
 interface Menu {
   key: string;
@@ -50,6 +52,17 @@ export default function Sidebar() {
     logout,
     user,
   } = useAuth0();
+
+  const { setColorblind } = useContext(ColorblindContext);
+  const switchColorblindType = (
+    type: string,
+    setColorblind: (type: string) => void,
+  ) => {
+    setColorblind(type);
+  };
+  const colorblindchange = (type: string) => {
+    switchColorblindType(type, setColorblind);
+  };
 
   const { t, i18n, ready } = useTranslation();
   const [anchorEl, setAnchorEl] = React.useState<
@@ -452,11 +465,11 @@ export default function Sidebar() {
                 anchorEl={anchorEl}
                 onClose={handleClose}
                 anchorOrigin={{
-                  vertical: "bottom",
+                  vertical: "top",
                   horizontal: "right",
                 }}
                 transformOrigin={{
-                  vertical: "top",
+                  vertical: "bottom",
                   horizontal: "right",
                 }}
               >
@@ -473,6 +486,18 @@ export default function Sidebar() {
                   >
                     Chinese
                   </Button>
+                </Box>
+                <Box className="divide-y divide-slate-200">
+                  <Button onClick={() => colorblindchange("protanopia")}>
+                    Protanopia
+                  </Button>
+                  <Button onClick={() => colorblindchange("deuteranopia")}>
+                    Deuteranopia
+                  </Button>
+                  <Button onClick={() => colorblindchange("tritanopia")}>
+                    Tritanopia
+                  </Button>
+                  <Button onClick={() => colorblindchange("none")}>None</Button>
                 </Box>
               </Popover>
             </Box>
