@@ -209,10 +209,14 @@ export default function MainPage() {
   ];
 
   const pathToText = (direction: string) => {
+    const directionArr = direction.split("at");
+    const directionName = directionArr.length > 0 ? directionArr[0].trim() : "";
+    const directionAddress =
+      directionArr.length > 0 ? directionArr[1].trim() : "";
     return (
       <Box mb={2} display="flex" gap={1} alignItems="center">
         {directionsList.find((item) => direction.includes(item.dir))?.icon}
-        {t("direction")}
+        {t(directionName, { address: directionAddress })}
       </Box>
     );
   };
