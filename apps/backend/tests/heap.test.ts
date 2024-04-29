@@ -4,7 +4,7 @@ import { GraphNode } from "../src/graph.ts";
 
 //const weightheap: Array<number> = new Array<number>;
 // const g = new GraphNode("test", 2, 2, 2); //graph nodes to test with
-const g2 = new GraphNode("test", 4, 6, 2);
+const g2 = new GraphNode("test", "test", 4, 6, 2);
 
 const heap = new minHeap();
 
