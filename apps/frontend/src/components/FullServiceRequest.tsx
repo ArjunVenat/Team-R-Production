@@ -44,6 +44,7 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 
 import "../styles/SwiperStyle.css";
+import { useTranslation } from "react-i18next";
 
 // import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 // import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
@@ -112,6 +113,8 @@ function ServiceRequestLog(props: { typeOfService: string }) {
     }
   });
 
+  const { t } = useTranslation();
+
   useEffect(() => {
     async function fetchData() {
       // Get all node data not including hallways from backend
@@ -165,7 +168,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
         contentComponent = (
           <>
             <div className="">
-              <h2 className="text-lg">Select Bouquet</h2>
+              <h2 className="text-lg">{t("Select Bouquet")}</h2>
               <div className="flex justify-center items-center w-full">
                 <Swiper
                   style={{ width: "80%" }}
@@ -262,7 +265,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
         contentComponent = (
           <>
             <div className="">
-              <h2 className="text-lg">Select Gift</h2>
+              <h2 className="text-lg">{t("Select Gift")}</h2>
               <div className="flex justify-center items-center w-full">
                 <Swiper
                   style={{ width: "80%" }}
@@ -411,7 +414,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
         <div className=" justify-center ">
           <div className="">
             <div className="my-2">
-              <h2 className="font-bold text-lg">Priority</h2>
+              <h2 className="font-bold text-lg">{t("Priority")}</h2>
 
               <div className="">
                 <RadioGroup
@@ -429,22 +432,22 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                   <FormControlLabel
                     value="Low"
                     control={<Radio />}
-                    label="Low"
+                    label={t("Low")}
                   />
                   <FormControlLabel
                     value="Medium"
                     control={<Radio />}
-                    label="Medium"
+                    label={t("Medium")}
                   />
                   <FormControlLabel
                     value="High"
                     control={<Radio />}
-                    label="High"
+                    label={t("High")}
                   />
                   <FormControlLabel
                     value="Emergency"
                     control={<Radio />}
-                    label="Emergency"
+                    label={t("Emergency")}
                   />
                 </RadioGroup>
               </div>
@@ -454,7 +457,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
               <div className="max-h-full mb-20">
                 <div className="rounded-lg ">
                   <h2 className="mb-2 font-bold text-lg">
-                    Service Request Form
+                    {t("Service Request Form")}
                   </h2>
                   <div className="space-y-2">
                     <div className="form-item flex flex-col">
@@ -464,7 +467,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                             className="w-full"
                             type="text"
                             id="name"
-                            label="Name"
+                            label={t("Name")}
                             variant="outlined"
                             value={singleServiceRequest.requesterName}
                             onChange={(e) =>
@@ -538,7 +541,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                             id="combo-box-end"
                             options={Locations}
                             renderInput={(params) => (
-                              <TextField {...params} label="Room Name" />
+                              <TextField {...params} label={t("Room Name")} />
                             )}
                           />
                         </div>
@@ -567,7 +570,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                             id="combo-box-end"
                             options={Nicknames}
                             renderInput={(params) => (
-                              <TextField {...params} label="Employee" />
+                              <TextField {...params} label={t("Employee")} />
                             )}
                           />
                         </div>
@@ -578,7 +581,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                       <TextField
                         className="w-full "
                         id="details"
-                        label="Details"
+                        label={t("Details")}
                         multiline
                         maxRows={2}
                         value={singleServiceRequest.details1}
@@ -597,7 +600,9 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                           {switchService(singleServiceRequest.requestType)}
                         </div>
                         <div className="">
-                          <h2 className="mt-2 text-lg">Size of Bouquet</h2>
+                          <h2 className="mt-2 text-lg">
+                            {t("Size of Bouquet")}
+                          </h2>
                           <RadioGroup
                             row
                             defaultValue="low"
@@ -613,21 +618,23 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                             <FormControlLabel
                               value="Small"
                               control={<Radio />}
-                              label="Small"
+                              label={t("Small")}
                             />
                             <FormControlLabel
                               value="Medium"
                               control={<Radio />}
-                              label="Medium"
+                              label={t("Medium")}
                             />
                             <FormControlLabel
                               value="Large"
                               control={<Radio />}
-                              label="Large"
+                              label={t("Large")}
                             />
                           </RadioGroup>
                           <h4 className="flex justify-end text-xs text-gray-200">
-                            Made By Lauren Harrison & Zihan Li
+                            {t("Made By", {
+                              names: "Lauren Harrison & Zihan Li",
+                            })}
                           </h4>
                         </div>
                       </div>
@@ -652,11 +659,13 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                             className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                           />
                           <label htmlFor="gifts-checkbox" className="ms-2">
-                            Wrapped
+                            {t("Wrapped")}
                           </label>
                         </div>
                         <h4 className="flex justify-end text-xs text-gray-200">
-                          Made by Artem Frenk and Arjun Venat
+                          {t("Made By", {
+                            names: "Artem Frenk and Arjun Venat",
+                          })}
                         </h4>
                       </div>
                     )}
@@ -665,12 +674,12 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                       <div className="flex flex-col w-[45rem]">
                         <FormControl>
                           <InputLabel id="type-Entertainment-label">
-                            Type of Entertainment
+                            {t("Type of Entertainment")}
                           </InputLabel>
                           <Select
                             className=""
                             labelId="type-Entertainment-label"
-                            label="Type of Entertainment"
+                            label={t("Type of Entertainment")}
                             value={singleServiceRequest.details2}
                             onChange={(e) =>
                               setSingleServiceRequest({
@@ -679,12 +688,14 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               })
                             }
                           >
-                            <MenuItem value="Movies">Movies</MenuItem>
-                            <MenuItem value="Gaming">Gaming</MenuItem>
-                            <MenuItem value="Board Games">Board Games</MenuItem>
-                            <MenuItem value="books">Books</MenuItem>
+                            <MenuItem value="Movies">{t("Movies")}</MenuItem>
+                            <MenuItem value="Gaming">{t("Gaming")}</MenuItem>
+                            <MenuItem value="Board Games">
+                              {t("Board Games")}
+                            </MenuItem>
+                            <MenuItem value="books">{t("Books")}</MenuItem>
                             <MenuItem value="arts and crafts">
-                              Arts and Crafts
+                              {t("Arts and Crafts")}
                             </MenuItem>
                           </Select>
 
@@ -707,7 +718,9 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                           </div>
 
                           <h4 className="flex justify-end text-xs text-gray-200">
-                            Made By Lauren Harrison & Zihan Li
+                            {t("Made By", {
+                              names: "Lauren Harrison & Zihan Li",
+                            })}
                           </h4>
                         </FormControl>
                       </div>
@@ -717,12 +730,12 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                       <div className="flex flex-col w-[45rem]">
                         <FormControl>
                           <InputLabel id="type-maintenance-label">
-                            Type of maintenance
+                            {t("Type of maintenance")}
                           </InputLabel>
                           <Select
                             className=""
                             labelId="type-maintenance-label"
-                            label="Type of maintenance"
+                            label={t("Type of maintenance")}
                             value={singleServiceRequest.details2}
                             onChange={(e) =>
                               setSingleServiceRequest({
@@ -731,14 +744,16 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               })
                             }
                           >
-                            <MenuItem value="spill">Spill</MenuItem>
+                            <MenuItem value="spill">{t("Spill")}</MenuItem>
                             <MenuItem value="down elevator">
-                              Down elevator
+                              {t("Down elevator")}
                             </MenuItem>
                             <MenuItem value="electricity issue">
-                              Electricity issue
+                              {t("Electricity issue")}
                             </MenuItem>
-                            <MenuItem value="bathroom">Bathroom</MenuItem>
+                            <MenuItem value="bathroom">
+                              {t("Bathroom")}
+                            </MenuItem>
                           </Select>
 
                           <div className="flex items-center pt-4">
@@ -755,12 +770,14 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
                             />
                             <label htmlFor="link-checkbox" className="ms-2  ">
-                              Hazardous Material
+                              {t("Hazardous Material")}
                             </label>
                           </div>
 
                           <h4 className="flex justify-end text-xs text-gray-200">
-                            Made By Jessie Hart & Hubert Liu
+                            {t("Made By", {
+                              names: "Jessie Hart & Hubert Liu",
+                            })}
                           </h4>
                         </FormControl>
                       </div>
@@ -774,7 +791,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               id="dosage"
                               min="0"
                               className="w-1/2 border border-gray-300 text-gray-900 text-sm rounded-l-lg focus:ring-blue-500 focus:border-blue-500 block p-2.5"
-                              placeholder="Dosage"
+                              placeholder={t("Dosage")}
                               value={singleServiceRequest.details2}
                               onChange={(e) =>
                                 setSingleServiceRequest({
@@ -791,17 +808,21 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                               inputProps={{ "aria-label": "units" }}
                             >
                               <MenuItem value="" disabled>
-                                <em>Units</em>
+                                <em>{t("Units")}</em>
                               </MenuItem>
-                              <MenuItem value="grams">grams</MenuItem>
-                              <MenuItem value="milligrams">milligrams</MenuItem>
-                              <MenuItem value="micrograms">micrograms</MenuItem>
-                              <MenuItem value="liters">liters</MenuItem>
+                              <MenuItem value="grams">{t("grams")}</MenuItem>
+                              <MenuItem value="milligrams">
+                                {t("milligrams")}
+                              </MenuItem>
+                              <MenuItem value="micrograms">
+                                {t("micrograms")}
+                              </MenuItem>
+                              <MenuItem value="liters">{t("liters")}</MenuItem>
                             </Select>
                           </div>
                         </form>
 
-                        <h2 className="text-lg mt-3">Route</h2>
+                        <h2 className="text-lg mt-3">{t("Route")}</h2>
                         <RadioGroup
                           defaultValue="oral"
                           name="route"
@@ -816,21 +837,23 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                           <FormControlLabel
                             value="oral"
                             control={<Radio />}
-                            label="Oral"
+                            label={t("Oral")}
                           />
                           <FormControlLabel
                             value="injected"
                             control={<Radio />}
-                            label="Injected"
+                            label={t("Injected")}
                           />
                           <FormControlLabel
                             value="topical"
                             control={<Radio />}
-                            label="Topical"
+                            label={t("Topical")}
                           />
                         </RadioGroup>
                         <h4 className="flex justify-end text-xs text-gray-200">
-                          Made by Brannon Henson and Alexander Stoyanov
+                          {t("Made By", {
+                            names: "Brannon Henson and Alexander Stoyanov",
+                          })}
                         </h4>
                       </div>
                     )}
@@ -839,13 +862,13 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                       <div className="w-[45rem]">
                         <form className="max-w-sm w-1/2">
                           <label htmlFor="Quantity" className="mb-2 text-lg">
-                            Quantity
+                            {t("Quantity")}
                           </label>
                           <input
                             type="number"
                             id="dosage"
                             className=" border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 "
-                            placeholder="Quantity"
+                            placeholder={t("Quantity")}
                             value={singleServiceRequest.details2}
                             onChange={(e) =>
                               setSingleServiceRequest({
@@ -857,7 +880,9 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                           />
                         </form>
 
-                        <h2 className="text-lg mt-3">Requires Supervision</h2>
+                        <h2 className="text-lg mt-3">
+                          {t("Requires Supervision")}
+                        </h2>
                         <FormGroup
                           onChange={(e) =>
                             setSingleServiceRequest({
@@ -903,7 +928,7 @@ function ServiceRequestLog(props: { typeOfService: string }) {
                       submitRequest();
                     }}
                   >
-                    Submit Request
+                    {t("Submit Request")}
                   </Button>
                 </div>
               </div>
@@ -918,9 +943,9 @@ function ServiceRequestLog(props: { typeOfService: string }) {
             id="successMessage"
             className="text-center text-green-600 text-xl mb-4"
           >
-            Success! Request Submitted
+            {t("Submit Request Success")}
           </h1>
-          <Button onClick={() => clearRequests()}>Close</Button>
+          <Button onClick={() => clearRequests()}>{t("Close")}</Button>
         </Card>
       </Modal>
       <Modal open={openFailMessage}>
@@ -929,10 +954,9 @@ function ServiceRequestLog(props: { typeOfService: string }) {
             id="failMessage"
             className="text-center text-red-600 text-xl mb-4"
           >
-            Error: Missing Information. Please fill out all fields before
-            submitting.
+            {t("Submit Request Error")}
           </h1>
-          <Button onClick={() => setOpenFail(false)}>Close</Button>
+          <Button onClick={() => setOpenFail(false)}>{t("Close")}</Button>
         </Card>
       </Modal>
     </div>
