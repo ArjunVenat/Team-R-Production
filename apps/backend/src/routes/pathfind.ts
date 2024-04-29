@@ -4,6 +4,10 @@ import { PrismaClient, Nodes } from "database";
 import { algoType, findpath } from "../findpath.ts";
 import { Directions } from "../findDirections.ts";
 
+interface EdgeWeight {
+  edgeID: string;
+  weight: number;
+}
 const prisma = new PrismaClient();
 
 const router: Router = express.Router();
@@ -12,9 +16,10 @@ const router: Router = express.Router();
 router.get(
   "/:algoType",
   async function (req: Request, res: Response): Promise<void> {
-    const { startNodeID, endNodeID } = req.query as {
+    const { startNodeID, endNodeID, edgeWeights } = req.query as {
       startNodeID: string;
       endNodeID: string;
+      edgeWeights?: string;
     };
 
     // Determine which algorithm to use for pathfinding
@@ -43,6 +48,21 @@ router.get(
     }
 
     const graph = await createGraph();
+    let parsedEdgeWeights: EdgeWeight[] | undefined;
+    if (edgeWeights) {
+      try {
+        parsedEdgeWeights = JSON.parse(edgeWeights);
+        console.log("here rn", parsedEdgeWeights);
+        parsedEdgeWeights!.forEach((edgeWeight) => {
+          graph.addEdgeWeight(edgeWeight.edgeID, edgeWeight.weight);
+        });
+      } catch (error) {
+        res.status(400).send("Invalid edgeWeights format");
+        return;
+      }
+    }
+
+    console.log("here 2", graph);
 
     //const path: string[] = graph.AStar(startNodeID, endNodeID);
     const pathDirections: string[] = findpath.doAlgo(
@@ -81,7 +101,7 @@ router.get(
   },
 );
 
-async function createGraph(): Promise<Graph> {
+export async function createGraph(): Promise<Graph> {
   const floorToZMap = new Map<string, number>();
   floorToZMap.set("L2", -200);
   floorToZMap.set("L1", 0);
@@ -119,9 +139,6 @@ async function createGraph(): Promise<Graph> {
   for (const edge of edges) {
     graph.addEdge(edge.StartNodeID, edge.EndNodeID);
   }
-
-  // Update weights for edges
-  graph.addEdgeWeight("FHALL02601_FHALL03101", 4);
 
   return graph;
 }
