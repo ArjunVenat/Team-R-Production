@@ -66,15 +66,31 @@ export default function MainPage() {
     const numPpl = data[0]["0"];
     // console.log(numPpl);
     setSnapShot({ edgeId: "FHALL02601_FHALL03101", weight: Number(numPpl) });
-    // console.log("snapShot: ", snapShot);
+    console.log("snapShot: ", snapShot);
   };
 
-  // const sendToBE =
+  // const sendToBE = async () => {
+  //   try {
+  //     // Send POST request backend server to upload the file
+  //     const response = await axios.post("/api/admin/csv", snapShot, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+  //     if (response.status == 200) {
+  //       console.log("snapShot successfully");
+  //     } else {
+  //       console.log("failed snapShot");
+  //     }
+  //   } catch {
+  //     console.log("failed to snapShot");
+  //   }
+  // };
 
   // const updateTraffic = () => {
-  //     getSnapShot().then();
-  //     // sendToBE();
-  // }
+  //   getSnapShot().then();
+  //   sendToBE();
+  // };
 
   useEffect(() => {
     console.log("snapShot: ", snapShot);
