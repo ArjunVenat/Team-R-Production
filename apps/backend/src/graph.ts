@@ -7,12 +7,14 @@ export class GraphNode {
   y: number;
   z: number;
   neighbors: GraphNode[];
+  weights: Map<GraphNode, number>;
   constructor(id: string, x: number, y: number, z: number) {
     this.id = id;
     this.neighbors = [];
     this.x = x;
     this.y = y;
     this.z = z;
+    this.weights = new Map<GraphNode, number>();
   }
 
   /**
@@ -23,11 +25,23 @@ export class GraphNode {
     this.neighbors.push(node);
   }
 
+  addWeight(other: GraphNode, weight: number) {
+    this.weights.set(other, weight);
+  }
+
   getDistance(other: GraphNode): number {
-    return Math.sqrt(
-      (this.x - other.x) ** 2 +
-        (this.y - other.y) ** 2 +
-        (this.z - other.z) ** 2,
+    let weight = this.weights.get(other);
+    if (!weight) {
+      weight = 1;
+    }
+
+    return (
+      weight *
+      Math.sqrt(
+        (this.x - other.x) ** 2 +
+          (this.y - other.y) ** 2 +
+          (this.z - other.z) ** 2,
+      )
     );
   }
 }
@@ -83,6 +97,15 @@ export class Graph {
 
     node1.addNeighbor(node2);
     node2.addNeighbor(node1);
+  }
+
+  addEdgeWeight(edgeid: string, weight: number): void {
+    const [id1, id2] = edgeid.split("_");
+    const node1 = Graph.nodeMap.get(id1)!;
+    const node2 = Graph.nodeMap.get(id2)!;
+
+    node1.addWeight(node2, weight);
+    node2.addWeight(node1, weight);
   }
 
   /**
