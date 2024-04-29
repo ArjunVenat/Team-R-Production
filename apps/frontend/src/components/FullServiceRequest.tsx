@@ -414,7 +414,6 @@ function ServiceRequestLog(props: { typeOfService: string }) {
               <h2 className="font-bold text-lg">Priority</h2>
 
               <div className="">
-                i
                 <RadioGroup
                   row
                   defaultValue="low"
