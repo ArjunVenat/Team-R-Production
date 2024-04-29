@@ -203,7 +203,7 @@ export default function AboutPage() {
                     name: "Zihan Li",
                     image: ZihanLi,
                     position1: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: " Quoting my quote",
                   },
                   {
                     name: "Alex Stoyanov",
