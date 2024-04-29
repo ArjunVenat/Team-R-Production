@@ -196,7 +196,7 @@ export default function AboutPage() {
                     name: "Brannon Henson",
                     image: BrannonHenson,
                     position1: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: "Don't worry, I've shaved the beard.",
                   },
                   {
                     name: "Zihan Li",
