@@ -12,6 +12,7 @@ import ViewMap from "../assets/hero/ViewMap.png";
 // import { Button } from "@mui/material";
 import { useState } from "react";
 import { useEffect } from "react";
+import axios from "axios";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
 const UserTypeButton = motion.button;
@@ -29,6 +30,36 @@ const useCurrentDateTime = () => {
   }, []);
 
   return currentDateTime;
+};
+
+interface WeatherData {
+  weather: {
+    description: string;
+  }[];
+  main: {
+    temp: number;
+  };
+}
+
+const useCurrentWeather = (): WeatherData | null => {
+  const [weather, setWeather] = useState<WeatherData | null>(null);
+
+  useEffect(() => {
+    const fetchWeather = async () => {
+      try {
+        // Make API call to fetch weather data for Boston
+        const response = await axios.get<WeatherData>(
+          `https://api.openweathermap.org/data/2.5/weather?q=Boston&appid=76efc8a02dba849d1c43fc1e8758373a&units=metric`,
+        );
+        setWeather(response.data);
+      } catch (error) {
+        console.error("Error fetching weather data:", error);
+      }
+    };
+    fetchWeather();
+  }, []);
+
+  return weather;
 };
 
 const formatDateTime = (dateTime: Date) => {
@@ -56,6 +87,7 @@ function SignInPage() {
 
   const [showWarning, setWarning] = useState<boolean>(true);
   const currentDateTime = useCurrentDateTime();
+  const weather = useCurrentWeather();
 
   return (
     <main className="h-screen w-screen">
@@ -80,6 +112,17 @@ function SignInPage() {
       <div className="absolute bottom-0 left-0 p-4 text-white font-sans font-semibold text-4xl">
         <p>{formatDateTime(currentDateTime)}</p>
         <p>{formatTime(currentDateTime)}</p>
+      </div>
+      <div className="weather-display absolute top-0 left-0 p-4 text-white font-sans font-semibold text-xl">
+        {weather ? (
+          <div className="weather-info">
+            <h2>Weather in Boston</h2>
+            <p>Description: {weather.weather[0].description}</p>
+            <p>Temperature: {weather.main.temp}°C</p>
+          </div>
+        ) : (
+          <p>Loading weather data...</p>
+        )}
       </div>
       {showWarning && (
         <div className="fixed top-0 bg-red-600 w-2/3 flex justify-between items-center">
