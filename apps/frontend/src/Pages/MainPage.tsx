@@ -149,55 +149,21 @@ export default function MainPage() {
       console.error("Start or end node not found");
     }
   }
+  const directionsList = [
+    { dir: "straight", icon: <StraightIcon /> },
+    { dir: "left", icon: <TurnLeftIcon /> },
+    { dir: "right", icon: <TurnRightIcon /> },
+    { dir: "elevator", icon: <ElevatorIcon /> },
+    { dir: "arrived", icon: <MyLocationIcon /> },
+  ];
 
   const pathToText = (direction: string) => {
-    // straight
-    if (direction.includes("straight")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <StraightIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    // turn left
-    if (direction.includes("left")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <TurnLeftIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    // turn right
-    if (direction.includes("right")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <TurnRightIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    if (direction.includes("elevator")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <ElevatorIcon />
-          {direction}
-        </Box>
-      );
-    }
-
-    if (direction.includes("arrived")) {
-      return (
-        <Box mb={2} display="flex" gap={1} alignItems="center">
-          <MyLocationIcon />
-          {direction}
-        </Box>
-      );
-    }
+    return (
+      <Box mb={2} display="flex" gap={1} alignItems="center">
+        {directionsList.find((item) => direction.includes(item.dir))?.icon}
+        {direction}
+      </Box>
+    );
   };
 
   const groupPath: { [key: string]: Nodes[] } = useMemo(() => {
