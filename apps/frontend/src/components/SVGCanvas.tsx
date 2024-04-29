@@ -490,7 +490,7 @@ export default function SVGCanvas(props: {
       height="100vh"
       width="auto"
       preserveAspectRatio="xMidYMid meet"
-      viewBox="0 0 5000 3400"
+      viewBox="0 250 5000 2813"
       overflow="clip"
       onMouseMove={(e) => handleMouseMove(e)}
       onMouseUp={(e) => handleMouseUp(e)}
