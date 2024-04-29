@@ -35,6 +35,7 @@ const useCurrentDateTime = () => {
 interface WeatherData {
   weather: {
     description: string;
+    icon: string;
   }[];
   main: {
     temp: number;
@@ -89,6 +90,13 @@ function SignInPage() {
   const currentDateTime = useCurrentDateTime();
   const weather = useCurrentWeather();
 
+  if (!weather) {
+    return <p>Loading weather data...</p>;
+  }
+  const iconCode = weather.weather[0].icon; // Assuming the icon code is provided in the weather data
+  // Construct the URL for the weather icon
+  const iconUrl = `http://openweathermap.org/img/w/${iconCode}.png`;
+
   return (
     <main className="h-screen w-screen">
       <Carousel
@@ -109,20 +117,20 @@ function SignInPage() {
           </div>
         ))}
       </Carousel>
-      <div className="absolute bottom-0 left-0 p-4 text-white font-sans font-semibold text-4xl">
-        <p>{formatDateTime(currentDateTime)}</p>
-        <p>{formatTime(currentDateTime)}</p>
-      </div>
-      <div className="weather-display absolute top-0 left-0 p-4 text-white font-sans font-semibold text-xl">
-        {weather ? (
-          <div className="weather-info">
-            <h2>Weather in Boston</h2>
-            <p>Description: {weather.weather[0].description}</p>
-            <p>Temperature: {weather.main.temp}°C</p>
-          </div>
-        ) : (
-          <p>Loading weather data...</p>
-        )}
+      <div
+        className="absolute bottom-0 left-0 p-4 text-white font-sans font-semibold text-2xl
+                        bg-primary bg-opacity-45 backdrop-blur-sm"
+      >
+        <p style={{ marginBottom: "5px" }}>{formatDateTime(currentDateTime)}</p>
+        <p style={{ marginBottom: "5px" }}>{formatTime(currentDateTime)}</p>
+        <p style={{ marginBottom: "5px" }}>
+          Temperature: {weather.main.temp}°C
+        </p>
+        <img
+          src={iconUrl}
+          alt="Weather icon"
+          style={{ width: "100px", height: "100px" }}
+        />
       </div>
       {showWarning && (
         <div className="fixed top-0 bg-red-600 w-2/3 flex justify-between items-center">
