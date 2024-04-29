@@ -174,7 +174,7 @@ export default function AboutPage() {
                     name: "John Diamond",
                     image: JohnDiamond,
                     position1: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: "Live in the moment",
                   },
                   {
                     name: "Lauren Harrison",
