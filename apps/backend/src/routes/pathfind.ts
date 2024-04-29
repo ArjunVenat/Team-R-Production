@@ -120,6 +120,9 @@ async function createGraph(): Promise<Graph> {
     graph.addEdge(edge.StartNodeID, edge.EndNodeID);
   }
 
+  // Update weights for edges
+  graph.addEdgeWeight("FHALL02601_FHALL03101", 4);
+
   return graph;
 }
 export default router;

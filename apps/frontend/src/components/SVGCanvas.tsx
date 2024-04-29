@@ -9,7 +9,7 @@ import { Tooltip } from "@mui/material";
 // import { IconButton } from '@mui/material';
 // import StairsTwoToneIcon from '@mui/icons-material/StairsTwoTone';
 import ElevatorIcon from "../assets/image/Elevator_Icon.svg";
-import { floors, defaultMap } from "./mapElements.ts";
+import { floors, defaultFloor } from "./mapElements.ts";
 import { GetColorblindColors } from "./colorblind.ts";
 
 export const EdgesCustomHook = () => {
@@ -19,10 +19,13 @@ export const EdgesCustomHook = () => {
 
 export default function SVGCanvas(props: {
   path?: Nodes[]; //Array of nodes representing the path to be highlighted
-  currentMap: string; //The current map being displayed
-  setCurrentMap?: (map: string) => void; //Function to set the current map
   newEdgeFlag?: boolean; //Flag for if a new edge has been made
-  currentLevel: string; //The current level of the map
+  currentFloor: { name: string; map: string; level: string }; //The current level of the map
+  setCurrentFloor?: (floor: {
+    name: string;
+    map: string;
+    level: string;
+  }) => void; //Function to set the current map
   nodeColor?: string; //color for rendering nodes
   edgeColor?: string; //color for rendering edges
   nodeClicked?: Nodes | undefined; //The currently clicked node
@@ -45,7 +48,7 @@ export default function SVGCanvas(props: {
 }) {
   const [nodesData, setNodesData] = React.useState<Nodes[]>([]);
   const { edgesData, setEdgesData } = EdgesCustomHook();
-  const [currentFloor, setCurrentFloor] = useState(props.currentLevel);
+  const [currentFloor, setCurrentFloor] = useState(props.currentFloor);
   const [hoverElevatorTooltip, setHoverElevatorTooltip] = useState("");
   const [isDragging, setIsDragging] = useState(false);
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
@@ -108,8 +111,8 @@ export default function SVGCanvas(props: {
 
   //useEffect to set floor to current level
   useEffect(() => {
-    setCurrentFloor(props.currentLevel);
-  }, [props.currentLevel]);
+    setCurrentFloor(props.currentFloor);
+  }, [props.currentFloor]);
 
   // console.log(props);
 
@@ -184,8 +187,8 @@ export default function SVGCanvas(props: {
     props.resetMapTransform();
 
     // Update the current map based on the changed floor
-    props.setCurrentMap!(
-      floors.find((floor) => floor.level === changedFloor)?.map || defaultMap,
+    props.setCurrentFloor!(
+      floors.find((floor) => floor.level === changedFloor) || defaultFloor,
     );
   }
 
@@ -326,7 +329,7 @@ export default function SVGCanvas(props: {
     }
     // Return true if the node meets the filtering criteria, false otherwise
     return (
-      node.Floor === props.currentLevel && // Node is on the current level
+      node.Floor === props.currentFloor.level && // Node is on the current level
       (!props.showPathOnly || // Show all nodes or
         isPartOfPath || // node is part of the path or
         (isElevator && isRelevantElevator)) // node is a relevant elevator
@@ -487,19 +490,21 @@ export default function SVGCanvas(props: {
       height="100vh"
       width="auto"
       preserveAspectRatio="xMidYMid meet"
-      viewBox="0 0 5000 3400"
+      viewBox="0 250 5000 2813"
       overflow="clip"
       onMouseMove={(e) => handleMouseMove(e)}
       onMouseUp={(e) => handleMouseUp(e)}
     >
-      <image href={props.currentMap} height="3400" width="5000" />
+      <image href={props.currentFloor.map} height="3400" width="5000" />
 
       {props.path &&
         splices()[0][0] &&
         splices()
-          .filter((splice) => splice[0].Floor === currentFloor)
+          .filter((splice) => splice[0].Floor === currentFloor.level)
           .map((current_splice) => {
-            if (current_splice?.every((node) => node.Floor === currentFloor)) {
+            if (
+              current_splice?.every((node) => node.Floor === currentFloor.level)
+            ) {
               const poly = (props: { style: string; strokeWidth: string }) => (
                 <polyline
                   className={`animate-dash-path ${props.style}`}
