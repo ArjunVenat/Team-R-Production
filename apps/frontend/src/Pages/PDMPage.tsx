@@ -1,110 +1,96 @@
 import React, { useState } from "react";
+import {
+  Autocomplete,
+  Slider,
+  FormControlLabel,
+  FormGroup,
+  Checkbox,
+  TextField,
+  Button,
+  Container,
+} from "@mui/material";
 
-interface FormData {
-  department: string;
-  ratingInterval: string;
-  language: string;
-  certification: string;
-  specialtyTraining: string;
-}
+export default function PDMPage() {
+  const [department, setDepartment] = useState<string | null>(null);
+  const [rating, setRating] = useState<[number, number]>([0, 5]);
+  const [language, setLanguage] = useState<string | null>(null);
+  const [certificationPref, setCertificationPref] = useState<boolean>(false);
+  const [boardCertification, setBoardCertification] = useState<boolean>(false);
 
-const SampleForm: React.FC = () => {
-  const [formData, setFormData] = useState<FormData>({
-    department: "",
-    ratingInterval: "",
-    language: "",
-    certification: "",
-    specialtyTraining: "",
-  });
+  const Departments: string[] = [
+    "Department A",
+    "Department B",
+    "Department C",
+    "Department D",
+  ]; // Example departments
+  const Languages: string[] = ["English", "Spanish", "French", "German"]; // Example languages
 
-  const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
-  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+  const handleFormSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // Handle form submission, e.g., sending data to backend
-    console.log(formData);
+    // Handle form submission here
+    console.log({
+      department,
+      rating,
+      language,
+      certificationPref,
+      boardCertification,
+    });
   };
 
   return (
-    <div>
-      <h2>Sample Form</h2>
-      <form onSubmit={handleSubmit}>
-        <div>
-          <label htmlFor="department">Department:</label>
-          <select
-            id="department"
-            name="department"
-            value={formData.department}
-            onChange={handleChange}
-          >
-            <option value="">Select Department</option>
-            <option value="dept1">Department 1</option>
-            <option value="dept2">Department 2</option>
-            <option value="dept3">Department 3</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="ratingInterval">Rating Interval:</label>
-          <select
-            id="ratingInterval"
-            name="ratingInterval"
-            value={formData.ratingInterval}
-            onChange={handleChange}
-          >
-            <option value="">Select Rating Interval</option>
-            <option value="low">Low</option>
-            <option value="high">High</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="language">Language:</label>
-          <select
-            id="language"
-            name="language"
-            value={formData.language}
-            onChange={handleChange}
-          >
-            <option value="">Select Language</option>
-            <option value="english">English</option>
-            <option value="spanish">Spanish</option>
-            <option value="french">French</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="certification">Certification:</label>
-          <select
-            id="certification"
-            name="certification"
-            value={formData.certification}
-            onChange={handleChange}
-          >
-            <option value="">Select Certification</option>
-            <option value="cert1">Certification 1</option>
-            <option value="cert2">Certification 2</option>
-            <option value="cert3">Certification 3</option>
-          </select>
-        </div>
-        <div>
-          <label htmlFor="specialtyTraining">Specialty Training:</label>
-          <select
-            id="specialtyTraining"
-            name="specialtyTraining"
-            value={formData.specialtyTraining}
-            onChange={handleChange}
-          >
-            <option value="">Select Specialty Training</option>
-            <option value="training1">Training 1</option>
-            <option value="training2">Training 2</option>
-            <option value="training3">Training 3</option>
-          </select>
-        </div>
-        <button type="submit">Submit</button>
+    <Container maxWidth="sm">
+      <form onSubmit={handleFormSubmit}>
+        <Autocomplete
+          value={department}
+          onChange={(event, newValue) => {
+            setDepartment(newValue);
+          }}
+          options={Departments}
+          renderInput={(params) => <TextField {...params} label="Department" />}
+        />
+        <Slider
+          value={rating}
+          onChange={(event, newValue) => {
+            setRating(newValue as [number, number]);
+          }}
+          valueLabelDisplay="auto"
+          min={0}
+          max={5}
+          marks
+          aria-labelledby="range-slider"
+        />
+        <Autocomplete
+          value={language}
+          onChange={(event, newValue) => {
+            setLanguage(newValue);
+          }}
+          options={Languages}
+          renderInput={(params) => <TextField {...params} label="Language" />}
+        />
+        <FormGroup>
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={certificationPref}
+                onChange={(e) => setCertificationPref(e.target.checked)}
+              />
+            }
+            label="Certification Preference"
+          />
+          <FormControlLabel
+            control={
+              <Checkbox
+                checked={boardCertification}
+                onChange={(e) => setBoardCertification(e.target.checked)}
+              />
+            }
+            label="Board Certification"
+          />
+        </FormGroup>
+        <Button type="submit" variant="contained" color="primary">
+          Submit
+        </Button>
       </form>
-    </div>
+    </Container>
   );
-};
-
-export default SampleForm;
+}
