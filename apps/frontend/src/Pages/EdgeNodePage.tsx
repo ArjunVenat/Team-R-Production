@@ -4,13 +4,11 @@ import { Box, Button, Card, Modal, Tab, Tabs } from "@mui/material";
 import { useState } from "react";
 import NodeTable from "../backendreference/Nodes.tsx";
 import EmployeeTable from "../backendreference/Employees.tsx";
-// import DoctorTable from "../backendreference/Doctor.tsx";
 import { useAuth0 } from "@auth0/auth0-react";
 import ScatterPlotIcon from "@mui/icons-material/ScatterPlot";
 import LinearScaleIcon from "@mui/icons-material/LinearScale";
 import UploadCSV from "../backendreference/UploadCSV.tsx";
 import DownloadCSV from "../backendreference/DownloadCSV.tsx";
-// import DownloadIcon from "@mui/icons-material/Download";
 import MedicalServicesIcon from "@mui/icons-material/MedicalServices";
 import DoctorTable from "../backendreference/Doctors.tsx";
 
