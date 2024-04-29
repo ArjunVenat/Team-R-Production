@@ -61,10 +61,11 @@ export default function PDMPage() {
       departmentFilter: department,
       ratingMin: rating[0],
       ratingMax: rating[1],
-      languages: language,
+      language: language ? language[0] : null,
       specialtyTraining: certificationPref,
       boardCertification: boardCertification,
     };
+    console.log(params);
 
     axios
       .get("/api/pdm/filter", { params })
@@ -107,6 +108,7 @@ export default function PDMPage() {
             setDepartment(newValue);
           }}
           options={departments}
+          getOptionLabel={(option) => option}
           renderInput={(params) => <TextField {...params} label="Department" />}
         />
         <div className="flex items-center space-x-2">
@@ -130,6 +132,7 @@ export default function PDMPage() {
             setLanguage(newValue);
           }}
           options={languages}
+          getOptionLabel={(option) => option}
           renderInput={(params) => <TextField {...params} label="Language" />}
         />
         <FormGroup>

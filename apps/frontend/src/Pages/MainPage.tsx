@@ -371,7 +371,6 @@ export default function MainPage() {
                   ))}
                 </Select>
 
-
                 <Button
                   className="content-center "
                   variant="outlined"
@@ -390,7 +389,7 @@ export default function MainPage() {
                 >
                   Update Traffic
                 </Button>
-                
+
                 {isAuthenticated && (
                   <Button
                     variant="contained"
@@ -410,7 +409,6 @@ export default function MainPage() {
                     EDIT MAP
                   </Button>
                 )}
-                
 
                 {path.length > 0 && (
                   <Box maxWidth={330} className="overflow-y-scroll">
