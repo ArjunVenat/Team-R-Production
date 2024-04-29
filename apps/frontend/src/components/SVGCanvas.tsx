@@ -482,36 +482,6 @@ export default function SVGCanvas(props: {
   //   };
   // }, []);
 
-  const draw_line = () => {
-    if (props.path && splices()[0][0]) {
-      const current_splice = splices().find(
-        (splice) => splice[0].Floor === currentFloor,
-      );
-      if (current_splice?.every((node) => node.Floor === currentFloor)) {
-        const poly = (props: { style: string; strokeWidth: string }) => (
-          <polyline
-            className={`animate-dash-path ${props.style}`}
-            fill="none"
-            strokeDasharray="20" //this must be half of the value of strokeDashoffset in tailwind.config.js
-            strokeWidth={props.strokeWidth}
-            strokeLinejoin="round"
-            strokeLinecap="round"
-            points={current_splice
-              ?.map((node) => `${node.Xcoord},${node.Ycoord}`)
-              .join(" ")}
-          />
-        );
-        return (
-          <>
-            {poly({ style: "stroke-primary", strokeWidth: "10" })}
-            {poly({ style: GetColorblindColors().color6, strokeWidth: "6" })}
-          </>
-        );
-      }
-      return undefined;
-    }
-  };
-
   return (
     <svg
       height="100vh"
@@ -523,7 +493,38 @@ export default function SVGCanvas(props: {
       onMouseUp={(e) => handleMouseUp(e)}
     >
       <image href={props.currentMap} height="3400" width="5000" />
-      {draw_line()}
+
+      {props.path &&
+        splices()[0][0] &&
+        splices()
+          .filter((splice) => splice[0].Floor === currentFloor)
+          .map((current_splice) => {
+            if (current_splice?.every((node) => node.Floor === currentFloor)) {
+              const poly = (props: { style: string; strokeWidth: string }) => (
+                <polyline
+                  className={`animate-dash-path ${props.style}`}
+                  fill="none"
+                  strokeDasharray="20" //this must be half of the value of strokeDashoffset in tailwind.config.js
+                  strokeWidth={props.strokeWidth}
+                  strokeLinejoin="round"
+                  strokeLinecap="round"
+                  points={current_splice
+                    ?.map((node) => `${node.Xcoord},${node.Ycoord}`)
+                    .join(" ")}
+                />
+              );
+              return (
+                <>
+                  {poly({ style: "stroke-primary", strokeWidth: "10" })}
+                  {poly({
+                    style: GetColorblindColors().color6,
+                    strokeWidth: "6",
+                  })}
+                </>
+              );
+            }
+            return undefined;
+          })}
 
       {/* Map over each edge in the filteredEdges array, defaulting to an empty array if filteredEdges is null or undefined */}
       {(filteredEdges ?? []).map((edge) => {
