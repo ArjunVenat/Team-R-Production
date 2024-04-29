@@ -57,7 +57,10 @@ export default function AboutPage() {
   return (
     <Box display="flex" minHeight="100vh">
       <div
-        className="overflow-y-auto h-screen w-full bg-cover bg-center bg-no-repeat relative flex flex-col justify-between"
+        className="
+        overflow-y-auto h-screen w-full
+        bg-cover bg-center bg-no-repeat
+        relative flex flex-col justify-between"
         style={{
           backgroundImage: `url(${swoosh})`,
         }}
@@ -75,7 +78,7 @@ export default function AboutPage() {
           >
             <Tabs
               TabIndicatorProps={{
-                style: { backgroundColor: GetColorblindColors().color3 },
+                sx: { backgroundColor: GetColorblindColors().color3 },
               }}
               value={aboutTab}
               onChange={(event, newValue) => setAboutTab(newValue)}
@@ -123,10 +126,8 @@ export default function AboutPage() {
         <CustomTabPanel value={aboutTab} index={0}>
           <main className="flex-col justify-center items-center leading-none">
             <div
-              className="backdrop-blur-md rounded-lg p-10 text-center"
-              style={{
-                backgroundColor: "rgb(103,124,143, 0.6)",
-              }}
+              className="backdrop-blur-md rounded-lg p-10 text-center "
+              style={{ backgroundColor: "rgb(103,124,143,0.6)" }}
             >
               <h2 className="text-2xl font-bold mb-4 text-primary">
                 Meet our Developers (Hover for favorite quote)
@@ -208,7 +209,7 @@ export default function AboutPage() {
                     name: "Alex Stoyanov",
                     image: AlexanderStoyanov,
                     position1: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: "It works but I don't know why...",
                   },
                 ].map((developer, index) => (
                   <div
@@ -216,8 +217,11 @@ export default function AboutPage() {
                     className="relative flex flex-col items-center gap-2"
                   >
                     <div
-                      className="absolute bg-black bg-opacity-50 w-full h-full flex flex-col justify-center items-center opacity-0 hover:opacity-100 transition-opacity duration-500 ease-in-out z-10 rounded-full"
-                      style={{ width: "200px", height: "200px" }}
+                      className="absolute bg-black bg-opacity-50
+                                w-[200px] h-[200px] flex flex-col justify-center
+                                items-center opacity-0 hover:opacity-100
+                                transition-opacity duration-500 ease-in-out
+                                z-10 rounded-full"
                     >
                       <p className="text-center text-sm font-semibold text-white">
                         {developer.quote}
@@ -226,12 +230,9 @@ export default function AboutPage() {
                     <img
                       src={developer.image}
                       alt={developer.name}
-                      className="transition-all duration-500 ease-in-out transform hover:scale-105 hover:blur-md rounded-full"
-                      style={{
-                        width: "200px",
-                        height: "200px",
-                        objectFit: "cover",
-                      }}
+                      className="transition-all duration-500 ease-in-out
+                                transform hover:scale-105 hover:blur-md
+                                rounded-full w-[200px] h-[200px] object-cover"
                     />
                     <h3 className="text-center text-lg font-semibold text-primary">
                       {developer.name}
@@ -255,9 +256,7 @@ export default function AboutPage() {
           <main className="flex-col justify-center items-center leading-none">
             <div
               className="backdrop-blur-md rounded-lg p-10 text-center"
-              style={{
-                backgroundColor: "rgb(103,124,143, 0.6)",
-              }}
+              style={{ backgroundColor: "rgb(103,124,143,0.6)" }}
             >
               <h2 className="text-2xl font-bold mb-4 text-primary">
                 Software Tools, Libraries, and Frameworks
@@ -327,12 +326,9 @@ export default function AboutPage() {
                       <img
                         src={tool.logo}
                         alt={tool.name}
-                        className="transition-all duration-500 ease-in-out transform hover:scale-105 rounded-lg"
-                        style={{
-                          width: "200px",
-                          height: "200px",
-                          objectFit: "cover",
-                        }}
+                        className="transition-all duration-500 ease-in-out
+                                    transform hover:scale-105 rounded-lg
+                                    w-[200px] h-[200px] object-cover"
                       />
                     </Link>
                     <h3 className="text-center text-lg font-semibold text-primary">
