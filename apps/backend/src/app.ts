@@ -19,7 +19,7 @@ import addEdgeRouter from "./routes/addEdgeRouter.ts";
 import resetRouter from "./routes/resetRouter.ts";
 import allEmployeesRouter from "./routes/allEmployeesRouter.ts";
 import addEmployeeRouter from "./routes/addEmployeeRouter.ts";
-// import filteringDoctors from "./routes/doctorRouter.ts";
+import filteringDoctors from "./routes/doctorRouter.ts";
 import { auth } from "express-oauth2-jwt-bearer";
 import allDoctorsRouter from "./routes/allDoctorsRouter.ts";
 import doctorFieldRouter from "./routes/doctorFieldRouter.ts";
@@ -49,6 +49,7 @@ app.use("/api/admin/allnodes", allNodesRouter);
 app.use("/api/admin/alledges", allEdgesRouter);
 app.use("/api/map/pathfind", pathfindRouter);
 app.use("/api/pdm/field", doctorFieldRouter);
+app.use("/api/pdm/filter", filteringDoctors); //!!!
 
 app.use(
   auth({
