@@ -26,6 +26,7 @@ import TurnRightIcon from "@mui/icons-material/TurnRight";
 import StraightIcon from "@mui/icons-material/Straight";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
+import EscalatorIcon from "@mui/icons-material/Escalator";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -34,6 +35,7 @@ import {
 } from "../components/mapElements.ts";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
+import { GetColorblindColors } from "../components/colorblind.ts";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -154,6 +156,7 @@ export default function MainPage() {
     { dir: "left", icon: <TurnLeftIcon /> },
     { dir: "right", icon: <TurnRightIcon /> },
     { dir: "elevator", icon: <ElevatorIcon /> },
+    { dir: "stairs", icon: <EscalatorIcon /> },
     { dir: "arrived", icon: <MyLocationIcon /> },
   ];
 
@@ -274,8 +277,8 @@ export default function MainPage() {
                       color: "white",
                       borderColor: "white",
                       "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
+                        borderColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color3,
                       },
                     }}
                     onClick={() => {
@@ -293,8 +296,8 @@ export default function MainPage() {
                       color: "white",
                       borderColor: "white",
                       "&:hover": {
-                        borderColor: "#f6bd38",
-                        color: "#f6bd38",
+                        borderColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color3,
                       },
                     }}
                     onClick={() => {
@@ -317,7 +320,7 @@ export default function MainPage() {
                     {
                       boxShadow:
                         "0px 3px 1px -2px rgba(0,0,0,0.2),0px 2px 2px 0px rgba(0,0,0,0.14),0px 1px 5px 0px rgba(0,0,0,0.12)",
-                      backgroundColor: "#009CA6",
+                      backgroundColor: GetColorblindColors().color2,
                       color: "white",
                     },
                   ]}

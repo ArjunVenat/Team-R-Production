@@ -5,6 +5,7 @@ import multer from "multer";
 import { insertNodeIntoDB } from "../node.ts"; // Importing node database functions
 import { insertEdgeIntoDB } from "../edge"; // Importing edge database functions
 import { insertEmployeeIntoDB } from "../employee.ts"; // Importing employee database functions
+import { insertDoctorIntoDB } from "../doctor.ts";
 import { parseCSVFile } from "../fileUtils.ts";
 
 const upload = multer({
@@ -53,6 +54,19 @@ CSVRouter.get("/:downloadType", async function (req: Request, res: Response) {
             })
             .join("\n"),
         );
+    } else if (downloadType == "Doctor") {
+      const doctors = await PrismaClient.doctor.findMany();
+      csvContent =
+        "userID,Name,Department,Years Worked,Rating,Specialty Training,Board Certification,Languages\n".concat(
+          doctors
+            .map((doctor) => {
+              const languages = doctor.languages
+                ? doctor.languages.join(",")
+                : "";
+              return `${doctor.userID},${doctor.name},${doctor.department},${doctor.yearsWorked},${doctor.rating},${doctor.specialtyTraining},${doctor.boardCertification},${languages}`;
+            })
+            .join("\n"),
+        );
     }
 
     //Determine if the csvContent is empty or not
@@ -93,59 +107,66 @@ CSVRouter.post(
 
       //Now that we know file exists, get the string
       const data: string = String(req.file.buffer);
+      const rows = parseCSVFile(data);
 
-      //Determine if data is not of the right type
-      if (
-        !data.includes("edgeID,startNode,endNode") &&
-        !data.includes(
+      //Determine datatype
+      let csvFormat: "edges" | "nodes" | "employee" | "doctor" | "unknown";
+      if (data.includes("edgeID,startNode,endNode")) {
+        csvFormat = "edges";
+      } else if (
+        data.includes(
           "nodeID,xcoord,ycoord,floor,building,nodeType,longName,shortName",
-        ) &&
-        !data.includes("userID,email,emailVerified,nickname,updatedAt")
+        )
       ) {
-        console.log(
-          "File uploaded is not of the right type! Must be edges data or nodes or employees data in proper csv format",
-        );
-        res.sendStatus(400); //send bad request
-        return;
+        csvFormat = "nodes";
+      } else if (
+        data.includes("userID,email,emailVerified,nickname,updatedAt")
+      ) {
+        csvFormat = "employee";
+      } else if (
+        data.includes(
+          "userID,Name,Department,Years Worked,Rating,Specialty Training,Board Certification,Languages",
+        )
+      ) {
+        csvFormat = "doctor";
+      } else {
+        csvFormat = "unknown";
       }
 
       // Trying to use \r\n as a delimiter
-      const rows = parseCSVFile(data);
-
-      //If We still have no data, give an error
-      if (rows.length == 0) {
-        console.log("The given csv is empty or delimited improperly");
-        res.sendStatus(400);
-        return;
-      }
-
-      // Decide what type of CSV we are dealing with, then delete records accordingly
-      if (rows[0].length == 3) {
-        await PrismaClient.edges.deleteMany({});
-      } else if (rows[0].length == 8) {
-        await PrismaClient.generalRequest.deleteMany({});
-        await PrismaClient.nodes.deleteMany({});
-      } else if (rows[0].length == 5) {
-        await PrismaClient.generalRequest.deleteMany({});
-        await PrismaClient.employee.deleteMany({});
-      }
-
-      //Now, write file contents to CSV
-      for (const row of rows) {
-        if (rows[0].length == 3) {
-          await insertEdgeIntoDB(row);
-        } else if (rows[0].length == 8) {
-          await insertNodeIntoDB(row);
-        } else if (rows[0].length == 5) {
-          await insertEmployeeIntoDB(row);
-        } else {
+      switch (csvFormat) {
+        case "edges":
+          await PrismaClient.edges.deleteMany({});
+          for (const row of rows.slice(0)) {
+            await insertEdgeIntoDB(row);
+          }
+          break;
+        case "nodes":
+          await PrismaClient.generalRequest.deleteMany({});
+          await PrismaClient.nodes.deleteMany({});
+          for (const row of rows.slice(0)) {
+            await insertNodeIntoDB(row);
+          }
+          break;
+        case "employee":
+          await PrismaClient.generalRequest.deleteMany({});
+          await PrismaClient.employee.deleteMany({});
+          for (const row of rows.slice(0)) {
+            await insertEmployeeIntoDB(row);
+          }
+          break;
+        case "doctor":
+          await PrismaClient.doctor.deleteMany({});
+          for (const row of rows.slice(0)) {
+            await insertDoctorIntoDB(row);
+          }
+          break;
+        default:
+          console.log("Unsupported CSV format");
           res.sendStatus(400);
-          console.log(
-            `Failed to insert data. CSV not supported. Must contains Edges or Nodes data`,
-          );
           return;
-        }
       }
+
       res.sendStatus(200);
     } catch (error) {
       console.error("Unable to upload data to database");
