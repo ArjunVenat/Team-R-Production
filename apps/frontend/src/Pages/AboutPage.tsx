@@ -146,14 +146,14 @@ export default function AboutPage() {
                     image: NickGolparvar,
                     position1: "Assistant Lead Software Engineer",
                     position2: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: "Where's everyone going? Bingo?",
                   },
                   {
                     name: "Hubert Liu",
                     image: HubertLiu,
                     position1: "Assistant Lead Software Engineer",
                     position2: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: "Oops I fell asleep",
                   },
                   {
                     name: "Arjun Venat",
