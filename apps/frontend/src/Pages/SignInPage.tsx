@@ -11,15 +11,32 @@ import outsidebwh from "../assets/hero/outsidebwh.png";
 import ViewMap from "../assets/hero/ViewMap.png";
 // import { Button } from "@mui/material";
 import { useState } from "react";
+import { useEffect } from "react";
 import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 
 const UserTypeButton = motion.button;
 const images: string[] = [blurHall, bwhoutside, hall, outsidebwh];
 
+const useCurrentDateTime = () => {
+  const [currentDateTime, setCurrentDateTime] = useState(new Date());
+
+  useEffect(() => {
+    const intervalId = setInterval(() => {
+      setCurrentDateTime(new Date());
+    }, 1000);
+
+    return () => clearInterval(intervalId);
+  }, []);
+
+  return currentDateTime;
+};
+
 function SignInPage() {
   const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
+
   const [showWarning, setWarning] = useState<boolean>(true);
+  const currentDateTime = useCurrentDateTime();
 
   return (
     <main className="h-screen w-screen">
@@ -29,16 +46,22 @@ function SignInPage() {
         navButtonsAlwaysInvisible={true}
         indicators={false}
         duration={1000}
-        className="carousel -z-10 h-full w-full"
+        className="carousel -z-10 h-full w-full relative"
       >
-        {images.map((image) => (
-          <img
-            src={image}
-            alt={image}
-            className="h-screen w-screen object-cover"
-          />
+        {images.map((image, index) => (
+          <div key={index} className="relative h-full w-full">
+            <img
+              src={image}
+              alt={image}
+              className="h-full w-full object-cover"
+            />
+          </div>
         ))}
       </Carousel>
+      <div className="absolute bottom-0 left-0 p-4 text-white font-sans font-semibold text-2xl">
+        <p>{currentDateTime.toDateString()}</p>
+        <p>{currentDateTime.toLocaleTimeString()}</p>
+      </div>
       {showWarning && (
         <div className="fixed top-0 bg-red-600 w-2/3 flex justify-between items-center">
           <div className="flex items-center m-4">
