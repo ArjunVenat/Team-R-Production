@@ -31,7 +31,7 @@ import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
   pathfindingAlgorithms,
-  defaultMap,
+  defaultFloor,
 } from "../components/mapElements.ts";
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
@@ -45,7 +45,7 @@ export default function MainPage() {
   const [end, setEnd] = useState("");
   const [nodes, setNodes] = useState<Nodes[]>();
   const [path, setPath] = useState<Nodes[]>([]);
-  const [currentMap, setCurrentMap] = useState(defaultMap);
+  const [currentFloor, setCurrentFloor] = useState(defaultFloor);
   const [clickTimes, setClickTimes] = useState<number>(0);
   const [pathfindingAlgorithm, setPathfindingAlgorithm] = useState(
     "/api/map/pathfind/a-star",
@@ -123,9 +123,8 @@ export default function MainPage() {
       const startingFloor: string = startNodeArray[0].Floor;
 
       // Setting current map based on the starting floor
-      setCurrentMap(
-        floors.find((floor) => floor.level === startingFloor)?.map ||
-          defaultMap,
+      setCurrentFloor(
+        floors.find((floor) => floor.level === startingFloor) || defaultFloor,
       );
 
       // Extracting end node ID
@@ -192,15 +191,10 @@ export default function MainPage() {
             <section id="map">
               <TransformComponent>
                 <SVGCanvas
-                  key={currentMap}
                   path={path}
-                  currentMap={currentMap}
-                  setCurrentMap={setCurrentMap}
+                  currentFloor={currentFloor}
+                  setCurrentFloor={setCurrentFloor}
                   resetMapTransform={resetTransform}
-                  currentLevel={
-                    floors.find((floor) => floor.map === currentMap)?.level ||
-                    ""
-                  }
                   handleNodeClicked={(node) => {
                     const newClickTimes = clickTimes + 1;
                     setClickTimes(newClickTimes);
@@ -222,7 +216,7 @@ export default function MainPage() {
                   zoomOut={zoomOut}
                 ></MapControls>
                 <FloorSelect
-                  setMap={setCurrentMap}
+                  setFloor={setCurrentFloor}
                   isDirectionsClicked={isDirectionsClicked}
                   path={path}
                   resetMapTransform={resetTransform}
@@ -290,7 +284,7 @@ export default function MainPage() {
                     Get Directions
                   </Button>
                   <Button
-                    className="content-center "
+                    className="content-center"
                     variant="outlined"
                     sx={{
                       color: "white",
@@ -305,7 +299,6 @@ export default function MainPage() {
                       setIsDirectionsClicked(false);
                       resetTransform();
                     }}
-                    style={{ marginLeft: "auto" }}
                   >
                     Reset Map
                   </Button>
@@ -347,7 +340,7 @@ export default function MainPage() {
                             isExpanded ? `panel${index}` : null,
                           );
                           resetTransform();
-                          setCurrentMap(matchedFloor ? matchedFloor.map : "");
+                          setCurrentFloor(matchedFloor || defaultFloor);
                         }}
                       >
                         <AccordionSummary expandIcon={<ExpandMoreIcon />}>
