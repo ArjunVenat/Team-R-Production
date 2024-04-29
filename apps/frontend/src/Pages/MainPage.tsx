@@ -27,6 +27,7 @@ import StraightIcon from "@mui/icons-material/Straight";
 import ElevatorIcon from "@mui/icons-material/Elevator";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import EscalatorIcon from "@mui/icons-material/Escalator";
+import StairsIcon from "@mui/icons-material/Stairs";
 import SyncIcon from "@mui/icons-material/Sync";
 import {
   floors,
@@ -36,6 +37,8 @@ import {
 import { rightSideBarStyle } from "../styles/RightSideBarStyle.ts";
 import ExpandMoreIcon from "@mui/icons-material/ExpandMore";
 import { GetColorblindColors } from "../components/colorblind.ts";
+import { useNavigate } from "react-router-dom";
+import EditIcon from "@mui/icons-material/Edit";
 
 export default function MainPage() {
   //Use auth0 react hook
@@ -56,12 +59,53 @@ export default function MainPage() {
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(
     null,
   );
+  const [snapShot, setSnapShot] = useState({
+    edgeWeights: [{ edgeID: "FHALL02601_FHALL03101", weight: 1 }],
+  });
 
-  // const navigate = useNavigate();
-  // const routeChange = (path: string) => {
-  //   const newPath = `/${path}`;
-  //   navigate(newPath);
+  const getSnapShot = async () => {
+    const res = await axios.get("http://localhost:5000/api/capture");
+    // console.log(res.data);
+    // console.log(data);
+    // console.log(numPpl);
+    setSnapShot(res.data);
+    console.log("snapShot: ", snapShot);
+  };
+
+  // const sendToBE = async () => {
+  //   try {
+  //     // Send POST request backend server to upload the file
+  //     const response = await axios.post("/api/admin/csv", snapShot, {
+  //       headers: {
+  //         "Content-Type": "multipart/form-data",
+  //       },
+  //     });
+  //     if (response.status == 200) {
+  //       console.log("snapShot successfully");
+  //     } else {
+  //       console.log("failed snapShot");
+  //     }
+  //   } catch {
+  //     console.log("failed to snapShot");
+  //   }
   // };
+
+  // const updateTraffic = () => {
+  //   getSnapShot().then();
+  //   sendToBE();
+  // };
+
+  useEffect(() => {
+    console.log("snapShot: ", snapShot);
+  }, [snapShot]); // Log snapShot whenever it changes
+
+  const { isAuthenticated } = useAuth0();
+
+  const navigate = useNavigate();
+  const routeChange = (path: string) => {
+    const newPath = `/${path}`;
+    navigate(newPath);
+  };
 
   useEffect(() => {
     //async function to fetch data from the server
@@ -131,12 +175,15 @@ export default function MainPage() {
       const endNode: string = endNodeArray[0]["NodeID"];
 
       // Fetching path data from the backend using pathfinding algorithm
-      const res = await axios.get(pathfindingAlgorithm, {
-        params: {
-          startNodeID: startNode,
-          endNodeID: endNode,
+      const res = await axios.post(
+        `${pathfindingAlgorithm}?startNodeID=${startNode}&endNodeID=${endNode}`,
+        snapShot,
+        {
+          headers: {
+            "Content-Type": "application/json",
+          },
         },
-      });
+      );
       setShowPathOnly(true);
       if (res.status === 200) {
         console.log("Successfully fetched path");
@@ -155,8 +202,9 @@ export default function MainPage() {
     { dir: "left", icon: <TurnLeftIcon /> },
     { dir: "right", icon: <TurnRightIcon /> },
     { dir: "elevator", icon: <ElevatorIcon /> },
-    { dir: "stairs", icon: <EscalatorIcon /> },
+    { dir: "stairs", icon: <StairsIcon /> },
     { dir: "arrived", icon: <MyLocationIcon /> },
+    { dir: "escalator", icon: <EscalatorIcon /> },
   ];
 
   const pathToText = (direction: string) => {
@@ -322,6 +370,48 @@ export default function MainPage() {
                     <MenuItem value={algorithm.path}>{algorithm.name}</MenuItem>
                   ))}
                 </Select>
+
+
+                <Button
+                  className="content-center "
+                  variant="outlined"
+                  sx={{
+                    color: "white",
+                    borderColor: "white",
+                    "&:hover": {
+                      borderColor: GetColorblindColors().color3,
+                      color: GetColorblindColors().color3,
+                    },
+                  }}
+                  onClick={() => {
+                    getSnapShot();
+                  }}
+                  style={{ marginLeft: "auto" }}
+                >
+                  Update Traffic
+                </Button>
+                
+                {isAuthenticated && (
+                  <Button
+                    variant="contained"
+                    sx={{
+                      backgroundColor: GetColorblindColors().color4,
+                      color: "white",
+                      "&:hover": {
+                        backgroundColor: GetColorblindColors().color3,
+                        color: GetColorblindColors().color4,
+                      },
+                    }}
+                    onClick={() => {
+                      routeChange("editmap");
+                    }}
+                  >
+                    <EditIcon />
+                    EDIT MAP
+                  </Button>
+                )}
+                
+
                 {path.length > 0 && (
                   <Box maxWidth={330} className="overflow-y-scroll">
                     <Box mb={2} display="flex" gap={1} alignItems="center">

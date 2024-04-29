@@ -10,7 +10,7 @@ beforeAll(async () => {
 
   // Insert nodes into DB
   for (const row of nodeData) {
-    const [nodeID, xcoord, ycoord, floor] = row;
+    const [nodeID, nodeLongName, xcoord, ycoord, floor] = row;
     let floornum = -99999;
     switch (floor) {
       case "3": {
@@ -35,7 +35,7 @@ beforeAll(async () => {
       }
     }
     // Cast string to number
-    graph.addNode(nodeID, +xcoord, +ycoord, floornum);
+    graph.addNode(nodeID, nodeLongName, +xcoord, +ycoord, floornum);
   }
 
   const edgeData = await readCSVFile("apps/backend/edges.csv");

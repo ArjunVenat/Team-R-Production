@@ -7,7 +7,7 @@ let heap = new minHeap();
 
 // Populate test nodes
 for (let i = 0; i < 10; i++) {
-  testNodes[i] = new GraphNode(`${i}`, 0, 0, 0);
+  testNodes[i] = new GraphNode(`${i}`, "test", 0, 0, 0);
 }
 
 // Clear the heap before each test

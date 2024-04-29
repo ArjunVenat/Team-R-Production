@@ -13,7 +13,7 @@ export async function SendDirections(request: Directions) {
 
   //ToDo: change api
   // Send a GET request to the server's map API endpoint to find directions.
-  const res = await axios.get("/api/map/pathfind", {
+  const res = await axios.post("/api/map/pathfind", "", {
     params: {
       startnodeid: request.start,
       endnodeid: request.end,
