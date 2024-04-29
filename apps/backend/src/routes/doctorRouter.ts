@@ -67,6 +67,7 @@ doctorRouter.get("/", async function (req: Request, res: Response) {
       doctors = doctors.filter(
         (doctor) => doctor.department === departmentFilter,
       );
+      console.log(doctors);
     }
     if (ratingMin !== undefined) {
       doctors = doctors.filter(
@@ -90,12 +91,12 @@ doctorRouter.get("/", async function (req: Request, res: Response) {
         (doctor) => doctor.yearsWorked <= parseInt(yearsWorkedMax, 10),
       );
     }
-    if (specialtyTraining !== undefined) {
+    if (specialtyTraining && specialtyTraining === "true") {
       doctors = doctors.filter(
         (doctor) => doctor.specialtyTraining === (specialtyTraining === "true"),
       );
     }
-    if (boardCertification !== undefined) {
+    if (boardCertification && boardCertification === "true") {
       doctors = doctors.filter(
         (doctor) =>
           doctor.boardCertification === (boardCertification === "true"),
