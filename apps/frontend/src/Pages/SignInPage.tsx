@@ -118,8 +118,8 @@ function SignInPage() {
         ))}
       </Carousel>
       <div
-        className="absolute bottom-0 left-0 p-4 text-white font-sans font-semibold text-2xl
-                        bg-primary bg-opacity-45 backdrop-blur-sm"
+        className="absolute bottom-0 left-0 p-4 text-white Arial font-semibold text-2xl
+                        bg-primary bg-opacity-45 backdrop-blur-sm rounded-lg"
       >
         <p style={{ marginBottom: "5px" }}>{formatDateTime(currentDateTime)}</p>
         <p style={{ marginBottom: "5px" }}>{formatTime(currentDateTime)}</p>
