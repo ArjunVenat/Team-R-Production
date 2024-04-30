@@ -49,8 +49,11 @@ router.post(
         algo = algoType.AStar;
         break;
     }
+
+    let multinode = false;
     // Validate query params before continuing
     if (startNodeID == undefined || endNodeID == undefined) {
+      multinode = true;
       if (nodeIDs.length < 2) {
         res
           .status(400)
@@ -80,26 +83,32 @@ router.post(
 
     console.log("here 2", graph);
 
-    const out = await pathfindSingle(graph, algo, startNodeID, endNodeID);
-    res.send(out);
-
-    // // TODO: take in multiple nodes to pathfind between
-    // // Mockup of new API,
-    // if (nodeIDs && nodeIDs.length >= 2) {
-    //   const dummyData: NavigationInstruction[] = [];
-    //   dummyData[0] = { path: pathNodes, directions: angles, eta: 3 };
-    //   dummyData[0] = {
-    //     path: pathNodes.reverse(),
-    //     directions: angles.reverse(),
-    //     eta: 9,
-    //   };
-    //   res.send({
-    //     paths: dummyData,
-    //   });
-    //   return;
-    // }
+    if (multinode) {
+      const instructions: NavigationInstruction[] = await Promise.all(
+        [...pairwise(nodeIDs)].map(([a, b]) =>
+          pathfindSingle(graph, algo, a, b),
+        ),
+      );
+      res.send({ instructions: instructions });
+    } else {
+      const out = await pathfindSingle(graph, algo, startNodeID, endNodeID);
+      res.send(out);
+    }
   },
 );
+
+// https://stackoverflow.com/a/54458643
+function* pairwise<T>(iterable: Iterable<T>): Generator<[T, T], void> {
+  const iterator = iterable[Symbol.iterator]();
+  let a = iterator.next();
+  if (a.done) return;
+  let b = iterator.next();
+  while (!b.done) {
+    yield [a.value, b.value];
+    a = b;
+    b = iterator.next();
+  }
+}
 
 async function pathfindSingle(
   graph: Graph,
