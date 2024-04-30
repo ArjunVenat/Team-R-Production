@@ -168,7 +168,7 @@ export default function PDMPage() {
                 onChange={(event, newValue) => {
                   setRating(newValue as [number, number]);
                 }}
-                valueLabelDisplay="off"
+                valueLabelDisplay="auto"
                 min={0}
                 max={5}
                 step={0.5}
