@@ -107,5 +107,17 @@
   "Update Traffic": "更新路径",
   "EDIT MAP": " 编辑地图",
   "DONE EDITING": "完成编辑",
-  "Hello, I am Herald. I am a AI chatbot. Feel free to ask me anything in the box below. Please be aware I may provide incorrect information!": "你好，我是Herald。我是AI聊天机器人。请在对话框中随意问我问题。请注意，提供的信息仅供参考！"
+  "Hello, I am Herald. I am a AI chatbot. Feel free to ask me anything in the box below. Please be aware I may provide incorrect information!": "你好，我是Herald。我是AI聊天机器人。请在对话框中随意问我问题。请注意，提供的信息仅供参考！",
+  "User ID": "用户ID",
+  "Name": "名称",
+  "Department": "部门",
+  "Years Worked": "工作年限",
+  "Rating": "评分",
+  "Specialty Training": "专业培训",
+  "Board Certification": "董事会认证",
+  "Languages": "多种语言",
+  "Select Rating Range": "选择评分范围",
+  "Certification Preference": "认证",
+  "Submit": "提交",
+  "Language": "语言"
 }

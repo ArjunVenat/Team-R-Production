@@ -18,14 +18,14 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
-
+import { useTranslation } from "react-i18next";
 export default function PDMPage() {
   const [department, setDepartment] = useState<string | null>(null);
   const [rating, setRating] = useState<[number, number]>([0, 5]);
   const [language, setLanguage] = useState<string | null>(null);
   const [certificationPref, setCertificationPref] = useState<boolean>(false);
   const [boardCertification, setBoardCertification] = useState<boolean>(false);
-
+  const { t } = useTranslation();
   const [departments, setDepartments] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [doctorData, setDoctorData] = useState<Doctor[]>([]);
@@ -109,10 +109,12 @@ export default function PDMPage() {
           }}
           options={departments}
           getOptionLabel={(option) => option}
-          renderInput={(params) => <TextField {...params} label="Department" />}
+          renderInput={(params) => (
+            <TextField {...params} label={t("Department")} />
+          )}
         />
         <div className="flex items-center space-x-2">
-          <Typography>Select Rating Range</Typography>
+          <Typography>{t("Select Rating Range")}</Typography>
           <Slider
             value={rating}
             onChange={(event, newValue) => {
@@ -133,7 +135,9 @@ export default function PDMPage() {
           }}
           options={languages}
           getOptionLabel={(option) => option}
-          renderInput={(params) => <TextField {...params} label="Language" />}
+          renderInput={(params) => (
+            <TextField {...params} label={t("Language")} />
+          )}
         />
         <FormGroup>
           <FormControlLabel
@@ -143,7 +147,7 @@ export default function PDMPage() {
                 onChange={(e) => setCertificationPref(e.target.checked)}
               />
             }
-            label="Certification Preference"
+            label={t("Certification Preference")}
           />
           <FormControlLabel
             control={
@@ -152,18 +156,23 @@ export default function PDMPage() {
                 onChange={(e) => setBoardCertification(e.target.checked)}
               />
             }
-            label="Board Certification"
+            label={t("Board Certification")}
           />
         </FormGroup>
         <Button type="submit" variant="contained" color="primary">
-          Submit
+          {t("Submit")}
         </Button>
       </form>
-      <Box className="w-full h-1/2 mt-8">
-        <TableContainer className="w-full h-full overflow-y-auto">
-          <Table className="min-w-full" aria-label="simple table">
-            <TableHead className="sticky top-0 bg-[#677c8f] text-white">
-              <TableRow className="bg-[#677c8f] text-white">
+      <Box className="w-4/5 mx-auto">
+        <TableContainer>
+          <Table aria-label="simple table">
+            <TableHead>
+              <TableRow
+                style={{
+                  backgroundColor: "#677c8f",
+                  color: "white",
+                }}
+              >
                 <TableCell
                   sx={{
                     color: "white",
@@ -171,7 +180,7 @@ export default function PDMPage() {
                     fontSize: "h6.fontSize",
                   }}
                 >
-                  User ID
+                  {t("User ID")}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -180,7 +189,7 @@ export default function PDMPage() {
                     fontSize: "h6.fontSize",
                   }}
                 >
-                  Name
+                  {t("Name")}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -189,7 +198,7 @@ export default function PDMPage() {
                     fontSize: "h6.fontSize",
                   }}
                 >
-                  Department
+                  {t("Department")}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -198,7 +207,7 @@ export default function PDMPage() {
                     fontSize: "h6.fontSize",
                   }}
                 >
-                  Years Worked
+                  {t("Years Worked")}
                 </TableCell>
                 <TableCell
                   sx={{
@@ -207,17 +216,7 @@ export default function PDMPage() {
                     fontSize: "h6.fontSize",
                   }}
                 >
-                  Rating
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Specialty Training
+                  {t("Rating")}
                 </TableCell>
 
                 <TableCell
@@ -227,7 +226,7 @@ export default function PDMPage() {
                     fontSize: "h6.fontSize",
                   }}
                 >
-                  Board Certification
+                  {t("Specialty Training")}
                 </TableCell>
 
                 <TableCell
@@ -237,7 +236,17 @@ export default function PDMPage() {
                     fontSize: "h6.fontSize",
                   }}
                 >
-                  Languages
+                  {t("Board Certification")}
+                </TableCell>
+
+                <TableCell
+                  sx={{
+                    color: "white",
+                    fontWeight: "bold",
+                    fontSize: "h6.fontSize",
+                  }}
+                >
+                  {t("Languages")}
                 </TableCell>
               </TableRow>
             </TableHead>
