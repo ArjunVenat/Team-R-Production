@@ -80,62 +80,70 @@ router.post(
 
     console.log("here 2", graph);
 
-    //const path: string[] = graph.AStar(startNodeID, endNodeID);
-    const pathDirections: string[] = findpath.doAlgo(
-      graph,
-      algo,
-      startNodeID,
-      endNodeID,
-    );
-    console.log(pathDirections);
+    const out = await pathfindSingle(graph, algo, startNodeID, endNodeID);
+    res.send(out);
 
-    // Check if the path is empty
-    if (pathDirections.length === 0) {
-      res.sendStatus(204); // and send 204, no data
-      return;
-    }
-
-    const dir = new Directions(
-      pathDirections.map((nodeID) => Graph.nodeMap.get(nodeID)!),
-    );
-    const angles = dir.getAngles();
-
-    const pathNodes: Nodes[] = await Promise.all(
-      pathDirections.map(async (nodeID) => {
-        return prisma.nodes.findUniqueOrThrow({
-          where: {
-            NodeID: nodeID,
-          },
-        });
-      }),
-    );
-
-    const time = graph.calculateTime(pathDirections);
-    console.log("time calculated (in seconds): " + time);
-
-    // TODO: take in multiple nodes to pathfind between
-    // Mockup of new API,
-    if (nodeIDs && nodeIDs.length >= 2) {
-      const dummyData: NavigationInstruction[] = [];
-      dummyData[0] = { path: pathNodes, directions: angles, eta: 3 };
-      dummyData[0] = {
-        path: pathNodes.reverse(),
-        directions: angles.reverse(),
-        eta: 9,
-      };
-      res.send({
-        paths: dummyData,
-      });
-      return;
-    }
-
-    res.send({
-      path: pathNodes,
-      directions: angles,
-      eta: time,
-    });
+    // // TODO: take in multiple nodes to pathfind between
+    // // Mockup of new API,
+    // if (nodeIDs && nodeIDs.length >= 2) {
+    //   const dummyData: NavigationInstruction[] = [];
+    //   dummyData[0] = { path: pathNodes, directions: angles, eta: 3 };
+    //   dummyData[0] = {
+    //     path: pathNodes.reverse(),
+    //     directions: angles.reverse(),
+    //     eta: 9,
+    //   };
+    //   res.send({
+    //     paths: dummyData,
+    //   });
+    //   return;
+    // }
   },
 );
+
+async function pathfindSingle(
+  graph: Graph,
+  algo: algoType,
+  startNodeID: string,
+  endNodeID: string,
+): Promise<NavigationInstruction> {
+  const pathDirections: string[] = findpath.doAlgo(
+    graph,
+    algo,
+    startNodeID,
+    endNodeID,
+  );
+  console.log(pathDirections);
+
+  // Check if the path is empty
+  if (pathDirections.length === 0) {
+    return Promise.reject("No path found");
+  }
+
+  const dir = new Directions(
+    pathDirections.map((nodeID) => Graph.nodeMap.get(nodeID)!),
+  );
+  const angles = dir.getAngles();
+
+  const pathNodes: Nodes[] = await Promise.all(
+    pathDirections.map(async (nodeID) => {
+      return prisma.nodes.findUniqueOrThrow({
+        where: {
+          NodeID: nodeID,
+        },
+      });
+    }),
+  );
+
+  const time = graph.calculateTime(pathDirections);
+  console.log("time calculated (in seconds): " + time);
+
+  return {
+    path: pathNodes,
+    directions: angles,
+    eta: time,
+  };
+}
 
 export async function createGraph(): Promise<Graph> {
   const floorToZMap = new Map<string, number>();
