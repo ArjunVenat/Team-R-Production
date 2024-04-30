@@ -28,21 +28,25 @@ export default function DoctorTable() {
     }
     fetch().then();
   }, [getAccessTokenSilently]);
-  const arrayDoctors = doctorData.map((doctor: Doctor) => (
-    <TableRow
-      key={doctor.userID}
-      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-    >
-      <TableCell>{doctor.userID}</TableCell>
-      <TableCell>{doctor.name}</TableCell>
-      <TableCell>{doctor.department}</TableCell>
-      <TableCell>{doctor.yearsWorked}</TableCell>
-      <TableCell>{doctor.rating.valueOf()}</TableCell>
-      <TableCell>{doctor.specialtyTraining ? "Yes" : "No"}</TableCell>
-      <TableCell>{doctor.boardCertification ? "Yes" : "No"}</TableCell>
-      <TableCell>{doctor.languages}</TableCell>
-    </TableRow>
-  ));
+
+  let arrayDoctors;
+  if (doctorData) {
+    arrayDoctors = doctorData?.map((doctor: Doctor) => (
+      <TableRow
+        key={doctor.userID}
+        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      >
+        <TableCell>{doctor.userID}</TableCell>
+        <TableCell>{doctor.name}</TableCell>
+        <TableCell>{doctor.department}</TableCell>
+        <TableCell>{doctor.yearsWorked}</TableCell>
+        <TableCell>{doctor.rating.valueOf()}</TableCell>
+        <TableCell>{doctor.specialtyTraining ? "Yes" : "No"}</TableCell>
+        <TableCell>{doctor.boardCertification ? "Yes" : "No"}</TableCell>
+        <TableCell>{doctor.languages}</TableCell>
+      </TableRow>
+    ));
+  }
   return (
     <Box className="w-4/5 mx-auto">
       <TableContainer>
