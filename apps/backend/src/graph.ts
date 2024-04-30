@@ -164,6 +164,15 @@ export class Graph {
     path.reverse();
     return path.map((n) => n.id);
   }
+
+  public calculateTime(path: string[]) {
+    const nodes = path.map((s) => Graph.nodeMap.get(s)!);
+    let out = 0;
+    for (let i = 0; i < nodes.length - 1; i++) {
+      out += nodes[i].getTime(nodes[i + 1]);
+    }
+    return out;
+  }
 }
 
 /* Code from Brannon's test
