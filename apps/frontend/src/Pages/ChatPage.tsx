@@ -11,7 +11,7 @@ import {
 import { motion } from "framer-motion";
 import "../styles/ChatPage.css";
 import SendIcon from "@mui/icons-material/Send";
-
+import { useTranslation } from "react-i18next";
 const key = "sk-proj-OSW3y1qeycxUiOAwBxigT3BlbkFJoKyoP4loGhm83Fw7pVKv";
 const openai = new OpenAI({
   apiKey: key,
@@ -34,7 +34,7 @@ const ChatPage = () => {
       messagesEndRef.current.scrollIntoView({ behavior: "smooth" });
     }
   }, [messages]);
-
+  const { t } = useTranslation();
   const sendMessage = async () => {
     setMessages([
       ...messages,
@@ -105,9 +105,9 @@ const ChatPage = () => {
               backgroundColor: "#f9f9f9",
             }}
           >
-            Hello, I am Herald. I am a AI chatbot. Feel free to ask me anything
-            in the box below. Please be aware I may provide incorrect
-            information!
+            {t(
+              "Hello, I am Herald. I am a AI chatbot. Feel free to ask me anything in the box below. Please be aware I may provide incorrect information!",
+            )}
           </h2>
           <List style={{ overflow: "auto", flexGrow: 1, padding: "1rem" }}>
             {messages.map((message, index) => (

@@ -21,13 +21,14 @@ import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
 import { GetColorblindColors } from "../components/colorblind.ts";
 
+import { useTranslation } from "react-i18next";
 export default function PDMPage() {
   const [department, setDepartment] = useState<string | null>(null);
   const [rating, setRating] = useState<[number, number]>([0, 5]);
   const [language, setLanguage] = useState<string | null>(null);
   const [certificationPref, setCertificationPref] = useState<boolean>(false);
   const [boardCertification, setBoardCertification] = useState<boolean>(false);
-
+  const { t } = useTranslation();
   const [departments, setDepartments] = useState<string[]>([]);
   const [languages, setLanguages] = useState<string[]>([]);
   const [doctorData, setDoctorData] = useState<Doctor[]>([]);
@@ -116,7 +117,7 @@ export default function PDMPage() {
             fontWeight: "bold",
           }}
         >
-          Find a Doctor
+          {t("Find a Doctor")}
         </Typography>
         <div className="container mx-auto h-full px-4">
           <form
@@ -135,7 +136,7 @@ export default function PDMPage() {
                 }}
                 options={departments}
                 renderInput={(params) => (
-                  <TextField {...params} label="Department" />
+                  <TextField {...params} label={t("Department")} />
                 )}
               />
               <Autocomplete
@@ -149,13 +150,13 @@ export default function PDMPage() {
                 }}
                 options={languages}
                 renderInput={(params) => (
-                  <TextField {...params} label="Language" />
+                  <TextField {...params} label={t("Language")} />
                 )}
               />
             </div>
 
             <div className="flex flex-col items-center space-x-2 w-1/2 mx-auto">
-              <Typography>Select Rating Range</Typography>
+              <Typography>{t("Select Rating Range")}</Typography>
               <Slider
                 value={rating}
                 onChange={(event, newValue) => {
@@ -192,7 +193,7 @@ export default function PDMPage() {
                       onChange={(e) => setCertificationPref(e.target.checked)}
                     />
                   }
-                  label="Certification Preference"
+                  label={t("Certification Preference")}
                 />
                 <FormControlLabel
                   control={
@@ -201,7 +202,7 @@ export default function PDMPage() {
                       onChange={(e) => setBoardCertification(e.target.checked)}
                     />
                   }
-                  label="Board Certification"
+                  label={t("Board Certification")}
                 />
               </div>
             </FormGroup>
@@ -219,7 +220,7 @@ export default function PDMPage() {
                   },
                 }}
               >
-                Submit
+                {t("Submit")}
               </Button>
             </div>
           </form>
@@ -235,7 +236,7 @@ export default function PDMPage() {
                         fontSize: "h6.fontSize",
                       }}
                     >
-                      User ID
+                      {t("User ID")}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -244,7 +245,7 @@ export default function PDMPage() {
                         fontSize: "h6.fontSize",
                       }}
                     >
-                      Name
+                      {t("Name")}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -253,7 +254,7 @@ export default function PDMPage() {
                         fontSize: "h6.fontSize",
                       }}
                     >
-                      Department
+                      {t("Department")}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -262,7 +263,7 @@ export default function PDMPage() {
                         fontSize: "h6.fontSize",
                       }}
                     >
-                      Years Worked
+                      {t("Years Worked")}
                     </TableCell>
                     <TableCell
                       sx={{
@@ -271,17 +272,7 @@ export default function PDMPage() {
                         fontSize: "h6.fontSize",
                       }}
                     >
-                      Rating
-                    </TableCell>
-
-                    <TableCell
-                      sx={{
-                        color: "white",
-                        fontWeight: "bold",
-                        fontSize: "h6.fontSize",
-                      }}
-                    >
-                      Specialty Training
+                      {t("Rating")}
                     </TableCell>
 
                     <TableCell
@@ -291,7 +282,16 @@ export default function PDMPage() {
                         fontSize: "h6.fontSize",
                       }}
                     >
-                      Board Certification
+                      {t("Specialty Training")}
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      {t("Board Certification")}
                     </TableCell>
 
                     <TableCell
@@ -301,7 +301,7 @@ export default function PDMPage() {
                         fontSize: "h6.fontSize",
                       }}
                     >
-                      Languages
+                      {t("Languages")}
                     </TableCell>
                   </TableRow>
                 </TableHead>
