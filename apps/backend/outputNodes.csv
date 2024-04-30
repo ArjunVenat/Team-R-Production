@@ -316,6 +316,7 @@ FHALL01101,1627,930,1,Tower,HALL,Tower Hallway 4,Hallway F01101
 FHALL01201,1548,930,1,Tower,HALL,Tower Staff Entrance,Hallway F01201
 FDEPT00101,1617,825,1,Tower,DEPT,Center for International Medicine,CIM
 FSERV00401,1721,970,1,Tower,DEPT,Spiritual Care Office,SCO
+FHALL01401,1627,1029,1,Tower,HALL,Tower Hallway 6,Hallway F01401
 FSERV00201,1605,1029,1,Tower,SERV,Tower Medical Cashier,Tower Cashier
 FHALL01501,1627,1060,1,Tower,HALL,Tower Hallway 7,Hallway F01501
 FHALL01601,1758,1060,1,Tower,HALL,Tower Hallway 8,Hallway F01601
@@ -326,6 +327,7 @@ FHALL01901,1758,1120,1,Tower,HALL,Tower Hallway 11,Hallway F01901
 FHALL02001,1700,1120,1,Tower,HALL,Tower Hallway 12,Hallway F02001
 FDEPT00201,1610,1120,1,Tower,DEPT,Bretholtz Center for Patients and Families,Bretholtz WR
 FSERV00301,1700,1158,1,Tower,SERV,Kessler Library,Kessler Library
+FHALL02101,1769,1146,1,Tower,HALL,Tower Hallway Entrance,Tower Entrance 2
 FDEPT00401,1794,1146,1,Tower,DEPT,Sharf Admitting Center,Sharf Center
 FHALL02201,1769,1280,1,Tower,HALL,Hallway Lobby Entrance,Entrance Hallway
 FLABS00101,1845,1250,1,Tower,LABS,Obstetrics Admitting,Obs Admitting
@@ -577,5 +579,3 @@ WHALL00702,1740,1500,2,Tower,HALL,Hallway Connector 7 Floor 2,Hallway W0702
 WHALL00802,1720,1745,2,Shapiro,HALL,Hallway Connector 8 Floor 2,Hallway W0802
 WHALL00902,1690,2240,2,Shapiro,HALL,Hallway Connector 9 Floor 2,Hallway W0902
 WHALL01002,1690,2455,2,BTM,HALL,Hallway Connector 10 Floor 2,Hallway W1002
-FHALL01401,1626,1007,1,Tower,HALL,Tower Hallway 6,Hallway F01401
-FHALL02101,1769,1146,1,Tower,HALL,Tower Hallway Entrance,Tower Entrance 2

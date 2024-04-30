@@ -178,20 +178,21 @@ export default function St4t5Page() {
         <div className="flex justify-center items-center h-full w-full">
           <div
             className="flex justify-center items-center
-                        h-[90%] w-[90%] bg-translucentGrey rounded-lg"
+                        h-[90%] w-[90%] bg-[rgba(103,124,143,0.3)]
+                        backdrop-blur-sm rounded-lg"
           >
             <div className="flex flex-col justify-center items-center w-[90%] h-[90%]">
               <Chart
                 chartType="ColumnChart"
-                width="1200px"
-                height="300px"
+                width="800px"
+                height="400px"
                 data={bardata}
                 options={coloptions}
                 legendToggle
               />
               <Chart
                 chartType="PieChart"
-                width="1000px"
+                width="800px"
                 height="300px"
                 data={piedata}
                 options={pieoptions}
