@@ -8,6 +8,13 @@ interface EdgeWeight {
   edgeID: string;
   weight: number;
 }
+
+interface NavigationInstruction {
+  path: Nodes[];
+  directions: string[][];
+  eta: number;
+}
+
 const prisma = new PrismaClient();
 
 const router: Router = express.Router();
@@ -16,9 +23,11 @@ const router: Router = express.Router();
 router.post(
   "/:algoType",
   async function (req: Request, res: Response): Promise<void> {
-    const { startNodeID, endNodeID } = req.query as {
+    // eslint-disable-next-line prefer-const
+    let { startNodeID, endNodeID, nodeIDs } = req.query as {
       startNodeID: string;
       endNodeID: string;
+      nodeIDs: string[];
     };
 
     // Determine which algorithm to use for pathfinding
@@ -42,8 +51,16 @@ router.post(
     }
     // Validate query params before continuing
     if (startNodeID == undefined || endNodeID == undefined) {
-      res.status(400).send("startNodeID and/or endNodeID is required");
-      return;
+      if (nodeIDs.length < 2) {
+        res
+          .status(400)
+          .send(
+            "startNodeID and/or endNodeID is required, or no nodeIDs were passed",
+          );
+        return;
+      }
+      startNodeID = nodeIDs[0];
+      endNodeID = nodeIDs[1];
     }
 
     const graph = await createGraph();
@@ -94,6 +111,23 @@ router.post(
     );
 
     // TODO: calculate and return a value for ETA, which is an integer number of minutes
+
+    // TODO: take in multiple nodes to pathfind between
+    // Mockup of new API,
+    if (nodeIDs && nodeIDs.length >= 2) {
+      const dummyData: NavigationInstruction[] = [];
+      dummyData[0] = { path: pathNodes, directions: angles, eta: 3 };
+      dummyData[0] = {
+        path: pathNodes.reverse(),
+        directions: angles.reverse(),
+        eta: 9,
+      };
+      res.send({
+        paths: dummyData,
+      });
+      return;
+    }
+
     res.send({
       path: pathNodes,
       directions: angles,
