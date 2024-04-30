@@ -15,7 +15,7 @@ doctorRouter.get("/", async function (req: Request, res: Response) {
       yearsWorkedMax,
       specialtyTraining,
       boardCertification,
-      languages,
+      language,
     } = req.query as {
       nameFilter: string;
       departmentFilter: string;
@@ -25,8 +25,10 @@ doctorRouter.get("/", async function (req: Request, res: Response) {
       yearsWorkedMax: string;
       specialtyTraining: string;
       boardCertification: string;
-      languages: string[];
+      language: string;
     };
+
+    console.log(language);
 
     let { column, sortDirection } = req.query as {
       column: string;
@@ -102,9 +104,9 @@ doctorRouter.get("/", async function (req: Request, res: Response) {
           doctor.boardCertification === (boardCertification === "true"),
       );
     }
-    if (languages !== undefined && languages.length > 0) {
+    if (language !== undefined) {
       doctors = doctors.filter((doctor) =>
-        languages.every((lang) => doctor.languages.includes(lang)),
+        doctor.languages.some((docLang) => docLang === language),
       );
     }
     res.json(doctors);

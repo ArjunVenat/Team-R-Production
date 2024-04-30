@@ -174,7 +174,7 @@ export default function AboutPage() {
                     name: "John Diamond",
                     image: JohnDiamond,
                     position1: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: "Live in the moment",
                   },
                   {
                     name: "Lauren Harrison",
@@ -190,8 +190,7 @@ export default function AboutPage() {
                     position1: "Scrum Master",
                     position2: "Co-Product Owner",
                     position3: "Full Stack Engineer",
-                    quote:
-                      "I've learned that I still have a lot to learn. - Maya Angelou",
+                    quote: "wootwoot - Lauren",
                   },
                   {
                     name: "Brannon Henson",
@@ -203,7 +202,7 @@ export default function AboutPage() {
                     name: "Zihan Li",
                     image: ZihanLi,
                     position1: "Full Stack Engineer",
-                    quote: "Placeholder quote",
+                    quote: " Quoting my quote",
                   },
                   {
                     name: "Alex Stoyanov",

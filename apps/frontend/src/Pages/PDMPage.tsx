@@ -63,7 +63,7 @@ export default function PDMPage() {
       departmentFilter: department,
       ratingMin: rating[0],
       ratingMax: rating[1],
-      languages: language,
+      language: language ? language[0] : null,
       specialtyTraining: certificationPref,
       boardCertification: boardCertification,
     };

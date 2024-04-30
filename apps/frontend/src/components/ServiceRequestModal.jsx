@@ -5,8 +5,11 @@ import { motion } from "framer-motion";
 import { Modal, Card, Typography } from "@mui/material";
 import CancelIcon from "@mui/icons-material/Cancel";
 import ServiceRequestLog from "../components/FullServiceRequest.tsx";
+import { useTranslation } from "react-i18next";
 
 const ServiceRequestModal = ({ open, onClose, typeOfService }) => {
+  const { t } = useTranslation();
+
   const expandShrink = {
     hidden: {
       opacity: 0,
@@ -56,7 +59,7 @@ const ServiceRequestModal = ({ open, onClose, typeOfService }) => {
                   fontWeight: "bold",
                 }}
               >
-                {typeOfService} Request
+                {t(typeOfService)} {t("Request")}
               </Typography>
               <CancelIcon
                 sx={{
