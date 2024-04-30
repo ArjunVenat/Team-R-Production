@@ -37,7 +37,9 @@ export default function PDMPage() {
     async function fetchDepartments() {
       try {
         const response = await axios.get("/api/pdm/field/departments");
-        setDepartments(response.data);
+        if (response.data) {
+          setDepartments(response.data);
+        }
       } catch (error) {
         console.error("Failed to fetch departments", error);
       }
@@ -49,7 +51,9 @@ export default function PDMPage() {
     async function fetchLanguages() {
       try {
         const response = await axios.get("/api/pdm/field/languages");
-        setLanguages(response.data);
+        if (response.data) {
+          setLanguages(response.data);
+        }
       } catch (error) {
         console.error("Failed to fetch languages", error);
       }
@@ -82,22 +86,24 @@ export default function PDMPage() {
       });
   };
 
-  const arrayDoctors = doctorData.map((doctor: Doctor) => (
-    <TableRow
-      key={doctor.userID}
-      sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
-    >
-      <TableCell>{doctor.userID}</TableCell>
-      <TableCell>{doctor.name}</TableCell>
-      <TableCell>{doctor.department}</TableCell>
-      <TableCell>{doctor.yearsWorked}</TableCell>
-      <TableCell>{doctor.rating.valueOf()}</TableCell>
-      <TableCell>{doctor.specialtyTraining ? "Yes" : "No"}</TableCell>
-      <TableCell>{doctor.boardCertification ? "Yes" : "No"}</TableCell>
-      <TableCell>{doctor.languages}</TableCell>
-    </TableRow>
-  ));
-
+  let arrayDoctors;
+  if (doctorData) {
+    arrayDoctors = doctorData.map((doctor: Doctor) => (
+      <TableRow
+        key={doctor.userID}
+        sx={{ "&:last-child td, &:last-child th": { border: 0 } }}
+      >
+        <TableCell>{doctor.userID}</TableCell>
+        <TableCell>{doctor.name}</TableCell>
+        <TableCell>{doctor.department}</TableCell>
+        <TableCell>{doctor.yearsWorked}</TableCell>
+        <TableCell>{doctor.rating.valueOf()}</TableCell>
+        <TableCell>{doctor.specialtyTraining ? "Yes" : "No"}</TableCell>
+        <TableCell>{doctor.boardCertification ? "Yes" : "No"}</TableCell>
+        <TableCell>{doctor.languages}</TableCell>
+      </TableRow>
+    ));
+  }
   return (
     <div className="flex flex-grow flex-col justify-center h-100vh">
       <div className="bg-primary pb-8"></div>
