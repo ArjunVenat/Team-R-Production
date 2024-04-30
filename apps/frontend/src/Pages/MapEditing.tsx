@@ -14,7 +14,7 @@ import { FloorSelect, MapControls } from "../components/MapUtils.tsx";
 import { defaultFloor } from "../components/mapElements.ts";
 
 import DoneIcon from "@mui/icons-material/Done";
-
+import { useTranslation } from "react-i18next";
 //import Table Items
 import Table from "@mui/material/Table";
 // import TableBody from '@mui/material/TableBody';
@@ -52,7 +52,7 @@ export default function MapEditing() {
       },
     }).then();
   }
-
+  const { t } = useTranslation();
   const defaultNode: Nodes = {
     NodeID: "",
     Xcoord: "",
@@ -915,7 +915,7 @@ export default function MapEditing() {
           }}
         >
           <DoneIcon />
-          DONE EDITING
+          {t("DONE EDITING")}
         </Button>
       </aside>
     </div>

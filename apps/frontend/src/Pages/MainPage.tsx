@@ -392,7 +392,7 @@ export default function MainPage() {
                   }}
                   style={{ marginLeft: "auto" }}
                 >
-                  Update Traffic
+                  {t("Update Traffic")}
                 </Button>
 
                 {isAuthenticated && (
@@ -411,7 +411,7 @@ export default function MainPage() {
                     }}
                   >
                     <EditIcon />
-                    EDIT MAP
+                    {t("EDIT MAP")}
                   </Button>
                 )}
 
