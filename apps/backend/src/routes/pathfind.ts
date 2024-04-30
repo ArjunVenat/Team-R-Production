@@ -23,11 +23,11 @@ const router: Router = express.Router();
 router.post(
   "/:algoType",
   async function (req: Request, res: Response): Promise<void> {
-    // eslint-disable-next-line prefer-const
-    let { startNodeID, endNodeID, nodeIDs } = req.query as {
+     
+    const { startNodeID, endNodeID, multiNodeID } = req.query as {
       startNodeID: string;
       endNodeID: string;
-      nodeIDs: string[];
+      multiNodeID: string[];
     };
 
     // Determine which algorithm to use for pathfinding
@@ -54,7 +54,7 @@ router.post(
     // Validate query params before continuing
     if (startNodeID == undefined || endNodeID == undefined) {
       multinode = true;
-      if (nodeIDs.length < 2) {
+      if (multiNodeID.length < 2) {
         res
           .status(400)
           .send(
@@ -62,8 +62,6 @@ router.post(
           );
         return;
       }
-      startNodeID = nodeIDs[0];
-      endNodeID = nodeIDs[1];
     }
 
     const graph = await createGraph();
@@ -85,7 +83,7 @@ router.post(
 
     if (multinode) {
       const instructions: NavigationInstruction[] = await Promise.all(
-        [...pairwise(nodeIDs)].map(([a, b]) =>
+        [...pairwise(multiNodeID)].map(([a, b]) =>
           pathfindSingle(graph, algo, a, b),
         ),
       );
