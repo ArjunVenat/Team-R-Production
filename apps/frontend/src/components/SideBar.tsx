@@ -487,6 +487,12 @@ export default function Sidebar() {
                   >
                     Chinese
                   </Button>
+                  <Button
+                    style={{ textTransform: "none" }}
+                    onClick={() => changeLanguage("ru")}
+                  >
+                    Russian
+                  </Button>
                 </Box>
                 <Box className="divide-y divide-slate-200">
                   <Button onClick={() => colorblindchange("protanopia")}>
