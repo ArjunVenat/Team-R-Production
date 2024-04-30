@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import swoosh from "../assets/swoosh.png";
 import {
   Autocomplete,
   Slider,
@@ -18,6 +19,7 @@ import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
 import TableHead from "@mui/material/TableHead";
 import TableRow from "@mui/material/TableRow";
+import { GetColorblindColors } from "../components/colorblind.ts";
 
 export default function PDMPage() {
   const [department, setDepartment] = useState<string | null>(null);
@@ -96,160 +98,227 @@ export default function PDMPage() {
   ));
 
   return (
-    <div className="container mx-auto h-screen px-4">
-      <form
-        onSubmit={handleFormSubmit}
-        className="space-y-4 justify-center w-1/2"
+    <div className="flex flex-grow flex-col justify-center h-100vh">
+      <div className="bg-primary pb-8"></div>
+      <div
+        className="flex flex-grow flex-col justify-center text-center  bg-cover bg-center bg-no-repeat relative"
+        style={{
+          backgroundImage: `url(${swoosh})`,
+          backgroundColor: "white",
+          width: "100%",
+          height: "100%",
+        }}
       >
-        <Autocomplete
-          value={department}
-          onChange={(event, newValue) => {
-            setDepartment(newValue);
+        <Typography
+          className="text-primary"
+          sx={{
+            fontSize: "1.7rem",
+            fontWeight: "bold",
           }}
-          options={departments}
-          renderInput={(params) => <TextField {...params} label="Department" />}
-        />
-        <div className="flex items-center space-x-2">
-          <Typography>Select Rating Range</Typography>
-          <Slider
-            value={rating}
-            onChange={(event, newValue) => {
-              setRating(newValue as [number, number]);
-            }}
-            valueLabelDisplay="auto"
-            min={0}
-            max={5}
-            step={0.5}
-            marks
-            aria-labelledby="range-slider"
-          />
+        >
+          Find a Doctor
+        </Typography>
+        <div className="container mx-auto h-full px-4">
+          <form
+            onSubmit={handleFormSubmit}
+            className="mt-4 space-y-4 justify-center w-full"
+          >
+            <div className="flex flex-row space-x-4 justify-center">
+              <Autocomplete
+                sx={{
+                  width: "300px",
+                  backgroundColor: "white",
+                }}
+                value={department}
+                onChange={(event, newValue) => {
+                  setDepartment(newValue);
+                }}
+                options={departments}
+                renderInput={(params) => (
+                  <TextField {...params} label="Department" />
+                )}
+              />
+              <Autocomplete
+                sx={{
+                  width: "300px",
+                  backgroundColor: "white",
+                }}
+                value={language}
+                onChange={(event, newValue) => {
+                  setLanguage(newValue);
+                }}
+                options={languages}
+                renderInput={(params) => (
+                  <TextField {...params} label="Language" />
+                )}
+              />
+            </div>
+
+            <div className="flex flex-col items-center space-x-2 w-1/2 mx-auto">
+              <Typography>Select Rating Range</Typography>
+              <Slider
+                value={rating}
+                onChange={(event, newValue) => {
+                  setRating(newValue as [number, number]);
+                }}
+                valueLabelDisplay="off"
+                min={0}
+                max={5}
+                step={0.5}
+                marks={[
+                  { value: 0, label: "0" },
+                  { value: 1, label: "1" },
+                  { value: 2, label: "2" },
+                  { value: 3, label: "3" },
+                  { value: 4, label: "4" },
+                  { value: 5, label: "5" },
+                ]}
+                aria-labelledby="range-slider"
+                sx={{
+                  color: "#012d5a",
+                  "& .MuiSlider-markLabel": {
+                    color: "text.primary",
+                  },
+                }}
+              />
+            </div>
+
+            <FormGroup>
+              <div className="flex flex-row justify-center w-1/2 mx-auto">
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={certificationPref}
+                      onChange={(e) => setCertificationPref(e.target.checked)}
+                    />
+                  }
+                  label="Certification Preference"
+                />
+                <FormControlLabel
+                  control={
+                    <Checkbox
+                      checked={boardCertification}
+                      onChange={(e) => setBoardCertification(e.target.checked)}
+                    />
+                  }
+                  label="Board Certification"
+                />
+              </div>
+            </FormGroup>
+
+            <div className="w-1/2 ml-auto">
+              <Button
+                type="submit"
+                variant="contained"
+                sx={{
+                  backgroundColor: GetColorblindColors().color4,
+                  color: "white",
+                  "&:hover": {
+                    backgroundColor: GetColorblindColors().color3,
+                    color: GetColorblindColors().color4,
+                  },
+                }}
+              >
+                Submit
+              </Button>
+            </div>
+          </form>
+          <Box className="w-full h-1/2 mt-8">
+            <TableContainer className="w-full h-full overflow-y-auto">
+              <Table className="min-w-full" aria-label="simple table">
+                <TableHead className="sticky top-0 bg-[#677c8f] text-white">
+                  <TableRow className="bg-[#677c8f] text-white">
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      User ID
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      Name
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      Department
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      Years Worked
+                    </TableCell>
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      Rating
+                    </TableCell>
+
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      Specialty Training
+                    </TableCell>
+
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      Board Certification
+                    </TableCell>
+
+                    <TableCell
+                      sx={{
+                        color: "white",
+                        fontWeight: "bold",
+                        fontSize: "h6.fontSize",
+                      }}
+                    >
+                      Languages
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody
+                  style={{
+                    borderWidth: 2,
+                    borderColor: "white",
+                    backgroundColor: "rgb(103,124,143, 0.15)",
+                  }}
+                >
+                  {arrayDoctors}
+                </TableBody>
+              </Table>
+            </TableContainer>
+          </Box>
         </div>
-        <Autocomplete
-          value={language}
-          onChange={(event, newValue) => {
-            setLanguage(newValue);
-          }}
-          options={languages}
-          renderInput={(params) => <TextField {...params} label="Language" />}
-        />
-        <FormGroup>
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={certificationPref}
-                onChange={(e) => setCertificationPref(e.target.checked)}
-              />
-            }
-            label="Certification Preference"
-          />
-          <FormControlLabel
-            control={
-              <Checkbox
-                checked={boardCertification}
-                onChange={(e) => setBoardCertification(e.target.checked)}
-              />
-            }
-            label="Board Certification"
-          />
-        </FormGroup>
-        <Button type="submit" variant="contained" color="primary">
-          Submit
-        </Button>
-      </form>
-      <Box className="w-full h-1/2 mt-8">
-        <TableContainer className="w-full h-full overflow-y-auto">
-          <Table className="min-w-full" aria-label="simple table">
-            <TableHead className="sticky top-0 bg-[#677c8f] text-white">
-              <TableRow className="bg-[#677c8f] text-white">
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  User ID
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Name
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Department
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Years Worked
-                </TableCell>
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Rating
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Specialty Training
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Board Certification
-                </TableCell>
-
-                <TableCell
-                  sx={{
-                    color: "white",
-                    fontWeight: "bold",
-                    fontSize: "h6.fontSize",
-                  }}
-                >
-                  Languages
-                </TableCell>
-              </TableRow>
-            </TableHead>
-            <TableBody
-              style={{
-                borderWidth: 2,
-                borderColor: "white",
-                backgroundColor: "rgb(103,124,143, 0.15)",
-              }}
-            >
-              {arrayDoctors}
-            </TableBody>
-          </Table>
-        </TableContainer>
-      </Box>
+      </div>
     </div>
   );
 }
