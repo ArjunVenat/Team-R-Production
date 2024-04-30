@@ -214,6 +214,12 @@ function SignInPage() {
                 >
                   {t("Chinese")}
                 </Button>
+                <Button
+                  style={{ textTransform: "none" }}
+                  onClick={() => changeLanguage("ru")}
+                >
+                  Russian
+                </Button>
               </Box>
             </Popover>
           </Box>
