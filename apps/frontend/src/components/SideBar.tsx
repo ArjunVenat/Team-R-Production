@@ -157,11 +157,9 @@ export default function Sidebar() {
     key: "Chat with Herald AI",
     title: t("Chat with Herald AI"),
     icon: (
-      <img
-        src={Herald}
-        alt="Herald"
-        style={{ height: "28px", width: "28px" }}
-      />
+      <svg height="25" width="25">
+        <image href={Herald} width="25" height="25" />
+      </svg>
     ),
     onlyDisplayLoggedIn: false,
   };

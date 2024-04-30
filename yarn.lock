@@ -7961,6 +7961,7 @@ __metadata:
     prettier-config-custom: "workspace:*"
     react: "npm:^18.2.0"
     react-dom: "npm:^18.2.0"
+    react-google-charts: "npm:^4.0.1"
     react-hook-form: "npm:^7.51.2"
     react-material-ui-carousel: "npm:^3.4.2"
     tsconfig-custom: "workspace:*"

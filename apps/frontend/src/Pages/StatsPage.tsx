@@ -5,6 +5,9 @@ import axios from "axios";
 // import swoosh from "../assets/swoosh.png";
 // import { useTranslation } from "react-i18next";
 import { Chart } from "react-google-charts";
+import swoosh from "../assets/swoosh.png";
+import { GetColorblindColors } from "../components/colorblind.ts";
+import { Box } from "@mui/material";
 
 type TypeLengths = {
   Flowers: number;
@@ -15,7 +18,7 @@ type TypeLengths = {
   Entertainment: number;
 };
 
-const St4t5Page = () => {
+export default function St4t5Page() {
   const {
     isAuthenticated,
     isLoading,
@@ -108,19 +111,7 @@ const St4t5Page = () => {
     ["Javier", typeLengths["Medical Equipment"]],
     ["Brannon", typeLengths.Entertainment],
   ];
-  const coloptions = {
-    title: "Service Requests By Type",
-    chartArea: { width: "50%" },
 
-    hAxis: {
-      title: "Service Request Type",
-      minValue: 0,
-    },
-    vAxis: {
-      title: "Number of Requests",
-    },
-    legend: "none",
-  };
   // const glazedata = [
   //     ["Phrases"],
   //     ["BWH is a hospital"],
@@ -139,28 +130,76 @@ const St4t5Page = () => {
   //             word: "BWH",
   //         },
   //     };
+  const coloptions = {
+    title: "Service Requests By Type",
+    chartArea: { width: "80%" },
+
+    hAxis: {
+      title: "Service Request Type",
+      minValue: 0,
+    },
+    vAxis: {
+      title: "Number of Requests",
+    },
+    legend: "none",
+    backgroundColor: "transparent",
+  };
   const pieoptions = {
     title: "Top Employees by Service Request Associated",
+    is3D: true,
+    backgroundColor: "transparent",
   };
   return (
-    <div>
-      <Chart
-        chartType="ColumnChart"
-        width="100%"
-        height="200px"
-        data={bardata}
-        options={coloptions}
-        legendToggle
-      />
-      <Chart
-        chartType="PieChart"
-        width="100%"
-        height="200px"
-        data={piedata}
-        options={pieoptions}
-      />
-    </div>
-  );
-};
+    <Box display="flex" height="100vh">
+      <div
+        className="
+        overflow-y-auto h-full w-full
+        bg-cover bg-center bg-no-repeat
+        relative flex flex-col justify-between"
+        style={{
+          backgroundImage: `url(${swoosh})`,
+        }}
+      >
+        <div className=" top-0 min-w-full pt-8 bg-primary">
+          <Box
+            sx={{
+              backgroundColor: GetColorblindColors().color2,
+              borderColor: "white",
+              display: "flex",
+              justifyContent: "center",
+              height: "10vh",
+              alignItems: "center",
+            }}
+          >
+            <h1 className="text-4xl text-white">Statistics</h1>
+          </Box>
+        </div>
 
-export default St4t5Page;
+        <div className="flex justify-center items-center h-full w-full">
+          <div
+            className="flex justify-center items-center
+                        h-[90%] w-[90%] bg-translucentGrey rounded-lg"
+          >
+            <div className="flex flex-col justify-center items-center w-[90%] h-[90%]">
+              <Chart
+                chartType="ColumnChart"
+                width="1200px"
+                height="300px"
+                data={bardata}
+                options={coloptions}
+                legendToggle
+              />
+              <Chart
+                chartType="PieChart"
+                width="1000px"
+                height="300px"
+                data={piedata}
+                options={pieoptions}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </Box>
+  );
+}
