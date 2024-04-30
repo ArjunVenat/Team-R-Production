@@ -28,6 +28,7 @@
     "common": "workspace:*",
     "dayjs": "^1.11.10",
     "framer-motion": "^11.0.24",
+    "i18n": "^0.15.1",
     "i18next": "^23.11.2",
     "i18next-browser-languagedetector": "^7.2.1",
     "i18next-http-backend": "^2.5.1",
@@ -39,6 +40,7 @@
     "react-background-slider": "^4.0.0-next.2",
     "react-bootstrap": "^2.10.2",
     "react-dom": "^18.2.0",
+    "react-google-charts": "^4.0.1",
     "react-hook-form": "^7.51.2",
     "react-i18next": "^14.1.1",
     "react-icons": "^5.0.1",
@@ -54,6 +56,7 @@
   },
   "devDependencies": {
     "@types/chance": "^1",
+    "@types/i18n": "^0",
     "@types/leaflet": "^1.9.8",
     "@types/node": "^20.2.5",
     "@types/prop-types": "^15.7.5",
