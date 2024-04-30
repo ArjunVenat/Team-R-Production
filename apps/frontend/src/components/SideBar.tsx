@@ -2,6 +2,7 @@
 // import LoginIcon from '@mui/icons-material/Login';
 import { SubmitUserDB } from "../backendreference/addUserToDB.ts";
 import { Logout, Login } from "@mui/icons-material";
+import { SvgIcon } from "@mui/material";
 // import RoomServiceIcon from '@mui/icons-material/RoomService';
 // import LastPageIcon from '@mui/icons-material/LastPage';
 import FirstPageIcon from "@mui/icons-material/FirstPage";
@@ -157,11 +158,11 @@ export default function Sidebar() {
     key: "Chat with Herald AI",
     title: t("Chat with Herald AI"),
     icon: (
-      <img
-        src={Herald}
-        alt="Herald"
-        style={{ height: "28px", width: "28px" }}
-      />
+      <SvgIcon>
+        <svg viewBox="0 0 24 24">
+          <image href={Herald} height="24" width="24" />
+        </svg>
+      </SvgIcon>
     ),
     onlyDisplayLoggedIn: false,
   };
