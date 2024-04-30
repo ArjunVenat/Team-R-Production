@@ -105,10 +105,10 @@ export default function PDMPage() {
     ));
   }
   return (
-    <div className="flex flex-grow flex-col justify-center h-100vh">
-      <div className="bg-primary pb-8"></div>
+    <div className="flex flex-grow flex-col justify-center h-screen bg-primary pt-8">
+      {/*<div className="bg-primary pb-8"></div>*/}
       <div
-        className="flex flex-grow flex-col justify-center text-center  bg-cover bg-center bg-no-repeat relative"
+        className="flex flex-col text-center  bg-cover bg-center bg-no-repeat relative"
         style={{
           backgroundImage: `url(${swoosh})`,
           backgroundColor: "white",
@@ -125,7 +125,7 @@ export default function PDMPage() {
         >
           {t("Find a Doctor")}
         </Typography>
-        <div className="container mx-auto h-full px-4">
+        <div className="container mx-auto h-1/3 px-4">
           <form
             onSubmit={handleFormSubmit}
             className="mt-4 space-y-4 justify-center w-full"
@@ -230,8 +230,8 @@ export default function PDMPage() {
               </Button>
             </div>
           </form>
-          <Box className="w-full h-1/2 mt-8">
-            <TableContainer className="w-full h-full overflow-y-auto">
+          <Box className="flex-grow mt-8">
+            <TableContainer className="w-full h-[50vh] overflow-auto">
               <Table className="min-w-full" aria-label="simple table">
                 <TableHead className="sticky top-0 bg-[#677c8f] text-white">
                   <TableRow className="bg-[#677c8f] text-white">
