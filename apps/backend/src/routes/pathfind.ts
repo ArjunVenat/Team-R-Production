@@ -93,9 +93,11 @@ router.post(
       }),
     );
 
+    // TODO: calculate and return a value for ETA, which is an integer number of minutes
     res.send({
       path: pathNodes,
       directions: angles,
+      eta: 3,
     });
   },
 );
