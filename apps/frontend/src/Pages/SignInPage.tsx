@@ -145,7 +145,7 @@ function SignInPage() {
         <p style={{ marginBottom: "5px" }}>{formatDateTime(currentDateTime)}</p>
         <p style={{ marginBottom: "5px" }}>{formatTime(currentDateTime)}</p>
         <p style={{ marginBottom: "5px" }}>
-          Temperature: {weather.main.temp}Â°C
+          Temperature: {weather.main.temp}°C
         </p>
         <img
           src={iconUrl}
