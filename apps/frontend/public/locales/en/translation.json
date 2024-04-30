@@ -103,5 +103,18 @@
   "Sub Type": "Sub Type",
   "Message": "Message",
   "Number of Requests by Type": "Number of Requests by Type",
-  "Request Type Statistics": "Request Type Statistics"
+  "Request Type Statistics": "Request Type Statistics",
+  "Update Traffic": "Update Traffic",
+  "EDIT MAP": "Edit Map",
+  "DONE EDITING": "DONE EDITING",
+  "Hello, I am Herald. I am a AI chatbot. Feel free to ask me anything in the box below. Please be aware I may provide incorrect information!": "Hello, I am Herald. I am a AI chatbot. Feel free to ask me anything in the box below. Please be aware I may provide incorrect information!",
+  "User ID": "User ID",
+  "Department": "Department",
+  "Years Worked": "Years Worked",
+  "Rating": "Rating",
+  "Board Certification": "Board Certification",
+  "Languages": "Languages",
+  "Select Rating Range": "Select Rating Range",
+  "Certification Preference": "Certification Preference",
+  "Submit": "Submit"
 }
