@@ -178,6 +178,7 @@ export default function MainPage() {
       // Fetching path data from the backend using pathfinding algorithm
       const res = await axios.post(
         `${pathfindingAlgorithm}?startNodeID=${startNode}&endNodeID=${endNode}`,
+        // `${pathfindingAlgorithm}?multiNodeID=${startNode}&multiNodeID=${endNode}`,
         snapShot,
         {
           headers: {
@@ -194,6 +195,8 @@ export default function MainPage() {
       console.log(res.data);
       setPath(res.data.path); // Update state with retrieved path data
       setPathDirections(res.data.directions); //Update state with retreived directions data
+      // setPath(res.data.instructions[0].path); // Update state with retrieved path data
+      // setPathDirections(res.data.instructions[0].directions); //Update state with retreived directions data
     } else {
       console.error("Start or end node not found");
     }
