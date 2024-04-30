@@ -46,6 +46,12 @@ export class GraphNode {
       )
     );
   }
+
+  getTime(other: GraphNode): number {
+    // 3 units per foot, assumes walking speed of 4.7ft/s
+    // Conveniently works out to also take 14 seconds per floor change with elevator
+    return this.getDistance(other) / (3 * 4.7);
+  }
 }
 
 class StairNode extends GraphNode {
@@ -59,6 +65,17 @@ class StairNode extends GraphNode {
       out *= 3;
     }
     return out;
+  }
+
+  getTime(other: GraphNode): number {
+    if (other instanceof StairNode) {
+      // Take 28 seconds per floor change with stairs
+      return this.getDistance(other) / (1.5 * 3 * 4.7);
+    } else {
+      return super.getDistance(other) / (3 * 4.7);
+    }
+    // 3 units per foot, assumes walking speed of 4.7ft/s
+    // Conveniently works out to also take 14 seconds per floor change with elevator
   }
 }
 /**
