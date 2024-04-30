@@ -110,7 +110,8 @@ router.post(
       }),
     );
 
-    // TODO: calculate and return a value for ETA, which is an integer number of minutes
+    const time = graph.calculateTime(pathDirections);
+    console.log("time calculated (in seconds): " + time);
 
     // TODO: take in multiple nodes to pathfind between
     // Mockup of new API,
@@ -131,7 +132,7 @@ router.post(
     res.send({
       path: pathNodes,
       directions: angles,
-      eta: 3,
+      eta: time,
     });
   },
 );
