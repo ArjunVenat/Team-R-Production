@@ -196,7 +196,12 @@ export default function MainPage() {
       console.log(res.data);
       setPath(res.data.path); // Update state with retrieved path data
       setPathDirections(res.data.directions); //Update state with retreived directions data
-      setPathTimes(`Expected to take ${Math.round(res.data.eta / 60)} minutes`);
+      const timeInMins = Math.ceil(res.data.eta / 60);
+      if (timeInMins == 1) {
+        setPathTimes("Expected to take 1 minute.");
+      } else {
+        setPathTimes(`Expected to take ${timeInMins} minutes.`);
+      }
       // setPath(res.data.instructions[0].path); // Update state with retrieved path data
       // setPathDirections(res.data.instructions[0].directions); //Update state with retreived directions data
     } else {

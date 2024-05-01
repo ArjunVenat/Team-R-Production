@@ -23,7 +23,6 @@ const router: Router = express.Router();
 router.post(
   "/:algoType",
   async function (req: Request, res: Response): Promise<void> {
-     
     const { startNodeID, endNodeID, multiNodeID } = req.query as {
       startNodeID: string;
       endNodeID: string;
