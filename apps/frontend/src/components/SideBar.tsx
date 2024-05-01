@@ -88,19 +88,19 @@ export default function Sidebar() {
 
   const home: Menu = {
     key: "Home",
-    title: t("Home"),
+    title: "Home",
     icon: <RiHome3Fill />,
     onlyDisplayLoggedIn: false,
   };
   const serviceRequest: Menu = {
     key: "Service Request",
-    title: t("Service Request"),
+    title: "Service Request",
     icon: <BsBellFill />,
     onlyDisplayLoggedIn: true,
   };
   const serviceRequestTable: Menu = {
     key: "Service Request Table",
-    title: t("Service Request Table"),
+    title: "Service Request Table",
     icon: <TableViewIcon />,
     onlyDisplayLoggedIn: true,
   };
@@ -113,20 +113,20 @@ export default function Sidebar() {
 
   const pdmOption: Menu = {
     key: "Find a Doctor",
-    title: t("Find a Doctor"),
+    title: "Find a Doctor",
     icon: <MedicalServicesIcon />,
     onlyDisplayLoggedIn: false,
   };
 
   const logoutOption: Menu = {
     key: "Logout",
-    title: t("Logout"),
+    title: "Logout",
     icon: <Logout />,
     onlyDisplayLoggedIn: false,
   };
   const nodes_edges: Menu = {
     key: "CSV Data",
-    title: t("CSV Data"),
+    title: "CSV Data",
     icon: <AccessibleForwardIcon />,
     onlyDisplayLoggedIn: true,
   };
@@ -138,7 +138,7 @@ export default function Sidebar() {
   // };
   const stats: Menu = {
     key: "Stats",
-    title: t("Stats"),
+    title: "Stats",
     icon: <BarChartIcon />,
     onlyDisplayLoggedIn: true,
   };
@@ -150,13 +150,13 @@ export default function Sidebar() {
   // };
   const aboutPage: Menu = {
     key: "About and Credits",
-    title: t("About and Credits"),
+    title: "About and Credits",
     icon: <InfoIcon />,
     onlyDisplayLoggedIn: false,
   };
   const chat: Menu = {
     key: "Chat with Herald AI",
-    title: t("Chat with Herald AI"),
+    title: "Chat with Herald AI",
     icon: (
       <SvgIcon>
         <svg viewBox="0 0 24 24">
@@ -168,7 +168,7 @@ export default function Sidebar() {
   };
   const login: Menu = {
     key: "Staff Login",
-    title: t("Staff Login"),
+    title: "Staff Login",
     icon: <Login />,
     onlyDisplayLoggedIn: false,
   };
@@ -443,7 +443,7 @@ export default function Sidebar() {
                   activeMenu === menu.key ? "text-tertiary" : "text-white"
                 }`}
               >
-                {menu.title}
+                {t(menu.title)}
               </span>
             </li>
           ))}
