@@ -57,6 +57,7 @@ export default function MainPage() {
   const [showPathOnly, setShowPathOnly] = useState(false);
   const [isDirectionsClicked, setIsDirectionsClicked] = useState(false);
   const [pathDirections, setPathDirections] = useState<string[][]>([]);
+  const [pathTimes, setPathTimes] = useState<string>("");
   const [expandedAccordion, setExpandedAccordion] = useState<string | null>(
     null,
   );
@@ -178,6 +179,7 @@ export default function MainPage() {
       // Fetching path data from the backend using pathfinding algorithm
       const res = await axios.post(
         `${pathfindingAlgorithm}?startNodeID=${startNode}&endNodeID=${endNode}`,
+        // `${pathfindingAlgorithm}?multiNodeID=${startNode}&multiNodeID=${endNode}`,
         snapShot,
         {
           headers: {
@@ -194,6 +196,9 @@ export default function MainPage() {
       console.log(res.data);
       setPath(res.data.path); // Update state with retrieved path data
       setPathDirections(res.data.directions); //Update state with retreived directions data
+      setPathTimes(`Expected to take ${Math.round(res.data.eta / 60)} minutes`);
+      // setPath(res.data.instructions[0].path); // Update state with retrieved path data
+      // setPathDirections(res.data.instructions[0].directions); //Update state with retreived directions data
     } else {
       console.error("Start or end node not found");
     }
@@ -421,6 +426,10 @@ export default function MainPage() {
                       <SyncIcon />
                       {t("From To", { start, end })}
                     </Box>
+                    <Box gap={1} p={2} alignItems="center">
+                      {pathTimes}
+                    </Box>
+
                     {pathDirections.map((floorDirections, index) => (
                       <Accordion
                         key={floorDirections[0]}
