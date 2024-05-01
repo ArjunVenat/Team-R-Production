@@ -553,226 +553,236 @@ export default function MapEditing() {
           )}
         {nodeClicked != undefined && nodeClicked != defaultNode && (
           <div
-            className={`backdrop-blur-sm bg-secondary 
+            style={{
+              display: "flex",
+              justifyContent: "flex-end",
+              alignItems: "center",
+              height: "100vh",
+            }}
+          >
+            <div
+              className={`backdrop-blur-sm bg-secondary 
                             border-[5px_solid_${GetColorblindColors().color4}] 
                             text-black b-radius-[3%]`}
-          >
-            <TableContainer sx={{ maxWidth: 350, marginBottom: 2 }}>
-              <Table sx={{ maxWidth: 350 }} aria-label="simple table">
-                <TableRow>
-                  <TableCell align="left">Node ID:</TableCell>
-                  <TableCell align="left">{editableNode?.NodeID}</TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">X Coord:</TableCell>
-                  <TableCell align="left">
-                    <input
-                      className="bg-transparent"
-                      value={editableNode?.Xcoord || ""}
-                      onChange={(e) => {
-                        editNodeDB(
-                          nodeClicked.NodeID,
-                          "Xcoord",
-                          e.target.value,
-                        ).then();
-                        nodeClicked.Xcoord = e.target.value;
-                        setEditableNode({ ...nodeClicked });
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Y Coord:</TableCell>
-                  <TableCell align="left">
-                    <input
-                      className="bg-transparent"
-                      value={editableNode?.Ycoord || ""}
-                      onChange={(e) => {
-                        editNodeDB(
-                          nodeClicked.NodeID,
-                          "Ycoord",
-                          e.target.value,
-                        ).then();
-                        nodeClicked.Ycoord = e.target.value;
-                        setEditableNode({ ...nodeClicked });
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Floor:</TableCell>
-                  <TableCell align="left">
-                    <Autocomplete
-                      value={nodeClicked?.Floor}
-                      onChange={(
-                        e: ChangeEvent<unknown>,
-                        getNodeFloor: string | null,
-                      ) => {
-                        editNodeDB(
-                          nodeClicked.NodeID,
-                          "Floor",
-                          getNodeFloor!,
-                        ).then();
-                        nodeClicked.Floor = getNodeFloor!;
-                        setEditableNode({ ...nodeClicked });
-                      }}
-                      disablePortal
-                      id="combo-box-end"
-                      options={["L1", "L2", "1", "2", "3"]}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Building:</TableCell>
-                  <TableCell align="left">
-                    <Autocomplete
-                      value={nodeClicked?.Building}
-                      onChange={(
-                        e: ChangeEvent<unknown>,
-                        getNodeBuilding: string | null,
-                      ) => {
-                        editNodeDB(
-                          nodeClicked.NodeID,
-                          "Building",
-                          getNodeBuilding!,
-                        ).then();
-                        nodeClicked.Building = getNodeBuilding!;
-                        setEditableNode({ ...nodeClicked });
-                      }}
-                      disablePortal
-                      id="combo-box-end"
-                      options={[
-                        "15 Francis",
-                        "45 Francis",
-                        "BTM",
-                        "Shapiro",
-                        "Tower",
-                      ]}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Node Type:</TableCell>
-                  <TableCell align="left">
-                    <Autocomplete
-                      value={nodeClicked?.NodeType}
-                      onChange={(
-                        e: ChangeEvent<unknown>,
-                        getNodeType: string | null,
-                      ) => {
-                        editNodeDB(
-                          nodeClicked.NodeID,
-                          "NodeType",
-                          getNodeType!,
-                        ).then();
-                        nodeClicked.NodeType = getNodeType!;
-                        setEditableNode({ ...nodeClicked });
-                      }}
-                      disablePortal
-                      id="combo-box-end"
-                      options={[
-                        "BATH",
-                        "CONF",
-                        "DEPT",
-                        "ELEV",
-                        "EXIT",
-                        "HALL",
-                        "INFO",
-                        "LABS",
-                        "REST",
-                        "RETL",
-                        "SERV",
-                        "STAI",
-                        "STAI",
-                      ]}
-                      renderInput={(params) => <TextField {...params} />}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Long Name:</TableCell>
-                  <TableCell align="left">
-                    <input
-                      className="bg-transparent"
-                      value={editableNode?.LongName || ""}
-                      onChange={(e) => {
-                        editNodeDB(
-                          nodeClicked.NodeID,
-                          "LongName",
-                          e.target.value,
-                        ).then();
-                        nodeClicked.LongName = e.target.value;
-                        setEditableNode({ ...nodeClicked });
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-                <TableRow>
-                  <TableCell align="left">Short Name:</TableCell>
-                  <TableCell align="left">
-                    <input
-                      className="bg-transparent"
-                      value={editableNode?.ShortName || ""}
-                      onChange={(e) => {
-                        editNodeDB(
-                          nodeClicked.NodeID,
-                          "ShortName",
-                          e.target.value,
-                        ).then();
-                        nodeClicked.ShortName = e.target.value;
-                        setEditableNode({ ...nodeClicked });
-                      }}
-                    />
-                  </TableCell>
-                </TableRow>
-              </Table>
-            </TableContainer>
-            <Box
-              display="flex"
-              justifyContent="right"
-              alignItems="center"
-              minHeight="5vh"
-              marginRight="5px"
-              className="pb-3 space-x-2 "
             >
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: GetColorblindColors().color2,
-                  color: "white",
-                }}
-                onClick={() => {
-                  delNodeDB("Single", nodeClicked.NodeID).then();
-                  setNodeClicked(undefined);
-                  nodeClicked.NodeID = "";
-                  nodeClicked.Xcoord = "";
-                  nodeClicked.Ycoord = "";
-                  nodeClicked.Floor = "";
-                  nodeClicked.Building = "";
-                  nodeClicked.NodeType = "";
-                  nodeClicked.LongName = "";
-                  nodeClicked.ShortName = "";
-                  setEditableNode({ ...nodeClicked });
-                  setAddEdgeFormFlag(false);
-                }}
+              <TableContainer sx={{ maxWidth: 350, marginBottom: 2 }}>
+                <Table sx={{ maxWidth: 350 }} aria-label="simple table">
+                  <TableRow>
+                    <TableCell align="left">Node ID:</TableCell>
+                    <TableCell align="left">{editableNode?.NodeID}</TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">X Coord:</TableCell>
+                    <TableCell align="left">
+                      <input
+                        className="bg-transparent"
+                        value={editableNode?.Xcoord || ""}
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "Xcoord",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.Xcoord = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Y Coord:</TableCell>
+                    <TableCell align="left">
+                      <input
+                        className="bg-transparent"
+                        value={editableNode?.Ycoord || ""}
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "Ycoord",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.Ycoord = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Floor:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={nodeClicked?.Floor}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getNodeFloor: string | null,
+                        ) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "Floor",
+                            getNodeFloor!,
+                          ).then();
+                          nodeClicked.Floor = getNodeFloor!;
+                          setEditableNode({ ...nodeClicked });
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={["L1", "L2", "1", "2", "3"]}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Building:</TableCell>
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={nodeClicked?.Building}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getNodeBuilding: string | null,
+                        ) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "Building",
+                            getNodeBuilding!,
+                          ).then();
+                          nodeClicked.Building = getNodeBuilding!;
+                          setEditableNode({ ...nodeClicked });
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={[
+                          "15 Francis",
+                          "45 Francis",
+                          "BTM",
+                          "Shapiro",
+                          "Tower",
+                        ]}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left" sx={{ width: "100px" }}>
+                      Node Type:
+                    </TableCell>{" "}
+                    <TableCell align="left">
+                      <Autocomplete
+                        value={nodeClicked?.NodeType}
+                        onChange={(
+                          e: ChangeEvent<unknown>,
+                          getNodeType: string | null,
+                        ) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "NodeType",
+                            getNodeType!,
+                          ).then();
+                          nodeClicked.NodeType = getNodeType!;
+                          setEditableNode({ ...nodeClicked });
+                        }}
+                        disablePortal
+                        id="combo-box-end"
+                        options={[
+                          "BATH",
+                          "CONF",
+                          "DEPT",
+                          "ELEV",
+                          "EXIT",
+                          "HALL",
+                          "INFO",
+                          "LABS",
+                          "REST",
+                          "RETL",
+                          "SERV",
+                          "STAI",
+                        ]}
+                        renderInput={(params) => <TextField {...params} />}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Long Name:</TableCell>
+                    <TableCell align="left">
+                      <input
+                        className="bg-transparent"
+                        value={editableNode?.LongName || ""}
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "LongName",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.LongName = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                  <TableRow>
+                    <TableCell align="left">Short Name:</TableCell>
+                    <TableCell align="left">
+                      <input
+                        className="bg-transparent"
+                        value={editableNode?.ShortName || ""}
+                        onChange={(e) => {
+                          editNodeDB(
+                            nodeClicked.NodeID,
+                            "ShortName",
+                            e.target.value,
+                          ).then();
+                          nodeClicked.ShortName = e.target.value;
+                          setEditableNode({ ...nodeClicked });
+                        }}
+                      />
+                    </TableCell>
+                  </TableRow>
+                </Table>
+              </TableContainer>
+              <Box
+                display="flex"
+                justifyContent="right"
+                alignItems="center"
+                minHeight="5vh"
+                marginRight="5px"
+                className="pb-3 space-x-2 "
               >
-                Delete Node
-              </Button>
-              <Button
-                variant="contained"
-                style={{
-                  backgroundColor: GetColorblindColors().color4,
-                  color: "white",
-                }}
-                onClick={() => {
-                  setNodeClicked(undefined);
-                }}
-              >
-                CANCEL
-              </Button>
-            </Box>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: GetColorblindColors().color2,
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    delNodeDB("Single", nodeClicked.NodeID).then();
+                    setNodeClicked(undefined);
+                    nodeClicked.NodeID = "";
+                    nodeClicked.Xcoord = "";
+                    nodeClicked.Ycoord = "";
+                    nodeClicked.Floor = "";
+                    nodeClicked.Building = "";
+                    nodeClicked.NodeType = "";
+                    nodeClicked.LongName = "";
+                    nodeClicked.ShortName = "";
+                    setEditableNode({ ...nodeClicked });
+                    setAddEdgeFormFlag(false);
+                  }}
+                >
+                  Delete Node
+                </Button>
+                <Button
+                  variant="contained"
+                  style={{
+                    backgroundColor: GetColorblindColors().color4,
+                    color: "white",
+                  }}
+                  onClick={() => {
+                    setNodeClicked(undefined);
+                  }}
+                >
+                  CANCEL
+                </Button>
+              </Box>
+            </div>
           </div>
         )}
         {edgeClicked != undefined &&
