@@ -9,12 +9,11 @@ import bwhoutside from "../assets/hero/bwhoutside.png";
 import hall from "../assets/hero/hall.png";
 import outsidebwh from "../assets/hero/outsidebwh.png";
 import ViewMap from "../assets/hero/ViewMap.png";
-// import { Button } from "@mui/material";
 import { useState } from "react";
+import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import { useEffect } from "react";
 import axios from "axios";
 import { useTranslation } from "react-i18next";
-import HighlightOffOutlinedIcon from "@mui/icons-material/HighlightOffOutlined";
 import LanguageIcon from "@mui/icons-material/Language";
 import { Box, Button, IconButton, Popover } from "@mui/material";
 
@@ -75,7 +74,6 @@ const formatDateTime = (dateTime: Date) => {
   };
   return new Intl.DateTimeFormat("en-US", options).format(dateTime);
 };
-
 const formatTime = (dateTime: Date) => {
   const options: Intl.DateTimeFormatOptions = {
     hour: "numeric",
@@ -85,10 +83,12 @@ const formatTime = (dateTime: Date) => {
   return dateTime.toLocaleTimeString("en-US", options);
 };
 
+console.log(useCurrentDateTime);
+console.log(useCurrentWeather);
+
 function SignInPage() {
   const { loginWithRedirect } = useAuth0();
   const navigate = useNavigate();
-
   const [showWarning, setWarning] = useState<boolean>(true);
   const currentDateTime = useCurrentDateTime();
   const weather = useCurrentWeather();
@@ -130,14 +130,12 @@ function SignInPage() {
         duration={1000}
         className="carousel -z-10 h-full w-full"
       >
-        {images.map((image, index) => (
-          <div key={index} className="relative h-full w-full">
-            <img
-              src={image}
-              alt={image}
-              className="h-full w-full object-cover"
-            />
-          </div>
+        {images.map((image) => (
+          <img
+            src={image}
+            alt={image}
+            className="h-screen w-screen object-cover"
+          />
         ))}
       </Carousel>
       <div
@@ -214,14 +212,21 @@ function SignInPage() {
                 >
                   {t("Chinese")}
                 </Button>
+                <Button
+                  style={{ textTransform: "none" }}
+                  onClick={() => changeLanguage("ru")}
+                >
+                  Russian
+                </Button>
               </Box>
             </Popover>
           </Box>
         )}
+        <div id="spacer" className="h-10" />
         <div
           className="*:font-Garamond
-                        flex flex-col flex-grow-2 gap-6
-                        justify-center justify-self-center"
+                    flex flex-col flex-grow-2 gap-6
+                    justify-center justify-self-center"
         >
           <h1 className="text-6xl font-bold">{t("welcome")}</h1>
           <h2 className="text-4xl font-bold"> {t("title")}</h2>
@@ -260,7 +265,7 @@ function SignInPage() {
                         bg-primary
                         font-semibold"
         >
-          {t("Staff ? Sign in Here")}
+          {t("Staff? Sign in Here")}
         </UserTypeButton>
       </aside>
     </main>
